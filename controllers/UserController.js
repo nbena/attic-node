@@ -40,7 +40,6 @@ module.exports.registerUser = registerUser;
 
 
 
-
 function home(req, res, next){
   if(req.user){
     var obj = {};
@@ -85,3 +84,4 @@ function getAll(req, res, next){
     res.json({ok: false, msg: Utils.jsonErr(err)});
   });
 }
+module.exports.getAll = getAll;
