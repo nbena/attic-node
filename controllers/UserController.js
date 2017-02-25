@@ -65,3 +65,23 @@ function home(req, res, next){
   }
 }
 module.exports.home = home;
+
+function getAll(req, res, next){
+  var ret = ParamHelp.userCheck(req, res);
+  if(!ret){
+    return;
+  }
+  var result = {};
+  Note.find({_userId: req.user._id}).exec()
+  .then(function(notes){
+    result.notes=notes;
+    return Tag.find({_userId: req.user._id}).exec()
+  })
+  .then(function(tags){
+    result.tags=tags;
+    return res.json({ok: true, result: result});
+  })
+  .catch(function(err){
+    res.json({ok: false, msg: Utils.jsonErr(err)});
+  });
+}

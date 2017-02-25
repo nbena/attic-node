@@ -27,7 +27,7 @@ var UserController = require('../controllers/UserController');
  */
 
 //var port = normalizePort(process.env.OPENSHIFT_NODEJS_PORT || '3000');
-var port = process.env.PORT || 3000; /*heroku listnes locally to 5000.*/
+var port = process.env.PORT || 5000; /*heroku listnes locally to 5000.*/
 app.set('port', port);
 /**
  * Create HTTP server.
