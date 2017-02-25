@@ -15,29 +15,6 @@ router.get("/home", auth, UserController.home);
 
 router.post("/home", auth, UserController.home);
 
-router.get("/all", function(req, res, next){
-  var users = [
-    {e_mail: "nicola@bena.it",
-    password: "nicolaPassword"},
-    {e_mail: "mikkel@bjergso.dk",
-    password: "mikkellerPassword"},
-    {e_mail: "menno@oliver.nl",
-    password: "mennoPassword"},
-    {e_mail: "martin@dickie.co.uk",
-    password: "dickiePassword"},
-    {e_mail: "james@watt.co.uk",
-    password: "wattPassword"},
-    {e_mail: "omni@pollo.com",
-    password: "omniPassword"},
-    {e_mail: "evil@twin.com",
-    password: "evilPassword"}
-//     {
-// 	"e_mail":"west@vleteren",
-// 	"password":"westPassword"
-// }
-  ]
-  res.json(users);
-});
 
 router.post("/create", UserController.registerUser);
 
