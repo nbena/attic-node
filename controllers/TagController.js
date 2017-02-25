@@ -238,3 +238,17 @@ function countTags(req, res, next){
 
 
 module.exports.countTags = countTags;
+
+function allTagsMin(req, res, next){
+  var ret = ParamHelp.justUser(req, res);
+  if(!ret){
+    return;
+  }
+  Tag.find({_userId: req.user._id},{_id: 1}).exec()
+  .then(function(tags){
+    return res.json({ok: true, result: tags});
+  })
+  .catch(function(err){
+    return res.json({ok: false, msg: Utils.jsonErr(err)});
+  });
+}

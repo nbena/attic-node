@@ -65,16 +65,20 @@ function home(req, res, next){
 }
 module.exports.home = home;
 
-function getAll(req, res, next){
-  var ret = ParamHelp.userCheck(req, res);
+function getAllUnpopulated(req, res, next){
+  var ret = ParamHelp.justUser(req, res);
   if(!ret){
     return;
   }
   var result = {};
-  Note.find({_userId: req.user._id}).exec()
+  Note.find({_userId: req.user._id})
+  .sort({title:1, lastModificationDate: -1, creationDate: -1})
+  .exec()
   .then(function(notes){
     result.notes=notes;
-    return Tag.find({_userId: req.user._id}).exec()
+    return Tag.find({_userId: req.user._id})
+      .sort({title:1})
+      .exec();
   })
   .then(function(tags){
     result.tags=tags;
@@ -84,4 +88,56 @@ function getAll(req, res, next){
     res.json({ok: false, msg: Utils.jsonErr(err)});
   });
 }
-module.exports.getAll = getAll;
+module.exports.getAllUnpopulated = getAllUnpopulated;
+
+
+function getAllPopulated(req, res, next){
+  var ret = ParamHelp.justUser(req, res);
+  if(!ret){
+    return;
+  }
+  var result = {};
+  Note.find({_userId: req.user._id})
+  .sort({title:1, lastModificationDate: -1, creationDate: -1})
+  .populate("mainTags")
+  .populate("otherTags")
+  .exec()
+  .then(function(notes){
+    result.notes=notes;
+    return Tag.find({_userId: req.user._id})
+      .sort({title:1})
+      .exec();
+  })
+  .then(function(tags){
+    result.tags=tags;
+    return res.json({ok: true, result: result});
+  })
+  .catch(function(err){
+    res.json({ok: false, msg: Utils.jsonErr(err)});
+  });
+}
+module.exports.getAllPopulated = getAllPopulated;
+
+function getAllMin(req, res, next){
+  var ret = ParamHelp.justUser(req, res);
+  if(!ret){
+    return;
+  }
+  var result = {};
+  Note.find({_userId: req.user._id},{_id: 1})
+  // .sort({title:1, lastModificationDate: -1, creationDate: -1})
+  .exec()
+  .then(function(notes){
+    result.notes=notes;
+    return Tag.find({_userId: req.user._id},{_id:1})
+      .exec();
+  })
+  .then(function(tags){
+    result.tags=tags;
+    return res.json({ok: true, result: result});
+  })
+  .catch(function(err){
+    res.json({ok: false, msg: Utils.jsonErr(err)});
+  });
+}
+module.exports.getAllMin = getAllMin;

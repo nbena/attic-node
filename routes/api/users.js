@@ -18,4 +18,16 @@ router.post("/home", auth, UserController.home);
 
 router.post("/create", UserController.registerUser);
 
+router.get("/home/all", auth, UserController.getAllPopulated);
+
+router.post("/home/all", auth, UserController.getAllPopulated);
+
+router.get("/home/all/unpop", auth, UserController.getAllUnpopulated);
+
+router.post("/home/all/unpop", auth, UserController.getAllUnpopulated);
+
+router.get("/home/all/min", auth, UserController.getAllMin);
+
+router.post("/home/all/min", auth, UserController.getAllMin);
+
 module.exports = router;
