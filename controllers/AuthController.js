@@ -51,3 +51,8 @@ function generateToken(user){
 }
 
 module.exports.generateToken = generateToken;
+
+function authenticate(req, res, next){
+  res.json({ok: true, token: 'JWT '+generateToken(req.user)});
+}
+module.exports.authenticate = authenticate;

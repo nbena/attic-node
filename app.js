@@ -19,6 +19,7 @@ var index = require('./routes/index');
 var notes = require('./routes/api/notes');
 var tags = require('./routes/api/tags');
 var users = require('./routes/api/users');
+var authenticator = require('./routes/api/auth.js');
 
 var Utils = require('./public/javascripts/Utils');
 
@@ -39,11 +40,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', index);
+ app.use('/', index); //resolve just /api and /
 
 app.use('/api/tags', tags);
 app.use('/api/notes', notes);
 app.use('/api/users', users);
+app.use('/api/auth', authenticator); //resolve just /api/auth/login
 
 //setting up JSON response for 404 error on API.
 app.get('/api/*', Utils.error404);

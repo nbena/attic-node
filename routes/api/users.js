@@ -28,9 +28,17 @@ router.get("/all", function(req, res, next){
     {e_mail: "james@watt.co.uk",
     password: "wattPassword"},
     {e_mail: "omni@pollo.com",
-    password: "omniPassword"}
+    password: "omniPassword"},
+    {e_mail: "evil@twin.com",
+    password: "evilPassword"}
+//     {
+// 	"e_mail":"west@vleteren",
+// 	"password":"westPassword"
+// }
   ]
   res.json(users);
 });
+
+router.post("/create", UserController.registerUser);
 
 module.exports = router;

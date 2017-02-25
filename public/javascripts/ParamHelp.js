@@ -179,6 +179,16 @@ function justUser(req, res){
 }
 module.exports.justUser=justUser;
 
+function registerCheck(req, res){
+  var ret = true;
+  if(!req.body.e_mail || !req.body.password){
+    res.json({ok: false, msg: Const.ERR_MAIL_PASS_REQUIRED});
+    ret = false;
+  }
+  return ret;
+}
+module.exports.registerCheck=registerCheck;
+
 
 function getTagsFromReq(req){
   var array;
