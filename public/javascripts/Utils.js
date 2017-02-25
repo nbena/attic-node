@@ -1,11 +1,5 @@
 var Const = require('./Const');
 
-/*
-Array.prototype.diff = function(a) {
-    return this.filter(function(i) {return a.indexOf(i) < 0;});
-};
-
-*/
 function arrayDiff(arg0, arg1){
   if(!(arg0 instanceof Array)  && !(arg1 instanceof Array)){
     throw new TypeError("the thwo args must be Array");
