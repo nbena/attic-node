@@ -8,6 +8,7 @@ var mongoose = require('mongoose');
 mongoose.Promise = require('bluebird');
 
 var Utils = require('../public/javascripts/Utils');
+var ParamHelp = require('../public/javascripts/ParamHelp');
 
 
 //all notes
@@ -38,7 +39,7 @@ function allNotesUnpopulatedBody(req, res, next){
 }
 
 function allNotesWrapper(req, res, next, populate){
-  var ret = Utils.Check.userPopulateCheck(req, res, populate);
+  var ret = ParamHelp.userPopulateCheck(req, res, populate);
   if(!ret){
     return;
   }
@@ -96,7 +97,7 @@ function noteByTitleRegexUnpopulatedBody(req, res, next){
 
 
 function noteByTitleRegexWrapper(req, res, next, populate){
-  var ret = Utils.Check.byTitleCheck(req, res, populate);
+  var ret = ParamHelp.byTitleCheck(req, res, populate);
   if(!ret){
     return;
   }
@@ -155,7 +156,7 @@ function noteByTitleUnpopulatedBody(req, res, next){
 }
 
 function noteByTitleWrapper(req, res, next, populate){
-  var ret = Utils.Check.byTitleCheck(req, res, populate);
+  var ret = ParamHelp.byTitleCheck(req, res, populate);
   if(!ret){
     return;
   }
@@ -212,7 +213,7 @@ function noteByTextUnpopulatedBody(req, res, next){
 }
 
 function noteByTextWrapper(req, res, next, populate){
-  var ret = Utils.Check.notesByTextCheck(req, re, populate);
+  var ret = ParamHelp.notesByTextCheck(req, re, populate);
   if(!ret){
     return;
   }
@@ -238,11 +239,11 @@ module.exports.noteByTextUnpopulated = noteByTextUnpopulated;
 
 
 function noteByIdPopulated(req, res, next){
-  var ret = Utils.Check.byIdCheck(req, res);
+  var ret = ParamHelp.byIdCheck(req, res);
   if(!ret){
     return;
   }
-  var par = Utils.getId(req);
+  var par = ParamHelp.Getter.getId(req);
       Note.findOne({_userId: req.user._id, _id: par})
         .populate("mainTags")
         .populate("otherTags")
@@ -316,7 +317,7 @@ function notesByTagUnpopulatedQueryBody(req){
 }
 
 function notesByTagWrapper(req, res, next, populate){
-  ret = Utils.Check.notesByTagCheck(req, res, populate);
+  ret = ParamHelp.notesByTagCheck(req, res, populate);
   if(!ret){
     return;
   }
@@ -372,7 +373,7 @@ function getNoteObject(note, id){
 
 function createNote(req, res, next){
 
-  var ret = Utils.Check.createNoteCheck(req, res);
+  var ret = ParamHelp.createNoteCheck(req, res);
   if(!ret){
     return;
   }
@@ -393,11 +394,11 @@ module.exports.createNote = createNote;
 
 
 function removeNote(req, res, next){
-  var ret = Utils.Check.byIdCheck(req, res);
+  var ret = ParamHelp.byIdCheck(req, res);
   if(!ret){
     return;
   }
-  var id = Utils.getId(req);
+  var id = ParamHelp.Getter.getId(req);
       Note.findOne({_userId: req.user._id, _id: id}).exec()
       .then(function(note){
         if(note){
@@ -421,7 +422,7 @@ module.exports.removeNote = removeNote;
 
 
 function removeAllNotes(req, res, next){
-  var ret = Utils.Check.justUser(req, res);
+  var ret = ParamHelp.justUser(req, res);
   if(!ret){
     return;
   }
@@ -445,7 +446,7 @@ module.exports.removeAllNotes = removeAllNotes;
 
 
   function updateText(req, res, next){
-    var ret = Utils.Check.notesByTextCheck(req, res);
+    var ret = ParamHelp.notesByTextCheck(req, res);
     if(!ret){
       return;
     }
@@ -518,12 +519,12 @@ function removeTagsBody(req, /*res, next*/ data){
 
 function removeAddTags(req, res, next, option){
 
-  var ret = Utils.Check.removeAddTagsCheck(req, res, next, option);
+  var ret = ParamHelp.removeAddTagsCheck(req, res, next, option);
   if(!ret){
     return;
   }
 
-      var tags = Utils.getTagsFromReq(req);
+      var tags = ParamHelp.Getter.getTagsFromReq(req);
       var noteFind;
       Note.findOne({_userId: req.user._id, _id: req.body.id}).exec()
       .then(function(note){
@@ -571,7 +572,7 @@ module.exports.removeTags = removeTags;
 
 
 function countNotes(req, res, next){
-  var ret = Utils.Check.justUser(req, res);
+  var ret = ParamHelp.justUser(req, res);
   if(!ret){
     return;
   }
@@ -620,7 +621,7 @@ function addTagsBody(req, res, next){
 
 
 function removeAddRefsWrapper(req, res, next, option){
-  var ret = Utils.Check.removeAddRefsCheck(req, res);
+  var ret = ParamHelp.removeAddRefsCheck(req, res);
   if(!ret){
     return ret;
   }
@@ -650,7 +651,7 @@ module.exports.addRefs = addRefs;
 
 
   function setDone(req, res, next){
-    var ret = Utils.Check.setDoneCheck(req, res);
+    var ret = ParamHelp.setDoneCheck(req, res);
     if(!ret){
       return;
     }
@@ -673,7 +674,7 @@ module.exports.addRefs = addRefs;
 
 
   function cleanNotes(req, res, next){
-    var ret = Utils.Check.justUser(req, res);
+    var ret = ParamHelp.justUser(req, res);
     if(!ret){
       return;
     }
@@ -695,7 +696,7 @@ module.exports.addRefs = addRefs;
 
   //for min
   function allNotesMin(req, res, next){
-    var ret = Utils.Check.justUser(req, res);
+    var ret = ParamHelp.justUser(req, res);
     if(!ret){
       return;
     }

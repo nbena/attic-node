@@ -2,6 +2,7 @@ var Tag = require('../models/TagModel');
 var AuthController = require('./AuthController.js');
 var Const = require('../public/javascripts/Const.js');
 var Utils = require('../public/javascripts/Utils.js');
+var ParamHelp = require('../public/javascripts/ParamHelp');
 
 var mongoose = require('mongoose');
 mongoose.Promise = require('bluebird');
@@ -15,7 +16,7 @@ if(result.user){
 */
 
 function allTagsPopulatedBody(req, res, next){
-  var titleToSearch = getTitle(req);
+  var titleToSearch = ParamHelp.Getter.getTitle(req);
       Tag.find({_userId: req.user._id})
         .populate("notes")
         .sort({title: 1})
@@ -46,7 +47,7 @@ function allTagsUnpopulatedBody(req, res, next){
 }
 
 function allTagsWrapper(req, res, next, populate){
-  var ret = Utils.Check.userPopulateCheck(req, res, populate);
+  var ret = ParamHelp.userPopulateCheck(req, res, populate);
   if(!ret){
     return;
   }
@@ -74,7 +75,7 @@ module.exports.allTagsPopulated=allTagsPopulated;
 
 
 function tagByTitlePopulatedBody(req, res, next){
-  var titleToSearch = getTitle(req);
+  var titleToSearch = ParamHelp.Getter.getTitle(req);
       Tag.find({_userId: req.user._id, title: {$regex: titleToSearch}})
         .populate("notes")
         .sort({title: 1})
@@ -105,7 +106,7 @@ function tagByTitleUnpopulatedBody(req, res, next){
 }
 
 function tagByTitleWrapper(req, res, next, populate){
-  var ret = Utils.Check.byTitleCheck(req, res, populate);
+  var ret = ParamHelp.byTitleCheck(req, res, populate);
   if(!ret){
     return;
   }
@@ -130,11 +131,11 @@ module.exports.tagByTitlePopulated = tagByTitlePopulated;
 
 
 function tagById(req, res, next){
-  var ret = Utils.Check.byIdCheck(req, res);
+  var ret = ParamHelp.byIdCheck(req, res);
   if(!ret){
     return;
   }
-  var id = Utils.getId(req);
+  var id = ParamHelp.Getter.getId(req);
       Tag.findOne({_userId: req.user._id, _id: id}).exec()
       .then(function(result){
         res.json({ok:true, result: result});
@@ -152,11 +153,11 @@ module.exports.tagById = tagById;
 //api/notes/:title PUT
 //api/notes/create PUT body:{"title":"new-title"}
 function createTag(req, res, next){
-  var ret=Utils.Check.byTitleCheck(req, res);
+  var ret=ParamHelp.byTitleCheck(req, res);
   if(!ret){
     return;
   }
-  var titleToSearch = Utils.getTitle(req);
+  var titleToSearch = ParamHelp.Getter.getTitle(req);
       var tag =new Tag({
         title: titleToSearch,
         _userId: req.user._id
@@ -175,7 +176,7 @@ module.exports.createTag = createTag;
 
 //delete
 function deleteTagById(req, res, next){
-  var ret = Utils.Check.byIdCheck(req, res);
+  var ret = ParamHelp.byIdCheck(req, res);
   if(!ret){
     return;
   }
@@ -199,7 +200,7 @@ module.exports.deleteTagById = deleteTagById;
 
 
 function deleteAllTags(req, res, next){
-  var ret = Utils.Check.justUser(req, res);
+  var ret = ParamHelp.justUser(req, res);
   if(!ret){
     return;
   }
@@ -222,7 +223,7 @@ module.exports.deleteAllTags = deleteAllTags;
 
 
 function countTags(req, res, next){
-  var ret = Utils.Check.justUser(req, res);
+  var ret = ParamHelp.justUser(req, res);
   if(!ret){
     return;
   }

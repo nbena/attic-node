@@ -9,6 +9,8 @@ var NoteController = require("../../controllers/NoteController");
 var TagController = require("../../controllers/TagController");
 var UserController = require("../../controllers/UserController");
 
+var Utils = require('../../public/javascripts/Utils');
+
 var passport = require('passport');
 require('../../config/passport')(passport);
 
@@ -54,9 +56,6 @@ that matches that param 'text'
 router.post("/by-text/unpop", auth, NoteController.noteByTextUnpopulated);
 
 
-
-
-
 /*
 Return a JSON object (note) with an id same as the id
 passed
@@ -65,90 +64,7 @@ Population is done.
 router.post("/by-id", auth, NoteController.noteByIdPopulated);
 
 
-/*
-Require:
-1) ["id1", "id2"] or either:
-2) [{"_id": "id",
-          "title": "title",
-          "_userId": "userId",
-          "__v": 0,
-          "notes": ["5898892b235e362230eb1305"]
-        }]
-It searches for the given objects/ids into mainTags
-and otherTags
-*/
-router.post("/by-tag", auth,  NoteController.notesByTagPopulated);
-
-/*
-Require:
-1) ["id1", "id2"] or either:
-2) [{"_id": "id",
-          "title": "title",
-          "_userId": "userId",
-          "__v": 0,
-          "notes": ["5898892b235e362230eb1305"]
-        }]
-It searches for the given objects/ids into mainTags
-*/
-// router.post("/by-main-tag", auth, NoteController.notesByMainTagPopulated);
-
-/*
-Require:
-1) ["id1", "id2"] or either:
-2) [{"_id": "id",
-          "title": "title",
-          "_userId": "userId",
-          "__v": 0,
-          "notes": ["5898892b235e362230eb1305"]
-        }]
-It searches for the given objects/ids into otherTags
-*/
-// router.post("/by-other-tag", auth, NoteController.notesByOthersTagPopulated);
-
-
-
-
-/*
-Require:
-1) ["id1", "id2"] or either:
-2) [{"_id": "id",
-          "title": "title",
-          "_userId": "userId",
-          "__v": 0,
-          "notes": ["5898892b235e362230eb1305"]
-        }]
-It searches for the given objects/ids into mainTags
-and otherTags
-*/
 router.post("/by-tag/unpop", auth,  NoteController.notesByTagUnpopulated);
-
-/*
-Require:
-1) ["id1", "id2"] or either:
-2) [{"_id": "id",
-          "title": "title",
-          "_userId": "userId",
-          "__v": 0,
-          "notes": ["5898892b235e362230eb1305"]
-        }]
-It searches for the given objects/ids into mainTags
-*/
-// router.post("/by-main-tag/unpop", auth, NoteController.notesByMainTagUnpopulated);
-
-/*
-Require:
-1) ["id1", "id2"] or either:
-2) [{"_id": "id",
-          "title": "title",
-          "_userId": "userId",
-          "__v": 0,
-          "notes": ["5898892b235e362230eb1305"]
-        }]
-It searches for the given objects/ids into otherTags
-*/
-// router.post("/by-other-tag/unpop", auth, NoteController.notesByOthersTagUnpopulated);
-
-
 
 
 router.put("/create", auth, NoteController.createNote);
@@ -192,7 +108,6 @@ Population is done.
 router.get("/:id", auth, NoteController.noteByIdPopulated);
 
 router.delete("/:id", auth, NoteController.removeNote);
-
 
 
 module.exports = router;

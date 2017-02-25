@@ -26,9 +26,8 @@ var UserController = require('../controllers/UserController');
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '3000');
+var port = normalizePort(process.env.OPENSHIFT_NODEJS_PORT || '3000');
 app.set('port', port);
-
 /**
  * Create HTTP server.
  */
@@ -42,7 +41,8 @@ var server = http.createServer(app);
 /**
  * Listen on provided port, on all network interfaces.
  */
-server.listen(port);
+ var address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
+server.listen(port, address);
 server.on('error', onError);
 server.on('listening', onListening);
 

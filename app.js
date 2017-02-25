@@ -20,6 +20,8 @@ var notes = require('./routes/api/notes');
 var tags = require('./routes/api/tags');
 var users = require('./routes/api/users');
 
+var Utils = require('./public/javascripts/Utils');
+
 //require('./config/passport')(passport);
 
 
@@ -42,6 +44,12 @@ app.use('/', index);
 app.use('/api/tags', tags);
 app.use('/api/notes', notes);
 app.use('/api/users', users);
+
+//setting up JSON response for 404 error on API.
+app.get('/api/*', Utils.error404);
+app.post('/api/*', Utils.error404);
+app.put('/api/*', Utils.error404);
+app.delete('/api/*', Utils.error404);
 
 
 // catch 404 and forward to error handler
