@@ -26,8 +26,12 @@ router.delete("/all", auth, TagController.deleteAllTags);
 
 router.post("/all/unpop", auth, TagController.allTagsUnpopulated);
 
-
 router.get("/all/unpop", auth, TagController.allTagsUnpopulated);
+
+
+router.get("/all/min", auth, TagController.allTagsMin);
+
+router.post("/all/min", auth, TagController.allTagsMin);
 
 
 router.post("/by-title/reg",auth, TagController.tagByTitlePopulated);
@@ -37,16 +41,24 @@ router.post("/by-title/reg",auth, TagController.tagByTitlePopulated);
 
 router.post("/by-title/reg/unpop", auth,TagController.tagByTitleUnpopulated);
 
-router.post("/by-id", auth, TagController.tagById);
 
-router.delete("/:id", auth, TagController.deleteTagById);
-
-router.get("/:id", auth, TagController.tagById);
 
 // router.delete("/delete-by-ids", auth, TagController.deleteTagsById);
 
 router.get("/count", auth, TagController.countTags);
 
 router.post("/count", auth, TagController.countTags);
+
+
+router.get("/most-used", auth, TagController.mostUsed);
+
+router.post("/most-used", auth, TagController.mostUsed);
+
+
+router.post("/by-id", auth, TagController.tagById);
+
+router.delete("/:id", auth, TagController.deleteTagById);
+
+router.get("/:id", auth, TagController.tagById);
 
 module.exports = router;

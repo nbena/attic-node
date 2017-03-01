@@ -1655,12 +1655,12 @@
                     <td>
                         If ok: <br>
                         <code>
-            {"ok": true, "result": [objs]}
-          </code></br>
+                          {"ok": true, "result": [objs]}
+                        </code></br>
                         If !ok <br>
                         <code>
-            {"ok": false, "msg": "error-msg"}
-          </code>
+                          {"ok": false, "msg": "error-msg"}
+                        </code>
                     </td>
                     <td>
                         <code>
@@ -1809,28 +1809,28 @@
                     <td>
                         If ok: <br>
                         <code>
-            {"ok": true, "result": [objs]}
-          </code></br>
+                          {"ok": true, "result": [objs]}
+                        </code></br>
                         If !ok <br>
                         <code>
-            {"ok": false, "msg": "error-msg"}
-          </code>
+                          {"ok": false, "msg": "error-msg"}
+                        </code>
                     </td>
                     <td>
                         <code>
-            {
-  "ok": true,
-  "result": [
-    {
-      "_id": "5898892b235e362230eb12f9",
-      "title": "tag1",
-      "_userId": "5898892b235e362230eb12f6",
-      "__v": 0,
-      "notes": [
-        "5898892b235e362230eb1305"
-      ]
-    }]}
-          </code>
+                          {
+                            "ok": true,
+                            "result": [
+                            {
+                              "_id": "5898892b235e362230eb12f9",
+                              "title": "tag1",
+                              "_userId": "5898892b235e362230eb12f6",
+                              "__v": 0,
+                              "notes": [
+                                "5898892b235e362230eb1305"
+                                ]
+                              }]}
+                          </code>
                     </td>
                 </tr>
 
@@ -1851,32 +1851,108 @@
                     <td>
                         If ok: <br>
                         <code>
-            {"ok": true, "result": [objs]}
-          </code></br>
+                          {"ok": true, "result": [objs]}
+                        </code></br>
                         If !ok <br>
                         <code>
-            {"ok": false, "msg": "error-msg"}
-          </code>
+                          {"ok": false, "msg": "error-msg"}
+                        </code>
                     </td>
                     <td>
                         <code>
-            {
-  "ok": true,
-  "result": [
-    {
-      "_id": "5898892b235e362230eb12f9",
-      "title": "tag1",
-      "_userId": "5898892b235e362230eb12f6",
-      "__v": 0,
-      "notes": [
-        "5898892b235e362230eb1305"
-      ]
-    }]}
-          </code>
+                          {
+                            "ok": true,
+                            "result": [
+                            {
+                              "_id": "5898892b235e362230eb12f9",
+                              "title": "tag1",
+                              "_userId": "5898892b235e362230eb12f6",
+                              "__v": 0,
+                              "notes": [
+                              "5898892b235e362230eb1305"
+                              ]
+                            }]}
+                          </code>
                     </td>
                 </tr>
 
 
+
+                <tr class="get">
+                    <td>GET</td>
+                    <td>Yes</td>
+                    <td>/api/tags/all/min</td>
+                    <td>Get all the tag ids for the current user.
+                    </td>
+                    <td>
+                        <ul>
+                            <li><code>Authorization: token</code></li>
+                        </ul>
+                    </td>
+                    <td>-</td>
+                    <td>
+                        If ok: <br>
+                        <code>
+                          {"ok": true, "result": [{"_id":"id1"}]}
+                        </code></br>
+                        If !ok <br>
+                        <code>
+                          {"ok": false, "msg": "error-msg"}
+                        </code>
+                    </td>
+                    <td>
+                        <code>
+                          {
+                            "ok": true,
+                            "result": [
+                            {
+                              "_id":"fake id 1"
+                            },
+                            {
+                              "_id":"fake id 2"
+                            }
+                            ]}
+                          </code>
+                    </td>
+                </tr>
+
+                <tr class="post">
+                    <td>POST</td>
+                    <td>Yes</td>
+                    <td>/api/tags/all/min</td>
+                    <td>Get all the tag ids for the current user.
+                    </td>
+                    <td>
+                        <ul>
+                            <li><code>Authorization: token</code></li>
+                        </ul>
+                    </td>
+                    <td>-</td>
+                    <td>
+                        If ok: <br>
+                        <code>
+                          {"ok": true, "result": [{"_id":"id1"}]}
+                        </code></br>
+                        If !ok <br>
+                        <code>
+                          {"ok": false, "msg": "error-msg"}
+                        </code>
+                    </td>
+                    <td>
+                        <code>
+                          {
+                            "ok": true,
+                            "result": [
+                            {
+                              "_id":"fake id 1"
+                            },
+                            {
+                              "_id":"fake id 2"
+                            }
+                            ]}
+                          </code>
+                    </td>
+                </tr>
 
 
 

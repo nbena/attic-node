@@ -18,6 +18,8 @@ var User = require('../../models/UserModel');
 var Note = require('../../models/NoteModel');
 var Tag = require('../../models/TagModel');
 
+var TagController = require('../../controllers/TagController');
+
 var fixx = require('./Fixify');
 
 
@@ -78,4 +80,4 @@ mongoose.connection.on('error', console.error.bind(console, 'MongoDB connection 
 //   }  );
 // }
 
-fixx.fix();
+//fixx.fix();

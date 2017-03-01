@@ -4,6 +4,8 @@ var Const = require('../public/javascripts/Const.js');
 var Utils = require('../public/javascripts/Utils.js');
 var ParamHelp = require('../public/javascripts/ParamHelp');
 
+var TagMiddle = require('../middle/TagMiddle');
+
 var mongoose = require('mongoose');
 mongoose.Promise = require('bluebird');
 /*
@@ -15,115 +17,53 @@ if(result.user){
 }
 */
 
-function allTagsPopulatedBody(req, res, next){
-  var titleToSearch = ParamHelp.Getter.getTitle(req);
-      Tag.find({_userId: req.user._id})
-        .populate("notes")
-        .sort({title: 1})
-        .exec()
-        .then(function(result){
-          res.json({ok:true, result: result});
-        })
-        .catch(function(err){
-          res.json({ok:false, msg: Utils.jsonErr(err)});
-        });
-}
 
 
-
-
-function allTagsUnpopulatedBody(req, res, next){
-      var titleToSearch = req.body.title;
-      Tag.find({_userId: req.user._id})
-        .populate("notes")
-        .sort({title: 1})
-        .exec()
-        .then(function(result){
-          res.json({ok:true, result: result});
-        })
-        .catch(function(err){
-          res.json({ok:false, msg: Utils.jsonErr(err)});
-        });
-}
-
-function allTagsWrapper(req, res, next, populate){
-  var ret = ParamHelp.userPopulateCheck(req, res, populate);
+function allTagsUnpopulated(req, res, next){
+  var ret = ParamHelp.justUser(req, res);
   if(!ret){
     return;
   }
-  if(populate){
-    allTagsPopulatedBody(req, res, next);
-  }else{
-    allTagsUnpopulatedBody(req, res, next);
-  }
-}
-
-function allTagsUnpopulated(req, res, next){
-  allTagsWrapper(req, res, next, false);
+  TagMiddle.allTagsUnpopulated(req.user._id, function(result){
+    res.json(result);
+  });
 }
 module.exports.allTagsUnpopulated=allTagsUnpopulated;
 
 function allTagsPopulated(req, res, next){
-  allTagsWrapper(req, res, next, true);
+  var ret = ParamHelp.justUser(req, res);
+  if(!ret){
+    return;
+  }
+  TagMiddle.allTagsPopulated(req.user._id, function(result){
+    res.json(result);
+  });
 }
 module.exports.allTagsPopulated=allTagsPopulated;
 
 
-//why not switch between population by a flag into the the req? Easy, because
-//so I can do a GET with no para (simpler).
 
-
-
-function tagByTitlePopulatedBody(req, res, next){
-  var titleToSearch = ParamHelp.Getter.getTitle(req);
-      Tag.find({_userId: req.user._id, title: {$regex: titleToSearch}})
-        .populate("notes")
-        .sort({title: 1})
-        .exec()
-        .then(function(result){
-          res.json({ok:true, result: result});
-        })
-        .catch(function(err){
-          res.json({ok:false, msg: Utils.jsonErr(err)});
-        });
-}
-
-
-
-
-function tagByTitleUnpopulatedBody(req, res, next){
-      var titleToSearch = req.body.title;
-      Tag.find({_userId: req.user._id, title: {$regex: titleToSearch}})
-        .populate("notes")
-        .sort({title: 1})
-        .exec()
-        .then(function(result){
-          res.json({ok:true, result: result});
-        })
-        .catch(function(err){
-          res.json({ok:false, msg: Utils.jsonErr(err)});
-        });
-}
-
-function tagByTitleWrapper(req, res, next, populate){
-  var ret = ParamHelp.byTitleCheck(req, res, populate);
+function tagByTitleUnpopulated(req, res, next){
+  var ret = ParamHelp.byTitleCheck(req, res);
   if(!ret){
     return;
   }
-  if(populate){
-    tagByTitlePopulatedBody(req, res, next);
-  }else{
-    tagByTitleUnpopulatedBody(req, res, next);
-  }
-}
-
-function tagByTitleUnpopulated(req, res, next){
-  tagByTitleWrapper(req, res, next, false);
+  var title = ParamHelp.Getter.getTitle(req);
+  TagMiddle.tagByTitleUnpopulated(req.user._id, title, function(result){
+    res.json(result);
+  });
 }
 module.exports.tagByTitleUnpopulated = tagByTitleUnpopulated;
 
 function tagByTitlePopulated(req, res, next){
-  tagByTitleWrapper(req, res, next, true);
+  var ret = ParamHelp.byTitleCheck(req);
+  if(!ret){
+    return;
+  }
+  var title = ParamHelp.Getter.getTitle(req);
+  TagMiddle.tagByTitlePopulated(req.user._id, title, function(result){
+    res.json(result);
+  });
 }
 module.exports.tagByTitlePopulated = tagByTitlePopulated;
 
@@ -136,13 +76,9 @@ function tagById(req, res, next){
     return;
   }
   var id = ParamHelp.Getter.getId(req);
-      Tag.findOne({_userId: req.user._id, _id: id}).exec()
-      .then(function(result){
-        res.json({ok:true, result: result});
-      })
-      .catch(function(err){
-        res.json({ok:false, msg: Utils.jsonErr(err)});
-      });
+  TagMiddle.tagById(req.user._id, id, function(result){
+    res.json(result);
+  });
 }
 
 module.exports.tagById = tagById;
@@ -157,18 +93,10 @@ function createTag(req, res, next){
   if(!ret){
     return;
   }
-  var titleToSearch = ParamHelp.Getter.getTitle(req);
-      var tag =new Tag({
-        title: titleToSearch,
-        _userId: req.user._id
-      });
-      tag.save()
-      .then(function(result){
-        res.json({ok: true, result: result});
-      })
-      .catch(function(err){
-        res.json({ok: false, msg: Utils.jsonErr(err)});
-      });
+  var title = ParamHelp.Getter.getTitle(req);
+  TagMiddle.createTag(req.user._id, title, function(result){
+    res.json(result);
+  });
 }
 
 module.exports.createTag = createTag;
@@ -180,19 +108,9 @@ function deleteTagById(req, res, next){
   if(!ret){
     return;
   }
-  Tag.findOne({_id: req.params.id, _userId: req.user._id}).exec()
-  .then(function(tag){
-    if(tag){
-      return tag.remove();
-    }else{
-      throw new Error(Cnst.ERR_TAG_NOT_FOUND);
-    }
-  })
-  .then(function(deleteResult){
-    res.json({ok: true});
-  })
-  .catch(function(err){
-    res.json({ok:false, msg: Utils.jsonErr(err)});
+  var id = ParamHelp.getId(req);
+  TagMiddle.deleteTagById(req.user._id, id, function(result){
+    res.json(result);
   });
 }
 
@@ -204,18 +122,8 @@ function deleteAllTags(req, res, next){
   if(!ret){
     return;
   }
-  Tag.remove({})
-  .then(function(result){
-    return Note.update({_userId: req.user._id},
-              {otherTags: [],
-              mainTags: []},
-              {multi: true}).exec();
-  })
-  .then(function(secondResult){
-    res.json({ok:true});
-  })
-  .catch(function(err){
-    res.json({ok: false, msg: Utils.jsonErr(err)});
+  TagMiddle.deleteAllTags(req.user._id, function(result){
+    res.json(result);
   });
 }
 
@@ -227,12 +135,8 @@ function countTags(req, res, next){
   if(!ret){
     return;
   }
-  Tag.count().exec()
-  .then(function(result){
-    res.json({ok: true, tagCount: result});
-  })
-  .catch(function(err){
-    res.json({ok: false, msg: Utils.jsonErr(err)});
+  TagMiddle.countTags(req.user._id, function(result){
+    res.json(result);
   });
 }
 
@@ -244,11 +148,20 @@ function allTagsMin(req, res, next){
   if(!ret){
     return;
   }
-  Tag.find({_userId: req.user._id},{_id: 1}).exec()
-  .then(function(tags){
-    return res.json({ok: true, result: tags});
-  })
-  .catch(function(err){
-    return res.json({ok: false, msg: Utils.jsonErr(err)});
+  TagMiddle.allTagsMin(req.user._id, function(result){
+    res.json(result);
   });
 }
+
+module.exports.allTagsMin=allTagsMin;
+
+function mostUsed(req, res, next){
+  var ret = ParamHelp.justUser(req, res);
+  if(!ret){
+    return;
+  }
+  TagMiddle.getMostUsedTag(req.user._id, 8, function(result){
+    res.json(result);
+  });
+}
+module.exports.mostUsed=mostUsed;
