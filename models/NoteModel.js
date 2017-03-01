@@ -129,7 +129,8 @@ noteSchema.post('init', function(){
 
 noteSchema.pre('remove', function(next){
   Tag.update({notes: this._id, _userId: this._userId},
-    {$pullAll: {notes: [this._id]}},
+    {$pullAll: {notes: [this._id]},
+    $inc: {notes_length: -1}},
     {multi: true},
     function(err, data){
       if(err){
@@ -144,7 +145,8 @@ function pushTagsOnNewNote(note){
   Tag.update({_userId: note._userId, $or: [
     {_id: {$in: note.mainTags}},
     {_id: {$in: note.otherTags}}]},
-    {$push: {notes: note._id}},
+    {$push: {notes: note._id},
+    $inc: {notes_length: 1}},
     {multi: true},
     function(err, data){
       if(err){
@@ -156,28 +158,13 @@ function pushTagsOnNewNote(note){
 }
 
 function updateTagsOnModifiedMainTags(note, next){
-  // console.log("mainTags is modified");
-  // console.log("maintags.length: ", note.mainTags.length, " _maintags.length: ", note._mainTags.length);
-  // if(note._mainTags.length>note.mainTags.length){ //remove
   if(note._original.mainTags.length>note.mainTags.length){
-    // consle.log("first opt");
-    // Tag.update({_userId: note.userId, notes: {$in: [note._id]}},
-    //   {$pullAll: {notes: [note._id]}},
-    //   {multi: true},
-    //   function(err, data){
-    //     if(err){
-    //       // console.log("err inpullAll", err);
-    //       var error = new Error("impossible to update mainTags", err);
-    //       next(error);
-    //       // throw err;
-    //     }
-    //   });
     var tagsToRemove = Utils.arrayDiff(note._original.mainTags, note.mainTags);
-    // console.log("the tags to remove: ", tagsToRemove);
-    // console.log("the current id: ", note._userId);
+    //removing
     Tag.update({_userId: note._userId,
                 _id: {$in: tagsToRemove}},
-              {$pullAll: {notes: [note._id]}},
+              {$pullAll: {notes: [note._id]},
+              $inc: {notes_length: -1}},
               {multi: true},
               function(err, data){
                 if(err){
@@ -185,23 +172,18 @@ function updateTagsOnModifiedMainTags(note, next){
                   next(error);
                 }
               });
-  // }else if(note._mainTags.length<note.mainTags.length){//update
   }else if(note._original.mainTags.length<note.mainTags.length){//update
-    // console.log("second opt");
     Tag.update({_userId: note._userId,  $or: [
       {_id: {$in: note.otherTags}},
       {_id: {$in: note.mainTags}}
     ]},
-      {$addToSet: {notes: note._id}},
+      {$addToSet: {notes: note._id},
+      $inc: {notes_length: 1}},
       {multi: true},
       function(err, data){
-        // console.log("here in what I have to do, result is:\n", data);
-        // console.log("I've done what I have to do");
         if(err){
-          // console.log("err in push", err);
           var error = new Error("impossible to update mainTags", err);
           next(error);
-          // throw err;
         }
       });
   }
@@ -210,20 +192,11 @@ function updateTagsOnModifiedMainTags(note, next){
 function updateTagsOnModifiedOtherTags(note, next){
   // if(note._otherTags.length>note.otherTags.length){ //remove
   if(note._original.otherTags.length>note.otherTags.length){ //remove
-    // Tag.update({_userId: note.userId, notes: {$in: [note._id]}},
-    //   {$pullAll: {notes: [note._id]}},
-    //   {multi: true},
-    //   function(err, data){
-    //     if(err){
-    //       var error = new Error("impossible to update otherTags", err);
-    //       next(error);
-    //       // throw err;
-    //     }
-    //   });
     var tagsToRemove = Utils.arrayDiff(note._original.otherTags, note.otherTags);
     Tag.update({_userId: note._userId,
                 _id: {$in: tagsToRemove}},
-              {$pullAll: {notes: [note._id]}},
+              {$pullAll: {notes: [note._id]},
+              $inc: {notes_length: -1}},
               {multi: true},
               function(err, data){
                 if(err){
@@ -237,7 +210,8 @@ function updateTagsOnModifiedOtherTags(note, next){
       {_id: {$in: note.otherTags}},
       {_id: {$in: note.mainTags}}
     ]},
-      {$addToSet: {notes: note._id}},
+      {$addToSet: {notes: note._id},
+      $inc: {notes_length}},
       {multi: true},
       function(err, data){
         if(err){
@@ -248,16 +222,6 @@ function updateTagsOnModifiedOtherTags(note, next){
       });
   }
 }
-
-// noteSchema.pre('save', function(next){
-//   var note = this;
-//   this.wasNew = this.isNew;
-//   if(note.isNew){
-//     pushTagsOnNewNote(note, next);
-//   }
-//   next();
-// });
-
 
 //called just when a new note is created.
 noteSchema.pre( 'save', function(next){

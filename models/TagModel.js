@@ -10,6 +10,7 @@ var tagSchema = new Schema({
     required: true,
     index:true}, //no unique, two user can have the same
   notes: [{type: Schema.Types.ObjectId, ref: 'Note'}],
+  notes_length: Number,
   _userId: {type: Schema. Types.ObjectId, ref: 'User'}
 });
 

@@ -248,16 +248,16 @@ function theNew(){
 
 
 
-  module.exports.someUsers = someUsers;
-  module.exports.searchNoteByTag = searchNoteByTag;
-  // module.exports.newNotes = newNotes;
-  // module.exports.newNewNotes = newNewNotes;
-  // module.exports.linkNotes = linkNotes;
-  module.exports.newTags = newTags;
-  module.exports.queryJustSomeField = queryJustSomeField;
-  module.exports.createNotes = createNotes;
-  module.exports.newTags2 = newTags2;
-  module.exports.newTags3 = newTags3;
-  module.exports.linkTags = linkTags;
-  module.exports.linkTags2 = linkTags2;
-  module.exports.theNew = theNew;
+  // // module.exports.someUsers = someUsers;
+  // module.exports.searchNoteByTag = searchNoteByTag;
+  // // module.exports.newNotes = newNotes;
+  // // module.exports.newNewNotes = newNewNotes;
+  // // module.exports.linkNotes = linkNotes;
+  // module.exports.newTags = newTags;
+  // module.exports.queryJustSomeField = queryJustSomeField;
+  // module.exports.createNotes = createNotes;
+  // module.exports.newTags2 = newTags2;
+  // module.exports.newTags3 = newTags3;
+  // module.exports.linkTags = linkTags;
+  // module.exports.linkTags2 = linkTags2;
+  // module.exports.theNew = theNew;

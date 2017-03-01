@@ -18,6 +18,8 @@ var User = require('../../models/UserModel');
 var Note = require('../../models/NoteModel');
 var Tag = require('../../models/TagModel');
 
+var fixx = require('./Fixify');
+
 
 var mongoose = require('mongoose');
 mongoose.connect("mongodb://localhost/attic");
@@ -51,7 +53,7 @@ mongoose.connection.on('error', console.error.bind(console, 'MongoDB connection 
 
 // examples.linkTags2();
 
-examples.theNew();
+//examples.theNew();
 
 
 //mongoose.connection.close();
@@ -75,3 +77,5 @@ examples.theNew();
 //     cb(null, author)
 //   }  );
 // }
+
+fixx.fix();

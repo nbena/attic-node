@@ -1,199 +1,214 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <title>API</title>
     <meta charset="utf-8">
     <style>
-    table{
-      text-align: center;
-      /*border-width: thin;*/
-      }
-      tr{
-        outline: thick solid;
-      }
-      .post{
-        /*outline: thin solid;*/
-        outline-color: goldenrod;
-      }
-      .get {
-        /*outline: thin solid;*/
-        outline-color: limegreen;
-      }
-      .put{
-        /*outline: thin solid;*/
-        outline-color: blue;
-      }
-      .delete{
-        /*outline: thin solid;*/
-        outline-color: red;
-      }
+        table {
+            text-align: center;
+            /*border-width: thin;*/
+        }
+
+        tr {
+            outline: thick solid;
+        }
+
+        .post {
+            /*outline: thin solid;*/
+            outline-color: goldenrod;
+        }
+
+        .get {
+            /*outline: thin solid;*/
+            outline-color: limegreen;
+        }
+
+        .put {
+            /*outline: thin solid;*/
+            outline-color: blue;
+        }
+
+        .delete {
+            /*outline: thin solid;*/
+            outline-color: red;
+        }
     </style>
-  </head>
+</head>
+
 <body>
-  <p>
-    NOTE api: <i> /api/notes/ </i><br>
-    <ul>Quick links:
-      <li><a href="#tag-table">Authentication</a>:
-        <ul>
-          <li><a href="#auth">/api/auth/login</a></li>
-          <!-- <li><a href="#tags-title">/api/tags/by-title</a></li>
+    <p>
+        NOTE api: <i> /api/notes/ </i><br>
+        <ul>Quick links:
+            <li><a href="#tag-table">Authentication</a>:
+                <ul>
+                    <li><a href="#auth">/api/auth/login</a></li>
+                    <!-- <li><a href="#tags-title">/api/tags/by-title</a></li>
           <li><a href="#tags-id">/api/tags/by-id</a></li> -->
-          <!-- <li><a href=""></a></li> -->
+                    <!-- <li><a href=""></a></li> -->
+                </ul>
+            </li>
+            <li><a href="#note-table">Notes</a>:
+                <ul>
+                    <li><a href="#notes-create">/api/notes/create</a></li>
+                    <li><a href="#notes-all">/api/notes/all</a></li>
+                    <li><a href="#notes-mod">/api/notes/mod</a></li>
+                    <li><a href="#notes-title">/api/notes/by-title</a></li>
+                    <li><a href="#notes-by-text">/api/notes/by-text</a></li>
+                    <li><a href="#notes-id">/api/notes/by-id</a></li>
+                    <li><a href="#notes-by-tag">/api/notes/by-tag</a></li>
+                </ul>
+            </li>
+            <li><a href="#tag-table">Tags</a>:
+                <ul>
+                    <li><a href="#tags-create">/api/tags/create</a></li>
+                    <li><a href="#tags-all">/api/tags/all</a></li>
+                    <li><a href="#tags-title">/api/tags/by-title</a></li>
+                    <li><a href="#tags-id">/api/tags/by-id</a></li>
+                    <!-- <li><a href=""></a></li> -->
+                </ul>
+            </li>
+            <li><a href="#user-table">Users</a>:
+                <ul>
+                    <li><a href="#users-create">/api/users/create</a></li>
+                    <li><a href="#users-home">/api/users/home</a></li>
+                </ul>
+            </li>
         </ul>
-      </li>
-      <li><a href="#note-table">Notes</a>:
-        <ul>
-          <li><a href="#notes-create">/api/notes/create</a></li>
-          <li><a href="#notes-all">/api/notes/all</a></li>
-          <li><a href="#notes-mod">/api/notes/mod</a></li>
-          <li><a href="#notes-title">/api/notes/by-title</a></li>
-          <li><a href="#notes-by-text">/api/notes/by-text</a></li>
-          <li><a href="#notes-id">/api/notes/by-id</a></li>
-          <li><a href="#notes-by-tag">/api/notes/by-tag</a></li>
-        </ul>
-      </li>
-      <li><a href="#tag-table">Tags</a>:
-        <ul>
-          <li><a href="#tags-create">/api/tags/create</a></li>
-          <li><a href="#tags-all">/api/tags/all</a></li>
-          <li><a href="#tags-title">/api/tags/by-title</a></li>
-          <li><a href="#tags-id">/api/tags/by-id</a></li>
-          <!-- <li><a href=""></a></li> -->
-        </ul>
-      </li>
-      <li><a href="#user-table">Users</a>:
-        <ul>
-          <li><a href="#users-create">/api/users/create</a></li>
-          <li><a href="#users-home">/api/users/home</a></li>
-        </ul>
-      </li>
-    </ul>
 
 
-    <p>
-      Each API that has the Protected set to 'Yes' need the JWT in order to accomplish the request. So,
-      fisrt thing to do is to call <code>/api/auth/login</code> in order to obatin your token. Token then
-      must be passed in each request into the header '<code>Authorization</code>' <b> AS IS</b>.
-    </p>
+        <p>
+            Each API that has the Protected set to 'Yes' need the JWT in order to accomplish the request. So, fisrt thing to do is to call <code>/api/auth/login</code> in order to obatin your token. Token then must be passed in each request into the header
+            '<code>Authorization</code>' <b> AS IS</b>.
+        </p>
 
-    <p>
-      AUTHENTICATION
-      <table id="login-table" border="1">
-        <tr>
-          <th>Method</th><th>Protected</th><th>URI</th><th>Description</th><th>Headers</th><th>Params</th><th>Return</th><th>Example return</th>
-        </tr>
+        <p>
+            AUTHENTICATION
+            <table id="login-table" border="1">
+                <tr>
+                    <th>Method</th>
+                    <th>Protected</th>
+                    <th>URI</th>
+                    <th>Description</th>
+                    <th>Headers</th>
+                    <th>Params</th>
+                    <th>Return</th>
+                    <th>Example return</th>
+                </tr>
 
-        <tr class="special" id="auth">
-          <td align="center" colspan="7"><b>/api/auth/create</b> and <b>/api/auth/login</b></td>
-        </tr>
+                <tr class="special" id="auth">
+                    <td align="center" colspan="7"><b>/api/auth/create</b> and <b>/api/auth/login</b></td>
+                </tr>
 
-        <tr class="post">
-          <td>POST</td>
-          <td>No</td>
-          <td>/api/auth/login</td>
-          <td>Login the provided username, by returning a <code>JSON Web Token</code>.
-            The token will be used in each other request, and it must be used 'as is'.
-          </td>
-          <td>
-            <ul>
-              <li><code>Content-type: application/json</code></li>
-            </ul>
-          </td>
-          <td>
-            <code>
-              {"e_mail":"user@example.com", "password":"password"}
-            </code>
-          </td>
-          <td>
-            If ok:<br>
-            <code>
-              {"ok": true, "token":"JWT token"}
-            </code><br>
-            If user not found:<br>
-            <code>
-              {
-    "ok": false,
-    "msg": "user not found."
-  }
-            </code><br>
-            If wrong password:<br>
-            <code>
-              {
-    "ok": false,
-    "msg": "wrong password."
-  }
-            </code>
-          </td>
-          <td>
-            <code>
-              {
-    "ok": true,
-    "token": "JWT a.fake.token"}
-            </code>
-          </td>
-        </tr>
+                <tr class="post">
+                    <td>POST</td>
+                    <td>No</td>
+                    <td>/api/auth/login</td>
+                    <td>Login the provided username, by returning a <code>JSON Web Token</code>. The token will be used in each other request, and it must be used 'as is'.
+                    </td>
+                    <td>
+                        <ul>
+                            <li><code>Content-type: application/json</code></li>
+                        </ul>
+                    </td>
+                    <td>
+                        <code>
+                            {"e_mail":"user@example.com", "password":"password"}
+                        </code>
+                    </td>
+                    <td>
+                        If ok:<br>
+                        <code>
+                          {"ok": true, "token":"JWT token"}
+                        </code><br> If user not found:<br>
+                        <code>
+                          {
+                            "ok": false,
+                            "msg": "user not found."
+                          }
+                        </code><br> If wrong password:<br>
+                        <code>
+                          {
+                            "ok": false,
+                            "msg": "wrong password."
+                          }
+                        </code>
+                    </td>
+                    <td>
+                        <code>
+                          {
+                            "ok": true,
+                            "token": "JWT a.fake.token"}
+                          </code>
+                    </td>
+                </tr>
 
-        <tr class="post">
-          <td>POST</td>
-          <td>No</td>
-          <td>/api/auth/create</td>
-          <td>Create a new user, with the provided email and password.</td>
-          <td>
-            <ul>
-              <li><code>Content-type: application/json</code></li>
-            </ul>
-          </td>
-          <td>
-            <code>
-            {"e_mail":"user@example.com", "password":"password"}
-            </code>
-          </td>
-          <td>
-            If ok:<br>
-            <code>
-              {"ok": true, "id": "id-of-created-user","token":"JWT token"}
-            </code><br>
-            If e_mail is found in the db:<br>
-            <code>
-              {
-    "ok": false,
-    "msg": "user already exists."
-  }
-            </code><br>
-            If missed parameters:<br>
-            <code>
-              {
-    "ok": false,
-    "msg": "e_mail and password required."
-  }
-            </code>
-          </td>
-          <td>
-            <code>
-            {
-  "ok": true,
-  "id": "58a1c708c0c9ff34ad4c03d8",
-  "token": "JWT a.fake.token"
-}
-            </code>
-          </td>
-        </tr>
+                <tr class="post">
+                    <td>POST</td>
+                    <td>No</td>
+                    <td>/api/auth/create</td>
+                    <td>Create a new user, with the provided email and password.</td>
+                    <td>
+                        <ul>
+                            <li><code>Content-type: application/json</code></li>
+                        </ul>
+                    </td>
+                    <td>
+                        <code>
+                          {"e_mail":"user@example.com", "password":"password"}
+                        </code>
+                    </td>
+                    <td>
+                        If ok:<br>
+                        <code>
+                          {"ok": true, "id": "id-of-created-user","token":"JWT token"}
+                        </code><br> If e_mail is found in the db:<br>
+                        <code>
+                          {
+                            "ok": false,
+                            "msg": "user already exists."
+                          }
+                        </code><br> If missed parameters:<br>
+                        <code>
+                          {
+                            "ok": false,
+                            "msg": "e_mail and password required."
+                          }
+                        </code>
+                    </td>
+                    <td>
+                        <code>
+                          {
+                            "ok": true,
+                            "id": "58a1c708c0c9ff34ad4c03d8",
+                            "token": "JWT a.fake.token"
+                          }
+                        </code>
+                    </td>
+                </tr>
 
 
-      </table>
-    </p>
+            </table>
+        </p>
 
-<br>
-<br>
-<br>
-<p>
-  NOTE:
-    <table id="note-table" border="1">
-      <tr>
-        <th>Method</th><th>Protected</th><th>URI</th><th>Description</th><th>Headers</th><th>Params</th><th>Return</th><th>Example return</th>
-      </tr>
+        <br>
+        <br>
+        <br>
+        <p>
+            NOTE:
+            <table id="note-table" border="1">
+                <tr>
+                    <th>Method</th>
+                    <th>Protected</th>
+                    <th>URI</th>
+                    <th>Description</th>
+                    <th>Headers</th>
+                    <th>Params</th>
+                    <th>Return</th>
+                    <th>Example return</th>
+                </tr>
 
-      <!-- <tr class="special">
+                <!-- <tr class="special">
         <td></td>
         <td></td>
         <td></td>
@@ -201,358 +216,346 @@
         <td></td>
         <td></td>
       </tr> -->
-      <tr class="special" id="notes-create">
-        <td colspan="7" align="center"><b>/api/notes/create</b></td>
-      </tr>
+                <tr class="special" id="notes-create">
+                    <td colspan="7" align="center"><b>/api/notes/create</b></td>
+                </tr>
 
-      <tr class="put">
-        <td>PUT</td>
-        <td>Yes</td>
-        <td>/api/notes/create</td>
-        <td>Create a new note for the logged in user with the provided tags. Tags must be already created. This API requires
-          the tags (<code>mainTags</code> and <code>otherTags</code>) to be <b>an array of ID</b>. Obviously, the tags must
-          be for the logged in user.</td>
-        <td>
-          <ul>
-            <li><code>Authorization: token</code></li>
-            <li><code>Content-type: application/json</code></li>
-          </ul>
-        </td>
-        <td>
-          A <code>JSON</code> object: <br>
-          <code>
-            {"note":{"title":"note-title","text":"note-text","mainTags":[array-of-ids], "otherTags":[array-of-ids]}}
-          </code><br>
-          Optionally, a set of links and <code>isDone</code> can be specified. <code>isDone</code>
-          default value is <code>false</code>.Example:<br>
-          <code>
-            {"note": {..."links":["uri","uri"], "isDone":true}}
-          </code>
-        </td>
-        <td>If ok:<br>
-          <code>{"ok": true, "result":{note-created-right-now}}</code><br>
-          If !ok: <br>
-          <code>{"ok": false, "msg": "error-msg"}</code>
-        </td>
-        <td>
-          <code>
-            "ok": true,
-            "result":
-              {
-                "_id": "fake-id",
-                "title": "fake-title",
-                "text": "fake-text,
-                "_userId": "fake-userId",
-                "links": [],
-                "isDone": true,
-                "creationDate": "date",
-                "lastModificationDate": "date1",
-                "otherTags": [
-                  {
-                    "_id": "fake-id",
-                    "title": "fake-id",
-                    "_userId": "fake-userId",
-                    "notes": [
-                      "fake-id",
-                    ]
-                  }
-                ],
-                "mainTags": [
-                {
-                  "_id": "fake-id",
-                  "title": "fake-id",
-                  "_userId": "fake-userId",
-                  "notes": [
-                    "fake-id",
-                  ]
-                }
-              }}
-        </code>
-        </td>
-      </tr>
+                <tr class="put">
+                    <td>PUT</td>
+                    <td>Yes</td>
+                    <td>/api/notes/create</td>
+                    <td>Create a new note for the logged in user with the provided tags. Tags must be already created. This API requires the tags (<code>mainTags</code> and <code>otherTags</code>) to be <b>an array of ID</b>. Obviously, the tags must be for
+                        the logged in user.</td>
+                    <td>
+                        <ul>
+                            <li><code>Authorization: token</code></li>
+                            <li><code>Content-type: application/json</code></li>
+                        </ul>
+                    </td>
+                    <td>
+                        A <code>JSON</code> object: <br>
+                        <code>
+                          {"note":{"title":"note-title","text":"note-text","mainTags":[array-of-ids], "otherTags":[array-of-ids]}}
+                        </code><br> Optionally, a set of links and <code>isDone</code> can be specified. <code>isDone</code> default value is <code>false</code>.Example:<br>
+                        <code>
+                          {"note": {..."links":["uri","uri"], "isDone":true}}
+                        </code>
+                    </td>
+                    <td>If ok:<br>
+                        <code>{"ok": true, "result":{note-created-right-now}}</code><br> If !ok: <br>
+                        <code>{"ok": false, "msg": "error-msg"}</code>
+                    </td>
+                    <td>
+                        <code>
+                          "ok": true,
+                          "result":
+                          {
+                            "_id": "fake-id",
+                            "title": "fake-title",
+                            "text": "fake-text,
+                            "_userId": "fake-userId",
+                            "links": [],
+                            "isDone": true,
+                            "creationDate": "date",
+                            "lastModificationDate": "date1",
+                            "otherTags": [
+                            {
+                              "_id": "fake-id",
+                              "title": "fake-id",
+                              "_userId": "fake-userId",
+                              "notes": [
+                              "fake-id",
+                              ]
+                            }
+                            ],
+                            "mainTags": [
+                            {
+                              "_id": "fake-id",
+                              "title": "fake-id",
+                              "_userId": "fake-userId",
+                              "notes": [
+                                "fake-id",
+                                ]
+                              }
+                            }}
+                          </code>
+                    </td>
+                </tr>
 
 
-      <tr class="special" id="notes-mod">
-        <td colspan="7" align="center"><b>/api/notes/mod</b></td>
-      </tr>
+                <tr class="special" id="notes-mod">
+                    <td colspan="7" align="center"><b>/api/notes/mod</b></td>
+                </tr>
 
 
-      <tr class="post">
-        <td>POST</td>
-        <td>Yes</td>
-        <td>/api/notes/mod/addtags</td>
-        <td>Add the provided tags to the note, can be either to <code>mainTags</code> or <code>otherTags</code> too.
-          Please note that if tags are already in the note nothing happens.</td>
-        <td>
-          <ul>
-            <li><code>Authrization: token</code></li>
-            <li><code>Content-type: application/json</code></li>
-          </ul>
-        </td>
-        <td>
-          A JSON object,three possibilities:
-          <ol>
-            <li><code>
-              {"id":"id-of-the-note", "mainTags":[ids-of-tags-to-add]}
-            </code></li>
-            <li><code>
-              {"id":"id-of-the-note", "otherTags":[ids-of-tags-to-add]}
-            </code></li>
-            <li><code>
-              {"id":"id-of-the-note", "mainTags":[ids-of-tags-to-add],
-              "otherTags":[ids-of-tags-to-add]}
-            </code></li>
-          </ol>
-        </td>
-        <td>
-          If ok:<br>
-          <code>
-            {"ok":true}
-          </code><br>
-          If !ok:<br>
-          <code>
-            {"ok":false, "msg":"error-msg"}
-          </code>
-        </td>
-        <td>
-          <code>
-            {"ok": true}
-          </code>
-        </td>
-      </tr>
+                <tr class="post">
+                    <td>POST</td>
+                    <td>Yes</td>
+                    <td>/api/notes/mod/addtags</td>
+                    <td>Add the provided tags to the note, can be either to <code>mainTags</code> or <code>otherTags</code> too. Please note that if tags are already in the note nothing happens.</td>
+                    <td>
+                        <ul>
+                            <li><code>Authrization: token</code></li>
+                            <li><code>Content-type: application/json</code></li>
+                        </ul>
+                    </td>
+                    <td>
+                        A JSON object,three possibilities:
+                        <ol>
+                            <li><code>
+                              {"id":"id-of-the-note", "mainTags":[ids-of-tags-to-add]}
+                            </code></li>
+                            <li><code>
+                              {"id":"id-of-the-note", "otherTags":[ids-of-tags-to-add]}
+                            </code></li>
+                            <li><code>
+                              {"id":"id-of-the-note", "mainTags":[ids-of-tags-to-add],
+                              "otherTags":[ids-of-tags-to-add]}
+                            </code></li>
+                        </ol>
+                    </td>
+                    <td>
+                        If ok:<br>
+                        <code>
+                          {"ok":true}
+                        </code><br> If !ok:<br>
+                        <code>
+                          {"ok":false, "msg":"error-msg"}
+                        </code>
+                    </td>
+                    <td>
+                        <code>
+                          {"ok": true}
+                        </code>
+                    </td>
+                </tr>
 
 
-      <tr class="post">
-        <td>POST</td>
-        <td>Yes</td>
-        <td>/api/notes/mod/removetags</td>
-        <td>Remove the provided tags from the note, for the logged in user. The ref to the note
-          is removed from tag's documents.
-        </td>
-        <td>
-          <ul>
-            <li><code>Authrization: token</code></li>
-            <li><code>Content-type: application/json</code></li>
-          </ul>
-        </td>
-        <td>
-          A JSON object,three possibilities:
-          <ol>
-            <li><code>
-              {"id":"id-of-the-note", "mainTags":[ids-of-tags-to-remove]}
-            </code></li>
-            <li><code>
-              {"id":"id-of-the-note", "otherTags":[ids-of-tags-to-remove]}
-            </code></li>
-            <li><code>
-              {"id":"id-of-the-note", "mainTags":[ids-of-tags-to-remove],
-              "otherTags":[ids-of-tags-to-remove]}
-            </code></li>
-          </ol>
-        </td>
-        <td>
-          If ok<br>
-          <code>
-            {"ok": true, "result":{note-updated-obj}}
-          </code><br>
-          If !ok<br>
-          <code>
-            {"ok": false, msg: "error-msg"}
-          </code>
-        </td>
-        <td>
-          <code>
-            {
-"ok": true,
-"result": [
-{
-"_id": "fake-id",
-"title": "fake-title",
-"text": "fake-text",
-"_userId": "fake-userId",
-"__v": 8,
-"links": [
-  "ur1",
-  "link2"
-],
-"isDone": true,
-"creationDate": "date",
-"lastModificationDate": "date",
-"otherTags": [
-  "fake-id",
-],
-"mainTags": [
-  "fake-id",
-]
-}}
-        </code>
-        </td>
-      </tr>
+                <tr class="post">
+                    <td>POST</td>
+                    <td>Yes</td>
+                    <td>/api/notes/mod/removetags</td>
+                    <td>Remove the provided tags from the note, for the logged in user. The ref to the note is removed from tag's documents.
+                    </td>
+                    <td>
+                        <ul>
+                            <li><code>Authrization: token</code></li>
+                            <li><code>Content-type: application/json</code></li>
+                        </ul>
+                    </td>
+                    <td>
+                        A JSON object,three possibilities:
+                        <ol>
+                            <li><code>
+                              {"id":"id-of-the-note", "mainTags":[ids-of-tags-to-remove]}
+                            </code></li>
+                            <li><code>
+                              {"id":"id-of-the-note", "otherTags":[ids-of-tags-to-remove]}
+                            </code></li>
+                            <li><code>
+                              {"id":"id-of-the-note", "mainTags":[ids-of-tags-to-remove],
+                              "otherTags":[ids-of-tags-to-remove]}
+                            </code></li>
+                        </ol>
+                    </td>
+                    <td>
+                        If ok<br>
+                        <code>
+                          {"ok": true, "result":{note-updated-obj}}
+                        </code><br> If !ok<br>
+                        <code>
+                          {"ok": false, msg: "error-msg"}
+                        </code>
+                    </td>
+                    <td>
+                        <code>
+                          {
+                            "ok": true,
+                            "result": [
+                            {
+                              "_id": "fake-id",
+                              "title": "fake-title",
+                              "text": "fake-text",
+                              "_userId": "fake-userId",
+                              "__v": 8,
+                              "links": [
+                              "ur1",
+                              "link2"
+                              ],
+                              "isDone": true,
+                              "creationDate": "date",
+                              "lastModificationDate": "date",
+                              "otherTags": [
+                                "fake-id",
+                              ],
+                              "mainTags": [
+                              "fake-id",
+                              ]
+                            }}
+                          </code>
+                    </td>
+                </tr>
 
-      <tr class="post">
-        <td>POST</td>
-        <td>Yes</td>
-        <td>/api/notes/mod/addrefs</td>
-        <td>Add the ref to the current note. Ref are added only if not present.</td>
-        <td>
-          <ul>
-            <li><code>Authorization: token</code></li>
-            <li><code>Content-type: application/json</code></li>
-          </ul>
-        </td>
-        <td>
-          A JSON object:<br>
-          <code>
-            {"id":"id-of-the-note", "links":["ur1","uri2"]}
-          </code>
-        </td>
-        <td>
-          If ok:<br>
-          <code>
-            {"ok":true}
-          </code><br>
-          If !ok:<br>
-          <code>
-            {"ok":false, "msg":"error-msg"}
-          </code>
-        </td>
-        <td>
-          <code>
-            {"ok": true}
-          </code>
-        </td>
-      </tr>
+                <tr class="post">
+                    <td>POST</td>
+                    <td>Yes</td>
+                    <td>/api/notes/mod/addrefs</td>
+                    <td>Add the ref to the current note. Ref are added only if not present.</td>
+                    <td>
+                        <ul>
+                            <li><code>Authorization: token</code></li>
+                            <li><code>Content-type: application/json</code></li>
+                        </ul>
+                    </td>
+                    <td>
+                        A JSON object:<br>
+                        <code>
+                          {"id":"id-of-the-note", "links":["ur1","uri2"]}
+                        </code>
+                    </td>
+                    <td>
+                        If ok:<br>
+                        <code>
+                          {"ok":true}
+                        </code><br> If !ok:<br>
+                        <code>
+                          {"ok":false, "msg":"error-msg"}
+                        </code>
+                    </td>
+                    <td>
+                        <code>
+                          {"ok": true}
+                        </code>
+                    </td>
+                </tr>
 
 
 
 
-      <tr class="post">
-        <td>POST</td>
-        <td>Yes</td>
-        <td>/api/notes/mod/removerefs</td>
-        <td>Remove the refs from the current note. Ref must be matched <b>exactly</b>.</td>
-        <td>
-          <ul>
-            <li><code>Authorization: token</code></li>
-            <li><code>Content-type: application/json</code></li>
-          </ul>
-        </td>
-        <td>
-          A JSON object:<br>
-          <code>
-            {"id":"id-of-the-note", "links":["uri1","uri2"]}
-          </code>
-        </td>
-        <td>
-          If ok:<br>
-          <code>
-            {"ok":true}
-          </code><br>
-          If !ok:<br>
-          <code>
-            {"ok":false, "msg":"error-msg"}
-          </code>
-        </td>
-        <td>
-          <code>
-            {"ok": true}
-          </code>
-        </td>
-      </tr>
+                <tr class="post">
+                    <td>POST</td>
+                    <td>Yes</td>
+                    <td>/api/notes/mod/removerefs</td>
+                    <td>Remove the refs from the current note. Ref must be matched <b>exactly</b>.</td>
+                    <td>
+                        <ul>
+                            <li><code>Authorization: token</code></li>
+                            <li><code>Content-type: application/json</code></li>
+                        </ul>
+                    </td>
+                    <td>
+                        A JSON object:<br>
+                        <code>
+                          {"id":"id-of-the-note", "links":["uri1","uri2"]}
+                        </code>
+                    </td>
+                    <td>
+                        If ok:<br>
+                        <code>
+                          {"ok":true}
+                        </code><br> If !ok:<br>
+                        <code>
+                          {"ok":false, "msg":"error-msg"}
+                        </code>
+                    </td>
+                    <td>
+                        <code>
+                          {"ok": true}
+                        </code>
+                    </td>
+                </tr>
 
 
-      <tr class="post">
-        <td>POST</td>
-        <td>Yes</td>
-        <td>/api/notes/mod/setdone</td>
-        <td>Set the "done" field for the provided note.</td>
-        <td>
-          <ul>
-            <li><code>Authorization: token</code></li>
-            <li><code>Content-type: application/json</code></li>
-          </ul>
-        </td>
-        <td>
-          A JSON object:<br>
-          <code>
-            {"id":"id-of-the-note", "done":true|false}
-          </code>
-        </td>
-        <td>
-          If ok:<br>
-          <code>
-            {"ok":true}
-          </code><br>
-          If !ok:<br>
-          <code>
-            {"ok":false, "msg":"error-msg"}
-          </code>
-        </td>
-        <td>
-          <code>
-            {"ok": true}
-          </code>
-        </td>
-      </tr>
+                <tr class="post">
+                    <td>POST</td>
+                    <td>Yes</td>
+                    <td>/api/notes/mod/setdone</td>
+                    <td>Set the "done" field for the provided note.</td>
+                    <td>
+                        <ul>
+                            <li><code>Authorization: token</code></li>
+                            <li><code>Content-type: application/json</code></li>
+                        </ul>
+                    </td>
+                    <td>
+                        A JSON object:<br>
+                        <code>
+                          {"id":"id-of-the-note", "done":true|false}
+                        </code>
+                    </td>
+                    <td>
+                        If ok:<br>
+                        <code>
+                          {"ok":true}
+                        </code><br> If !ok:<br>
+                        <code>
+                          {"ok":false, "msg":"error-msg"}
+                        </code>
+                    </td>
+                    <td>
+                        <code>
+                          {"ok": true}
+                        </code>
+                    </td>
+                </tr>
 
 
-      <tr class="post">
-        <td>POST</td>
-        <td>Yes</td>
-        <td>/api/notes/mod/text</td>
-        <td>Update the text for the provided note.</td>
-        <td>
-          <ul>
-            <li><code>Authrization: token</code></li>
-            <li><code>Content-type: application/json</code></li>
-          </ul>
-        </td>
-        <td>
-          A JSON object:<br>
-          <code>
+                <tr class="post">
+                    <td>POST</td>
+                    <td>Yes</td>
+                    <td>/api/notes/mod/text</td>
+                    <td>Update the text for the provided note.</td>
+                    <td>
+                        <ul>
+                            <li><code>Authrization: token</code></li>
+                            <li><code>Content-type: application/json</code></li>
+                        </ul>
+                    </td>
+                    <td>
+                        A JSON object:<br>
+                        <code>
             {"id":"id-of-the-note", "text":"the new text"}
           </code>
-        </td>
-        <td>
-          If ok:<br>
-          <code>
+                    </td>
+                    <td>
+                        If ok:<br>
+                        <code>
             {"ok":true}
-          </code><br>
-          If !ok:<br>
-          <code>
+          </code><br> If !ok:<br>
+                        <code>
             {"ok":false, "msg":"error-msg"}
           </code>
-        </td>
-        <td>
-          <code>
+                    </td>
+                    <td>
+                        <code>
             {"ok": true}
           </code>
-        </td>
-      </tr>
+                    </td>
+                </tr>
 
 
-      <tr class="special" id="notes-all">
-        <td colspan="7" align="center"><b>/api/notes/all</b> and <b>/api/notes/all/unpop</b></td>
-      </tr>
+                <tr class="special" id="notes-all">
+                    <td colspan="7" align="center"><b>/api/notes/all</b> and <b>/api/notes/all/unpop</b></td>
+                </tr>
 
 
-      <tr class="get">
-        <td>GET</td>
-        <td>Yes</td>
-        <td>/api/notes/all</td>
-        <td>Get all the notes for the logged in user.<code>Populate()</code> is called on <code>mainTags</code>
-        and <code>otherTags</code>.</td>
-        <td><ul>
-          <li><code>Authorization: token</code></li>
-        </ul></td>
-        <td> - </td>
-        <td>If ok:<br>
-          <code>{"ok": true, "result":[array-of-tags-element]}</code><br>
-          If !ok: <br>
-          <code>{"ok": false, "msg": "error-msg"}</code>
-        </td>
-        <td>
-          <code>
+                <tr class="get">
+                    <td>GET</td>
+                    <td>Yes</td>
+                    <td>/api/notes/all</td>
+                    <td>Get all the notes for the logged in user.<code>Populate()</code> is called on <code>mainTags</code> and <code>otherTags</code>.</td>
+                    <td>
+                        <ul>
+                            <li><code>Authorization: token</code></li>
+                        </ul>
+                    </td>
+                    <td> - </td>
+                    <td>If ok:<br>
+                        <code>{"ok": true, "result":[array-of-tags-element]}</code><br> If !ok: <br>
+                        <code>{"ok": false, "msg": "error-msg"}</code>
+                    </td>
+                    <td>
+                        <code>
             "ok": true,
             "result": [
               {
@@ -586,26 +589,26 @@
                 ]
               }}
           </code>
-        </td>
-      </tr>
+                    </td>
+                </tr>
 
-      <tr class="post">
-        <td>POST</td>
-        <td>Yes</td>
-        <td>/api/notes/all</td>
-        <td>Get all the notes for the logged in user.<code>Populate()</code> is called on <code>mainTags</code>
-        and <code>otherTags</code>.</td>
-        <td><ul>
-          <li><code>Authorization: token</code></li>
-        </ul></td>
-        <td> - </td>
-        <td>If ok:<br>
-          <code>{"ok": true, "result":[array-of-tags-element]}</code><br>
-          If !ok: <br>
-          <code>{"ok": false, "msg": "error-msg"}</code>
-        </td>
-        <td>
-          <code>
+                <tr class="post">
+                    <td>POST</td>
+                    <td>Yes</td>
+                    <td>/api/notes/all</td>
+                    <td>Get all the notes for the logged in user.<code>Populate()</code> is called on <code>mainTags</code> and <code>otherTags</code>.</td>
+                    <td>
+                        <ul>
+                            <li><code>Authorization: token</code></li>
+                        </ul>
+                    </td>
+                    <td> - </td>
+                    <td>If ok:<br>
+                        <code>{"ok": true, "result":[array-of-tags-element]}</code><br> If !ok: <br>
+                        <code>{"ok": false, "msg": "error-msg"}</code>
+                    </td>
+                    <td>
+                        <code>
             "ok": true,
             "result": [
               {
@@ -639,79 +642,81 @@
                 ]
               }}
           </code>
-        </td>
-      </tr>
+                    </td>
+                </tr>
 
 
 
-      <tr class="get">
-        <td>GET</td>
-        <td>Yes</td>
-        <td>/api/notes/all/min</td>
-        <td>Get all the notes for the logged in user. Just id and title are provided.</td>
-        <td><ul>
-          <li><code>Authorization: token</code></li>
-        </ul></td>
-        <td> - </td>
-        <td>If ok:<br>
-          <code>{"ok": true, "result":[array-of-tags-element]}</code><br>
-          If !ok: <br>
-          <code>{"ok": false, "msg": "error-msg"}</code>
-        </td>
-        <td>
-          <code>
+                <tr class="get">
+                    <td>GET</td>
+                    <td>Yes</td>
+                    <td>/api/notes/all/min</td>
+                    <td>Get all the notes for the logged in user. Just id and title are provided.</td>
+                    <td>
+                        <ul>
+                            <li><code>Authorization: token</code></li>
+                        </ul>
+                    </td>
+                    <td> - </td>
+                    <td>If ok:<br>
+                        <code>{"ok": true, "result":[array-of-tags-element]}</code><br> If !ok: <br>
+                        <code>{"ok": false, "msg": "error-msg"}</code>
+                    </td>
+                    <td>
+                        <code>
             {"ok":true, "result":[{
   "_id": "5898892b235e362230eb1305",
   "title": "note1 title",
 }]}
           </code>
-        </td>
-      </tr>
+                    </td>
+                </tr>
 
 
-      <tr class="post">
-        <td>POST</td>
-        <td>Yes</td>
-        <td>/api/notes/all/min</td>
-        <td>Get all the notes for the logged in user. Just id and title are provided.</td>
-        <td><ul>
-          <li><code>Authorization: token</code></li>
-        </ul></td>
-        <td> - </td>
-        <td>If ok:<br>
-          <code>{"ok": true, "result":[array-of-tags-element]}</code><br>
-          If !ok: <br>
-          <code>{"ok": false, "msg": "error-msg"}</code>
-        </td>
-        <td>
-          <code>
+                <tr class="post">
+                    <td>POST</td>
+                    <td>Yes</td>
+                    <td>/api/notes/all/min</td>
+                    <td>Get all the notes for the logged in user. Just id and title are provided.</td>
+                    <td>
+                        <ul>
+                            <li><code>Authorization: token</code></li>
+                        </ul>
+                    </td>
+                    <td> - </td>
+                    <td>If ok:<br>
+                        <code>{"ok": true, "result":[array-of-tags-element]}</code><br> If !ok: <br>
+                        <code>{"ok": false, "msg": "error-msg"}</code>
+                    </td>
+                    <td>
+                        <code>
             {"ok":true, "result":[{
   "_id": "5898892b235e362230eb1305",
   "title": "note1 title",
 }]}
           </code>
-        </td>
-      </tr>
+                    </td>
+                </tr>
 
 
 
-      <tr class="get">
-        <td>GET</td>
-        <td>Yes</td>
-        <td>/api/notes/all/unpop</td>
-        <td>Get all the notes for the logged in user. For each tag, no <code>populate()</code>
-        is done, just the ids are provided.</td>
-        <td><ul>
-          <li><code>Authorization: token</code></li>
-        </ul></td>
-        <td> - </td>
-        <td>If ok:<br>
-          <code>{"ok": true, "result":[array-of-tags-element]}</code><br>
-          If !ok: <br>
-          <code>{"ok": false, "msg": "error-msg"}</code>
-        </td>
-        <td>
-          <code>
+                <tr class="get">
+                    <td>GET</td>
+                    <td>Yes</td>
+                    <td>/api/notes/all/unpop</td>
+                    <td>Get all the notes for the logged in user. For each tag, no <code>populate()</code> is done, just the ids are provided.</td>
+                    <td>
+                        <ul>
+                            <li><code>Authorization: token</code></li>
+                        </ul>
+                    </td>
+                    <td> - </td>
+                    <td>If ok:<br>
+                        <code>{"ok": true, "result":[array-of-tags-element]}</code><br> If !ok: <br>
+                        <code>{"ok": false, "msg": "error-msg"}</code>
+                    </td>
+                    <td>
+                        <code>
             {
 "ok": true,
 "result": [
@@ -736,25 +741,25 @@
 ]
 }}
           </code>
-        </td>
-      </tr>
-      <tr class="post">
-        <td>POST</td>
-        <td>Yes</td>
-        <td>/api/notes/all/unpop</td>
-        <td>Get all the notes for the logged in user. For each tag, no <code>populate()</code>
-        is done, just the ids are provided.</td>
-        <td><ul>
-          <li><code>Authorization: token</code></li>
-        </ul></td>
-        <td> - </td>
-        <td>If ok:<br>
-          <code>{"ok": true, "result":[array-of-tags-element]}</code><br>
-          If !ok: <br>
-          <code>{"ok": false, "msg": "error-msg"}</code>
-        </td>
-        <td>
-          <code>
+                    </td>
+                </tr>
+                <tr class="post">
+                    <td>POST</td>
+                    <td>Yes</td>
+                    <td>/api/notes/all/unpop</td>
+                    <td>Get all the notes for the logged in user. For each tag, no <code>populate()</code> is done, just the ids are provided.</td>
+                    <td>
+                        <ul>
+                            <li><code>Authorization: token</code></li>
+                        </ul>
+                    </td>
+                    <td> - </td>
+                    <td>If ok:<br>
+                        <code>{"ok": true, "result":[array-of-tags-element]}</code><br> If !ok: <br>
+                        <code>{"ok": false, "msg": "error-msg"}</code>
+                    </td>
+                    <td>
+                        <code>
             "ok": true,
             "result": [
               {
@@ -788,34 +793,35 @@
                 ]
               }}
           </code>
-        </td>
-      </tr>
+                    </td>
+                </tr>
 
 
-      <tr class="delete">
-        <td>DELETE</td>
-        <td>Yes</td>
-        <td>/api/notes/all</td>
-        <td>Delete all the notes for the logged in user.</td>
-        <td><ul>
-          <li><code>Authorization: token</code></li>
-        </ul></td>
-        <td> - </td>
-        <td>If ok:<br>
-          <code>{"ok": true, "result":{"ok": "true","result": {"n" : obj-count,"ok": 1}}}</code><br>
-          If !ok: <br>
-          <code>{"ok": false, "msg": "error-msg"}</code>
-        </td>
-        <td>
-          <code>
+                <tr class="delete">
+                    <td>DELETE</td>
+                    <td>Yes</td>
+                    <td>/api/notes/all</td>
+                    <td>Delete all the notes for the logged in user.</td>
+                    <td>
+                        <ul>
+                            <li><code>Authorization: token</code></li>
+                        </ul>
+                    </td>
+                    <td> - </td>
+                    <td>If ok:<br>
+                        <code>{"ok": true, "result":{"ok": "true","result": {"n" : obj-count,"ok": 1}}}</code><br> If !ok: <br>
+                        <code>{"ok": false, "msg": "error-msg"}</code>
+                    </td>
+                    <td>
+                        <code>
             {"ok": "true"}
           </code>
-        </td>
-      </tr>
+                    </td>
+                </tr>
 
 
 
-      <!-- <tr class="special">
+                <!-- <tr class="special">
         <td></td>
         <td></td>
         <td></td>
@@ -825,31 +831,32 @@
         <td></td>
       </tr> -->
 
-      <tr class = "special" id="notes-title">
-        <td colspan="7" align="center"><b>/api/notes/by-title</b>, <b>/api/notes/byt-title/unpop</b> and
-        <b>/api/notes/by-title/reg</b></td>
-      </tr>
+                <tr class="special" id="notes-title">
+                    <td colspan="7" align="center"><b>/api/notes/by-title</b>, <b>/api/notes/byt-title/unpop</b> and
+                        <b>/api/notes/by-title/reg</b></td>
+                </tr>
 
 
 
-      <tr class="post">
-        <td>POST</td>
-        <td>Yes</td>
-        <td>/api/notes/by-title</td>
-        <td>Get the note with a title that matches <i>exactly</i> with the provided one.
-        <code>Populate()</code> is called on <code>mainTags</code> and <code>otherTags.</code></td>
-        <td><ul>
-          <li><code>Authorization: token</code></li>
-          <li><code>Content-type: application/json</code></li>
-        </ul></td>
-        <td><code>{"title":"title-to-search"}</code></td>
-        <td>If ok:<br>
-          <code>{"ok": true, "result":{"ok": "true","result": {obj}}}</code><br>
-          If !ok: <br>
-          <code>{"ok": false, "msg": "error-msg"}</code>
-        </td>
-        <td>
-          <code>
+                <tr class="post">
+                    <td>POST</td>
+                    <td>Yes</td>
+                    <td>/api/notes/by-title</td>
+                    <td>Get the note with a title that matches <i>exactly</i> with the provided one.
+                        <code>Populate()</code> is called on <code>mainTags</code> and <code>otherTags.</code></td>
+                    <td>
+                        <ul>
+                            <li><code>Authorization: token</code></li>
+                            <li><code>Content-type: application/json</code></li>
+                        </ul>
+                    </td>
+                    <td><code>{"title":"title-to-search"}</code></td>
+                    <td>If ok:<br>
+                        <code>{"ok": true, "result":{"ok": "true","result": {obj}}}</code><br> If !ok: <br>
+                        <code>{"ok": false, "msg": "error-msg"}</code>
+                    </td>
+                    <td>
+                        <code>
             "ok": true,
             "result": [
               {
@@ -883,29 +890,29 @@
                 ]
               }}
           </code>
-        </td>
-      </tr>
+                    </td>
+                </tr>
 
 
 
-      <tr class="post">
-        <td>POST</td>
-        <td>Yes</td>
-        <td>/api/notes/by-title/unpop</td>
-        <td>Get the note with a title that matches <i>exactly</i> with the provided one.
-        No <code>populate()</code>.</td>
-        <td><ul>
-          <li><code>Authorization: token</code></li>
-          <li><code>Content-type: application/json</code></li>
-        </ul></td>
-        <td><code>{"title":"title-to-search"}</code></td>
-        <td>If ok:<br>
-          <code>{"ok": true, "result":{"ok": "true","result": {obj}}}</code><br>
-          If !ok: <br>
-          <code>{"ok": false, "msg": "error-msg"}</code>
-        </td>
-        <td>
-          <code>
+                <tr class="post">
+                    <td>POST</td>
+                    <td>Yes</td>
+                    <td>/api/notes/by-title/unpop</td>
+                    <td>Get the note with a title that matches <i>exactly</i> with the provided one. No <code>populate()</code>.</td>
+                    <td>
+                        <ul>
+                            <li><code>Authorization: token</code></li>
+                            <li><code>Content-type: application/json</code></li>
+                        </ul>
+                    </td>
+                    <td><code>{"title":"title-to-search"}</code></td>
+                    <td>If ok:<br>
+                        <code>{"ok": true, "result":{"ok": "true","result": {obj}}}</code><br> If !ok: <br>
+                        <code>{"ok": false, "msg": "error-msg"}</code>
+                    </td>
+                    <td>
+                        <code>
             {
 "ok": true,
 "result": [
@@ -930,31 +937,32 @@
 ]
 }}
           </code>
-        </td>
-      </tr>
+                    </td>
+                </tr>
 
 
 
 
 
-            <tr class="post">
-              <td>POST</td>
-              <td>Yes</td>
-              <td>/api/notes/by-title/reg</td>
-              <td>Get the notes with a title that matches the one provided in the request, regex are used.
-              <code>Populate()</code> is called on <code>mainTags</code> and <code>otherTags.</code></td>
-              <td><ul>
-                <li><code>Authorization: token</code></li>
-                <li><code>Content-type: application/json</code></li>
-              </ul></td>
-              <td> <code>{"title":"title-to-search"}</code> </td>
-              <td>If ok:<br>
-                <code>{"ok": true, "result":{"ok": "true","result": {obj}}}</code><br>
-                If !ok: <br>
-                <code>{"ok": false, "msg": "error-msg"}</code>
-              </td>
-              <td>
-                <code>
+                <tr class="post">
+                    <td>POST</td>
+                    <td>Yes</td>
+                    <td>/api/notes/by-title/reg</td>
+                    <td>Get the notes with a title that matches the one provided in the request, regex are used.
+                        <code>Populate()</code> is called on <code>mainTags</code> and <code>otherTags.</code></td>
+                    <td>
+                        <ul>
+                            <li><code>Authorization: token</code></li>
+                            <li><code>Content-type: application/json</code></li>
+                        </ul>
+                    </td>
+                    <td> <code>{"title":"title-to-search"}</code> </td>
+                    <td>If ok:<br>
+                        <code>{"ok": true, "result":{"ok": "true","result": {obj}}}</code><br> If !ok: <br>
+                        <code>{"ok": false, "msg": "error-msg"}</code>
+                    </td>
+                    <td>
+                        <code>
                   "ok": true,
                   "result": [
                     {
@@ -988,29 +996,29 @@
                       ]
                     }}
                 </code>
-              </td>
-            </tr>
+                    </td>
+                </tr>
 
 
 
-            <tr class="post">
-              <td>POST</td>
-              <td>Yes</td>
-              <td>/api/notes/by-title/unpop</td>
-              <td>Get the notes with a title that matches the one provided in the request, regex are used.
-              No <code>populate()</code>.</td>
-              <td><ul>
-                <li><code>Authorization: token</code></li>
-                <li><code>Content-type: application/json</code></li>
-              </ul></td>
-              <td> <code>{"title":"title-to-search"}</code> </td>
-              <td>If ok:<br>
-                <code>{"ok": true, "result":{"ok": "true","result": {obj}}}</code><br>
-                If !ok: <br>
-                <code>{"ok": false, "msg": "error-msg"}</code>
-              </td>
-              <td>
-                <code>
+                <tr class="post">
+                    <td>POST</td>
+                    <td>Yes</td>
+                    <td>/api/notes/by-title/unpop</td>
+                    <td>Get the notes with a title that matches the one provided in the request, regex are used. No <code>populate()</code>.</td>
+                    <td>
+                        <ul>
+                            <li><code>Authorization: token</code></li>
+                            <li><code>Content-type: application/json</code></li>
+                        </ul>
+                    </td>
+                    <td> <code>{"title":"title-to-search"}</code> </td>
+                    <td>If ok:<br>
+                        <code>{"ok": true, "result":{"ok": "true","result": {obj}}}</code><br> If !ok: <br>
+                        <code>{"ok": false, "msg": "error-msg"}</code>
+                    </td>
+                    <td>
+                        <code>
                   {
   "ok": true,
   "result": [
@@ -1035,10 +1043,10 @@
       ]
     }}
                 </code>
-              </td>
-            </tr>
+                    </td>
+                </tr>
 
-<!--
+                <!--
             <tr class="delete">
               <td>DELETE</td>
               <td>Yes</td>
@@ -1099,7 +1107,7 @@
 -->
 
 
-            <!-- <tr class="special">
+                <!-- <tr class="special">
               <td></td>
               <td></td>
               <td></td>
@@ -1109,28 +1117,29 @@
             </tr> -->
 
 
-            <tr class="special" id="notes-text">
-              <td colspan="7" align="center"><b>/api/notes/by-text</b> and <b>/api/notes/by-text/unpop</b></td>
-            </tr>
+                <tr class="special" id="notes-text">
+                    <td colspan="7" align="center"><b>/api/notes/by-text</b> and <b>/api/notes/by-text/unpop</b></td>
+                </tr>
 
-            <tr class="post">
-              <td>POST</td>
-              <td>Yes</td>
-              <td>/api/notes/by-text</td>
-              <td>Get the notes with a text that matches the one provided in the request, regex are used.
-              <code>Populate()</code> is called on <code>mainTags</code> and <code>otherTags.</code></td>
-              <td><ul>
-                <li><code>Authorization: token</code></li>
-                <li><code>Content-type: application/json</code></li>
-              </ul></td>
-              <td> <code>{"text":"text-to-search"}</code> </td>
-              <td>If ok:<br>
-                <code>{"ok": true, "result":{"ok": "true","result": {obj}}}</code><br>
-                If !ok: <br>
-                <code>{"ok": false, "msg": "error-msg"}</code>
-              </td>
-              <td>
-                <code>
+                <tr class="post">
+                    <td>POST</td>
+                    <td>Yes</td>
+                    <td>/api/notes/by-text</td>
+                    <td>Get the notes with a text that matches the one provided in the request, regex are used.
+                        <code>Populate()</code> is called on <code>mainTags</code> and <code>otherTags.</code></td>
+                    <td>
+                        <ul>
+                            <li><code>Authorization: token</code></li>
+                            <li><code>Content-type: application/json</code></li>
+                        </ul>
+                    </td>
+                    <td> <code>{"text":"text-to-search"}</code> </td>
+                    <td>If ok:<br>
+                        <code>{"ok": true, "result":{"ok": "true","result": {obj}}}</code><br> If !ok: <br>
+                        <code>{"ok": false, "msg": "error-msg"}</code>
+                    </td>
+                    <td>
+                        <code>
                   "ok": true,
                   "result": [
                     {
@@ -1164,29 +1173,29 @@
                       ]
                     }}
                 </code>
-              </td>
-            </tr>
+                    </td>
+                </tr>
 
 
 
-            <tr class="post">
-              <td>POST</td>
-              <td>Yes</td>
-              <td>/api/notes/by-text/unpop</td>
-              <td>Get the notes with a text that matches the one provided in the request, regex are used.
-              No <code>populate()</code>.</td>
-              <td><ul>
-                <li><code>Authorization: token</code></li>
-                <li><code>Content-type: application/json</code></li>
-              </ul></td>
-              <td> <code>{"text":"text-to-search"}</code> </td>
-              <td>If ok:<br>
-                <code>{"ok": true, "result":{"ok": "true","result": {obj}}}</code><br>
-                If !ok: <br>
-                <code>{"ok": false, "msg": "error-msg"}</code>
-              </td>
-              <td>
-                <code>
+                <tr class="post">
+                    <td>POST</td>
+                    <td>Yes</td>
+                    <td>/api/notes/by-text/unpop</td>
+                    <td>Get the notes with a text that matches the one provided in the request, regex are used. No <code>populate()</code>.</td>
+                    <td>
+                        <ul>
+                            <li><code>Authorization: token</code></li>
+                            <li><code>Content-type: application/json</code></li>
+                        </ul>
+                    </td>
+                    <td> <code>{"text":"text-to-search"}</code> </td>
+                    <td>If ok:<br>
+                        <code>{"ok": true, "result":{"ok": "true","result": {obj}}}</code><br> If !ok: <br>
+                        <code>{"ok": false, "msg": "error-msg"}</code>
+                    </td>
+                    <td>
+                        <code>
                   {
   "ok": true,
   "result": [
@@ -1211,12 +1220,12 @@
       ]
     }}
                 </code>
-              </td>
-            </tr>
+                    </td>
+                </tr>
 
 
 
-            <!-- <tr class="special">
+                <!-- <tr class="special">
               <td></td>
               <td></td>
               <td></td>
@@ -1226,28 +1235,29 @@
             </tr> -->
 
 
-            <tr class="special" id="notes-id">
-              <td colspan="7" align="center"><b>/api/notes/:id</b> and <b>/api/notes/by-id</b></td>
-            </tr>
+                <tr class="special" id="notes-id">
+                    <td colspan="7" align="center"><b>/api/notes/:id</b> and <b>/api/notes/by-id</b></td>
+                </tr>
 
 
-            <tr class="get">
-              <td>GET</td>
-              <td>Yes</td>
-              <td>/api/notes/:id</td>
-              <td>Get the note with an id that matches the provided one.
-              <code>Populate()</code> is called on <code>mainTags</code> and <code>otherTags.</code></td>
-              <td><ul>
-                <li><code>Authorization: token</code></li>
-              </ul></td>
-              <td>-</td>
-              <td>If ok:<br>
-                <code>{"ok": true, "result":{"ok": "true","result": {obj}}}</code><br>
-                If !ok: <br>
-                <code>{"ok": false, "msg": "error-msg"}</code>
-              </td>
-              <td>
-                <code>
+                <tr class="get">
+                    <td>GET</td>
+                    <td>Yes</td>
+                    <td>/api/notes/:id</td>
+                    <td>Get the note with an id that matches the provided one.
+                        <code>Populate()</code> is called on <code>mainTags</code> and <code>otherTags.</code></td>
+                    <td>
+                        <ul>
+                            <li><code>Authorization: token</code></li>
+                        </ul>
+                    </td>
+                    <td>-</td>
+                    <td>If ok:<br>
+                        <code>{"ok": true, "result":{"ok": "true","result": {obj}}}</code><br> If !ok: <br>
+                        <code>{"ok": false, "msg": "error-msg"}</code>
+                    </td>
+                    <td>
+                        <code>
                   "ok": true,
                   "result": [
                     {
@@ -1281,30 +1291,31 @@
                       ]
                     }}
                 </code>
-              </td>
-            </tr>
+                    </td>
+                </tr>
 
 
 
 
-            <tr class="post">
-              <td>POST</td>
-              <td>Yes</td>
-              <td>/api/notes/by-id</td>
-              <td>Get the note with an id that matches the provided one.
-              <code>Populate()</code> is called on <code>mainTags</code> and <code>otherTags.</code></td>
-              <td><ul>
-                <li><code>Authorization: token</code></li>
-                <li><code>Content-type: application/json</code></li>
-              </ul></td>
-              <td>{"id":"note-id"}</td>
-              <td>If ok:<br>
-                <code>{"ok": true, "result":{"ok": "true","result": {obj}}}</code><br>
-                If !ok: <br>
-                <code>{"ok": false, "msg": "error-msg"}</code>
-              </td>
-              <td>
-                <code>
+                <tr class="post">
+                    <td>POST</td>
+                    <td>Yes</td>
+                    <td>/api/notes/by-id</td>
+                    <td>Get the note with an id that matches the provided one.
+                        <code>Populate()</code> is called on <code>mainTags</code> and <code>otherTags.</code></td>
+                    <td>
+                        <ul>
+                            <li><code>Authorization: token</code></li>
+                            <li><code>Content-type: application/json</code></li>
+                        </ul>
+                    </td>
+                    <td>{"id":"note-id"}</td>
+                    <td>If ok:<br>
+                        <code>{"ok": true, "result":{"ok": "true","result": {obj}}}</code><br> If !ok: <br>
+                        <code>{"ok": false, "msg": "error-msg"}</code>
+                    </td>
+                    <td>
+                        <code>
                   "ok": true,
                   "result": [
                     {
@@ -1338,37 +1349,38 @@
                       ]
                     }}
                 </code>
-              </td>
-            </tr>
+                    </td>
+                </tr>
 
 
 
 
 
-            <tr class="delete">
-              <td>DELETE</td>
-              <td>Yes</td>
-              <td>/api/notes/:id/</td>
-              <td>Delete the note with an id that matches the provided one.</td>
-              <td><ul>
-                <li><code>Authorization: token</code></li>
-              </ul></td>
-              <td> <code>-</code> </td>
-              <td>If ok:<br>
-                <code>{"ok": true}</code><br>
-                If !ok: <br>
-                <code>{"ok": false, "msg": "error-msg"}</code>
-              </td>
-              <td>
-                <code>
+                <tr class="delete">
+                    <td>DELETE</td>
+                    <td>Yes</td>
+                    <td>/api/notes/:id/</td>
+                    <td>Delete the note with an id that matches the provided one.</td>
+                    <td>
+                        <ul>
+                            <li><code>Authorization: token</code></li>
+                        </ul>
+                    </td>
+                    <td> <code>-</code> </td>
+                    <td>If ok:<br>
+                        <code>{"ok": true}</code><br> If !ok: <br>
+                        <code>{"ok": false, "msg": "error-msg"}</code>
+                    </td>
+                    <td>
+                        <code>
                   {
                     "ok": "true"
                   }
                 </code>
-              </td>
-            </tr>
+                    </td>
+                </tr>
 
-<!--
+                <!--
             <tr class="delete">
               <td>DELETE</td>
               <td>Yes</td>
@@ -1399,7 +1411,7 @@
 
 -->
 
-            <!-- <tr class="special">
+                <!-- <tr class="special">
               <td></td>
               <td></td>
               <td></td>
@@ -1409,52 +1421,46 @@
               <td></td>
             </tr> -->
 
-            <tr class="special" id="notes-tag">
-              <td colspan="7" align="center"><b>/api/notes/by-tag</b>, <b>/api/notes/by-main-tag</b> and
-              <b>/api/notes/by-other-tag</b>, with <b>/unpop</b> options too</td>
-            </tr>
+                <tr class="special" id="notes-tag">
+                    <td colspan="7" align="center"><b>/api/notes/by-tag</b>, <b>/api/notes/by-main-tag</b> and
+                        <b>/api/notes/by-other-tag</b>, with <b>/unpop</b> options too</td>
+                </tr>
 
 
-            <tr class="post">
-              <td>POST</td>
-              <td>Yes</td>
-              <td>/api/notes/by-tag</td>
-              <td>Get all the notes for the logged in user, with tags that matches the provided ones.
-              Research is done into <code>mainTags</code> and <code>otherTags</code> or in one of
-              two options, depends upon the request. The objects are then populated.
-            </tb>
-              <code>Populate()</code> is called on <code>mainTags</code>and <code>otherTags</code>.</td>
-              <td><ul>
-                <li><code>Authorization: token</code></li>
-                <li><code>Content-type: application/json</code></li>
-              </td>
-              <td>Three differente possibilities, based on your needings:<br>
-                <ul>
-                  <li><code>
+                <tr class="post">
+                    <td>POST</td>
+                    <td>Yes</td>
+                    <td>/api/notes/by-tag</td>
+                    <td>Get all the notes for the logged in user, with tags that matches the provided ones. Research is done into <code>mainTags</code> and <code>otherTags</code> or in one of two options, depends upon the request. The objects are then populated.
+                        </tb>
+                        <code>Populate()</code> is called on <code>mainTags</code>and <code>otherTags</code>.</td>
+                    <td>
+                        <ul>
+                            <li><code>Authorization: token</code></li>
+                            <li><code>Content-type: application/json</code></li>
+                    </td>
+                    <td>Three differente possibilities, based on your needings:<br>
+                        <ul>
+                            <li><code>
                     {"tags":["id1","id2"]}
-                  </code><br>
-                  This means that the research is done through <code>mainTags</code> and <code>otherTags</code>
-                  too, using an <code>or</code>clause.
-                  </li>
-                  <li><code>
+                  </code><br> This means that the research is done through <code>mainTags</code> and <code>otherTags</code> too, using an <code>or</code>clause.
+                            </li>
+                            <li><code>
                     {"mainTags":["id1","id2"]}
-                  </code><br>
-                  This means that the research is done through <code>mainTags</code>.
-                  </li>
-                  <li><code>
+                  </code><br> This means that the research is done through <code>mainTags</code>.
+                            </li>
+                            <li><code>
                     {"otherTags":["id1","id2"]}
-                  </code><br>
-                  This means that the research is done through <code>otherTags</code>.
-                  </li>
-                </ul>
-              </td>
-              <td>If ok:<br>
-                <code>{"ok": true, "result":[array-of-notes]}</code><br>
-                If !ok: <br>
-                <code>{"ok": false, "msg": "error-msg"}</code>
-              </td>
-              <td>
-                <code>
+                  </code><br> This means that the research is done through <code>otherTags</code>.
+                            </li>
+                        </ul>
+                    </td>
+                    <td>If ok:<br>
+                        <code>{"ok": true, "result":[array-of-notes]}</code><br> If !ok: <br>
+                        <code>{"ok": false, "msg": "error-msg"}</code>
+                    </td>
+                    <td>
+                        <code>
                   {
   "ok": true,
   "result": [
@@ -1489,51 +1495,45 @@
       ]
     }}
                 </code>
-              </td>
-            </tr>
+                    </td>
+                </tr>
 
 
 
-            <tr class="post">
-              <td>POST</td>
-              <td>Yes</td>
-              <td>/api/notes/by-tag/unpop</td>
-              <td>Get all the notes for the logged in user, with tags that matches the provided ones.
-              Research is done into <code>mainTags</code> and <code>otherTags</code> or in one of
-              two options, depends upon the request. The objects are not populated.
-            </tb>
-              <code>Populate()</code> is called on <code>mainTags</code>and <code>otherTags</code>.</td>
-              <td><ul>
-                <li><code>Authorization: token</code></li>
-                <li><code>Content-type: application/json</code></li>
-              </td>
-              <td>Three differente possibilities, based on your needings:<br>
-                <ul>
-                  <li><code>
+                <tr class="post">
+                    <td>POST</td>
+                    <td>Yes</td>
+                    <td>/api/notes/by-tag/unpop</td>
+                    <td>Get all the notes for the logged in user, with tags that matches the provided ones. Research is done into <code>mainTags</code> and <code>otherTags</code> or in one of two options, depends upon the request. The objects are not populated.
+                        </tb>
+                        <code>Populate()</code> is called on <code>mainTags</code>and <code>otherTags</code>.</td>
+                    <td>
+                        <ul>
+                            <li><code>Authorization: token</code></li>
+                            <li><code>Content-type: application/json</code></li>
+                    </td>
+                    <td>Three differente possibilities, based on your needings:<br>
+                        <ul>
+                            <li><code>
                     {"tags":["id1","id2"]}
-                  </code><br>
-                  This means that the research is done through <code>mainTags</code> and <code>otherTags</code>
-                  too, using an <code>or</code>clause.
-                  </li>
-                  <li><code>
+                  </code><br> This means that the research is done through <code>mainTags</code> and <code>otherTags</code> too, using an <code>or</code>clause.
+                            </li>
+                            <li><code>
                     {"mainTags":["id1","id2"]}
-                  </code><br>
-                  This means that the research is done through <code>mainTags</code>.
-                  </li>
-                  <li><code>
+                  </code><br> This means that the research is done through <code>mainTags</code>.
+                            </li>
+                            <li><code>
                     {"otherTags":["id1","id2"]}
-                  </code><br>
-                  This means that the research is done through <code>otherTags</code>.
-                  </li>
-                </ul>
-              </td>
-              <td>If ok:<br>
-                <code>{"ok": true, "result":[array-of-notes]}</code><br>
-                If !ok: <br>
-                <code>{"ok": false, "msg": "error-msg"}</code>
-              </td>
-              <td>
-                <code>
+                  </code><br> This means that the research is done through <code>otherTags</code>.
+                            </li>
+                        </ul>
+                    </td>
+                    <td>If ok:<br>
+                        <code>{"ok": true, "result":[array-of-notes]}</code><br> If !ok: <br>
+                        <code>{"ok": false, "msg": "error-msg"}</code>
+                    </td>
+                    <td>
+                        <code>
                   {
   "ok": true,
   "result": [
@@ -1558,24 +1558,31 @@
       ]
     }}
                 </code>
-              </td>
-            </tr>
+                    </td>
+                </tr>
 
-    </table>
-  </p>
+            </table>
+        </p>
 
-<br>
-<br>
-<br>
-  <p>
-    TAG
-    <table id="tag-table" border="1">
-      <tr>
-        <th>Method</th><th>Protected</th><th>URI</th><th>Description</th><th>Headers</th><th>Params</th><th>Return</th><th>Example return</th>
-      </tr>
+        <br>
+        <br>
+        <br>
+        <p>
+            TAG
+            <table id="tag-table" border="1">
+                <tr>
+                    <th>Method</th>
+                    <th>Protected</th>
+                    <th>URI</th>
+                    <th>Description</th>
+                    <th>Headers</th>
+                    <th>Params</th>
+                    <th>Return</th>
+                    <th>Example return</th>
+                </tr>
 
 
-      <!-- <tr class="special">
+                <!-- <tr class="special">
         <td></td>
         <td></td>
         <td></td>
@@ -1584,34 +1591,35 @@
         <td></td>
       </tr> -->
 
-      <tr class="special" id="tags-create">
-        <td colspan="7" align="center"><b>/api/tags/create</b></td>
-      </tr>
+                <tr class="special" id="tags-create">
+                    <td colspan="7" align="center"><b>/api/tags/create</b></td>
+                </tr>
 
 
-      <tr class="put">
-        <td>PUT</td>
-        <td>Yes</td>
-        <td>/api/tags/:tag-name</td>
-        <td>Create a new tag, for the logged in user. System will check if the tag name is unique
-          per-user.
-        </td>
-        <td><ul>
-          <li><code>Authorization: token</code></li>
-        </ul></td>
-        <td>-</td>
-        <td>
-          If ok: <br>
-          <code>
+                <tr class="put">
+                    <td>PUT</td>
+                    <td>Yes</td>
+                    <td>/api/tags/:tag-name</td>
+                    <td>Create a new tag, for the logged in user. System will check if the tag name is unique per-user.
+                    </td>
+                    <td>
+                        <ul>
+                            <li><code>Authorization: token</code></li>
+                        </ul>
+                    </td>
+                    <td>-</td>
+                    <td>
+                        If ok: <br>
+                        <code>
             {"ok": true, "result": {obj}}
           </code></br>
-          If !ok <br>
-          <code>
+                        If !ok <br>
+                        <code>
             {"ok": false, "msg": "error-msg"}
           </code>
-        </td>
-        <td>
-          <code>
+                    </td>
+                    <td>
+                        <code>
             {
   "ok": true,
   "result": {
@@ -1623,40 +1631,39 @@
   }
 }
           </code>
-        </td>
-      </tr>
+                    </td>
+                </tr>
 
-      <tr class="special" id="tags-all">
-        <td colspan="7" align="center"><b>/api/tags/all</b> and <b>/api/tags/all/unpop</b></td>
-      </tr>
+                <tr class="special" id="tags-all">
+                    <td colspan="7" align="center"><b>/api/tags/all</b> and <b>/api/tags/all/unpop</b></td>
+                </tr>
 
 
 
-      <tr class="post">
-        <td>POST</td>
-        <td>Yes</td>
-        <td>/api/tags/all</td>
-        <td>Get all the tags for the logged in user. <code>Populate()</code> is called
-          on <code>notes</code>.
-        </td>
-        <td>
-          <ul>
-            <li><code>Authorization: token</code></li>
-          </ul>
-        </td>
-        <td>-</td>
-        <td>
-          If ok: <br>
-          <code>
+                <tr class="post">
+                    <td>POST</td>
+                    <td>Yes</td>
+                    <td>/api/tags/all</td>
+                    <td>Get all the tags for the logged in user. <code>Populate()</code> is called on <code>notes</code>.
+                    </td>
+                    <td>
+                        <ul>
+                            <li><code>Authorization: token</code></li>
+                        </ul>
+                    </td>
+                    <td>-</td>
+                    <td>
+                        If ok: <br>
+                        <code>
             {"ok": true, "result": [objs]}
           </code></br>
-          If !ok <br>
-          <code>
+                        If !ok <br>
+                        <code>
             {"ok": false, "msg": "error-msg"}
           </code>
-        </td>
-        <td>
-          <code>
+                    </td>
+                    <td>
+                        <code>
             {
   "ok": true,
   "result": [
@@ -1686,36 +1693,35 @@
       ]
     }]}
           </code>
-        </td>
-      </tr>
+                    </td>
+                </tr>
 
 
 
-      <tr class="get">
-        <td>GET</td>
-        <td>Yes</td>
-        <td>/api/tags/all</td>
-        <td>Get all the tags for the logged in user. <code>Populate()</code> is called
-          on <code>notes</code>.
-        </td>
-        <td>
-          <ul>
-            <li><code>Authorization: token</code></li>
-          </ul>
-        </td>
-        <td>-</td>
-        <td>
-          If ok: <br>
-          <code>
+                <tr class="get">
+                    <td>GET</td>
+                    <td>Yes</td>
+                    <td>/api/tags/all</td>
+                    <td>Get all the tags for the logged in user. <code>Populate()</code> is called on <code>notes</code>.
+                    </td>
+                    <td>
+                        <ul>
+                            <li><code>Authorization: token</code></li>
+                        </ul>
+                    </td>
+                    <td>-</td>
+                    <td>
+                        If ok: <br>
+                        <code>
             {"ok": true, "result": [objs]}
           </code></br>
-          If !ok <br>
-          <code>
+                        If !ok <br>
+                        <code>
             {"ok": false, "msg": "error-msg"}
           </code>
-        </td>
-        <td>
-          <code>
+                    </td>
+                    <td>
+                        <code>
             {
   "ok": true,
   "result": [
@@ -1745,35 +1751,35 @@
       ]
     }]}
           </code>
-        </td>
-      </tr>
+                    </td>
+                </tr>
 
 
 
-      <tr class="delete">
-        <td>DELETE</td>
-        <td>Yes</td>
-        <td>/api/tags/all</td>
-        <td>Delete all the tags for the logged in user.
-        </td>
-        <td>
-          <ul>
-            <li><code>Authorization: token</code></li>
-          </ul>
-        </td>
-        <td>-</td>
-        <td>
-          If ok: <br>
-          <code>
+                <tr class="delete">
+                    <td>DELETE</td>
+                    <td>Yes</td>
+                    <td>/api/tags/all</td>
+                    <td>Delete all the tags for the logged in user.
+                    </td>
+                    <td>
+                        <ul>
+                            <li><code>Authorization: token</code></li>
+                        </ul>
+                    </td>
+                    <td>-</td>
+                    <td>
+                        If ok: <br>
+                        <code>
             {"ok": true, "result":{"ok": "true","result": {"n" : obj-count,"ok": 1}}}
           </code></br>
-          If !ok <br>
-          <code>
+                        If !ok <br>
+                        <code>
             {"ok": false, "msg": "error-msg"}
           </code>
-        </td>
-        <td>
-          <code>
+                    </td>
+                    <td>
+                        <code>
             {
   "ok": "true",
   "result": {
@@ -1782,36 +1788,36 @@
   }
 }
           </code>
-        </td>
-      </tr>
+                    </td>
+                </tr>
 
 
 
 
-      <tr class="post">
-        <td>POST</td>
-        <td>Yes</td>
-        <td>/api/tags/all/unpop</td>
-        <td>Get all the tags for the logged in user. No <code>Populate()</code> is done.
-        </td>
-        <td>
-          <ul>
-            <li><code>Authorization: token</code></li>
-          </ul>
-        </td>
-        <td>-</td>
-        <td>
-          If ok: <br>
-          <code>
+                <tr class="post">
+                    <td>POST</td>
+                    <td>Yes</td>
+                    <td>/api/tags/all/unpop</td>
+                    <td>Get all the tags for the logged in user. No <code>Populate()</code> is done.
+                    </td>
+                    <td>
+                        <ul>
+                            <li><code>Authorization: token</code></li>
+                        </ul>
+                    </td>
+                    <td>-</td>
+                    <td>
+                        If ok: <br>
+                        <code>
             {"ok": true, "result": [objs]}
           </code></br>
-          If !ok <br>
-          <code>
+                        If !ok <br>
+                        <code>
             {"ok": false, "msg": "error-msg"}
           </code>
-        </td>
-        <td>
-          <code>
+                    </td>
+                    <td>
+                        <code>
             {
   "ok": true,
   "result": [
@@ -1825,35 +1831,35 @@
       ]
     }]}
           </code>
-        </td>
-      </tr>
+                    </td>
+                </tr>
 
 
 
-      <tr class="get">
-        <td>GET</td>
-        <td>Yes</td>
-        <td>/api/tags/all/unpop</td>
-        <td>Get all the tags for the logged in user. No <code>Populate()</code> is done.
-        </td>
-        <td>
-          <ul>
-            <li><code>Authorization: token</code></li>
-          </ul>
-        </td>
-        <td>-</td>
-        <td>
-          If ok: <br>
-          <code>
+                <tr class="get">
+                    <td>GET</td>
+                    <td>Yes</td>
+                    <td>/api/tags/all/unpop</td>
+                    <td>Get all the tags for the logged in user. No <code>Populate()</code> is done.
+                    </td>
+                    <td>
+                        <ul>
+                            <li><code>Authorization: token</code></li>
+                        </ul>
+                    </td>
+                    <td>-</td>
+                    <td>
+                        If ok: <br>
+                        <code>
             {"ok": true, "result": [objs]}
           </code></br>
-          If !ok <br>
-          <code>
+                        If !ok <br>
+                        <code>
             {"ok": false, "msg": "error-msg"}
           </code>
-        </td>
-        <td>
-          <code>
+                    </td>
+                    <td>
+                        <code>
             {
   "ok": true,
   "result": [
@@ -1867,14 +1873,14 @@
       ]
     }]}
           </code>
-        </td>
-      </tr>
+                    </td>
+                </tr>
 
 
 
 
 
-            <!-- <tr class="special">
+                <!-- <tr class="special">
               <td></td>
               <td></td>
               <td></td>
@@ -1884,37 +1890,35 @@
               <td></td>
             </tr> -->
 
-            <tr class="special" id="tags-title">
-              <td colspan="7" align="center"><b>/api/tags/by-title</b>, <b>/api/tags/byt-title/unpop</b> and
-              <b>/api/tags/by-title/reg</b></td>
-            </tr>
+                <tr class="special" id="tags-title">
+                    <td colspan="7" align="center"><b>/api/tags/by-title</b>, <b>/api/tags/byt-title/unpop</b> and
+                        <b>/api/tags/by-title/reg</b></td>
+                </tr>
 
-      <tr class="post">
-        <td>POST</td>
-        <td>Yes</td>
-        <td>/api/tags/by-title/reg</td>
-        <td>Get all the tags for the logged in user, with a title the matches the one
-          provided. Regex are used and <code>Populate()</code> is done
-          on <code>notes</code>.
-        </td>
-        <td>
-          <ul>
-            <li><code>Authorization: token</code></li>
-          </ul>
-        </td>
-        <td><code>{"title":"title-to-search"}</code></td>
-        <td>
-          If ok: <br>
-          <code>
+                <tr class="post">
+                    <td>POST</td>
+                    <td>Yes</td>
+                    <td>/api/tags/by-title/reg</td>
+                    <td>Get all the tags for the logged in user, with a title the matches the one provided. Regex are used and <code>Populate()</code> is done on <code>notes</code>.
+                    </td>
+                    <td>
+                        <ul>
+                            <li><code>Authorization: token</code></li>
+                        </ul>
+                    </td>
+                    <td><code>{"title":"title-to-search"}</code></td>
+                    <td>
+                        If ok: <br>
+                        <code>
             {"ok": true, "result": [objs]}
           </code></br>
-          If !ok <br>
-          <code>
+                        If !ok <br>
+                        <code>
             {"ok": false, "msg": "error-msg"}
           </code>
-        </td>
-        <td>
-          <code>
+                    </td>
+                    <td>
+                        <code>
             {
   "ok": true,
   "result": [
@@ -1944,38 +1948,36 @@
       ]
     }]}
           </code>
-        </td>
-      </tr>
+                    </td>
+                </tr>
 
 
 
 
-            <tr class="post">
-              <td>POST</td>
-              <td>Yes</td>
-              <td>/api/tags/by-title/reg/unpop</td>
-              <td>Get all the tags for the logged in user, with a title the matches the one
-                provided. Regex are used and no <code>Populate()</code> is done
-                on <code>notes</code>.
-              </td>
-              <td>
-                <ul>
-                  <li><code>Authorization: token</code></li>
-                </ul>
-              </td>
-              <td><code>{"title":"title-to-search"}</code></td>
-              <td>
-                If ok: <br>
-                <code>
+                <tr class="post">
+                    <td>POST</td>
+                    <td>Yes</td>
+                    <td>/api/tags/by-title/reg/unpop</td>
+                    <td>Get all the tags for the logged in user, with a title the matches the one provided. Regex are used and no <code>Populate()</code> is done on <code>notes</code>.
+                    </td>
+                    <td>
+                        <ul>
+                            <li><code>Authorization: token</code></li>
+                        </ul>
+                    </td>
+                    <td><code>{"title":"title-to-search"}</code></td>
+                    <td>
+                        If ok: <br>
+                        <code>
                   {"ok": true, "result": [objs]}
                 </code></br>
-                If !ok <br>
-                <code>
+                        If !ok <br>
+                        <code>
                   {"ok": false, "msg": "error-msg"}
                 </code>
-              </td>
-              <td>
-                <code>
+                    </td>
+                    <td>
+                        <code>
                   {
         "ok": true,
         "result": [
@@ -1989,11 +1991,11 @@
             ]
           }]}
                 </code>
-              </td>
-            </tr>
+                    </td>
+                </tr>
 
 
-<!--
+                <!--
 
             <tr class="delete">
               <td>DELETE</td>
@@ -2029,26 +2031,24 @@
 
 -->
 
-            <tr class="delete">
-              <td>DELETE</td>
-              <td>Yes</td>
-              <td>/api/tags/by-title</td>
-              <td>Delete all the tags for the logged in user, with a title the matches <i>exactly</i>
-                the provided one.
-              </td>
-              <td>
-                <ul>
-                  <li><code>Authorization: token</code></li>
-                </ul>
-              </td>
-              <td><code>{"title":"exact-title"}</code></td>
-              <td>If ok:<br>
-                <code>{"ok": true, "result":{"ok": "true","result": {"n" : obj-count,"ok": 1}}}</code><br>
-                If !ok: <br>
-                <code>{"ok": false, "msg": "error-msg"}</code>
-              </td>
-              <td>
-                <code>
+                <tr class="delete">
+                    <td>DELETE</td>
+                    <td>Yes</td>
+                    <td>/api/tags/by-title</td>
+                    <td>Delete all the tags for the logged in user, with a title the matches <i>exactly</i> the provided one.
+                    </td>
+                    <td>
+                        <ul>
+                            <li><code>Authorization: token</code></li>
+                        </ul>
+                    </td>
+                    <td><code>{"title":"exact-title"}</code></td>
+                    <td>If ok:<br>
+                        <code>{"ok": true, "result":{"ok": "true","result": {"n" : obj-count,"ok": 1}}}</code><br> If !ok: <br>
+                        <code>{"ok": false, "msg": "error-msg"}</code>
+                    </td>
+                    <td>
+                        <code>
                   {
                     "ok": "true",
                     "result": {
@@ -2057,13 +2057,13 @@
                     }
                   }
                 </code>
-              </td>
-            </tr>
+                    </td>
+                </tr>
 
 
 
 
-            <!-- <tr class="special">
+                <!-- <tr class="special">
               <td></td>
               <td></td>
               <td></td>
@@ -2072,36 +2072,35 @@
               <td></td>
             </tr> -->
 
-            <tr class="special" id="tags-id">
-              <td colspan="7" align="center"><b>/api/tags/:id</b> and <b>/api/tags/by-id</b></td>
-            </tr>
+                <tr class="special" id="tags-id">
+                    <td colspan="7" align="center"><b>/api/tags/:id</b> and <b>/api/tags/by-id</b></td>
+                </tr>
 
-            <tr class="get">
-              <td>GET</td>
-              <td>Yes</td>
-              <td>/api/tags/:id</td>
-              <td>Get the tag for the logged in user, with an id that is the like the provided one.
-                <code>Populate()</code> is done
-                on <code>notes</code>.
-              </td>
-              <td>
-                <ul>
-                  <li><code>Authorization: token</code></li>
-                </ul>
-              </td>
-              <td>-</td>
-              <td>
-                If ok: <br>
-                <code>
+                <tr class="get">
+                    <td>GET</td>
+                    <td>Yes</td>
+                    <td>/api/tags/:id</td>
+                    <td>Get the tag for the logged in user, with an id that is the like the provided one.
+                        <code>Populate()</code> is done on <code>notes</code>.
+                    </td>
+                    <td>
+                        <ul>
+                            <li><code>Authorization: token</code></li>
+                        </ul>
+                    </td>
+                    <td>-</td>
+                    <td>
+                        If ok: <br>
+                        <code>
                   {"ok": true, "result": {obj}}
                 </code></br>
-                If !ok <br>
-                <code>
+                        If !ok <br>
+                        <code>
                   {"ok": false, "msg": "error-msg"}
                 </code>
-              </td>
-              <td>
-                <code>
+                    </td>
+                    <td>
+                        <code>
                   {
   "ok": true,
   "result": {
@@ -2115,32 +2114,31 @@
   }
 }
                 </code>
-              </td>
-            </tr>
+                    </td>
+                </tr>
 
 
 
 
 
-            <tr class="delete">
-              <td>DELETE</td>
-              <td>Yes</td>
-              <td>/api/tags/:id</td>
-              <td>Delete the tag for the logged in user with an id that matches the provided one.
-              </td>
-              <td>
-                <ul>
-                  <li><code>Authorization: token</code></li>
-                </ul>
-              </td>
-              <td>-</td>
-              <td>If ok:<br>
-                <code>{"ok": true, "result":{"ok": "true","result": {"n" : obj-count,"ok": 1}}}</code><br>
-                If !ok: <br>
-                <code>{"ok": false, "msg": "error-msg"}</code>
-              </td>
-              <td>
-                <code>
+                <tr class="delete">
+                    <td>DELETE</td>
+                    <td>Yes</td>
+                    <td>/api/tags/:id</td>
+                    <td>Delete the tag for the logged in user with an id that matches the provided one.
+                    </td>
+                    <td>
+                        <ul>
+                            <li><code>Authorization: token</code></li>
+                        </ul>
+                    </td>
+                    <td>-</td>
+                    <td>If ok:<br>
+                        <code>{"ok": true, "result":{"ok": "true","result": {"n" : obj-count,"ok": 1}}}</code><br> If !ok: <br>
+                        <code>{"ok": false, "msg": "error-msg"}</code>
+                    </td>
+                    <td>
+                        <code>
                   {
                     "ok": "true",
                     "result": {
@@ -2149,43 +2147,42 @@
                     }
                   }
                 </code>
-              </td>
-            </tr>
+                    </td>
+                </tr>
 
 
 
 
-            <tr class="post">
-              <td>POST</td>
-              <td>Yes</td>
-              <td>/api/tags/by-id</td>
-              <td>Get the tag for the logged in user, with an id that is the like the provided one.
-                <code>Populate()</code> is done
-                on <code>notes</code>.
-              </td>
-              <td>
-                <ul>
-                  <li><code>Authorization: token</code></li>
-                  <lI><code>Content-type: application/json</code></li>
-                </ul>
-              </td>
-              <td>
-                <code>
+                <tr class="post">
+                    <td>POST</td>
+                    <td>Yes</td>
+                    <td>/api/tags/by-id</td>
+                    <td>Get the tag for the logged in user, with an id that is the like the provided one.
+                        <code>Populate()</code> is done on <code>notes</code>.
+                    </td>
+                    <td>
+                        <ul>
+                            <li><code>Authorization: token</code></li>
+                            <lI><code>Content-type: application/json</code></li>
+                        </ul>
+                    </td>
+                    <td>
+                        <code>
                 {"id":"tag-id"}
                 </code>
-              </td>
-              <td>
-                If ok: <br>
-                <code>
+                    </td>
+                    <td>
+                        If ok: <br>
+                        <code>
                   {"ok": true, "result": {obj}}
                 </code></br>
-                If !ok <br>
-                <code>
+                        If !ok <br>
+                        <code>
                   {"ok": false, "msg": "error-msg"}
                 </code>
-              </td>
-              <td>
-                <code>
+                    </td>
+                    <td>
+                        <code>
                   {
   "ok": true,
   "result": {
@@ -2199,154 +2196,157 @@
   }
 }
                 </code>
-              </td>
-            </tr>
-    </table>
-  </p>
+                    </td>
+                </tr>
+            </table>
+        </p>
 
 
-  <p>
-    USER
-    <table  id="user-table" border="1">
+        <p>
+            USER
+            <table id="user-table" border="1">
 
-      <tr class="special" id="users-create">
-        <td colspan="7" align="center">
-          <b>/api/users/create</b>
-        </td>
-      </tr>
+                <tr class="special" id="users-create">
+                    <td colspan="7" align="center">
+                        <b>/api/users/create</b>
+                    </td>
+                </tr>
 
-      <tr>
-        <th>Method</th><th>Protected</th><th>URI</th><th>Description</th><th>Headers</th><th>Params</th><th>Return</th><th>Example return</th>
-      </tr>
-      <tr class="put">
-        <td>PUT</td>
-        <td>No</td>
-        <td>/api/users/create</td>
-        <td>Create a new user, with the given <code>e_mail</code> and <code>password</code>, the latter is the hashed before being saved.</td>
-        <td>
-          <ul>
-            <li><code>Content-type:application/json</code></li>
-          </ul>
-        </td>
-        <td>
-          A JSON object:<br>
-          <code>
+                <tr>
+                    <th>Method</th>
+                    <th>Protected</th>
+                    <th>URI</th>
+                    <th>Description</th>
+                    <th>Headers</th>
+                    <th>Params</th>
+                    <th>Return</th>
+                    <th>Example return</th>
+                </tr>
+                <tr class="put">
+                    <td>PUT</td>
+                    <td>No</td>
+                    <td>/api/users/create</td>
+                    <td>Create a new user, with the given <code>e_mail</code> and <code>password</code>, the latter is the hashed before being saved.</td>
+                    <td>
+                        <ul>
+                            <li><code>Content-type:application/json</code></li>
+                        </ul>
+                    </td>
+                    <td>
+                        A JSON object:<br>
+                        <code>
             {"e_mail":"mail", "password":"password"}
           </code>
-        </td>
-        <td>
-          A JSON object:<br>
-          <code>
+                    </td>
+                    <td>
+                        A JSON object:<br>
+                        <code>
             {
               "ok":true,
               "id":"id-of-the-new-user"
               "token": "JWT session.token.to_use"
             }
           </code>
-        </td>
-        <td>
-          {
-  "ok": true,
-  "id": "id-of-the-new-user",
-  "token": "JWT jwt.fake.token"
-}
-        </td>
-      </tr>
+                    </td>
+                    <td>
+                        { "ok": true, "id": "id-of-the-new-user", "token": "JWT jwt.fake.token" }
+                    </td>
+                </tr>
 
-      <tr class="special" id="users-home">
-        <td colspan="7" align="center">
-          <b>/api/users/home</b>
-        </td>
-      </tr>
+                <tr class="special" id="users-home">
+                    <td colspan="7" align="center">
+                        <b>/api/users/home</b>
+                    </td>
+                </tr>
 
-      <tr class="get">
-        <td>GET</td>
-        <td>Yes</td>
-        <td>/api/users/home</td>
-        <td>Get a basic object that contains just the number of tags and notes for the logged in user.</td>
-        <td>
-          <ul>
-            <li><code>Authorization: token</code></li>
-          </ul>
-        </td>
-        <td>-</td>
-        <td>
-          A JSON object:<br>
-          <code>
+                <tr class="get">
+                    <td>GET</td>
+                    <td>Yes</td>
+                    <td>/api/users/home</td>
+                    <td>Get a basic object that contains just the number of tags and notes for the logged in user.</td>
+                    <td>
+                        <ul>
+                            <li><code>Authorization: token</code></li>
+                        </ul>
+                    </td>
+                    <td>-</td>
+                    <td>
+                        A JSON object:<br>
+                        <code>
             {"ok": true,
             "result":{
               "tagCount":"number-of-tags",
               "noteCount":"number-of-notes"
             }}
           </code>
-        </td>
-        <td>
-          <code>
+                    </td>
+                    <td>
+                        <code>
             {"ok": true,
             "result":{
               "tagCount":6,
               "noteCount":8
             }}
           </code>
-        </td>
-      </tr>
+                    </td>
+                </tr>
 
-      <tr class="post">
-        <td>POST</td>
-        <td>Yes</td>
-        <td>/api/users/home</td>
-        <td>Get a basic object that contains just the number of tags and notes for the logged in user.</td>
-        <td>
-          <ul>
-            <li><code>Authorization: token</code></li>
-          </ul>
-        </td>
-        <td>-</td>
-        <td>
-          A JSON object:<br>
-          <code>
+                <tr class="post">
+                    <td>POST</td>
+                    <td>Yes</td>
+                    <td>/api/users/home</td>
+                    <td>Get a basic object that contains just the number of tags and notes for the logged in user.</td>
+                    <td>
+                        <ul>
+                            <li><code>Authorization: token</code></li>
+                        </ul>
+                    </td>
+                    <td>-</td>
+                    <td>
+                        A JSON object:<br>
+                        <code>
             {"ok": true,
             "result":{
               "tagCount":"number-of-tags",
               "noteCount":"number-of-notes"
             }}
           </code>
-        </td>
-        <td>
-          <code>
+                    </td>
+                    <td>
+                        <code>
             {"ok": true,
             "result":{
               "tagCount":6,
               "noteCount":8
             }}
           </code>
-        </td>
-      </tr>
+                    </td>
+                </tr>
 
 
-      <tr class="get">
-        <td>GET</td>
-        <td>Yes</td>
-        <td>/api/users/home/all</td>
-        <td>Get all the objects in the DB, notes populated by tag AND tags, these latter are not populated.</td>
-        <td>
-          <ul>
-            <li><code>Authorization: token</code></li>
-          </ul>
-        </td>
-        <td>-</td>
-        <td>
-          A JSON object:<br>
-          <code>
+                <tr class="get">
+                    <td>GET</td>
+                    <td>Yes</td>
+                    <td>/api/users/home/all</td>
+                    <td>Get all the objects in the DB, notes populated by tag AND tags, these latter are not populated.</td>
+                    <td>
+                        <ul>
+                            <li><code>Authorization: token</code></li>
+                        </ul>
+                    </td>
+                    <td>-</td>
+                    <td>
+                        A JSON object:<br>
+                        <code>
             {"ok": true,
             "result":{
               "notes":[{note1-populated}],
               "tags":[{tag1}, {tag2}]
             }}
           </code>
-        </td>
-        <td>
-          <code>
+                    </td>
+                    <td>
+                        <code>
             {
   "ok": true,
   "result": {
@@ -2399,33 +2399,33 @@
       ]
     }}
           </code>
-        </td>
-      </tr>
+                    </td>
+                </tr>
 
 
-            <tr class="post">
-              <td>POST</td>
-              <td>Yes</td>
-              <td>/api/users/home/all</td>
-              <td>Get all the objects in the DB, notes populated by tag AND tags, these latter are not populated.</td>
-              <td>
-                <ul>
-                  <li><code>Authorization: token</code></li>
-                </ul>
-              </td>
-              <td>-</td>
-              <td>
-                A JSON object:<br>
-                <code>
+                <tr class="post">
+                    <td>POST</td>
+                    <td>Yes</td>
+                    <td>/api/users/home/all</td>
+                    <td>Get all the objects in the DB, notes populated by tag AND tags, these latter are not populated.</td>
+                    <td>
+                        <ul>
+                            <li><code>Authorization: token</code></li>
+                        </ul>
+                    </td>
+                    <td>-</td>
+                    <td>
+                        A JSON object:<br>
+                        <code>
                   {"ok": true,
                   "result":{
                     "notes":[{note1-populated}],
                     "tags":[{tag1}, {tag2}]
                   }}
                 </code>
-              </td>
-              <td>
-                <code>
+                    </td>
+                    <td>
+                        <code>
                   {
         "ok": true,
         "result": {
@@ -2478,26 +2478,26 @@
             ]
           }}
                 </code>
-              </td>
-            </tr>
+                    </td>
+                </tr>
 
 
 
 
-                  <tr class="get">
+                <tr class="get">
                     <td>GET</td>
                     <td>Yes</td>
                     <td>/api/users/home/all/unpop</td>
                     <td>Get all the objects in the DB, notes and tags, no <code>populate()</code> is done.</td>
                     <td>
-                      <ul>
-                        <li><code>Authorization: token</code></li>
-                      </ul>
+                        <ul>
+                            <li><code>Authorization: token</code></li>
+                        </ul>
                     </td>
                     <td>-</td>
                     <td>
-                      A JSON object:<br>
-                      <code>
+                        A JSON object:<br>
+                        <code>
                         {"ok": true,
                         "result":{
                           "notes":[{note1}],
@@ -2506,7 +2506,7 @@
                       </code>
                     </td>
                     <td>
-                      <code>
+                        <code>
                         {
               "ok": true,
               "result": {
@@ -2548,23 +2548,23 @@
                 }}
                       </code>
                     </td>
-                  </tr>
+                </tr>
 
 
-                  <tr class="post">
+                <tr class="post">
                     <td>POST</td>
                     <td>Yes</td>
                     <td>/api/users/home/all/unpop</td>
                     <td>Get all the objects in the DB, notes and tags, no <code>populate()</code> is done.</td>
                     <td>
-                      <ul>
-                        <li><code>Authorization: token</code></li>
-                      </ul>
+                        <ul>
+                            <li><code>Authorization: token</code></li>
+                        </ul>
                     </td>
                     <td>-</td>
                     <td>
-                      A JSON object:<br>
-                      <code>
+                        A JSON object:<br>
+                        <code>
                         {"ok": true,
                         "result":{
                           "notes":[{note1}],
@@ -2573,7 +2573,7 @@
                       </code>
                     </td>
                     <td>
-                      <code>
+                        <code>
                         {
               "ok": true,
               "result": {
@@ -2615,24 +2615,24 @@
                 }}
                       </code>
                     </td>
-                  </tr>
+                </tr>
 
-        <tr class="get">
-          <td>GET</td>
-          <td>Yes</td>
-          <td>/api/users/all/min</td>
-          <td>
-            Get the IDS of all the tags and the notes for the logged in user.
-          </td>
-          <td>
-            <ul>
-              <li><code>Authorization: token</code></li>
-            </ul>
-          </td>
-          <td>-</td>
-          <td>
-            A JSON object:<br>
-            <code>
+                <tr class="get">
+                    <td>GET</td>
+                    <td>Yes</td>
+                    <td>/api/users/all/min</td>
+                    <td>
+                        Get the IDS of all the tags and the notes for the logged in user.
+                    </td>
+                    <td>
+                        <ul>
+                            <li><code>Authorization: token</code></li>
+                        </ul>
+                    </td>
+                    <td>-</td>
+                    <td>
+                        A JSON object:<br>
+                        <code>
               {"ok":true,
             "result":{
               "notes":[array-of-ids],
@@ -2640,9 +2640,9 @@
             }
             }
             </code>
-          </td>
-          <td>
-            <code>
+                    </td>
+                    <td>
+                        <code>
               {"ok":true,
             "result":{
               "notes":[{"_id":"id1"}, {"_id":"id2"}],
@@ -2650,19 +2650,20 @@
             }
             }
             </code>
-          </td>
-        </tr>
+                    </td>
+                </tr>
 
 
 
-    </table>
-  </p>
+            </table>
+        </p>
 
-<br>
-<br>
-<br>
+        <br>
+        <br>
+        <br>
 
 
 
-<body>
+        <body>
+
 </html>

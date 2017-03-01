@@ -3,3 +3,6 @@
 /node_modules
 npm-debug.log
 .tarr
+/public/javascripts/examples.js
+/public/javascripts/pupulate.js
+/public/javascripts/Fixify.js
