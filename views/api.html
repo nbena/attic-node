@@ -2195,73 +2195,453 @@
                 </code>
               </td>
             </tr>
+    </table>
+  </p>
 
 
-<!--
-            <tr class="delete">
-              <td>DELETE</td>
+  <p>
+    USER
+    <table  id="user-login" border="1">
+      <tr>
+        <th>Method</th><th>Protected</th><th>URI</th><th>Description</th><th>Headers</th><th>Params</th><th>Return</th><th>Example return</th>
+      </tr>
+      <tr class="POST">
+        <td>POST</td>
+        <td>No</td>
+        <td>/api/users/create</td>
+        <td>Create a new user, with the given <code>e_mail</code> and <code>password</code>, the latter is the hashed before being saved.</td>
+        <td>
+          <ul>
+            <li><code>Content-type:application/json</code></li>
+          </ul>
+        </td>
+        <td>
+          A JSON object:<br>
+          <code>
+            {"e_mail":"mail", "password":"password"}
+          </code>
+        </td>
+        <td>
+          A JSON object:<br>
+          <code>
+            {
+              "ok":true,
+              "id":"id-of-the-new-user"
+              "token": "JWT session.token.to_use"
+            }
+          </code>
+        </td>
+        <td>
+          {
+  "ok": true,
+  "id": "id-of-the-new-user",
+  "token": "JWT jwt.fake.token"
+}
+        </td>
+      </tr>
+
+      <tr class="special" id="users-home">
+        <td colspan="7" align="center">
+          <b>/api/users/home</b>
+        </td>
+      </tr>
+
+      <tr class="get">
+        <td>GET</td>
+        <td>Yes</td>
+        <td>/api/users/home</td>
+        <td>Get a basic object that contains just the number of tags and notes for the logged in user.</td>
+        <td>
+          <ul>
+            <li><code>Authorization: token</code></li>
+          </ul>
+        </td>
+        <td>-</td>
+        <td>
+          A JSON object:<br>
+          <code>
+            {"ok": true,
+            "result":{
+              "tagCount":"number-of-tags",
+              "noteCount":"number-of-notes"
+            }}
+          </code>
+        </td>
+        <td>
+          <code>
+            {"ok": true,
+            "result":{
+              "tagCount":6,
+              "noteCount":8
+            }}
+          </code>
+        </td>
+      </tr>
+
+      <tr class="post">
+        <td>POST</td>
+        <td>Yes</td>
+        <td>/api/users/home</td>
+        <td>Get a basic object that contains just the number of tags and notes for the logged in user.</td>
+        <td>
+          <ul>
+            <li><code>Authorization: token</code></li>
+          </ul>
+        </td>
+        <td>-</td>
+        <td>
+          A JSON object:<br>
+          <code>
+            {"ok": true,
+            "result":{
+              "tagCount":"number-of-tags",
+              "noteCount":"number-of-notes"
+            }}
+          </code>
+        </td>
+        <td>
+          <code>
+            {"ok": true,
+            "result":{
+              "tagCount":6,
+              "noteCount":8
+            }}
+          </code>
+        </td>
+      </tr>
+
+
+      <tr class="get">
+        <td>GET</td>
+        <td>Yes</td>
+        <td>/api/users/home/all<td>
+        <td>Get all the objects in the DB, notes populated by tag AND tags, these latter are not populated.</td>
+        <td>
+          <ul>
+            <li><code>Authorization: token</code></li>
+          </ul>
+        </td>
+        <td>-</td>
+        <td>
+          A JSON object:<br>
+          <code>
+            {"ok": true,
+            "result":{
+              "notes":[{note1-populated}],
+              "tags":[{tag1}, {tag2}]
+            }}
+          </code>
+        </td>
+        <td>
+          <code>
+            {
+  "ok": true,
+  "result": {
+    "notes": [
+      {
+        "_id": "fake id",
+        "title": "fake title",
+        "text": "fake text",
+        "_userId": "fake userid",
+        "__v": 8,
+        "links": [
+          "link1",
+        ],
+        "isDone": true,
+        "creationDate": "somadey",
+        "lastModificationDate": "someday",
+        "otherTags": [
+          {
+            "_id": "fake tag id",
+            "title": "fake tag title",
+            "_userId": "fake userid",
+            "__v": 0,
+            "notes": [
+              "fakeid",
+            ]
+          }
+        ],
+        "mainTags": [
+        {
+          "_id": "fake tag id",
+          "title": "fake tag title",
+          "_userId": "fake userid",
+          "__v": 0,
+          "notes": [
+            "fakeid",
+          ]
+        }
+        ]
+      },
+      "tags":[
+      {
+        "_id": "fake tag id",
+        "title": "fake tag title",
+        "_userId": "fake userid",
+        "__v": 0,
+        "notes": [
+          "fakeid",
+        ]
+      }
+      ]
+    }}
+          </code>
+        </td>
+      </tr>
+
+
+            <tr class="post">
+              <td>POST</td>
               <td>Yes</td>
-              <td>/api/tags/by-id</td>
-              <td>Delete the tag for the logged in user with an id that matches the provided one.
-              </td>
+              <td>/api/users/home/all<td>
+              <td>Get all the objects in the DB, notes populated by tag AND tags, these latter are not populated.</td>
               <td>
                 <ul>
                   <li><code>Authorization: token</code></li>
-                  <li><code>Content-type: application/json</code></li>
                 </ul>
               </td>
-              <td><code>{"id":"id-to-delete"}</code></td>
-              <td>If ok:<br>
-                <code>{"ok": true, "result":{"ok": "true","result": {"n" : obj-count,"ok": 1}}}</code><br>
-                If !ok: <br>
-                <code>{"ok": false, "msg": "error-msg"}</code>
+              <td>-</td>
+              <td>
+                A JSON object:<br>
+                <code>
+                  {"ok": true,
+                  "result":{
+                    "notes":[{note1-populated}],
+                    "tags":[{tag1}, {tag2}]
+                  }}
+                </code>
               </td>
               <td>
                 <code>
                   {
-                    "ok": "true",
-                    "result": {
-                      "n": 1,
-                      "ok": 1
-                    }
-                  }
+        "ok": true,
+        "result": {
+          "notes": [
+            {
+              "_id": "fake id",
+              "title": "fake title",
+              "text": "fake text",
+              "_userId": "fake userid",
+              "__v": 8,
+              "links": [
+                "link1",
+              ],
+              "isDone": true,
+              "creationDate": "somadey",
+              "lastModificationDate": "someday",
+              "otherTags": [
+                {
+                  "_id": "fake tag id",
+                  "title": "fake tag title",
+                  "_userId": "fake userid",
+                  "__v": 0,
+                  "notes": [
+                    "fakeid",
+                  ]
+                }
+              ],
+              "mainTags": [
+              {
+                "_id": "fake tag id",
+                "title": "fake tag title",
+                "_userId": "fake userid",
+                "__v": 0,
+                "notes": [
+                  "fakeid",
+                ]
+              }
+              ]
+            },
+            "tags":[
+            {
+              "_id": "fake tag id",
+              "title": "fake tag title",
+              "_userId": "fake userid",
+              "__v": 0,
+              "notes": [
+                "fakeid",
+              ]
+            }
+            ]
+          }}
                 </code>
               </td>
             </tr>
-          -->
 
-<!--
-            <tr class="delete">
-              <td>DELETE</td>
-              <td>Yes</td>
-              <td>/api/tags/delete-by-ids</td>
-              <td>Delete the tags for the logged in user with an ids that match the provided ones.
-              </td>
-              <td>
-                <ul>
-                  <li><code>Authorization: token</code></li>
-                  <li><code>Content-type: application/json</code></li>
-                </ul>
-              </td>
-              <td><code>{"ids":[array-of-ids]}</code></td>
-              <td>If ok:<br>
-                <code>{"ok": true, "result":{"ok": "true","result": {"n" : obj-count,"ok": 1}}}</code><br>
-                If !ok: <br>
-                <code>{"ok": false, "msg": "error-msg"}</code>
-              </td>
-              <td>
-                <code>
+
+
+
+                  <tr class="get">
+                    <td>GET</td>
+                    <td>Yes</td>
+                    <td>/api/users/home/all/unpop<td>
+                    <td>Get all the objects in the DB, notes and tags, no <code>populate()</code> is done.</td>
+                    <td>
+                      <ul>
+                        <li><code>Authorization: token</code></li>
+                      </ul>
+                    </td>
+                    <td>-</td>
+                    <td>
+                      A JSON object:<br>
+                      <code>
+                        {"ok": true,
+                        "result":{
+                          "notes":[{note1}],
+                          "tags":[{tag1}, {tag2}]
+                        }}
+                      </code>
+                    </td>
+                    <td>
+                      <code>
+                        {
+              "ok": true,
+              "result": {
+                "notes": [
                   {
-                    "ok": "true",
-                    "result": {
-                      "n": 1,
-                      "ok": 1
+                    "_id": "fake id",
+                    "title": "fake title",
+                    "text": "fake text",
+                    "_userId": "fake userid",
+                    "__v": 8,
+                    "links": [
+                      "link1",
+                    ],
+                    "isDone": true,
+                    "creationDate": "somadey",
+                    "lastModificationDate": "someday",
+                    "otherTags": [
+                      {
+                        "_id": "fake tag id",
+                      }
+                    ],
+                    "mainTags": [
+                    {
+                      "_id":"fake tag id"
                     }
+                    ]
+                  },
+                  "tags":[
+                  {
+                    "_id": "fake tag id",
+                    "title": "fake tag title",
+                    "_userId": "fake userid",
+                    "__v": 0,
+                    "notes": [
+                      "fakeid",
+                    ]
                   }
-                </code>
-              </td>
-            </tr>
--->
+                  ]
+                }}
+                      </code>
+                    </td>
+                  </tr>
+
+
+                  <tr class="post">
+                    <td>POST</td>
+                    <td>Yes</td>
+                    <td>/api/users/home/all/unpop<td>
+                    <td>Get all the objects in the DB, notes and tags, no <code>populate()</code> is done.</td>
+                    <td>
+                      <ul>
+                        <li><code>Authorization: token</code></li>
+                      </ul>
+                    </td>
+                    <td>-</td>
+                    <td>
+                      A JSON object:<br>
+                      <code>
+                        {"ok": true,
+                        "result":{
+                          "notes":[{note1}],
+                          "tags":[{tag1}, {tag2}]
+                        }}
+                      </code>
+                    </td>
+                    <td>
+                      <code>
+                        {
+              "ok": true,
+              "result": {
+                "notes": [
+                  {
+                    "_id": "fake id",
+                    "title": "fake title",
+                    "text": "fake text",
+                    "_userId": "fake userid",
+                    "__v": 8,
+                    "links": [
+                      "link1",
+                    ],
+                    "isDone": true,
+                    "creationDate": "somadey",
+                    "lastModificationDate": "someday",
+                    "otherTags": [
+                      {
+                        "_id": "fake tag id",
+                      }
+                    ],
+                    "mainTags": [
+                    {
+                      "_id":"fake tag id"
+                    }
+                    ]
+                  },
+                  "tags":[
+                  {
+                    "_id": "fake tag id",
+                    "title": "fake tag title",
+                    "_userId": "fake userid",
+                    "__v": 0,
+                    "notes": [
+                      "fakeid",
+                    ]
+                  }
+                  ]
+                }}
+                      </code>
+                    </td>
+                  </tr>
+
+        <tr class="get">
+          <td>GET</td>
+          <td>Yes</td>
+          <td>/api/users/all/min</td>
+          <td>
+            Get the IDS of all the tags and the notes for the logged in user.
+          </td>
+          <td>
+            <ul>
+              <li><code>Authorization: token</code></li>
+            </ul>
+          </td>
+          <td>-</td>
+          <td>
+            A JSON object:<br>
+            <code>
+              {"ok":true,
+            "result":{
+              "notes":[array-of-ids],
+              "tags":[array-of-tags]
+            }
+            }
+            </code>
+          </td>
+          <td>
+            <code>
+              {"ok":true,
+            "result":{
+              "notes":[{"_id":"id1"}, {"_id":"id2"}],
+              "tags":[{"_id":"id1"}, {"_id":"id2"}]
+            }
+            }
+            </code>
+          </td>
+        </tr>
+
+
+
     </table>
   </p>
 
@@ -2269,69 +2649,6 @@
 <br>
 <br>
 
-
-  <script>
-  function paintTable(){
-    // var table = document.getElementsByTagName("table")[0];
-    // var rows = table.getElementsByTagName("tr");
-    // for(var i=0;i<rows.length;i++){
-    //   var cells = rows[i].childNodes;
-    //   if(rows[i].style.class=="get"){
-    //     for(var j=0;j<cells.length;j++){
-    //       cells[i].style.cssText="border: 1px solide green";
-    //     }
-    //   }
-    // }
-
-    // var getRows = document.getElementsByClassName("get");
-    // for(var i=0;i<getRows.length;i++){
-    //   var row = getRows[i];
-    //   var cells = row.getElementsByTagName("td");
-    //   for(var j=0;j<cells.length;j++){
-    //     cells[j].style.cssText="border: 1px solid limegreen";
-    //   }
-    // }
-    //
-    // var getRows = document.getElementsByClassName("post");
-    // for(var i=0;i<getRows.length;i++){
-    //   var row = getRows[i];
-    //   var cells = row.getElementsByTagName("td");
-    //   for(var j=0;j<cells.length;j++){
-    //     cells[j].style.cssText="border: 1px solid goldenrod";
-    //   }
-    // }
-    //
-    // var getRows = document.getElementsByClassName("put");
-    // for(var i=0;i<getRows.length;i++){
-    //   var row = getRows[i];
-    //   var cells = row.getElementsByTagName("td");
-    //   for(var j=0;j<cells.length;j++){
-    //     cells[j].style.cssText="border: 1px solid blue";
-    //   }
-    // }
-    //
-    // var getRows = document.getElementsByClassName("delete");
-    // for(var i=0;i<getRows.length;i++){
-    //   var row = getRows[i];
-    //   var cells = row.getElementsByTagName("td");
-    //   for(var j=0;j<cells.length;j++){
-    //     cells[j].style.cssText="border: 1px solid red";
-    //   }
-    // }
-    //
-    // var getRows = document.getElementsByClassName("special");
-    // for(var i=0;i<getRows.length;i++){
-    //   var row = getRows[i];
-    //   // var cells = row.getElementsByTagName("tr");
-    //   // for(var j=0;j<cells.length;j++){
-    //   //   cells[j].style.cssText="outline: thin solid";
-    //   // }
-    //   row.style.cssText = "outline: thin solid";
-    // }
-
-
-  }
-  </script>
 
 
 <body>
