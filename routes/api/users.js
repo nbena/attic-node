@@ -11,12 +11,12 @@ var auth = passport.authenticate('jwt', { session: false});
 var authLog = passport.authenticate('local', {session: false}); //just when /auth/login
 
 
+router.put("/create", UserController.registerUser);
+
+
 router.get("/home", auth, UserController.home);
 
 router.post("/home", auth, UserController.home);
-
-
-router.post("/create", UserController.registerUser);
 
 router.get("/home/all", auth, UserController.getAllPopulated);
 

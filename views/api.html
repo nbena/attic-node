@@ -61,6 +61,12 @@
           <!-- <li><a href=""></a></li> -->
         </ul>
       </li>
+      <li><a href="#user-table">Users</a>:
+        <ul>
+          <li><a href="#users-create">/api/users/create</a></li>
+          <li><a href="#users-home">/api/users/home</a></li>
+        </ul>
+      </li>
     </ul>
 
 
@@ -2201,12 +2207,19 @@
 
   <p>
     USER
-    <table  id="user-login" border="1">
+    <table  id="user-table" border="1">
+
+      <tr class="special" id="users-create">
+        <td colspan="7" align="center">
+          <b>/api/users/create</b>
+        </td>
+      </tr>
+
       <tr>
         <th>Method</th><th>Protected</th><th>URI</th><th>Description</th><th>Headers</th><th>Params</th><th>Return</th><th>Example return</th>
       </tr>
-      <tr class="POST">
-        <td>POST</td>
+      <tr class="put">
+        <td>PUT</td>
         <td>No</td>
         <td>/api/users/create</td>
         <td>Create a new user, with the given <code>e_mail</code> and <code>password</code>, the latter is the hashed before being saved.</td>
