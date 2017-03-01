@@ -226,8 +226,6 @@ function updateTagsOnModifiedOtherTags(note, next){
 //called just when a new note is created.
 noteSchema.pre( 'save', function(next){
   var note = this;
-  // console.log("the fucking event is fired");
-  // console.log("note.isModified('mainTags')? ", note.isModified('mainTags'));
     if(this.isNew){
       pushTagsOnNewNote(note, next);
     }else{
@@ -247,16 +245,3 @@ noteSchema.pre( 'save', function(next){
 var Note = mongoose.model('Note', noteSchema);
 
 module.exports = Note;
-
-/*
-schema.pre('save', function (next) {
-    this.wasNew = this.isNew;
-    next();
-});
-
-schema.post('save', function () {
-    if (this.wasNew) {
-        // ...
-    }
-});
-*/
