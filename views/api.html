@@ -2830,6 +2830,80 @@
                     <td>Yes</td>
                     <td>/api/users/all/min</td>
                     <td>
+                        Get the IDS and the titles of all the tags and the notes for the logged in user.
+                    </td>
+                    <td>
+                        <ul>
+                            <li><code>Authorization: token</code></li>
+                        </ul>
+                    </td>
+                    <td>-</td>
+                    <td>
+                        A JSON object:<br>
+                        <code>
+                          {"ok":true,
+                          "result":{
+                            "notes":[{id, title}],
+                            "tags":[{id,title}]
+                          }
+                        }
+                      </code>
+                    </td>
+                    <td>
+                        <code>
+                          {"ok":true,
+                          "result":{
+                            "notes":[{"_id":"id1", "title":"title1"}, {"_id":"id2", "title":"title2"}],
+                            "tags":[{"_id":"id1", "title":"title1"}, {"_id":"id2","title":"title2"}]
+                          }
+                        }
+                      </code>
+                    </td>
+                </tr>
+
+
+                <tr class="post">
+                    <td>POST</td>
+                    <td>Yes</td>
+                    <td>/api/users/all/min</td>
+                    <td>
+                        Get the IDS and the titles of all the tags and the notes for the logged in user.
+                    </td>
+                    <td>
+                        <ul>
+                            <li><code>Authorization: token</code></li>
+                        </ul>
+                    </td>
+                    <td>-</td>
+                    <td>
+                        A JSON object:<br>
+                        <code>
+                          {"ok":true,
+                          "result":{
+                            "notes":[{id, title}],
+                            "tags":[{id, title}]
+                          }
+                        }
+                      </code>
+                    </td>
+                    <td>
+                        <code>
+                          {"ok":true,
+                          "result":{
+                            "notes":[{"_id":"id1", "title":"title1"}, {"_id":"id2", "title":"title2"}],
+                            "tags":[{"_id":"id1","title":"title1"}, {"_id":"id2", "title":"title2"}]
+                          }
+                        }
+                      </code>
+                    </td>
+                </tr>
+
+
+                <tr class="get">
+                    <td>GET</td>
+                    <td>Yes</td>
+                    <td>/api/users/all/ids</td>
+                    <td>
                         Get the IDS of all the tags and the notes for the logged in user.
                     </td>
                     <td>
@@ -2841,23 +2915,60 @@
                     <td>
                         A JSON object:<br>
                         <code>
-              {"ok":true,
-            "result":{
-              "notes":[array-of-ids],
-              "tags":[array-of-tags]
-            }
-            }
-            </code>
+                          {"ok":true,
+                          "result":{
+                            "notes":[array-of-ids],
+                            "tags":[array-of-tags]
+                          }
+                        }
+                      </code>
                     </td>
                     <td>
                         <code>
-              {"ok":true,
-            "result":{
-              "notes":[{"_id":"id1"}, {"_id":"id2"}],
-              "tags":[{"_id":"id1"}, {"_id":"id2"}]
-            }
-            }
-            </code>
+                          {"ok":true,
+                          "result":{
+                            "notes":[{"_id":"id1"}, {"_id":"id2"}],
+                            "tags":[{"_id":"id1"}, {"_id":"id2"}]
+                          }
+                        }
+                      </code>
+                    </td>
+                </tr>
+
+
+                <tr class="post">
+                    <td>POST</td>
+                    <td>Yes</td>
+                    <td>/api/users/all/ids</td>
+                    <td>
+                        Get the IDS of all the tags and the notes for the logged in user.
+                    </td>
+                    <td>
+                        <ul>
+                            <li><code>Authorization: token</code></li>
+                        </ul>
+                    </td>
+                    <td>-</td>
+                    <td>
+                        A JSON object:<br>
+                        <code>
+                          {"ok":true,
+                          "result":{
+                            "notes":[array-of-ids],
+                            "tags":[array-of-tags]
+                          }
+                        }
+                      </code>
+                    </td>
+                    <td>
+                        <code>
+                          {"ok":true,
+                          "result":{
+                            "notes":[{"_id":"id1"}, {"_id":"id2"}],
+                            "tags":[{"_id":"id1"}, {"_id":"id2"}]
+                          }
+                        }
+                      </code>
                     </td>
                 </tr>
 
