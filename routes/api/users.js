@@ -30,4 +30,8 @@ router.get("/home/all/min", auth, UserController.getAllMin);
 
 router.post("/home/all/min", auth, UserController.getAllMin);
 
+router.get("/home/all/ids", auth, UserController.getAllIds);
+
+router.post("/home/all/ids", auth, UserController.getAllIds);
+
 module.exports = router;

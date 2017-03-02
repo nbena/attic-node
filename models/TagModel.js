@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var Note = require("./NoteModel.js");
+mongoose.Promise=require('bluebird');
 
 var tagSchema = new Schema({
   // _id: {type: String, uppercase: false, trim: true},

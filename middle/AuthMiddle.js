@@ -18,7 +18,6 @@ function getToken(headers) {
   }
   // return headers.authorization;
 };
-module.exports.getToken = getToken;
 
 /*
 { user:

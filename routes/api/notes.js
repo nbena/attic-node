@@ -30,22 +30,14 @@ router.get("/all/unpop", auth, NoteController.allNotesUnpopulated);
 
 router.post("/all/unpop", auth, NoteController.allNotesUnpopulated);
 
-router.post("/by-title/", auth, NoteController.noteByTitlePopulated);
+router.post("/by-title/", auth, NoteController.notesByTitlePopulated);
 
-router.post("/by-title/unpop", auth, NoteController.noteByTitleUnpopulated);
+router.post("/by-title/unpop", auth, NoteController.notesByTitleUnpopulated);
 
-router.post("/by-title/reg", auth,  NoteController.noteByTitleRegexPopulated);
+router.post("/by-title/reg", auth,  NoteController.notesByTitleRegexPopulated);
 
-router.post("/by-title/reg/unpop", auth, NoteController.noteByTitleRegexUnpopulated);
+router.post("/by-title/reg/unpop", auth, NoteController.notesByTitleRegexUnpopulated);
 
-
-/*
-Require:
-{"text":"text-to-search"}
-Return a JSON array with the notes that have text
-that matches that param 'text'
-*/
-router.post("/by-text/", auth, NoteController.noteByTextPopulated);
 
 /*
 Require:
@@ -53,7 +45,15 @@ Require:
 Return a JSON array with the notes that have text
 that matches that param 'text'
 */
-router.post("/by-text/unpop", auth, NoteController.noteByTextUnpopulated);
+router.post("/by-text/", auth, NoteController.notesByTextPopulated);
+
+/*
+Require:
+{"text":"text-to-search"}
+Return a JSON array with the notes that have text
+that matches that param 'text'
+*/
+router.post("/by-text/unpop", auth, NoteController.notesByTextUnpopulated);
 
 
 /*
@@ -61,7 +61,7 @@ Return a JSON object (note) with an id same as the id
 passed
 Population is done.
 */
-router.post("/by-id", auth, NoteController.noteByIdPopulated);
+
 
 
 router.post("/by-tag/unpop", auth,  NoteController.notesByTagUnpopulated);
@@ -71,9 +71,9 @@ router.put("/create", auth, NoteController.createNote);
 
 router.post("/mod/addtags", auth, NoteController.addTags);
 
-router.post("/mod/addrefs", auth, NoteController.addRefs);
+router.post("/mod/addrefs", auth, NoteController.addLinks);
 
-router.post("/mod/removerefs", auth, NoteController.removeRefs);
+router.post("/mod/removerefs", auth, NoteController.removeLinks);
 
 router.post("/mod/removetags", auth, NoteController.removeTags);
 
@@ -97,6 +97,10 @@ router.get("/all/min", auth, NoteController.allNotesMin);
 
 router.post("/all/min", auth, NoteController.allNotesMin);
 
+router.get("/all/ids", auth, NoteController.allNotesIds);
+
+router.post("/all/ids", auth, NoteController.allNotesIds);
+
 
 
 /*
@@ -104,6 +108,7 @@ Return a JSON object (note) with an id same as the id
 passed
 Population is done.
 */
+router.post("/by-id", auth, NoteController.noteByIdPopulated);
 
 router.get("/:id", auth, NoteController.noteByIdPopulated);
 

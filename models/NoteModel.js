@@ -5,6 +5,7 @@ var Tag = require("./TagModel.js")
 // var hook = require('captain-hook');
 
 var Utils = require('../public/javascripts/Utils');
+mongoose.Promise=require('bluebird');
 
 
 // defining Schema for a Note object
@@ -23,7 +24,7 @@ var noteSchema = new Schema({
   title:{type: String,
     required: true,
     lowercase: true,
-    index: true}, //can't be unique
+    index: true}, //can't be uniqueg
   // _userId:{type: String, ref: 'User'},
   _userId: {type: Schema.Types.ObjectId, ref: 'User'},
   text: String,
@@ -211,7 +212,7 @@ function updateTagsOnModifiedOtherTags(note, next){
       {_id: {$in: note.mainTags}}
     ]},
       {$addToSet: {notes: note._id},
-      $inc: {notes_length}},
+      $inc: {notes_length:1}},
       {multi: true},
       function(err, data){
         if(err){

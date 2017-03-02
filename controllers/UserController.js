@@ -3,36 +3,27 @@ var User = require('../models/UserModel');
 var jwt = require("jsonwebtoken");
 var config = require('../config/database');
 
-var AuthController = require('./AuthController');
+// var AuthController = require('./AuthController');
 var Const = require('../public/javascripts/Const');
 
 var Note = require('../models/NoteModel');
 var Tag = require('../models/TagModel');
-var ParamHelp = require('../public/javascripts/ParamHelp');
+var ParamHelpRequest = require('../public/javascripts/ParamHelpRequest');
 var Utils = require('../public/javascripts/Utils');
+var UserMiddle = require('../middle/UserMiddle');
 
 var mongoose = require('mongoose');
 mongoose.Promise = require('bluebird');
 
 function registerUser(req, res, next){
-  var ret = ParamHelp.registerCheck(req, res);
-  if(!ret){
+  var ret = ParamHelpRequest.registerCheck(req, res);
+  if(!ret.ok){
+    res.json(ret);
     return;
   }
-  var user = new User({
-    e_mail: req.body.e_mail,
-    hashedPassword: req.body.password
-  })
-  .save()
-    .then(function(result){
-      res.json({ok: true,
-              id:result._id,
-              token: 'JWT '+ AuthController.generateToken(user)
-            });
-    })
-    .catch(function(err){
-      res.json({ok: false, msg: Utils.jsonErr(err)});
-    });
+  UserMiddle.registerUser(req.body.e_mail, req.body.password, function(result){
+    res.json(result);
+  });
 }
 
 
@@ -41,103 +32,62 @@ module.exports.registerUser = registerUser;
 
 
 function home(req, res, next){
-  if(req.user){
-    var obj = {};
-    var promise = Note.count({_userId: req.user._id}).exec();
-    promise.then(function(noteCount){
-      obj.noteCount=noteCount;
-      return Tag.count({_userId: req.user._id}).exec();
-    })
-    .then(function(tagCount){
-      obj.tagCount=tagCount;
-      return tagCount;
-    })
-    .then(function(tagCount){
-      return res.json({ok: true, result: obj});
-    })
-    .catch(function(err){
-      res.json({ok: false, msg: err});
-    });
-
-  }else{
-    res.json({ok: false, msg: Const.ERR_TOKEN_REQUIRED})
+  var ret = ParamHelpRequest.justUser(req);
+  if(!ret.ok){
+    res.json(ret);
+    return;
   }
+  UserMiddle.home(req.user._id, function(result){
+    res.json(result);
+  });
 }
 module.exports.home = home;
 
 function getAllUnpopulated(req, res, next){
-  var ret = ParamHelp.justUser(req, res);
-  if(!ret){
+  var ret = ParamHelpRequest.justUser(req, res);
+  if(!ret.ok){
+    res.json(ret);
     return;
   }
-  var result = {};
-  Note.find({_userId: req.user._id})
-  .sort({title:1, lastModificationDate: -1, creationDate: -1})
-  .exec()
-  .then(function(notes){
-    result.notes=notes;
-    return Tag.find({_userId: req.user._id})
-      .sort({title:1})
-      .exec();
-  })
-  .then(function(tags){
-    result.tags=tags;
-    return res.json({ok: true, result: result});
-  })
-  .catch(function(err){
-    res.json({ok: false, msg: Utils.jsonErr(err)});
+  UserMiddle.getAllUnpopulated(req.user._id, function(result){
+    res.json(result);
   });
 }
 module.exports.getAllUnpopulated = getAllUnpopulated;
 
 
 function getAllPopulated(req, res, next){
-  var ret = ParamHelp.justUser(req, res);
-  if(!ret){
+  var ret = ParamHelpRequest.justUser(req, res);
+  if(!ret.ok){
+    res.json(ret);
     return;
   }
-  var result = {};
-  Note.find({_userId: req.user._id})
-  .sort({title:1, lastModificationDate: -1, creationDate: -1})
-  .populate("mainTags")
-  .populate("otherTags")
-  .exec()
-  .then(function(notes){
-    result.notes=notes;
-    return Tag.find({_userId: req.user._id})
-      .sort({title:1})
-      .exec();
-  })
-  .then(function(tags){
-    result.tags=tags;
-    return res.json({ok: true, result: result});
-  })
-  .catch(function(err){
-    res.json({ok: false, msg: Utils.jsonErr(err)});
+  UserMiddle.getAllPopulated(req.user._id, function(result){
+    res.json(result);
   });
 }
 module.exports.getAllPopulated = getAllPopulated;
 
 function getAllMin(req, res, next){
-  var ret = ParamHelp.justUser(req, res);
-  if(!ret){
+  var ret = ParamHelpRequest.justUser(req, res);
+  if(!ret.ok){
+    res.json(ret);
     return;
   }
-  var result = {};
-  Note.find({_userId: req.user._id},{_id: 1})
-  // .sort({title:1, lastModificationDate: -1, creationDate: -1})
-  .exec()
-  .then(function(notes){
-    result.notes=notes;
-    return Tag.find({_userId: req.user._id},{_id:1})
-      .exec();
-  })
-  .then(function(tags){
-    result.tags=tags;
-    return res.json({ok: true, result: result});
-  })
-  .catch(function(err){
-    res.json({ok: false, msg: Utils.jsonErr(err)});
+  UserMiddle.getAllMin(req.user._id, function(result){
+    res.json(result);
   });
 }
 module.exports.getAllMin = getAllMin;
+
+function getAllIds(req, res, next){
+  var ret = ParamHelpRequest.justUser(req, res);
+  if(!ret.ok){
+    res.json(ret);
+    return;
+  }
+  UserMiddle.getAllIds(req.user._id, function(result){
+    res.json(result);
+  });
+}
+module.exports.getAllIds=getAllIds;

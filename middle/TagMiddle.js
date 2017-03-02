@@ -2,18 +2,16 @@ var Tag = require('../models/TagModel');
 var Note = require('../models/NoteModel');
 var Const = require('../public/javascripts/Const.js');
 var Utils = require('../public/javascripts/Utils.js');
-var ParamHelp = require('../public/javascripts/ParamHelp');
+var ParamHelpMiddle = require('../public/javascripts/ParamHelpMiddle');
 
 var mongoose = require('mongoose');
 mongoose.Promise = require('bluebird');
 
 function getMostUsedTag(id, limitParam, cb){
-  if (!limitParam instanceof Number){
-    throw new TypeError("second arg must be Number");
-  }
-  if (!cb instanceof Function){
-    throw new TypeError("third arg must be Function");
-  }
+  var ret = ParamHelpMiddle.tagsMostUsed(userId, cb);
+    if(ret!=""){
+      throw new TypeError(ret);
+    }
   var result = {};
   Tag.find({_userId: id})
     .sort({notes_length:-1})
@@ -32,8 +30,27 @@ function getMostUsedTag(id, limitParam, cb){
 module.exports.getMostUsedTag=getMostUsedTag;
 
 function allTagsMin(userId, cb){
-  if (!cb instanceof Function){
-    throw new TypeError("third arg must be Function");
+  var ret = ParamHelpMiddle.justCbUserIdCheck(userId, cb);
+  if(ret!=""){
+    throw new TypeError(ret);
+  }
+  var result={};
+  Tag.find({_userId: userId},{_id: 1, title:1}).exec()
+  .then(function(tags){
+    result={ok: true, result: tags};
+    return cb(result);
+  })
+  .catch(function(err){
+    result={ok: false, msg: Utils.jsonErr(err)};
+    return cb(result);
+  });
+}
+module.exports.allTagsMin=allTagsMin;
+
+function allTagsIds(userId, cb){
+  var ret = ParamHelpMiddle.justCbUserIdCheck(userId, cb);
+  if(ret!=""){
+    throw new TypeError(ret);
   }
   var result={};
   Tag.find({_userId: userId},{_id: 1}).exec()
@@ -46,11 +63,12 @@ function allTagsMin(userId, cb){
     return cb(result);
   });
 }
-module.exports.allTagsMin=allTagsMin;
+module.exports.allTagsIds=allTagsIds;
 
 function countTags(userId, cb){
-  if (!cb instanceof Function){
-    throw new TypeError("third arg must be Function");
+  var ret = ParamHelpMiddle.justCbUserIdCheck(userId, cb);
+  if(ret!=""){
+    throw new TypeError(ret);
   }
   var result={};
   Tag.count({_userId: userId}).exec()
@@ -66,8 +84,9 @@ function countTags(userId, cb){
 module.exports.countTags=countTags;
 
 function deleteAllTags(userId, cb){
-  if (!cb instanceof Function){
-    throw new TypeError("third arg must be Function");
+  var ret = ParamHelpMiddle.justCbUserIdCheck(userId, cb);
+  if(ret!=""){
+    throw new TypeError(ret);
   }
   var result={};
   Tag.remove({})
@@ -89,8 +108,9 @@ function deleteAllTags(userId, cb){
 module.exports.deleteAllTags=deleteAllTags;
 
 function deleteTagById(userId, id, cb){
-  if (!cb instanceof Function){
-    throw new TypeError("third arg must be Function");
+  var ret = ParamHelpMiddle.userIdIdCheck(userId, id, cb);
+  if(ret!=""){
+    throw new TypeError(ret);
   }
   var result={};
   Tag.findOne({_id: id, _userId: userId}).exec()
@@ -114,8 +134,9 @@ function deleteTagById(userId, id, cb){
 module.exports.deleteTagById=deleteTagById;
 
 function createTag(userId, title,cb){
-  if (!cb instanceof Function){
-    throw new TypeError("third arg must be Function");
+  var ret = ParamHelpMiddle.byTitleCheck(userId, title, cb);
+  if(ret!=""){
+    throw new TypeError(ret);
   }
   var result={};
   var tag =new Tag({
@@ -135,8 +156,9 @@ function createTag(userId, title,cb){
 module.exports.createTag=createTag;
 
 function tagById(userId, id, cb){
-  if (!cb instanceof Function){
-    throw new TypeError("third arg must be Function");
+  var ret = ParamHelpMiddle.userIdIdCheck(userId, id, cb);
+  if(ret!=""){
+    throw new TypeError(ret);
   }
   var result={};
   Tag.findOne({_userId: userId, _id: id}).exec()
@@ -152,11 +174,9 @@ function tagById(userId, id, cb){
 module.exports.tagById;
 
 function tagByTitleUnpopulated(userId, title, cb){
-  if (!cb instanceof Function){
-    throw new TypeError("third arg must be Function");
-  }
-  if(!title instanceof String){
-    throw new TypeError("second argument must be String");
+  var ret = ParamHelpMiddle.byTitleCheck(userId, title, cb);
+  if(ret!=""){
+    throw new TypeError(ret);
   }
   var result={};
   Tag.find({_userId: userId, title: {$regex: titleToSearch}})
@@ -173,13 +193,8 @@ function tagByTitleUnpopulated(userId, title, cb){
 }
 module.exports.tagByTitleUnpopulated=tagByTitleUnpopulated;
 
-function tagByTitlePopulated(id, title, cb){
-  if (!cb instanceof Function){
-    throw new TypeError("third arg must be Function");
-  }
-  if(!title instanceof String){
-    throw new TypeError("second argument must be String");
-  }
+function tagByTitlePopulated(userId, title, cb){
+
   var result={};
   Tag.find({_userId: userId, title: {$regex: titleToSearch}})
     .populate("notes")
@@ -197,8 +212,9 @@ function tagByTitlePopulated(id, title, cb){
 module.exports.tagByTitlePopulated=tagByTitlePopulated;
 
 function allTagsPopulated(userId, cb){
-  if (!cb instanceof Function){
-    throw new TypeError("third arg must be Function");
+  var ret = ParamHelpMiddle.justCbUserIdCheck(userId, cb);
+  if(ret!=""){
+    throw new TypeError(ret);
   }
   var result={};
   Tag.find({_userId: userId})
@@ -217,8 +233,9 @@ function allTagsPopulated(userId, cb){
 module.exports.allTagsPopulated=allTagsPopulated;
 
 function allTagsUnpopulated(userId, cb){
-  if (!cb instanceof Function){
-    throw new TypeError("third arg must be Function");
+  var ret = ParamHelpMiddle.justCbUserIdCheck(userId, cb);
+  if(ret!=""){
+    throw new TypeError(ret);
   }
   var result={};
   Tag.find({_userId: userId})

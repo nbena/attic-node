@@ -33,6 +33,10 @@ router.get("/all/min", auth, TagController.allTagsMin);
 
 router.post("/all/min", auth, TagController.allTagsMin);
 
+router.get("/all/ids", auth, TagController.allTagsIds);
+
+router.post("/all/ids", auth, TagController.allTagsIds);
+
 
 router.post("/by-title/reg",auth, TagController.tagByTitlePopulated);
 

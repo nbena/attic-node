@@ -16,24 +16,6 @@ function arrayDiff(arg0, arg1){
   }
   module.exports.jsonErr = jsonErr;
 
-  // function isTagsArrayOk(req){
-  //   if(req.body.mainTags  && req.body.otherTags){
-  //     return (req.body.mainTags instanceof Array) &&
-  //       (req.body.otherTags instanceof Array);
-  //   }
-  //   if(req.body.mainTtags){
-  //     return req.body.mainTags instanceof Array;
-  //   }
-  //   if(req.body.otherTags){
-  //     return req.body.otherTags instanceof Array;
-  //   }
-  // }
-  // module.exports.isTagsArrayOk = isTagsArrayOk;
-
-  const Option={ADD:0, REMOVE:1};
-  module.exports.Option = Option;
-
-
 
 function error404(req, res, next){
   res.status(404);
