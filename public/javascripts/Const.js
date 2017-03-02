@@ -23,3 +23,5 @@ exports.ERR_REF_REQUIRED = "ref required.";
 exports.ERR_ID_REF_REQUIRED = "id and ref required.";
 exports.ERR_ID_DONE_REQUIRED = "id and done required.";
 exports.ERR_404 = "404 not found";
+
+exports.ERR_USER="user required, error";

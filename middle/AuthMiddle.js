@@ -51,7 +51,14 @@ function generateToken(user){
 
 module.exports.generateToken = generateToken;
 
-function authenticate(req, res, next){
-  res.json({ok: true, token: 'JWT '+generateToken(req.user)});
+function authenticate(user, cb){
+  if(!user instanceof Object){
+    throw new TypeError("user must be instanceof Object");
+  }
+  if(!cb instanceof Function){
+    throw new TypeError("cb must be instanceof Function");
+  }
+  var result={ok: true, token: 'JWT '+generateToken(user)};
+  return cb(result);
 }
 module.exports.authenticate = authenticate;
