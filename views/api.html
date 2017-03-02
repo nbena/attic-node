@@ -659,16 +659,16 @@
                     </td>
                     <td> - </td>
                     <td>If ok:<br>
-                        <code>{"ok": true, "result":[array-of-tags-element]}</code><br> If !ok: <br>
+                        <code>{"ok": true, "result":[array-of-notes-element]}</code><br> If !ok: <br>
                         <code>{"ok": false, "msg": "error-msg"}</code>
                     </td>
                     <td>
                         <code>
-            {"ok":true, "result":[{
-  "_id": "5898892b235e362230eb1305",
-  "title": "note1 title",
-}]}
-          </code>
+                          {"ok":true, "result":[{
+                            "_id": "fake id",
+                            "title":"fake title"
+                          }]}
+                        </code>
                     </td>
                 </tr>
 
@@ -685,16 +685,66 @@
                     </td>
                     <td> - </td>
                     <td>If ok:<br>
-                        <code>{"ok": true, "result":[array-of-tags-element]}</code><br> If !ok: <br>
+                        <code>{"ok": true, "result":[array-of-notes-element]}</code><br> If !ok: <br>
                         <code>{"ok": false, "msg": "error-msg"}</code>
                     </td>
                     <td>
                         <code>
-            {"ok":true, "result":[{
-  "_id": "5898892b235e362230eb1305",
-  "title": "note1 title",
-}]}
-          </code>
+                          {"ok":true, "result":[{
+                            "_id": "fake id",
+                            "title": "fake title"
+                          }]}
+                        </code>
+                    </td>
+                </tr>
+
+
+                <tr class="get">
+                    <td>GET</td>
+                    <td>Yes</td>
+                    <td>/api/notes/all/ids</td>
+                    <td>Get all the notes for the logged in user. Just id is provided.</td>
+                    <td>
+                        <ul>
+                            <li><code>Authorization: token</code></li>
+                        </ul>
+                    </td>
+                    <td> - </td>
+                    <td>If ok:<br>
+                        <code>{"ok": true, "result":[array-of-notes-element]}</code><br> If !ok: <br>
+                        <code>{"ok": false, "msg": "error-msg"}</code>
+                    </td>
+                    <td>
+                        <code>
+                          {"ok":true, "result":[{
+                            "_id": "fake id 1"
+                          }]}
+                        </code>
+                    </td>
+                </tr>
+
+
+                <tr class="post">
+                    <td>POST</td>
+                    <td>Yes</td>
+                    <td>/api/notes/all/ids</td>
+                    <td>Get all the notes for the logged in user. Just id is provided.</td>
+                    <td>
+                        <ul>
+                            <li><code>Authorization: token</code></li>
+                        </ul>
+                    </td>
+                    <td> - </td>
+                    <td>If ok:<br>
+                        <code>{"ok": true, "result":[array-of-notes-element]}</code><br> If !ok: <br>
+                        <code>{"ok": false, "msg": "error-msg"}</code>
+                    </td>
+                    <td>
+                        <code>
+                          {"ok":true, "result":[{
+                            "_id": "fake id 1"
+                          }]}
+                        </code>
                     </td>
                 </tr>
 
@@ -1882,7 +1932,89 @@
                     <td>GET</td>
                     <td>Yes</td>
                     <td>/api/tags/all/min</td>
-                    <td>Get all the tag ids for the current user.
+                    <td>Get all the tags id and title for the current user.
+                    </td>
+                    <td>
+                        <ul>
+                            <li><code>Authorization: token</code></li>
+                        </ul>
+                    </td>
+                    <td>-</td>
+                    <td>
+                        If ok: <br>
+                        <code>
+                          {"ok": true, "result": [{"_id":"id1"}]}
+                        </code></br>
+                        If !ok <br>
+                        <code>
+                          {"ok": false, "msg": "error-msg"}
+                        </code>
+                    </td>
+                    <td>
+                        <code>
+                          {
+                            "ok": true,
+                            "result": [
+                            {
+                              "_id":"fake id 1",
+                              "title":"fake title 1"
+                            },
+                            {
+                              "_id":"fake id 2",
+                              "title":"fake title 2"
+                            }
+                            ]}
+                          </code>
+                    </td>
+                </tr>
+
+                <tr class="post">
+                    <td>POST</td>
+                    <td>Yes</td>
+                    <td>/api/tags/all/min</td>
+                    <td>Get all the tags id and title for the current user.
+                    </td>
+                    <td>
+                        <ul>
+                            <li><code>Authorization: token</code></li>
+                        </ul>
+                    </td>
+                    <td>-</td>
+                    <td>
+                        If ok: <br>
+                        <code>
+                          {"ok": true, "result": [{"_id":"id1", "title":"title1"}]}
+                        </code></br>
+                        If !ok <br>
+                        <code>
+                          {"ok": false, "msg": "error-msg"}
+                        </code>
+                    </td>
+                    <td>
+                        <code>
+                          {
+                            "ok": true,
+                            "result": [
+                            {
+                              "_id":"fake id 1",
+                              "title":"fake title 1"
+                            },
+                            {
+                              "_id":"fake id 2",
+                              "title":"fake title 2"
+                            }
+                            ]}
+                          </code>
+                    </td>
+                </tr>
+
+
+
+                <tr class="get">
+                    <td>GET</td>
+                    <td>Yes</td>
+                    <td>/api/tags/all/ids</td>
+                    <td>Get all the tags id for the current user.
                     </td>
                     <td>
                         <ul>
@@ -1919,8 +2051,8 @@
                 <tr class="post">
                     <td>POST</td>
                     <td>Yes</td>
-                    <td>/api/tags/all/min</td>
-                    <td>Get all the tag ids for the current user.
+                    <td>/api/tags/all/ids</td>
+                    <td>Get all the tags id for the current user.
                     </td>
                     <td>
                         <ul>
@@ -1947,7 +2079,7 @@
                               "_id":"fake id 1"
                             },
                             {
-                              "_id":"fake id 2"
+                              "_id":"fake id 2",
                             }
                             ]}
                           </code>
