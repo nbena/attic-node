@@ -161,7 +161,9 @@ function tagById(userId, id, cb){
     throw new TypeError(ret);
   }
   var result={};
-  Tag.findOne({_userId: userId, _id: id}).exec()
+  Tag.findOne({_userId: userId, _id: id})
+    .populate("notes")
+    .exec()
   .then(function(result){
     result={ok:true, result: result};
     return cb(result);
