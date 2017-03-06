@@ -171,7 +171,7 @@ function tagById(userId, id, cb){
     return cb(result);
   });
 }
-module.exports.tagById;
+module.exports.tagById=tagById;
 
 function tagByTitleUnpopulated(userId, title, cb){
   var ret = ParamHelpMiddle.byTitleCheck(userId, title, cb);

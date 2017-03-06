@@ -100,7 +100,7 @@ function onError(error) {
 function connect(){
   mongoose.connect(mongoURI, function (err, res) {
   if (err) {
-    console.log ('ERROR connecting to: ' + uristring + '. ' + err);
+    console.log ('ERROR connecting to: ' + mongoURI + '. ' + err);
   } else {
     console.log ('Succeeded connected to: ' + mongoURI);
   }
