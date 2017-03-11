@@ -94,8 +94,8 @@ module.exports.tagById = tagById;
 //api/notes/:title PUT
 //api/notes/create PUT body:{"title":"new-title"}
 function createTag(req, res, next){
-  console.log(req);
-  console.log("creating: "+req.params.title);
+  // console.log(req);
+  // console.log("creating: "+req.params.title);
   var ret=ParamHelpRequest.byTitleCheck(req);
   if(!ret.ok){
     res.json(ret);
