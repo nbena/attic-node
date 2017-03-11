@@ -1,6 +1,5 @@
 var Note = require('../models/NoteModel');
 var Tag = require('../models/TagModel');
-// var AuthController = require('./AuthController.js');
 var Const = require('../public/javascripts/Const.js');
 var mongoose = require('mongoose');
 mongoose.Promise = require('bluebird');
@@ -9,11 +8,6 @@ var Utils = require('../public/javascripts/Utils');
 var ParamHelpRequest = require('../public/javascripts/ParamHelpRequest');
 
 var NoteMiddle = require('../middle/NoteMiddle');
-
-// var cb = function(result){res.json(result)};
-
-
-
 
 function allNotesPopulated(req, res, next){
   var ret = ParamHelpRequest.justUser(req);
