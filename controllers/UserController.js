@@ -28,8 +28,6 @@ function registerUser(req, res, next){
 
 module.exports.registerUser = registerUser;
 
-
-
 function home(req, res, next){
   var ret = ParamHelpRequest.justUser(req);
   if(!ret.ok){
