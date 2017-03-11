@@ -97,7 +97,7 @@ function byTitleCheck(req){
   if(!req.user){
     ret = {ok: false, msg: Const.ERR_TOKEN_REQUIRED};
   }
-  if(!req.body.title || !req.params.title){
+  if(!req.body.title && !req.params.title){
       ret = {ok:false, msg: Const.ERR_TITLE_REQUIRED};
   }
     return ret;
