@@ -8,16 +8,6 @@ var TagMiddle = require('../middle/TagMiddle');
 
 var mongoose = require('mongoose');
 mongoose.Promise = require('bluebird');
-/*
-var result = AuthController.getUserFromToken(req.headers);
-if(result.user){
-
-}else{
-  res.json(result);
-}
-*/
-
-
 
 function allTagsUnpopulated(req, res, next){
   var ret = ParamHelpRequest.justUser(req);

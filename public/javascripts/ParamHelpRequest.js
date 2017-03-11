@@ -28,7 +28,7 @@ function createNoteCheck(req){
   if(!req.body.note){
     ret = {ok: false, msg: Const.ERR_NOTE_REQUIRED};
   }
-  console.log(isRefOk(req));
+  // console.log(isRefOk(req));
   if(!isNoteOk(req)){
     ret = {ok: false, msg: Const.ERR_NOTE_MALF};
   }
