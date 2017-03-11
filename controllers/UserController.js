@@ -3,7 +3,6 @@ var User = require('../models/UserModel');
 var jwt = require("jsonwebtoken");
 var config = require('../config/database');
 
-// var AuthController = require('./AuthController');
 var Const = require('../public/javascripts/Const');
 
 var Note = require('../models/NoteModel');
