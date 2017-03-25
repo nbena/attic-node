@@ -14,7 +14,7 @@ function getMostUsedTag(id, limitParam, cb){
     }
   var result = {};
   Tag.find({_userId: id})
-    .sort({notes_length:-1})
+    .sort({notes_length:-1, title:1})
     .limit(limitParam)
     .exec()
     .then(function (data){
@@ -35,7 +35,9 @@ function allTagsMin(userId, cb){
     throw new TypeError(ret);
   }
   var result={};
-  Tag.find({_userId: userId},{_id: 1, title:1}).exec()
+  Tag.find({_userId: userId},{_id: 1, title:1})
+    .sort({notes_length:-1, title: 1})
+    .exec()
   .then(function(tags){
     result={ok: true, result: tags};
     return cb(result);
@@ -47,13 +49,35 @@ function allTagsMin(userId, cb){
 }
 module.exports.allTagsMin=allTagsMin;
 
+function allTagsMinWithNotesLength(userId, cb){
+  var ret = ParamHelpMiddle.justCbUserIdCheck(userId, cb);
+  if(ret!=""){
+    throw new TypeError(ret);
+  }
+  var result={};
+  Tag.find({_userId: userId},{_id: 1, title:1, notes_length: 1})
+    .sort({notes_length:-1, title:1})
+    .exec()
+  .then(function(tags){
+    result={ok: true, result: tags};
+    return cb(result);
+  })
+  .catch(function(err){
+    result={ok: false, msg: Utils.jsonErr(err)};
+    return cb(result);
+  });
+}
+module.exports.allTagsMinWithNotesLength=allTagsMinWithNotesLength;
+
 function allTagsIds(userId, cb){
   var ret = ParamHelpMiddle.justCbUserIdCheck(userId, cb);
   if(ret!=""){
     throw new TypeError(ret);
   }
   var result={};
-  Tag.find({_userId: userId},{_id: 1}).exec()
+  Tag.find({_userId: userId},{_id: 1})
+    .sort({notes_length:-1, title: 1})
+    .exec()
   .then(function(tags){
     result={ok: true, result: tags};
     return cb(result);
@@ -163,6 +187,7 @@ function tagById(userId, id, cb){
   var result={};
   Tag.findOne({_userId: userId, _id: id})
     .populate("notes")
+    .sort({notes_length:-1, title: 1})
     .exec()
   .then(function(result){
     result={ok:true, result: result};
@@ -182,7 +207,7 @@ function tagByTitleUnpopulated(userId, title, cb){
   }
   var result={};
   Tag.find({_userId: userId, title: {$regex: titleToSearch}})
-    .sort({title: 1})
+    .sort({notes_length:-1, title: 1})
     .exec()
     .then(function(result){
       result={ok:true, result: result};
@@ -200,7 +225,7 @@ function tagByTitlePopulated(userId, title, cb){
   var result={};
   Tag.find({_userId: userId, title: {$regex: titleToSearch}})
     .populate("notes")
-    .sort({title: 1})
+    .sort({notes_length:-1, title: 1})
     .exec()
     .then(function(result){
       result={ok:true, result: result};
@@ -221,7 +246,7 @@ function allTagsPopulated(userId, cb){
   var result={};
   Tag.find({_userId: userId})
     .populate("notes")
-    .sort({title: 1})
+    .sort({notes_length:-1, title: 1})
     .exec()
     .then(function(result){
       result={ok:true, result: result};
@@ -241,7 +266,7 @@ function allTagsUnpopulated(userId, cb){
   }
   var result={};
   Tag.find({_userId: userId})
-    .sort({title: 1})
+    .sort({notes_length:-1, title: 1})
     .exec()
     .then(function(result){
       result={ok:true, result: result};
@@ -253,3 +278,14 @@ function allTagsUnpopulated(userId, cb){
     });
 }
 module.exports.allTagsUnpopulated=allTagsUnpopulated;
+
+// function allTagsMinAndNotesCount(userId, cb){
+//   var ret = ParamHelpMiddle.justCbUserIdCheck(userId, cb);
+//   if(ret!=""){
+//     throw new TypeError(ret);
+//   }
+//   var result = {};
+//   Tag.find({_userId: userId})
+//     .sort({})
+//     .exec()
+// }

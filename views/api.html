@@ -2008,7 +2008,89 @@
                     </td>
                 </tr>
 
+                <tr class="get">
+                    <td>GET</td>
+                    <td>Yes</td>
+                    <td>/api/tags/all/min/notes-length</td>
+                    <td>Get all the tags id, title, number of notes ref by, for the current user.
+                    </td>
+                    <td>
+                        <ul>
+                            <li><code>Authorization: token</code></li>
+                        </ul>
+                    </td>
+                    <td>-</td>
+                    <td>
+                        If ok: <br>
+                        <code>
+                          {"ok": true, "result": [{"_id":"id1", "title":"title1","notes_length":x}]}
+                        </code></br>
+                        If !ok <br>
+                        <code>
+                          {"ok": false, "msg": "error-msg"}
+                        </code>
+                    </td>
+                    <td>
+                        <code>
+                          {
+                            "ok": true,
+                            "result": [
+                            {
+                              "_id":"fake id 1",
+                              "title":"fake title 1",
+                              "notes_length":1
+                            },
+                            {
+                              "_id":"fake id 2",
+                              "title":"fake title 2",
+                              "notes_length":2
+                            }
+                            ]}
+                          </code>
+                    </td>
+                </tr>
 
+                <tr class="post">
+                    <td>POST</td>
+                    <td>Yes</td>
+                    <td>/api/tags/all/min/notes-length</td>
+                    <td>Get all the tags id, title, number of notes ref by, for the current user.
+                    </td>
+                    <td>
+                        <ul>
+                            <li><code>Authorization: token</code></li>
+                        </ul>
+                    </td>
+                    <td>-</td>
+                    <td>
+                        If ok: <br>
+                        <code>
+                          {"ok": true, "result": [{"_id":"id1", "title":"title1", "notes_length":x}]}
+                        </code></br>
+                        If !ok <br>
+                        <code>
+                          {"ok": false, "msg": "error-msg"}
+                        </code>
+                    </td>
+                    <td>
+                        <code>
+                          {
+                            "ok": true,
+                            "result": [
+                            {
+                              "_id":"fake id 1",
+                              "title":"fake title 1",
+                              "notes_length":1
+                            },
+                            {
+                              "_id":"fake id 2",
+                              "title":"fake title 2",
+                              "notes_length":2
+                            }
+                            ]}
+                          </code>
+                    </td>
+                </tr>
 
                 <tr class="get">
                     <td>GET</td>

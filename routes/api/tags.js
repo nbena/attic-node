@@ -33,6 +33,10 @@ router.get("/all/min", auth, TagController.allTagsMin);
 
 router.post("/all/min", auth, TagController.allTagsMin);
 
+router.get('/all/min/notes-length', auth, TagController.allTagsMinWithNotesLength);
+
+router.post('/all/min/notes-length', auth, TagController.allTagsMinWithNotesLength);
+
 router.get("/all/ids", auth, TagController.allTagsIds);
 
 router.post("/all/ids", auth, TagController.allTagsIds);
