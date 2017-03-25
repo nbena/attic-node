@@ -232,7 +232,7 @@ function getQueryOnNotesByTagsPopulated(userId, mainTags, otherTags, tags){
 
 
 function notesByTagPopulated(userId, mainTags, otherTags, tags, cb){
-  var ret = ParamHelpMiddle.notesByTag(userId, mainTags, otherTags, tags, cb);
+  var ret = ParamHelpMiddle.notesByTagCheck(userId, mainTags, otherTags, tags, cb);
   if(ret!=""){
     throw new TypeError(ret);
   }
@@ -275,7 +275,7 @@ function getQueryOnNotesByTagsUnpopulated(userId, mainTags, otherTags, tags){
 
 
 function notesByTagUnpopulated(userId, mainTags, otherTags, tags, cb){
-  var ret = ParamHelpMiddle.notesByTag(userId, mainTags, otherTags, tags, cb);
+  var ret = ParamHelpMiddle.notesByTagCheck(userId, mainTags, otherTags, tags, cb);
   if(ret!=""){
     throw new TypeError(ret);
   }
