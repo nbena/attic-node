@@ -156,6 +156,18 @@ function allTagsMin(req, res, next){
 }
 module.exports.allTagsMin=allTagsMin;
 
+function allTagsMinWithNotesLength(req, res, next){
+  var ret = ParamHelpRequest.justUser(req);
+  if(!ret.ok){
+    res.json(ret);
+    return;
+  }
+  TagMiddle.allTagsMinWithNotesLength(req.user._id, function(result){
+    res.json(result);
+  });
+}
+module.exports.allTagsMinWithNotesLength=allTagsMinWithNotesLength;
+
 function allTagsIds(req, res, next){
   var ret = ParamHelpRequest.justUser(req);
   if(!ret.ok){
