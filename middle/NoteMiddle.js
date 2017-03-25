@@ -237,7 +237,7 @@ function notesByTagPopulated(userId, mainTags, otherTags, tags, cb){
     throw new TypeError(ret);
   }
   var result = {};
-  getQueryOnNotesByTagsPopulated(userId, mainTags, otherTagd, tags)
+  getQueryOnNotesByTagsPopulated(userId, mainTags, otherTags, tags)
   .then(function(result){
     result={ok:true, result: result};
     return cb(result);
@@ -280,7 +280,7 @@ function notesByTagUnpopulated(userId, mainTags, otherTags, tags, cb){
     throw new TypeError(ret);
   }
   var result = {};
-  getQueryOnNotesByTagsUnpopulated(userId, mainTags, otherTagd, tags)
+  getQueryOnNotesByTagsUnpopulated(userId, mainTags, otherTags, tags)
   .then(function(result){
     result={ok:true, result: result};
     return cb(result);
