@@ -212,7 +212,7 @@ function removeAllNotes(req, res, next){
     res.json(ret);
     return;
   }
-  NoteMidddle.removeAllNotes(req.user._id,function(result){
+  NoteMiddle.removeAllNotes(req.user._id,function(result){
     res.json(result);
   });
 }
@@ -228,7 +228,7 @@ module.exports.removeAllNotes = removeAllNotes;
       res.json(ret);
       return;
     }
-    NoteMidddle.updateText(req.user.id, req.body.id, req.body.text,function(result){
+    NoteMiddle.updateText(req.user.id, req.body.id, req.body.text,function(result){
       res.json(result);
     });
 }
