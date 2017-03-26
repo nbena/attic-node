@@ -534,6 +534,40 @@
                 </tr>
 
 
+
+                <tr class="post">
+                    <td>POST</td>
+                    <td>Yes</td>
+                    <td>/api/notes/mod/title</td>
+                    <td>Update the title for the provided note.</td>
+                    <td>
+                        <ul>
+                            <li><code>Authrization: token</code></li>
+                            <li><code>Content-type: application/json</code></li>
+                        </ul>
+                    </td>
+                    <td>
+                        A JSON object:<br>
+                        <code>
+            {"id":"id-of-the-note", "title":"the new title"}
+          </code>
+                    </td>
+                    <td>
+                        If ok:<br>
+                        <code>
+            {"ok":true}
+          </code><br> If !ok:<br>
+                        <code>
+            {"ok":false, "msg":"error-msg"}
+          </code>
+                    </td>
+                    <td>
+                        <code>
+            {"ok": true}
+          </code>
+                    </td>
+                </tr>
+
                 <tr class="special" id="notes-all">
                     <td colspan="7" align="center"><b>/api/notes/all</b> and <b>/api/notes/all/unpop</b></td>
                 </tr>

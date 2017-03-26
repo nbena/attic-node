@@ -235,6 +235,19 @@ module.exports.removeAllNotes = removeAllNotes;
 
 module.exports.updateText = updateText;
 
+function updateTitle(req, res, next){
+  var ret = ParamHelpRequest.notesUpdateTitleCheck(req);
+  if(!ret.ok){
+    res.json(ret);
+    return;
+  }
+  NoteMiddle.updateTitle(req.user.id, req.body.id, req.body.title,function(result){
+    res.json(result);
+  });
+}
+
+module.exports.updateTitle = updateTitle;
+
 
 function addTags(req, res, next){
   var ret = ParamHelpRequest.notesRemoveAddTagsCheck(req);

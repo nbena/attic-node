@@ -90,6 +90,22 @@ function notesUpdateTextCheck(req){
 }
 module.exports.notesUpdateTextCheck=notesUpdateTextCheck;
 
+function notesUpdateTitleCheck(req){
+  var ret = {};
+  ret.ok = true;;
+  if(!req.user){
+    ret = {ok: false, msg: Const.ERR_TOKEN_REQUIRED};
+  }
+  if(!req.body.title){
+      ret = {ok:false, msg: Const.ERR_TEXT_REQUIRED};
+  }
+  if(!req.body.id){
+    ret = {ok: false, msg: Const.ERR_ID_REQUIRED};
+  }
+  return ret;
+}
+module.exports.notesUpdateTitleCheck=notesUpdateTitleCheck;
+
 
 function byTitleCheck(req){
   var ret = {};

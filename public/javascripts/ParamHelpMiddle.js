@@ -25,6 +25,24 @@ function byTitleCheck(userId, title, cb){
 }
 module.exports.byTitleCheck=byTitleCheck;
 
+function notesUpdateTitleCheck(userId, _id, title, cb){
+  var ret="";
+  if(!cb instanceof Function || cb==null){
+    ret="cb must be instanceof Function";
+  }
+  if(!_id instanceof String || _id==null){
+    ret="id must be instanceof String";
+  }
+  if(!title instanceof String || title==null){
+    ret="title must be instanceof String";
+  }
+  if(userId==null){
+    ret="userId required";
+  }
+  return ret;
+}
+module.exports.notesUpdateTitleCheck=notesUpdateTitleCheck;
+
 function notesByTextCheck(userId, text, cb){
   var ret="";
   if(!cb instanceof Function || cb==null){

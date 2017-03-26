@@ -81,6 +81,8 @@ router.post("/mod/setdone", auth, NoteController.setDone);
 
 router.post("/mod/text", auth, NoteController.updateText);
 
+router.post('/mod/title', auth, NoteController.updateTitle);
+
 router.delete("/all", auth, NoteController.removeAllNotes);
 
 router.delete("/clean", auth, NoteController.cleanNotes);

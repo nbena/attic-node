@@ -91,6 +91,27 @@ function notesByTitleRegexUnpopulated(userId, title, cb){
 module.exports.notesByTitleRegexUnpopulated = notesByTitleRegexUnpopulated;
 
 
+function updateTitle(userId, id, title, cb){
+  var ret = ParamHelpMiddle.notesUpdateTitleCheck(userId, id, title, cb);
+  if(ret!=""){
+    throw new TypeError(ret);
+  }
+  var result = {};
+  Note.findOneAndUpdate({_userId: userId, _id: id},
+    {title: title})
+    .exec()
+    .then(function(result){
+      result={ok: true};
+      return cb(result);
+    })
+    .catch(function(err){
+      result={ok:false, msg: Utils.jsonErr(err)};
+      return cb(result);
+    });
+}
+module.exports.updateTitle=updateTitle;
+
+
 
 function notesByTitlePopulated(userId, title, cb){
   var ret = ParamHelpMiddle.byTitleCheck(userId, title, cb);
