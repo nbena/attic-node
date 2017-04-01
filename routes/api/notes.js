@@ -73,7 +73,7 @@ router.post("/mod/addtags", auth, NoteController.addTags);
 
 router.post("/mod/addlinks", auth, NoteController.addLinks);
 
-router.post("/mod/removerefs", auth, NoteController.removeLinks);
+router.post("/mod/removelinks", auth, NoteController.removeLinks);
 
 router.post("/mod/removetags", auth, NoteController.removeTags);
 
