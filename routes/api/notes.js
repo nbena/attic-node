@@ -69,7 +69,7 @@ router.post("/by-tag/unpop", auth,  NoteController.notesByTagUnpopulated);
 
 router.put("/create", auth, NoteController.createNote);
 
-router.post("/mod/addlinks", auth, NoteController.addTags);
+router.post("/mod/addtags", auth, NoteController.addTags);
 
 router.post("/mod/addlinks", auth, NoteController.addLinks);
 
