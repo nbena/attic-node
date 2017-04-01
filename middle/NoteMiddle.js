@@ -392,7 +392,7 @@ function removeAllNotes(userId, cb){
       {notes:[]},
       {multi: true}).exec();
   })
-  .then(secondResult=>){
+  .then(secondResult=>{
     result={ok: true};
     return cb(result);
   })
