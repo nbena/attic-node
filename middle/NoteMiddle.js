@@ -18,11 +18,11 @@ function allNotesPopulated(userId, cb){
     .populate("otherTags")
     .sort({title:1, lastModificationDate: -1, creationDate: -1})
     .exec()
-    .then(function(result){
+    .then(result=>{
       result={ok:true, result: result};
       return cb(result);
     })
-    .catch(function(err){
+    .catch(err=>{
       result={ok:false, msg: Utils.jsonErr(err)};
       return cb(result);
     });
@@ -37,11 +37,11 @@ function allNotesUnpopulated(userId, cb){
   Note.find({_userId: userId})
     .sort({title:1, lastModificationDate: -1, creationDate: -1})
     .exec()
-    .then(function(result){
+    .then(result=>{
       result={ok:true, result: result};
       return cb(result);
     })
-    .catch(function(err){
+    .catch(err=>{
       result={ok:false, msg: Utils.jsonErr(err)};
       return cb(result);
     });
@@ -59,11 +59,11 @@ function notesByTitleRegexPopulated(userId, title, cb){
     .populate("otherTags")
     .sort({title:1, lastModificationDate: -1, creationDate: -1})
     .exec()
-    .then(function(result){
+    .then(result=>{
       result={ok:true, result: result};
       return cb(result);
     })
-    .catch(function(err){
+    .catch(err=>{
       result={ok:false, msg: Utils.jsonErr(err)};
       return cb(result);
     });
@@ -79,11 +79,11 @@ function notesByTitleRegexUnpopulated(userId, title, cb){
   Note.find({_userId: userId, title:{$regex: title}})
     .sort({title:1, lastModificationDate: -1, creationDate: -1})
     .exec()
-    .then(function(result){
+    .then(result=>{
       result={ok:true, result: result};
       return cb(result);
     })
-    .catch(function(err){
+    .catch(err=>{
       result={ok:false, msg: Utils.jsonErr(err)};
       return cb(result);
     });
@@ -98,13 +98,13 @@ function updateTitle(userId, id, title, cb){
   }
   var result = {};
   Note.findOneAndUpdate({_userId: userId, _id: id},
-    {title: title})
+    {title: title, lastModificationDate: Date.now()})
     .exec()
-    .then(function(result){
+    .then(result=>{
       result={ok: true};
       return cb(result);
     })
-    .catch(function(err){
+    .catch(err=>{
       result={ok:false, msg: Utils.jsonErr(err)};
       return cb(result);
     });
@@ -124,11 +124,11 @@ function notesByTitlePopulated(userId, title, cb){
     .populate("otherTags")
     .sort({title:1, lastModificationDate: -1, creationDate: -1})
     .exec()
-    .then(function(result){
+    .then(result=>{
       result={ok:true, result: result};
       return cb(result);
     })
-    .catch(function(err){
+    .catch(err=>{
       result={ok:false, msg: Utils.jsonErr(err)};
       return cb(result);
     });
@@ -144,11 +144,11 @@ function notesByTitleUnpopulated(userId, title, cb){
   Note.findOne({_userId: userId, title:title})
     .sort({title:1, lastModificationDate: -1, creationDate: -1})
     .exec()
-    .then(function(result){
+    .then(result=>{
       result={ok:true, result: result};
       return cb(result);
     })
-    .catch(function(err){
+    .catch(err=>{
       result={ok:false, msg: Utils.jsonErr(err)};
       return cb(result);
     });
@@ -166,11 +166,11 @@ function notesByTextPopulated(userId, text, cb){
     .populate("otherTags")
     .sort({title:1, lastModificationDate: -1, creationDate: -1})
     .exec()
-    .then(function(result){
+    .then(result=>{
       result={ok:true, result: result};
       return cb(result);
     })
-    .catch(function(err){
+    .catch(err=>{
       result={ok:false, msg: Utils.jsonErr(err)};
       return cb(result);
     });
@@ -186,11 +186,11 @@ function notesByTextUnpopulated(userId, text, cb){
   Note.find({_userId: userId, text: {$regex: text}})
     .sort({title:1, lastModificationDate: -1, creationDate: -1})
     .exec()
-    .then(function(result){
+    .then(result=>{
       result={ok:true, result: result};
       return cb(result);
     })
-    .catch(function(err){
+    .catch(err=>{
       result={ok:false, msg: Utils.jsonErr(err)};
       return cb(result);
     });
@@ -208,11 +208,11 @@ function noteByIdPopulated(userId, id, cb){
     .populate("otherTags")
     .sort({title:1, lastModificationDate: -1, creationDate: -1})
     .exec()
-    .then(function(result){
+    .then(result=>{
       result={ok:true, result: result};
       return cb(result);
     })
-    .catch(function(err){
+    .catch(err=>{
       result={ok:false, msg: Utils.jsonErr(err)};
       return cb(result);
     });
@@ -259,11 +259,11 @@ function notesByTagPopulated(userId, mainTags, otherTags, tags, cb){
   }
   var result = {};
   getQueryOnNotesByTagsPopulated(userId, mainTags, otherTags, tags)
-  .then(function(result){
+  .then(result=>{
     result={ok:true, result: result};
     return cb(result);
   })
-  .catch(function(err){
+  .catch(err=>{
     result={ok:false, msg: Utils.jsonErr(err)};
     return cb(result);
   });
@@ -302,11 +302,11 @@ function notesByTagUnpopulated(userId, mainTags, otherTags, tags, cb){
   }
   var result = {};
   getQueryOnNotesByTagsUnpopulated(userId, mainTags, otherTags, tags)
-  .then(function(result){
+  .then(result=>{
     result={ok:true, result: result};
     return cb(result);
   })
-  .catch(function(err){
+  .catch(err=>{
     result={ok:false, msg: Utils.jsonErr(err)};
     return cb(result);
   });
@@ -343,11 +343,11 @@ function createNote(userId, note, cb){
   var note = getNoteObject(note, userId);
 
   note.save()
-  .then(function(result){
+  .then(result=>{
     result={ok: true, result: result};
     return cb(result);
   })
-  .catch(function(err){
+  .catch(err=>{
     result={ok: false, msg: Utils.jsonErr(err)};
     return cb(result);
   });
@@ -361,18 +361,18 @@ function removeNote(userId, id, cb){
   }
   var result = {};
   Note.findOne({_userId: userId, _id: id}).exec()
-  .then(function(note){
+  .then(note=>{
     if(note){
       return note.remove();
     }else{
       throw new Error(Const.ERR_NOTE_NOT_FOUND);
     }
   })
-  .then(function(result){
+  .then(result=>{
     result={ok: true};
     return cb(result);
   })
-  .catch(function(err){
+  .catch(err=>{
     result={ok: false, msg: Utils.jsonErr(err)};
     return cb(result);
   })
@@ -387,16 +387,16 @@ function removeAllNotes(userId, cb){
   }
   var result = {};
   Note.remove({_userId: userId}).exec()
-  .then(function(result){
+  .then(result=>{
     return Tag.update({_userId: userId},
       {notes:[]},
       {multi: true}).exec();
   })
-  .then(function(secondResult){
+  .then(secondResult=>){
     result={ok: true};
     return cb(result);
   })
-  .catch(function(err){
+  .catch(err=>{
     result={ok: false, msg: Utils.jsonErr(err)};
     return cb(result);
   });
@@ -410,8 +410,8 @@ function updateText(userId, id, text, cb){
   }
   var result = {};
   Note.findOneAndUpdate({_userId: userId, _id: id},
-    {text: text}).exec()
-    .then(function(result){
+    {text: text, lastModificationDate: Date.now()}).exec()
+    .then(result=>{
       if(result){
         result={ok: true};
         return cb(result);
@@ -419,7 +419,7 @@ function updateText(userId, id, text, cb){
         throw new Error(Const.ERR_NOTE_NOT_FOUND);
       }
     })
-    .catch(function(err){
+    .catch(err=>{
       result={ok: false, msg: Utils.jsonErr(err)};
       return cb(result);
     });
@@ -459,7 +459,7 @@ function addTags(userId, id, mainTags, otherTags, tags, cb){
   var result = {};
   var noteFind;
   Note.findOne({_userId: userId, _id: id}).exec()
-  .then(function(note){
+  .then(note=>{
     if(note){
       noteFind=note;
       return Tag.find({_userId: userId, _id: {$in: tags}}).exec()
@@ -467,18 +467,18 @@ function addTags(userId, id, mainTags, otherTags, tags, cb){
       throw new Error(Const.ERR_NOTE_NOT_FOUND);
     }
   })
-  .then(function(dataTags){
+  .then(dataTags=>{
     if(dataTags.length==tags.length){
         return getQueryAddTags(mainTags, otherTags, noteFind);
     }else{
       throw new Error(Const.ERR_TAG_NOT_FOUND);
     }
   })
-  .then(function(savingResult){ //here if all is allright.
+  .then(savingResult=>{ //here if all is allright.
     result={ok: true};
     return cb(result);
   })
-  .catch(function(err){
+  .catch(err=>{
     result={ok: false, msg: Utils.jsonErr(err)};
     return cb(result);
   });
@@ -513,7 +513,7 @@ function removeTags(userId, id, mainTags, otherTags, tags, cb){
   var result = {};
   var noteFind;
   Note.findOne({_userId: userId, _id: id}).exec()
-  .then(function(note){
+  .then(note=>{
     if(note){
       noteFind=note;
       return Tag.find({_userId: userId, _id: {$in: tags}}).exec()
@@ -521,18 +521,18 @@ function removeTags(userId, id, mainTags, otherTags, tags, cb){
       throw new Error(Const.ERR_NOTE_NOT_FOUND);
     }
   })
-  .then(function(dataTags){
+  .then(dataTags=>{
     if(dataTags.length==tags.length){
         return getQueryRemoveTags(mainTags, otherTags, noteFind);
     }else{
       throw new Error(Const.ERR_TAG_NOT_FOUND);
     }
   })
-  .then(function(savingResult){ //here if all is allright.
+  .then(savingResult=>{ //here if all is allright.
     result={ok: true};
     return cb(result);
   })
-  .catch(function(err){
+  .catch(err=>{
     result={ok: false, msg: Utils.jsonErr(err)};
     return cb(result);
   });
@@ -546,11 +546,11 @@ function countNotes(userId, cb){
   }
   var result= {};
   Note.count({_userId: userId})
-  .then(function(data){
+  .then(data=>{
     result={ok: true, noteCount: data};
     return cb(result);
   })
-  .catch(function(err){
+  .catch(err=>{
     result={ok: false, msg: Utils.jsonErr(err)};
     return cb(result);
   });
@@ -564,36 +564,40 @@ function addLinks(userId, id, links, cb){
     throw new TypeError(ret);
   }
   var result = {};
-  // Note.findOneAndUpdate({_userId: userId, _id: id},
-  //   {$addToSet:{links: {$each: links}}}).exec()
-  // .then(function(note){
-  //   if(note){
-  //     result={ok: true};
-  //     return cb(result);
-  //   }else{
-  //     // res.json({ok: false, msg: Const.ERR_NOTE_NOT_FOUND});
-  //     throw new Error(Const.ERR_NOTE_NOT_FOUND);
-  //   }
-  // })
-  Note.findOne({_userId: userId, _id: id})
-    .exec()
-    .then(findResult=>{
-      if(findResult){
-        findResult.links.addToSet(links);
-        return findResult.save();
-      }
-      else{
-        throw new Error(Const.ERR_NOTE_NOT_FOUND);
-      }
-    })
-    .then(saveResult=>{
+  Note.findOneAndUpdate({_userId: userId, _id: id},
+    {$addToSet:{links: {$each: links}}, lastModificationDate: Date.now()}).exec()
+  .then(note=>{
+    if(note){
       result={ok: true};
       return cb(result);
-    })
+    }else{
+      // res.json({ok: false, msg: Const.ERR_NOTE_NOT_FOUND});
+      throw new Error(Const.ERR_NOTE_NOT_FOUND);
+    }
+  })
   .catch(err=>{
     result={ok: false, msg: Utils.jsonErr(err)};
     return cb(result);
-  });
+  })
+  // Note.findOne({_userId: userId, _id: id})
+  //   .exec()
+  //   .then(findResult=>{
+  //     if(findResult){
+  //       findResult.links.addToSet(links);
+  //       return findResult.save();
+  //     }
+  //     else{
+  //       throw new Error(Const.ERR_NOTE_NOT_FOUND);
+  //     }
+  //   })
+  //   .then(saveResult=>{
+  //     result={ok: true};
+  //     return cb(result);
+  //   })
+  // .catch(err=>{
+  //   result={ok: false, msg: Utils.jsonErr(err)};
+  //   return cb(result);
+  // });
 }
 module.exports.addLinks = addLinks;
 
@@ -604,8 +608,8 @@ function removeLinks(userId, id, links, cb){
   }
   var result = {};
   Note.findOneAndUpdate({_userId: userId, _id: id},
-    {$pullAll:{links: links}}).exec()
-  .then(function(note){
+    {$pullAll:{links: links}, lastModificationDate: Date.now()}).exec()
+  .then(note=>{
     if(note){
       result={ok: true};
       return cb(result);
@@ -614,7 +618,7 @@ function removeLinks(userId, id, links, cb){
       throw new Error(Const.ERR_NOTE_NOT_FOUND);
     }
   })
-  .catch(function(err){
+  .catch(err=>{
     result={ok: false, msg: Utils.jsonErr(err)};
     return cb(result);
   });
@@ -629,8 +633,8 @@ function setDone(userId, id, done, cb){
   }
   var result = {};
   Note.findOneAndUpdate({_userId: userId, _id:id},
-    {isDone: done}).exec()
-  .then(function(note){
+    {isDone: done, lastModificationDate: Date.now()}).exec()
+  .then(note=>{
     if(note){
       result={ok:true};
       return cb(result);
@@ -638,7 +642,7 @@ function setDone(userId, id, done, cb){
       throw new Error(Const.ERR_NOTE_NOT_FOUND);
     }
   })
-  .catch(function(err){
+  .catch(err=>{
     result={ok: false, msg: Utils.jsonErr(err)};
     return cb(result);
   });
@@ -653,11 +657,11 @@ function allNotesMin(userId, cb){
   var result = {};
   Note.find({_userId: userId},
             {_id: 1, title:1}).exec()
-            .then(function(data){
+            .then(data=>{
               result={ok: true, result: data};
               return cb(result);
             })
-            .catch(function(err){
+            .catch(err=>{
               result={ok: false, msg: Utils.jsonErr(err)};
               return cb(result);
             });
@@ -673,11 +677,11 @@ function allNotesIds(userId, cb){
   var result = {};
   Note.find({_userId: userId},
             {_id: 1}).exec()
-            .then(function(data){
+            .then(data=>{
               result={ok: true, result: data};
               return cb(result);
             })
-            .catch(function(err){
+            .catch(err=>{
               result={ok: false, msg: Utils.jsonErr(err)};
               return cb(result);
             });
