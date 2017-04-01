@@ -302,7 +302,7 @@ function removeLinks(req, res, next){
     res.json(ret);
     return;
   }
-  NoteMiddle.removeLinks(req.user._id, req.body.links,function(result){
+  NoteMiddle.removeLinks(req.user._id, req.body.id, req.body.links,function(result){
     res.json(result);
   });
 }
@@ -316,7 +316,7 @@ function addLinks(req, res, next){
       res.json(ret);
       return;
     }
-    NoteMiddle.addLinks(req.user._id, req.body.links,function(result){
+    NoteMiddle.addLinks(req.user._id, req.body.id, req.body.links,function(result){
       res.json(result);
     });
   }
