@@ -564,18 +564,33 @@ function addLinks(userId, id, links, cb){
     throw new TypeError(ret);
   }
   var result = {};
-  Note.findOneAndUpdate({_userId: userId, _id: id},
-    {$addToSet:{links: {$each: links}}}).exec()
-  .then(function(note){
-    if(note){
+  // Note.findOneAndUpdate({_userId: userId, _id: id},
+  //   {$addToSet:{links: {$each: links}}}).exec()
+  // .then(function(note){
+  //   if(note){
+  //     result={ok: true};
+  //     return cb(result);
+  //   }else{
+  //     // res.json({ok: false, msg: Const.ERR_NOTE_NOT_FOUND});
+  //     throw new Error(Const.ERR_NOTE_NOT_FOUND);
+  //   }
+  // })
+  Note.findOne({_userId: userId, _id: id})
+    .exec()
+    .then(findResult=>{
+      if(findResult){
+        findResult.links.addToSet(links);
+        return findResult.save();
+      }
+      else{
+        throw new Error(Const.ERR_NOTE_NOT_FOUND);
+      }
+    })
+    .then(saveResult=>{
       result={ok: true};
       return cb(result);
-    }else{
-      // res.json({ok: false, msg: Const.ERR_NOTE_NOT_FOUND});
-      throw new Error(Const.ERR_NOTE_NOT_FOUND);
-    }
-  })
-  .catch(function(err){
+    })
+  .catch(err=>{
     result={ok: false, msg: Utils.jsonErr(err)};
     return cb(result);
   });
