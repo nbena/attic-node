@@ -595,7 +595,7 @@ function addLinks(userId, id, links, cb){
     return cb(result);
   });
 }
-module.exports.adLinks = addLinks;
+module.exports.addLinks = addLinks;
 
 function removeLinks(userId, id, links, cb){
   var ret = ParamHelpMiddle.notesAddRemoveLinksCheck(userId, id, links, cb);
