@@ -330,7 +330,7 @@ module.exports.addLinks = addLinks;
       res.json(ret);
       return;
     }
-    NoteMiddle.setDone(req.user._id, req.body.done,function(result){
+    NoteMiddle.setDone(req.user._id, req.body.id, req.body.done,function(result){
       res.json(result);
     });
   }
