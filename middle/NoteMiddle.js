@@ -627,7 +627,7 @@ function removeLinks(userId, id, links, cb){
 module.exports.removeLinks = removeLinks;
 
 function setDone(userId, id, done, cb){
-  var ret = ParamHelp.notesDoneCheck(userId, id, done, cb);
+  var ret = ParamHelpMiddle.notesDoneCheck(userId, id, done, cb);
   if(ret!=""){
     throw new TypeError(ret);
   }
