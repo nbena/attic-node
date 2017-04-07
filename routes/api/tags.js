@@ -42,12 +42,14 @@ router.get("/all/ids", auth, TagController.allTagsIds);
 router.post("/all/ids", auth, TagController.allTagsIds);
 
 
+router.post("/by-title/reg/unpop", auth,TagController.tagByTitleUnpopulated);
+
+///api/tags/by-title/reg/unpop
+
+
 router.post("/by-title/reg",auth, TagController.tagByTitlePopulated);
 
 // router.delete("/by-title/reg", auth, TagController.deleteTagsByTitleRegex);
-
-
-router.post("/by-title/reg/unpop", auth,TagController.tagByTitleUnpopulated);
 
 
 
