@@ -206,7 +206,7 @@ function tagByTitleUnpopulated(userId, title, cb){
     throw new TypeError(ret);
   }
   var result={};
-  Tag.find({_userId: userId, title: {$regex: titleToSearch}})
+  Tag.find({_userId: userId, title: {$regex: title}})
     .sort({notes_length:-1, title: 1})
     .exec()
     .then(function(result){
