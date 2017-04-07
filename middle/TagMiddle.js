@@ -223,7 +223,7 @@ module.exports.tagByTitleUnpopulated=tagByTitleUnpopulated;
 function tagByTitlePopulated(userId, title, cb){
 
   var result={};
-  Tag.find({_userId: userId, title: {$regex: titleToSearch}})
+  Tag.find({_userId: userId, title: {$regex: title}})
     .populate("notes")
     .sort({notes_length:-1, title: 1})
     .exec()
