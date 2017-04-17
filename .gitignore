@@ -1,9 +1,6 @@
-.todo
-/attic/node_modules
-/node_modules
+node_modules/*
+typings/*
 npm-debug.log
-.tarr
-/public/javascripts/examples.js
-/public/javascripts/pupulate.js
-/public/javascripts/Fixify.js
-attic-postgres
+.settings/*
+.git/*
+bower_components/*

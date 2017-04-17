@@ -1,0 +1,126 @@
+
+
+18:31:03 error: there is no parameter $1
+         query: select json_object('{userId, hashedPassword}', array[userId, hashedPassword]) as user from attic.users where userId=$1;
+
+18:33:59 error: there is no parameter $1
+         query: select json_object('{userId, hashedPassword}', array[userId, hashedPassword]) as user from attic.users where userId=$1;
+
+18:35:26 error: there is no parameter $1
+         query: select json_object('{userId, hashedPassword}', array[userId, hashedPassword]) as user from attic.users where userId=$1;
+
+18:42:06 error: there is no parameter $1
+         query: select json_object('{userId, hashedPassword}', array[userId, hashedPassword]) as user from attic.users where userId=$1;
+
+18:42:15 error: there is no parameter $1
+         query: select json_object('{userId, hashedPassword}', array[userId, hashedPassword]) as user from attic.users where userId=$1;
+
+18:42:35 error: there is no parameter $1
+         query: select json_object('{userId, hashedPassword}', array[userId, hashedPassword]) as user from attic.users where userId=$1;
+
+18:48:09 error: there is no parameter $1
+         query: select json_object('{userId, hashedPassword}', array[userId, hashedPassword]) as user from attic.users where userId=$1;
+
+18:49:09 error: there is no parameter $1
+         query: select json_object('{userId, hashedPassword}', array[userId, hashedPassword]) as user from attic.users where userId=$1;
+
+18:49:12 error: there is no parameter $1
+         query: select json_object('{userId, hashedPassword}', array[userId, hashedPassword]) as user from attic.users where userId=$1;
+
+18:56:25 error: there is no parameter $1
+         query: select json_object('{userId, hashedPassword}', array[userId, hashedPassword]) as user from attic.users where userId=$1;
+
+19:38:20 error: there is no parameter $1
+         query: select json_object('{userId, hashedPassword}', array[userId, hashedPassword]) as user from attic.users where userId=$1;
+
+19:42:07 error: there is no parameter $1
+         query: select json_object('{userId, hashedPassword}', array[userId, hashedPassword]) as user from attic.users where userId=$1;
+
+20:17:33 error: there is no parameter $1
+         query: select json_object('{userId, hashedPassword}', array[userId, hashedPassword]) as user from attic.users where userId=$1;
+
+20:21:11 error: there is no parameter $1
+         query: select json_object('{userId, hashedPassword}', array[userId, hashedPassword]) as user from attic.users where userId=$1;
+
+20:23:23 error: there is no parameter $1
+         query: select json_object('{userId, hashedPassword}', array[userId, hashedPassword]) as user from attic.users where userId=$1;
+
+21:01:12 error: there is no parameter $1
+         query: select json_object('{title, userId}', array[title, userId]) as result from attic.notes where userId=$1 order by lastModificationDate desc, title asc;
+
+21:02:52 error: No data returned from the query.
+         query: select json_object('{title, userId}', array[title, userId]) as result from attic.notes where userId='{"userId":"omni@pollo.com","hashedPassword":"$2a$10$uVoXykMphQZjxPqBLW9Qo.sBHp1ovd3QfpQMt.qqC/Eav0gK7hQYW"}' order by lastModificationDate desc, title asc;
+
+21:04:10 error: No data returned from the query.
+         query: select json_object('{title, userId}', array[title, userId]) as result from attic.notes where userId='{"userId":"omni@pollo.com","hashedPassword":"$2a$10$uVoXykMphQZjxPqBLW9Qo.sBHp1ovd3QfpQMt.qqC/Eav0gK7hQYW"}' order by lastModificationDate desc, title asc;
+
+21:06:25 error: No data returned from the query.
+         query: select json_object('{title, userId}', array[title, userId]) as result from attic.notes where userId='{"userId":"omni@pollo.com","hashedPassword":"$2a$10$uVoXykMphQZjxPqBLW9Qo.sBHp1ovd3QfpQMt.qqC/Eav0gK7hQYW"}' order by lastModificationDate desc, title asc;
+
+21:09:41 error: No data returned from the query.
+         query: select json_object('{title, userId}', array[title, userId]) as result from attic.notes where userId='{"userId":"omni@pollo.com","hashedPassword":"$2a$10$uVoXykMphQZjxPqBLW9Qo.sBHp1ovd3QfpQMt.qqC/Eav0gK7hQYW"}' order by lastModificationDate desc, title asc;
+
+21:10:48 error: there is no parameter $1
+         query: select json_object('{title, userId}', array[title, userId]) as result from attic.notes where userId=$1 order by lastModificationDate desc, title asc;
+
+21:11:16 error: there is no parameter $1
+         query: select json_object('{title, userId}', array[title, userId]) as result from attic.notes where userId=$1 order by lastModificationDate desc, title asc;
+
+21:14:20 error: there is no parameter $1
+         query: select json_object('{title, userId}', array[title, userId]) as result from attic.notes where userId=$1 order by lastModificationDate desc, title asc;
+
+21:16:02 error: there is no parameter $1
+         query: select title, userId from attic.notes where userId=$1
+
+11:14:51 error: password authentication failed for user "postgres"
+         connection: "postgres://postgres@localhost:##########"
+
+11:21:57 error: password authentication failed for user "postgres"
+         connection: "postgres://postgres@localhost:##########"
+
+11:24:02 error: Empty or undefined query.
+
+11:30:54 error: Empty or undefined query.
+
+11:32:52 error: column reference "userid" is ambiguous
+         query: select title, userId, count(tagTitle) as notesLength from attic.tags as t left join attic.notes_tags on title=tagTitle where t.userId='omni@pollo.com' group by title, t.userId order by count(tagTitle) desc, title asc;
+
+13:22:47 error: No data returned from the query.
+         query: delete from attic.tags where userId='omni@pollo.com' and title='new tag10';
+
+13:44:23 error: there is no parameter $1
+         query: insert into attic.notes(userId, title, text) values ($1, $2, $3) returning json_object('{userId, title, text, isDone, links, creationDate, lastModificationDate}', array[userId, title, text, isDone::text, links::text, creationDate::text, lastModificationDate::date]) as jsonResult;
+
+13:47:54 error: ARRAY types character varying and date cannot be matched
+         query: insert into attic.notes(userId, title, text) values ('omni@pollo.com', 'new-cleint-note', 'something to remind you when I''m gone') returning json_object('{userId, title, text, isDone, links, creationDate, lastModificationDate}', array[userId, title, text, isDone::text, links::text, creationDate::text, lastModificationDate::date]) as jsonResult;
+
+13:49:05 error: ARRAY types character varying and date cannot be matched
+         query: insert into attic.notes(userId, title, text) values ('omni@pollo.com', 'new-cleint-note', 'something to remind you when I''m gone') returning json_object('{userId, title, text, isDone, links, creationDate, lastModificationDate}', array[userId, title, text, isDone::text, links::text, creationDate::text, lastModificationDate::date]) as jsonResult;
+
+18:14:53 error: function get_note_full(unknown, unknown) does not exist
+         query: select get_note_full('omni@pollo.com', 'new-client-note') as result;
+
+19:05:37 error: Cannot read property 'userId' of undefined
+         query: select get_full_tag($1, $2) as tag;
+         params: 
+
+19:07:42 error: Cannot read property 'userId' of undefined
+         query: select get_full_tag($1, $2) as tag;
+         params: 
+
+19:08:52 error: Cannot read property 'userId' of undefined
+         query: select get_full_tag($1, $2) as tag;
+         params: 
+
+19:10:28 error: Cannot read property 'userId' of undefined
+         query: select get_full_tag($1, $2) as tag;
+         params: 
+
+19:12:37 error: column reference "title" is ambiguous
+         query: select get_full_tag('omni@pollo.com', 'omni-tag1') as tag;
+
+19:13:40 error: column reference "userid" is ambiguous
+         query: select get_full_tag('omni@pollo.com', 'omni-tag1') as tag;
+
+20:34:45 error: password authentication failed for user "postgres"
+         connection: "postgres://postgres@localhost:##########"

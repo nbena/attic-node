@@ -1,0 +1,2 @@
+dest=/media/nicola/Drive/BackupTar/attic_node_ts.tar.bz2
+exclude_dir=node_modules
