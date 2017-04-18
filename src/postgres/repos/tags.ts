@@ -17,7 +17,7 @@ export class Repository {
 
 
   changeTitle = (tag: TagClass.Tag,newTitle: string)=>{
-    return this.db.one(sql.changeTitle, [tag.userId, tag.title, newTitle], (tag: any)=>{return tag.result});
+    return this.db.one(sql.changeTitle, [tag.userid, tag.title, newTitle], (tag: any)=>{return tag.result});
   }
 
   createTag = (tag: TagClass.Tag)=>{
@@ -37,15 +37,15 @@ export class Repository {
   }
 
   selectTagsByTitleReg = (user:User, title: string)=>{
-    return this.db.any(sql.selectTagsByTitle, [user.userId, title]/*, (rows:any)=>{return rows}*/);
+    return this.db.any(sql.selectTagsByTitle, [user.userid, title]/*, (rows:any)=>{return rows}*/);
   }
 
   selectTagsFull = (user:User) =>{
-    return this.db.any(sql.selectTagsFull/*, (rows:any)=>{return rows}*/,[user.userId]);
+    return this.db.any(sql.selectTagsFull/*, (rows:any)=>{return rows}*/,[user.userid]);
   }
 
   selectTagsMin = (user:User)=>{
-    return this.db.any(sql.selectTagsMin/*, (rows:any)=>{return rows}*/,[user.userId]);
+    return this.db.any(sql.selectTagsMin/*, (rows:any)=>{return rows}*/,[user.userid]);
   }
 
 }

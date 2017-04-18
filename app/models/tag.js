@@ -1,7 +1,7 @@
 "use strict";
 class Tag {
     getValues() {
-        return [this.userId, this.title];
+        return [this.userid, this.title];
     }
 }
 exports.Tag = Tag;

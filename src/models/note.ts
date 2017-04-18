@@ -1,13 +1,13 @@
 export default class Note{
-  userId: string;
+  userid: string;
   title: string;
   text: string;
-  isDone: boolean;
-  creationDate: Date;
-  lastModificationDate: Date;
+  isdone: boolean;
+  creationdate: Date;
+  lastmodificationdate: Date;
   links: string[];
-  mainTags: string[];
-  otherTags: string[];
+  maintags: string[];
+  othertags: string[];
 
   /*
   no need to have mainTags and otherTags as string because they'll
@@ -22,7 +22,7 @@ export default class Note{
   //   return values;
   // }
   public getValues():string[]{
-    return [this.userId, this.title];
+    return [this.userid, this.title];
   }
 
 

@@ -24,13 +24,13 @@ public static getUserFromToken = (headers):User=>{
   if(token==null){
     throw new Error('NO TOKEN');
   }
-  let userId:any = jwt.decode(token, Config.secret);
-  return new User(userId);
+  let userid:any = jwt.decode(token, Config.secret);
+  return new User(userid);
 }
 
 
 public static generateToken = (user:User)=>{
-  return jwt.sign({userId: user.userId}, Config.secret);
+  return jwt.sign({userid: user.userid}, Config.secret);
 }
 
 

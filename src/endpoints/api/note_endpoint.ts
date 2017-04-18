@@ -24,18 +24,18 @@ class NoteEndpointParamCheck{
     let result: any = null;
     result = NoteEndpointParamCheck.title(req);
     console.log('is note instanceof?');
-    console.log(JSON.stringify(req.body.note.mainTags instanceof Array));
-    if(req.body.note.mainTags == null && req.body.note.otherTags == null){
+    console.log(JSON.stringify(req.body.note.maintags instanceof Array));
+    if(req.body.note.maintags == null && req.body.note.otherTags == null){
       result = Utils.jsonErr(new Error(Const.TAGS_REQUIRED));
     }
-    else if(req.body.note.mainTags!=null){
-      if(req.body.note.mainTags instanceof Array==false){
+    else if(req.body.note.maintags!=null){
+      if(req.body.note.maintags instanceof Array==false){
         result = Utils.jsonErr(new Error(Const.NO_ARR_INST));
       }
 
     }
-    if(req.body.note.otherTags!=null){
-      if(req.body.note.otherTags !instanceof Array==false){
+    if(req.body.note.othertags!=null){
+      if(req.body.note.othertags !instanceof Array==false){
         result = Utils.jsonErr(new Error(Const.NO_ARR_INST));
       }
     }
@@ -81,14 +81,19 @@ class NoteEndpointParamCheck{
 
   static createNote = (req: express.Request):types.BasicResult=>{
     let result:any=NoteEndpointParamCheck.changeText(req);
-    if(req.body.note.mainTags){
-      if(req.body.note.mainTags instanceof Array==false){
+    if(req.body.note.maintags){
+      if(req.body.note.maintags instanceof Array==false){
         result = Utils.jsonErr(new Error(Const.INVALID_NOTE));
       }
     }
     if(req.body.note.otherTags){
       if(req.body.note.otherTags instanceof Array==false){
         result = Utils.jsonErr(new Error(Const.INVALID_NOTE));
+      }
+    }
+    if(req.body.note.links){
+      if(req.body.note.links instanceof Array==false){
+        result = Utils.jsonErr(new Error(Const.LINK_NOT_ARRAY));
       }
     }
     return result;
@@ -163,17 +168,17 @@ export default class NoteEndpoint{
     roles = [];
     note.title = req.body.note.title;
 
-    note.userId=user.userId;
-    if(req.body.note.mainTags){
-      req.body.note.mainTags.map((currentValue, currentIndex)=>{
+    note.userid=user.userid;
+    if(req.body.note.maintags){
+      req.body.note.maintags.map((currentValue, currentIndex)=>{
         let tag:TagClass.Tag=new TagClass.Tag();
         tag.title=currentValue;
         tags.push(tag);
         roles.push('mainTags');
       });
     }
-    if(req.body.note.otherTags){
-      req.body.note.otherTags.map((currentValue, currentIndex)=>{
+    if(req.body.note.otherags){
+      req.body.note.othertags.map((currentValue, currentIndex)=>{
         let tag:TagClass.Tag=new TagClass.Tag();
         tag.title=currentValue;
         tags.push(tag);
@@ -208,7 +213,7 @@ export default class NoteEndpoint{
     note = new Note();
     note.title=req.body.note.title;
     links = req.body.note.links;
-    note.userId = user.userId;
+    note.userid = user.userid;
     NoteMiddle.changeLinks(note, links)
     .then(result=>{
       res.json(result);
@@ -229,7 +234,7 @@ export default class NoteEndpoint{
     note = new Note();
     note.title=req.body.note.title;
     text = req.body.note.text;
-    note.userId = user.userId;
+    note.userid = user.userid;
     NoteMiddle.changeText(note, text)
     .then(result=>{
       res.json(result);
@@ -248,8 +253,8 @@ export default class NoteEndpoint{
 
     note = new Note();
     note.title=req.body.note.title;
-    newTitle = req.body.note.newTitle;
-    note.userId = user.userId;
+    newTitle = req.body.note.newtitle;
+    note.userid = user.userid;
     NoteMiddle.changeTitle(note, newTitle)
     .then(result=>{
       res.json(result);
@@ -266,14 +271,33 @@ export default class NoteEndpoint{
     }
 
     note = new Note();
-    note.userId=user.userId;
+    note.userid=user.userid;
     note.title=req.body.note.title;
     note.text=req.body.note.text;
-    note.isDone=((req.body.note.isDone) ? req.body.note.isDone : null);
-    note.links=((req.body.note.links) ? req.body.note.links : null);
+    note.isdone=((req.body.note.isdone) ? req.body.note.isdone : null);
 
-    note.mainTags=((req.body.note.mainTags) ? req.body.note.mainTags : null);
-    note.otherTags=((req.body.note.otherTags) ? req.body.note.otherTags : null);
+    // note.links=((req.body.note.links) ? req.body.note.links : null);
+
+    //already checked that it's an array.
+
+    if(req.body.note.maintags){
+      if(req.body.note.maintags.length>0){
+        note.maintags=req.body.note.maintags;
+      }
+    }else{
+      note.maintags = null;
+    }
+
+    if(req.body.note.othertags){
+      if(req.body.note.othertags.length>0){
+        note.maintags=req.body.note.othertags;
+      }
+    }else{
+      note.othertags = null;
+    }
+
+    // note.maintags=((req.body.note.maintags) ? req.body.note.maintags : null);
+    // note.othertags=((req.body.note.othertags) ? req.body.note.othertags : null);
 
     NoteMiddle.createNote(note)
     .then(result=>{
@@ -290,7 +314,7 @@ export default class NoteEndpoint{
       return;
     }
     note=new Note();
-    note.userId=user.userId;
+    note.userid=user.userid;
     note.title=req.params.title;
     NoteMiddle.removeNote(note)
     .then(result=>{
@@ -309,7 +333,7 @@ export default class NoteEndpoint{
     }
     note = new Note();
     note.title=req.body.note.title;
-    note.userId=user.userId;
+    note.userid=user.userid;
     req.body.note.tags.map((currentValue)=>{
       let t = new TagClass.Tag();
       t.title=currentValue;
@@ -334,7 +358,7 @@ export default class NoteEndpoint{
       t.title=currentValue;
       tags.push(t);
     });
-    NoteMiddle.selectNotesByTagsNoRole(user.userId, tags)
+    NoteMiddle.selectNotesByTagsNoRole(user.userid, tags)
     .then(result=>{
       res.json(result);
     })
@@ -349,7 +373,7 @@ export default class NoteEndpoint{
       res.json(result);
       return;
     }
-    if(req.body.note.mainTags){
+    if(req.body.note.maintags){
       req.body.mainTags.map((currentValue, currentIndex)=>{
         let tag:TagClass.Tag=new TagClass.Tag();
         tag.title=currentValue;
@@ -357,7 +381,7 @@ export default class NoteEndpoint{
         roles.push('mainTags');
       });
     }
-    if(req.body.note.otherTags){
+    if(req.body.note.othertags){
       req.body.otherTags.map((currentValue, currentIndex)=>{
         let tag:TagClass.Tag=new TagClass.Tag();
         tag.title=currentValue;
@@ -365,7 +389,7 @@ export default class NoteEndpoint{
         roles.push('otherTags');
       });
     }
-    NoteMiddle.selectNotesByTagsWithRole(user.userId, tags, roles)
+    NoteMiddle.selectNotesByTagsWithRole(user.userid, tags, roles)
     .then(result=>{
       res.json(result);
     })
@@ -382,7 +406,7 @@ export default class NoteEndpoint{
     }
     note = new Note();
     note.title=req.params.title;
-    note.userId=user.userId;
+    note.userid=user.userid;
     NoteMiddle.selectNoteByTitle(note)
     .then(result=>{
       res.json(result);
@@ -398,7 +422,7 @@ export default class NoteEndpoint{
       return;
     }
     title=req.body.note.title;
-    NoteMiddle.selectNotesByTitleReg(user.userId, title)
+    NoteMiddle.selectNotesByTitleReg(user.userid, title)
     .then(result=>{
       res.json(result);
     })
@@ -414,7 +438,7 @@ export default class NoteEndpoint{
       return;
     }
     text=req.body.note.title;
-    NoteMiddle.selectNotesByTextReg(user.userId, text)
+    NoteMiddle.selectNotesByTextReg(user.userid, text)
     .then(result=>{
       res.json(result);
     })
@@ -430,9 +454,9 @@ export default class NoteEndpoint{
       return;
     }
     note = new Note();
-    note.userId=user.userId;
+    note.userid=user.userid;
     note.title=req.body.note.title;
-    isDone=req.body.note.isDone;
+    isDone=req.body.note.isdone;
     NoteMiddle.setDone(note, isDone)
     .then(result=>{
       res.json(result);

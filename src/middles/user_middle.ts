@@ -10,7 +10,7 @@ export default class UserMiddle{
         .then(user=>{
           let result:any={
             ok:true,
-            userId: user.userId,
+            userid: user.userid,
             token: 'JWT '+AuthMiddle.generateToken(user)
           };
           resolve(result);

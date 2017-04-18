@@ -4,27 +4,27 @@ class User {
     hashPassword() {
         return bcrypt.genSalt(10)
             .then(salt => {
-            return bcrypt.hash(this.hashedPassword, salt);
+            return bcrypt.hash(this.hashedpassword, salt);
         })
             .then(hash => {
-            this.hashedPassword = hash;
+            this.hashedpassword = hash;
         })
             .catch(error => {
             throw new Error(error);
         });
     }
     checkPassword(passwordToCheck) {
-        return bcrypt.compare(passwordToCheck, this.hashedPassword);
+        return bcrypt.compare(passwordToCheck, this.hashedpassword);
     }
     getValues() {
         let values = {
-            userId: this.userId,
-            hashedPassword: this.hashedPassword
+            userid: this.userid,
+            hashedpassword: this.hashedpassword
         };
         return values;
     }
-    constructor(userId) {
-        this.userId = userId;
+    constructor(userid) {
+        this.userid = userid;
     }
 }
 Object.defineProperty(exports, "__esModule", { value: true });

@@ -4,7 +4,7 @@ let sql = sql_1.default.tags;
 class Repository {
     constructor(db, pgp) {
         this.changeTitle = (tag, newTitle) => {
-            return this.db.one(sql.changeTitle, [tag.userId, tag.title, newTitle], (tag) => { return tag.result; });
+            return this.db.one(sql.changeTitle, [tag.userid, tag.title, newTitle], (tag) => { return tag.result; });
         };
         this.createTag = (tag) => {
             return this.db.one(sql.createTag, tag.getValues(), (tag) => { return tag.result; });
@@ -16,13 +16,13 @@ class Repository {
             return this.db.oneOrNone(sql.selectTagByTitle, tag.getValues(), (tag) => { return tag; });
         };
         this.selectTagsByTitleReg = (user, title) => {
-            return this.db.any(sql.selectTagsByTitle, [user.userId, title]);
+            return this.db.any(sql.selectTagsByTitle, [user.userid, title]);
         };
         this.selectTagsFull = (user) => {
-            return this.db.any(sql.selectTagsFull, [user.userId]);
+            return this.db.any(sql.selectTagsFull, [user.userid]);
         };
         this.selectTagsMin = (user) => {
-            return this.db.any(sql.selectTagsMin, [user.userId]);
+            return this.db.any(sql.selectTagsMin, [user.userid]);
         };
         this.db = db;
         this.pgp = pgp;

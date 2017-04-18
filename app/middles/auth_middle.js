@@ -21,11 +21,11 @@ AuthMiddle.getUserFromToken = (headers) => {
     if (token == null) {
         throw new Error('NO TOKEN');
     }
-    let userId = jwt.decode(token, database_1.default.secret);
-    return new user_1.default(userId);
+    let userid = jwt.decode(token, database_1.default.secret);
+    return new user_1.default(userid);
 };
 AuthMiddle.generateToken = (user) => {
-    return jwt.sign({ userId: user.userId }, database_1.default.secret);
+    return jwt.sign({ userid: user.userid }, database_1.default.secret);
 };
 AuthMiddle.authenticate = (user) => {
     return new Promise((resolve, reject) => {

@@ -12,7 +12,7 @@ export default class Utils{
   }
 
   public static extractUser = (req: express.Request):User=>{
-    return new User(req.user.userId);
+    return new User(req.user.userid);
   }
   /*
   key: the name of the obj property,

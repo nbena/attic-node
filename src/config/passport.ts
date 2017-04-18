@@ -10,7 +10,7 @@ import User from '../models/user';
 const ExtractJwt = passportJwt.ExtractJwt;
 const JwtStrategy = passportJwt.Strategy;
 
-const localLoginOpt = {usernameField: 'userId'};
+const localLoginOpt = {usernameField: 'userid'};
 const jwtOpt = {
   jwtFromRequest: ExtractJwt.fromAuthHeader(),
   secretOrKey: Config.secret
@@ -53,7 +53,7 @@ function passportFunc(passport: passport.Passport){
   //   });
   // });
   const jwtLogin = new JwtStrategy(jwtOpt, (payload, done)=>{
-    db.users.selectByUserId(<string>payload.userId)
+    db.users.selectByUserId(<string>payload.userid)
       .then(user=>{
         return done(null, user);
       })

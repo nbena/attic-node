@@ -58,8 +58,8 @@ NoteMiddle.createNote = (note) => {
             console.log('the result');
             console.log(JSON.stringify(result));
             let noteRes = result[0].result;
-            noteRes.mainTags = ((note.mainTags == null) ? [] : note.mainTags);
-            noteRes.otherTags = ((note.otherTags == null) ? [] : note.otherTags);
+            noteRes.maintags = ((note.maintags == null) ? [] : note.maintags);
+            noteRes.othertags = ((note.othertags == null) ? [] : note.othertags);
             resolve(new types.NoteResult(true, noteRes));
         });
         result.catch(error => {

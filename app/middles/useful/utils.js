@@ -10,7 +10,7 @@ Utils.jsonErr = (err) => {
     return res;
 };
 Utils.extractUser = (req) => {
-    return new user_1.default(req.user.userId);
+    return new user_1.default(req.user.userid);
 };
 Utils.jsonCorrect = (obj) => {
     let objString = JSON.stringify(obj, (key, value) => {

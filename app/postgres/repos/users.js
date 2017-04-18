@@ -10,12 +10,16 @@ class Repository {
             });
         };
         this.removeUser = (user) => {
-            return this.db.result(sql.removeUser, user.userId, (result) => { result.rowCount; });
+            return this.db.result(sql.removeUser, user.userid, (result) => { result.rowCount; });
         };
-        this.selectByUserId = (userId) => {
-            return this.db.oneOrNone(sql.selectByUserId, userId, (result) => {
-                let user = new user_1.default(result.user.userId);
-                user.hashedPassword = result.user.hashedPassword;
+        this.selectByUserId = (userid) => {
+            return this.db.oneOrNone(sql.selectByUserId, userid, (result) => {
+                console.log('the result of the select is:');
+                console.log(JSON.stringify(result));
+                let user = new user_1.default(result.user.userid);
+                user.hashedpassword = result.user.hashedpassword;
+                console.log('the user instead is:');
+                console.log(JSON.stringify(user));
                 return user;
             });
         };

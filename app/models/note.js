@@ -1,7 +1,7 @@
 "use strict";
 class Note {
     getValues() {
-        return [this.userId, this.title];
+        return [this.userid, this.title];
     }
 }
 Object.defineProperty(exports, "__esModule", { value: true });

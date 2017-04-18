@@ -1,8 +1,8 @@
 import Note from './note';
 export class Tag{
-  userId: string;
+  userid: string;
   title: string;
-  notesLength: number;
+  noteslength: number;
 
   // public getValues():any{
   //   let values: any;
@@ -13,7 +13,7 @@ export class Tag{
   // }
 
   public getValues():string[]{
-    return [this.userId, this.title];
+    return [this.userid, this.title];
   }
 
 

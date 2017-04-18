@@ -40,7 +40,7 @@ let sql = sqlProvider.notes;
 export class Repository{
 
   private static readonly SELECT_NOTES_BY_TAGS_START =
-  'select json_array(\'{title, text, isDone, creationDate, lastModficationDate, links}\', array[title, text, isDone:: text, creationDate::text, lastModficationDate::text, links::text]) from attic.notes join attic.notes_tags as rel on title=noteTitle where rel.userId=\'';
+  'select json_array(\'{title, text, isDone, creationDate, lastModficationDate, links}\', array[title, text, isDone:: text, creationDate::text, lastModficationDate::text, links::text]) from attic.notes join attic.notes_tags as rel on title=noteTitle where rel.userid=\'';
 
   private db: IDatabase<any>;
   private pgp: IMain;
@@ -57,11 +57,11 @@ export class Repository{
         noteTitle: note.title,
         tagTitle: tags[i].title,
         role: roles[i],
-        userId: note.userId
+        userid: note.userid
       });
     }
-    let res:string = this.pgp.helpers.insert(things, ['noteTitle', 'tagTitle', 'role', 'userId'], 'attic.notes_tags');
-    res=res.replace('"attic.notes_tags"("noteTitle","tagTitle","role","userId")', "attic.notes_tags(noteTitle,tagTitle,role,userId)");
+    let res:string = this.pgp.helpers.insert(things, ['noteTitle', 'tagTitle', 'role', 'userid'], 'attic.notes_tags');
+    res=res.replace('"attic.notes_tags"("noteTitle","tagTitle","role","userid")', "attic.notes_tags(noteTitle,tagTitle,role,userid)");
     return res;
   }
 
@@ -75,7 +75,7 @@ export class Repository{
       // let queries:any[]=[tags.length];
       // for(let i=0;i<tags.length;i++){
       //   let values:any[]=[
-      //     note.userId,
+      //     note.userid,
       //     note.title,
       //     tags[i].title,
       //     roles[i]
@@ -83,11 +83,11 @@ export class Repository{
       //   queries.push(t.one(sql.addTags, values, (note:any)=>{note.result}));
       // }
 
-      // let values:any = new Inserts('${noteTitle}, ${tagTitle}, ${role}, ${userId}', things);
+      // let values:any = new Inserts('${noteTitle}, ${tagTitle}, ${role}, ${userid}', things);
       // console.log('the values is: ');
       // console.log(JSON.stringify(values));
       // return t.batch([
-      //   t.none('insert into attic.notes_tags(noteTitle, tagTitle, role, userId) values $1 returning noteTitle as result;',
+      //   t.none('insert into attic.notes_tags(noteTitle, tagTitle, role, userid) values $1 returning noteTitle as result;',
       //     values,
       //     (result:any)=>{return result})
       //   ]);
@@ -97,27 +97,27 @@ export class Repository{
   }
 
   changeLinks = (note: Note, links: string[]):Promise<any>=>{
-    let values:any[]=[note.userId, note.title, links];
+    let values:any[]=[note.userid, note.title, links];
     return this.db.one(sql.changeLinks,values, (note:any)=>{return note.result});
   }
 
   changeText = (note: Note, newText: string):Promise<any>=>{
-    let values:any[]=[note.userId, note.title, newText];
+    let values:any[]=[note.userid, note.title, newText];
     return this.db.one(sql.changeText, values, (note:any)=>{return note.result});
   }
 
   changeTitle = (note:Note, newTitle: string):Promise<any>=>{
-    let values:any[]=[note.userId, note.title, newTitle];
+    let values:any[]=[note.userid, note.title, newTitle];
     return this.db.one(sql.changeTitle, values, (note:any)=>{return note.result});
   }
 
   /*rewrite a bit, will be done into a transaction..*/
   createNoteAll = (note:Note):Promise<Note>=>{
     let values: any[]=[
-      note.userId,
+      note.userid,
       note.title,
       note.text,
-      note.isDone,
+      note.isdone,
       JSON.stringify(note.links)
     ];
 
@@ -126,11 +126,11 @@ export class Repository{
 
   createNote = (note: Note):Promise<Note>=>{
     let values:any[]=[
-      note.userId,
+      note.userid,
       note.title,
       note.text
     ];
-    values.push(((note.isDone == null) ? false : note.isDone));
+    values.push(((note.isdone == null) ? false : note.isdone));
     values.push(((note.links == null) ? '[]' : note.links));
 
     console.log('values are');
@@ -142,8 +142,8 @@ export class Repository{
     let tags:TagClass.Tag[]=[];
     let roles:string[]=[];
 
-    if(note.mainTags !=null && note.mainTags.length!=0){
-        note.mainTags.map((currentValue, currentIndex)=>{
+    if(note.maintags !=null && note.maintags.length!=0){
+        note.maintags.map((currentValue, currentIndex)=>{
           let tag =  new TagClass.Tag();
           tag.title = currentValue;
           roles.push('mainTags');
@@ -151,8 +151,8 @@ export class Repository{
         });
     }
 
-    if(note.mainTags !=null && note.otherTags.length !=0){
-        note.otherTags.map((currentValue, currentIndex)=>{
+    if(note.maintags !=null && note.othertags.length !=0){
+        note.othertags.map((currentValue, currentIndex)=>{
           let tag =  new TagClass.Tag();
           tag.title = currentValue;
           roles.push('otherTags');
@@ -172,7 +172,7 @@ export class Repository{
 
   // createNoteWithNoLinks = (note: Note):Promise<Note>=>{
   //   let values: any[]=[
-  //     note.userId,
+  //     note.userid,
   //     note.title,
   //     note.text,
   //     note.isDone,
@@ -183,7 +183,7 @@ export class Repository{
   //
   // createNoteWithNoIsDone = (note: Note):Promise<Note>=>{
   //   let values: any[]=[
-  //     note.userId,
+  //     note.userid,
   //     note.title,
   //     note.text,
   //     JSON.stringify(note.links)
@@ -194,7 +194,7 @@ export class Repository{
   //
   // createNoteWithNoLinksNoIsDone = (note: Note):Promise<Note>=>{
   //   let values: any=[
-  //     note.userId,
+  //     note.userid,
   //     note.title,
   //     note.text,
   //   ];
@@ -217,7 +217,7 @@ export class Repository{
       let queries:any[]=[tags.length];
       for(let i=0;i<tags.length;i++){
         let values:any={
-          userId:note.userId,
+          userid:note.userid,
           noteTitle:note.title,
           tagTitle:tags[i].title
         };
@@ -230,18 +230,18 @@ export class Repository{
   /*
   select title, text, isDone, creationDate, lastModficationDate, links
   from attic.notes join attic.notes_tags on title=noteTitle
-  where attic.notes.userId=$1 and tagTitle=$2;
+  where attic.notes.userid=$1 and tagTitle=$2;
   */
-  private static getQueryNotesByTagsNoRole(userId: string, tags:TagClass.Tag[]):string{
+  private static getQueryNotesByTagsNoRole(userid: string, tags:TagClass.Tag[]):string{
     let tagsTitle:string[]=tags.map((currentValue:TagClass.Tag)=>{
       return currentValue.title;
     });
 
     let query:string = Repository.SELECT_NOTES_BY_TAGS_START;
-    query = query.concat(userId+'\'' );
+    query = query.concat(userid+'\'' );
     query = query.concat('and ( tagTitle=\'');
 
-    /*select ... from ... where userId='ciao' and (tagTitle='*/
+    /*select ... from ... where userid='ciao' and (tagTitle='*/
 
     let joined:string = tagsTitle.join('\' and tagTitle = \'');
     joined = joined.concat('\');');
@@ -251,14 +251,14 @@ export class Repository{
     return query.concat(joined);
   }
 
-  private static getQueryNotesByTagsWithRole(userId: string, tags:TagClass.Tag[], roles:string[]):string{
+  private static getQueryNotesByTagsWithRole(userid: string, tags:TagClass.Tag[], roles:string[]):string{
 
     let rolesTags:any[]=tags.map((currentValue:TagClass.Tag, currentIndex: number)=>{
       return {role:roles[currentIndex], title: currentValue.title};
     });
 
     let query:string = Repository.SELECT_NOTES_BY_TAGS_START;
-    query = query.concat(userId+'\'' );
+    query = query.concat(userid+'\'' );
     query = query.concat('and ');
     let joined:string='';
 
@@ -272,17 +272,17 @@ export class Repository{
     return query;
   }
 
-  selectNotesByTagsNoRole = (userId: string, tags:TagClass.Tag[]):Promise<any>=>{
-    let values:string = Repository.getQueryNotesByTagsNoRole(userId,tags)
+  selectNotesByTagsNoRole = (userid: string, tags:TagClass.Tag[]):Promise<any>=>{
+    let values:string = Repository.getQueryNotesByTagsNoRole(userid,tags)
     return this.db.many(values);
   }
 
 
-  selectNotesByTagsWithRole = (userId: string, tags:TagClass.Tag[], roles:string[]):Promise<any>=>{
+  selectNotesByTagsWithRole = (userid: string, tags:TagClass.Tag[], roles:string[]):Promise<any>=>{
     if(tags.length!=roles.length){
       throw new TypeError(Const.ERR_DIFF_LENGTH);
     }
-    let values:string = Repository.getQueryNotesByTagsWithRole(userId, tags, roles);
+    let values:string = Repository.getQueryNotesByTagsWithRole(userid, tags, roles);
     return this.db.many(values);
   }
 
@@ -291,24 +291,24 @@ export class Repository{
       return note});
   }
 
-  selectNotesByTitleReg = (userId:string, title:string):Promise<any>=>{
-    return this.db.many(sql.selectNotesByTitleReg, [userId, title]);
+  selectNotesByTitleReg = (userid:string, title:string):Promise<any>=>{
+    return this.db.many(sql.selectNotesByTitleReg, [userid, title]);
   }
 
-  selectNotesByTextReg = (userId:string, text:string):Promise<any>=>{
-    return this.db.many(sql.selectNotesByTextReg, [userId, text]);
+  selectNotesByTextReg = (userid:string, text:string):Promise<any>=>{
+    return this.db.many(sql.selectNotesByTextReg, [userid, text]);
   }
 
-  selectNotesFull = (userId:string):Promise<any>=>{
-    return this.db.many(sql.selectNotesFull, [userId]);
+  selectNotesFull = (userid:string):Promise<any>=>{
+    return this.db.many(sql.selectNotesFull, [userid]);
   }
 
   selectNotesMin = (user: User):Promise<any>=>{
-    return this.db.any(sql.selectNotesMin,[user.userId]);
+    return this.db.any(sql.selectNotesMin,[user.userid]);
   }
 
   setDone = (note:Note, done: boolean):Promise<any>=>{
-    let values:any[]=[note.isDone, note.title, done];
+    let values:any[]=[note.isdone, note.title, done];
     return this.db.one(sql.setDone, values, (note:any)=>{return note.result});
   }
 

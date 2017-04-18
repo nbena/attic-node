@@ -10,7 +10,7 @@ UserMiddle.createUser = (user) => {
             .then(user => {
             let result = {
                 ok: true,
-                userId: user.userId,
+                userid: user.userid,
                 token: 'JWT ' + auth_middle_1.default.generateToken(user)
             };
             resolve(result);

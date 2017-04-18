@@ -7,6 +7,8 @@ export default class Const{
   public static readonly INVALID_NOTE: string = 'the provided param is not a valid note';
   public static readonly NOTE_REQUIRED: string = 'note.title required';
   public static readonly LINKS_REQUIRED: string = 'note.links required';
+  public static readonly LINK_NOT_ARRAY: string = 'note.links is not an array';
+  public static readonly IS_DONE_NOT_BOOL: string = 'note.isdone is not boolean';
   public static readonly TEXT_REQUIRED:string = 'note.text required';
   public static readonly TITLE_REQUIRED:string = 'note.title required';
   public static readonly IS_DONE_REQUIRED: string = 'note.isDone required';
@@ -16,5 +18,7 @@ export default class Const{
   public static readonly TAG_TITLE_REQUIRED: string = 'tag.title required';
   public static readonly TAG_TITLE_PARAM_REQUIRED: string = ':title required';
   public static readonly TAG_NEW_TITLE_REQUIRED: string = 'tag.newTitle required';
+
+  //public static readonly ARRAY_EMPTY_NOT_ALLOWED: string = 'empty arrays are not allowed';
 
 }

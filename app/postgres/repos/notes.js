@@ -12,11 +12,11 @@ class Repository {
                     noteTitle: note.title,
                     tagTitle: tags[i].title,
                     role: roles[i],
-                    userId: note.userId
+                    userid: note.userid
                 });
             }
-            let res = this.pgp.helpers.insert(things, ['noteTitle', 'tagTitle', 'role', 'userId'], 'attic.notes_tags');
-            res = res.replace('"attic.notes_tags"("noteTitle","tagTitle","role","userId")', "attic.notes_tags(noteTitle,tagTitle,role,userId)");
+            let res = this.pgp.helpers.insert(things, ['noteTitle', 'tagTitle', 'role', 'userid'], 'attic.notes_tags');
+            res = res.replace('"attic.notes_tags"("noteTitle","tagTitle","role","userid")', "attic.notes_tags(noteTitle,tagTitle,role,userid)");
             return res;
         };
         this.addTags = (note, tags, roles) => {
@@ -26,50 +26,50 @@ class Repository {
             return this.db.none(this.addTagsString(note, tags, roles));
         };
         this.changeLinks = (note, links) => {
-            let values = [note.userId, note.title, links];
+            let values = [note.userid, note.title, links];
             return this.db.one(sql.changeLinks, values, (note) => { return note.result; });
         };
         this.changeText = (note, newText) => {
-            let values = [note.userId, note.title, newText];
+            let values = [note.userid, note.title, newText];
             return this.db.one(sql.changeText, values, (note) => { return note.result; });
         };
         this.changeTitle = (note, newTitle) => {
-            let values = [note.userId, note.title, newTitle];
+            let values = [note.userid, note.title, newTitle];
             return this.db.one(sql.changeTitle, values, (note) => { return note.result; });
         };
         this.createNoteAll = (note) => {
             let values = [
-                note.userId,
+                note.userid,
                 note.title,
                 note.text,
-                note.isDone,
+                note.isdone,
                 JSON.stringify(note.links)
             ];
             return this.db.one(sql.createNoteAll, values, (note) => { return note.result; });
         };
         this.createNote = (note) => {
             let values = [
-                note.userId,
+                note.userid,
                 note.title,
                 note.text
             ];
-            values.push(((note.isDone == null) ? false : note.isDone));
+            values.push(((note.isdone == null) ? false : note.isdone));
             values.push(((note.links == null) ? '[]' : note.links));
             console.log('values are');
             console.log(values);
             let queries = [];
             let tags = [];
             let roles = [];
-            if (note.mainTags != null && note.mainTags.length != 0) {
-                note.mainTags.map((currentValue, currentIndex) => {
+            if (note.maintags != null && note.maintags.length != 0) {
+                note.maintags.map((currentValue, currentIndex) => {
                     let tag = new TagClass.Tag();
                     tag.title = currentValue;
                     roles.push('mainTags');
                     tags.push(tag);
                 });
             }
-            if (note.mainTags != null && note.otherTags.length != 0) {
-                note.otherTags.map((currentValue, currentIndex) => {
+            if (note.maintags != null && note.othertags.length != 0) {
+                note.othertags.map((currentValue, currentIndex) => {
                     let tag = new TagClass.Tag();
                     tag.title = currentValue;
                     roles.push('otherTags');
@@ -94,7 +94,7 @@ class Repository {
                 let queries = [tags.length];
                 for (let i = 0; i < tags.length; i++) {
                     let values = {
-                        userId: note.userId,
+                        userid: note.userid,
                         noteTitle: note.title,
                         tagTitle: tags[i].title
                     };
@@ -103,15 +103,15 @@ class Repository {
                 return t.batch(queries);
             });
         };
-        this.selectNotesByTagsNoRole = (userId, tags) => {
-            let values = Repository.getQueryNotesByTagsNoRole(userId, tags);
+        this.selectNotesByTagsNoRole = (userid, tags) => {
+            let values = Repository.getQueryNotesByTagsNoRole(userid, tags);
             return this.db.many(values);
         };
-        this.selectNotesByTagsWithRole = (userId, tags, roles) => {
+        this.selectNotesByTagsWithRole = (userid, tags, roles) => {
             if (tags.length != roles.length) {
                 throw new TypeError(const_1.default.ERR_DIFF_LENGTH);
             }
-            let values = Repository.getQueryNotesByTagsWithRole(userId, tags, roles);
+            let values = Repository.getQueryNotesByTagsWithRole(userid, tags, roles);
             return this.db.many(values);
         };
         this.selectNoteByTitle = (note) => {
@@ -119,42 +119,42 @@ class Repository {
                 return note;
             });
         };
-        this.selectNotesByTitleReg = (userId, title) => {
-            return this.db.many(sql.selectNotesByTitleReg, [userId, title]);
+        this.selectNotesByTitleReg = (userid, title) => {
+            return this.db.many(sql.selectNotesByTitleReg, [userid, title]);
         };
-        this.selectNotesByTextReg = (userId, text) => {
-            return this.db.many(sql.selectNotesByTextReg, [userId, text]);
+        this.selectNotesByTextReg = (userid, text) => {
+            return this.db.many(sql.selectNotesByTextReg, [userid, text]);
         };
-        this.selectNotesFull = (userId) => {
-            return this.db.many(sql.selectNotesFull, [userId]);
+        this.selectNotesFull = (userid) => {
+            return this.db.many(sql.selectNotesFull, [userid]);
         };
         this.selectNotesMin = (user) => {
-            return this.db.any(sql.selectNotesMin, [user.userId]);
+            return this.db.any(sql.selectNotesMin, [user.userid]);
         };
         this.setDone = (note, done) => {
-            let values = [note.isDone, note.title, done];
+            let values = [note.isdone, note.title, done];
             return this.db.one(sql.setDone, values, (note) => { return note.result; });
         };
         this.db = db;
         this.pgp = pgp;
     }
-    static getQueryNotesByTagsNoRole(userId, tags) {
+    static getQueryNotesByTagsNoRole(userid, tags) {
         let tagsTitle = tags.map((currentValue) => {
             return currentValue.title;
         });
         let query = Repository.SELECT_NOTES_BY_TAGS_START;
-        query = query.concat(userId + '\'');
+        query = query.concat(userid + '\'');
         query = query.concat('and ( tagTitle=\'');
         let joined = tagsTitle.join('\' and tagTitle = \'');
         joined = joined.concat('\');');
         return query.concat(joined);
     }
-    static getQueryNotesByTagsWithRole(userId, tags, roles) {
+    static getQueryNotesByTagsWithRole(userid, tags, roles) {
         let rolesTags = tags.map((currentValue, currentIndex) => {
             return { role: roles[currentIndex], title: currentValue.title };
         });
         let query = Repository.SELECT_NOTES_BY_TAGS_START;
-        query = query.concat(userId + '\'');
+        query = query.concat(userid + '\'');
         query = query.concat('and ');
         let joined = '';
         for (let obj of rolesTags) {
@@ -166,6 +166,6 @@ class Repository {
         return query;
     }
 }
-Repository.SELECT_NOTES_BY_TAGS_START = 'select json_array(\'{title, text, isDone, creationDate, lastModficationDate, links}\', array[title, text, isDone:: text, creationDate::text, lastModficationDate::text, links::text]) from attic.notes join attic.notes_tags as rel on title=noteTitle where rel.userId=\'';
+Repository.SELECT_NOTES_BY_TAGS_START = 'select json_array(\'{title, text, isDone, creationDate, lastModficationDate, links}\', array[title, text, isDone:: text, creationDate::text, lastModficationDate::text, links::text]) from attic.notes join attic.notes_tags as rel on title=noteTitle where rel.userid=\'';
 exports.Repository = Repository;
 //# sourceMappingURL=notes.js.map

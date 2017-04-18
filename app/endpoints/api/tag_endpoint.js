@@ -48,7 +48,7 @@ TagEndpoint.changeTitle = (req, res, next) => {
     }
     tag = new TagClass.Tag();
     tag.title = req.body.tag.title;
-    tag.userId = user.userId;
+    tag.userid = user.userid;
     newTitle = req.body.tag.newTitle;
     tag_middle_1.default.changeTitle(tag, newTitle)
         .then(result => {
@@ -65,7 +65,7 @@ TagEndpoint.createTag = (req, res, next) => {
     }
     tag = new TagClass.Tag();
     tag.title = req.params.title;
-    tag.userId = user.userId;
+    tag.userid = user.userid;
     tag_middle_1.default.createTag(tag)
         .then(result => {
         res.json(result);
@@ -81,7 +81,7 @@ TagEndpoint.removeTag = (req, res, next) => {
     }
     tag = new TagClass.Tag();
     tag.title = req.params.title;
-    tag.userId = user.userId;
+    tag.userid = user.userid;
     tag_middle_1.default.removeTag(tag)
         .then(result => {
         res.json(result);
@@ -97,7 +97,7 @@ TagEndpoint.selectTagByTitle = (req, res, next) => {
     }
     tag = new TagClass.Tag();
     tag.title = req.params.title;
-    tag.userId = user.userId;
+    tag.userid = user.userid;
     console.log('the object is:'),
         console.log(JSON.stringify(tag));
     tag_middle_1.default.selectTagByTitle(tag)
@@ -115,7 +115,7 @@ TagEndpoint.selectTagsByTitleReg = (req, res, next) => {
     }
     tag = new TagClass.Tag();
     tag.title = req.body.tag.title;
-    tag.userId = user.userId;
+    tag.userid = user.userid;
     tag_middle_1.default.selectTagByTitle(tag)
         .then(result => {
         res.json(result);

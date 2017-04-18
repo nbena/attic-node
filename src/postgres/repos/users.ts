@@ -21,19 +21,21 @@ export class Repository {
   }
 
   removeUser = (user: User) =>{
-    return this.db.result(sql.removeUser, user.userId, (result:any)=>{result.rowCount});
+    return this.db.result(sql.removeUser, user.userid, (result:any)=>{result.rowCount});
   }
 
-  selectByUserId = (userId: string):Promise<User>=>{
-    return this.db.oneOrNone(sql.selectByUserId, userId, (result:any)=>{
+  selectByUserId = (userid: string):Promise<User>=>{
+    return this.db.oneOrNone(sql.selectByUserId, userid, (result:any)=>{
     /*
     I know it's f@@@@@ing ugly but is necessary, if I doesn't
     create a new object I can't obtain the function checkPassword.
     */
-
-      let user:User = new User(result.user.userId);
-      user.hashedPassword=result.user.hashedPassword;
-
+      console.log('the result of the select is:');
+      console.log(JSON.stringify(result));
+      let user:User = new User(result.user.userid);
+      user.hashedpassword=result.user.hashedpassword;
+      console.log('the user instead is:');
+      console.log(JSON.stringify(user));
       return user;
     });
   }

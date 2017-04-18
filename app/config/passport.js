@@ -5,7 +5,7 @@ const database_1 = require("./database");
 const db = require("../postgres");
 const ExtractJwt = passportJwt.ExtractJwt;
 const JwtStrategy = passportJwt.Strategy;
-const localLoginOpt = { usernameField: 'userId' };
+const localLoginOpt = { usernameField: 'userid' };
 const jwtOpt = {
     jwtFromRequest: ExtractJwt.fromAuthHeader(),
     secretOrKey: database_1.default.secret
@@ -29,7 +29,7 @@ function passportFunc(passport) {
         });
     });
     const jwtLogin = new JwtStrategy(jwtOpt, (payload, done) => {
-        db.users.selectByUserId(payload.userId)
+        db.users.selectByUserId(payload.userid)
             .then(user => {
             return done(null, user);
         })

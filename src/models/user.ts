@@ -1,15 +1,15 @@
 import * as bcrypt from 'bcrypt';
 export default class User{
-  userId: string;
-  hashedPassword: string;
+  userid: string;
+  hashedpassword: string;
 
   public hashPassword(){
     return bcrypt.genSalt(10)
       .then(salt=>{
-        return bcrypt.hash(this.hashedPassword, salt);
+        return bcrypt.hash(this.hashedpassword, salt);
       })
       .then(hash=>{
-        this.hashedPassword = hash;
+        this.hashedpassword = hash;
       })
       .catch(error=>{
         throw new Error(error);
@@ -21,21 +21,21 @@ export default class User{
   */
 
   public checkPassword(passwordToCheck: string):Promise<boolean>{
-    return bcrypt.compare(passwordToCheck, this.hashedPassword);
+    return bcrypt.compare(passwordToCheck, this.hashedpassword);
   }
 
 
 
   public getValues(){
     let values: any = {
-      userId: this.userId,
-      hashedPassword: this.hashedPassword
+      userid: this.userid,
+      hashedpassword: this.hashedpassword
     }
     return values;
   }
 
-  constructor(userId: string){
-    this.userId=userId;
+  constructor(userid: string){
+    this.userid=userid;
   }
 
 

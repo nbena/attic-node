@@ -169,3 +169,30 @@
 
 17:22:00 error: current transaction is aborted, commands ignored until end of transaction block
          tx: insert into attic.notes_tags(noteTitle,tagTitle,role,userId) values('is-a-test','new-tag3','mainTags','omni@pollo.com'),('is-a-test','tag-0','otherTags','omni@pollo.com')
+
+19:58:53 error: password authentication failed for user "postgres"
+         connection: "postgres://postgres@localhost:##########"
+
+20:22:01 error: null value in column "userid" violates not-null constraint
+         tx: insert into attic.notes(userId, title, text, isDone, links) values (null, 'is-a-test', 'this is a text', false, '[]') returning json_build_object('userid', userId, 'title', title, 'text', text, 'links', links, 'isdone', isDone, 'creationdate', creationDate, 'lastmodificationdate', lastModificationDate) as result;
+
+20:22:01 error: current transaction is aborted, commands ignored until end of transaction block
+         tx: insert into attic.notes_tags(noteTitle,tagTitle,role,userid) values('is-a-test','new-tag3','mainTags',null),('is-a-test','tag-0','otherTags',null)
+
+20:25:10 error: there is no parameter $1
+         query: select json_object('{userid, hashedpassword}', array[userId, hashedPassword]) as user from attic.users where userId=$1;
+
+20:27:41 error: there is no parameter $1
+         query: select json_object('{userid, hashedpassword}', array[userId, hashedPassword]) as user from attic.users where userId=$1;
+
+20:29:24 error: there is no parameter $1
+         query: select json_object('{userid, hashedpassword}', array[userId, hashedPassword]) as user from attic.users where userId=$1;
+
+20:32:15 error: null value in column "userid" violates not-null constraint
+         tx: insert into attic.notes(userId, title, text, isDone, links) values (null, 'is-a-test', 'this is a text', false, '[]') returning json_build_object('userid', userId, 'title', title, 'text', text, 'links', links, 'isdone', isDone, 'creationdate', creationDate, 'lastmodificationdate', lastModificationDate) as result;
+
+20:32:15 error: current transaction is aborted, commands ignored until end of transaction block
+         tx: insert into attic.notes_tags(noteTitle,tagTitle,role,userid) values('is-a-test','new-tag3','mainTags',null),('is-a-test','tag-0','otherTags',null)
+
+20:50:05 error: cannot determine type of empty array
+         tx: insert into attic.notes(userId, title, text, isDone, links) values ('omni@pollo.com', 'is-a-test', 'this is a text', false, array[]) returning json_build_object('userid', userId, 'title', title, 'text', text, 'links', links, 'isdone', isDone, 'creationdate', creationDate, 'lastmodificationdate', lastModificationDate) as result;
