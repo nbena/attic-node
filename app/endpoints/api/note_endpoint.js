@@ -16,14 +16,20 @@ NoteEndpointParamCheck.title = (req) => {
 NoteEndpointParamCheck.addTags = (req) => {
     let result = null;
     result = NoteEndpointParamCheck.title(req);
+    console.log('is note instanceof?');
+    console.log(JSON.stringify(req.body.note.mainTags instanceof Array));
     if (req.body.note.mainTags == null && req.body.note.otherTags == null) {
         result = utils_1.default.jsonErr(new Error(const_1.default.TAGS_REQUIRED));
     }
-    if (req.body.note.mainTags != null && req.body.note.mainTags instanceof Array) {
-        result = utils_1.default.jsonErr(new Error(const_1.default.NO_ARR_INST));
+    else if (req.body.note.mainTags != null) {
+        if (req.body.note.mainTags instanceof Array == false) {
+            result = utils_1.default.jsonErr(new Error(const_1.default.NO_ARR_INST));
+        }
     }
-    if (req.body.note.otherTags != null && req.body.note.otherTags instanceof Array) {
-        result = utils_1.default.jsonErr(new Error(const_1.default.NO_ARR_INST));
+    if (req.body.note.otherTags != null) {
+        if (req.body.note.otherTags instanceof Array == false) {
+            result = utils_1.default.jsonErr(new Error(const_1.default.NO_ARR_INST));
+        }
     }
     return result;
 };
@@ -52,7 +58,18 @@ NoteEndpointParamCheck.changeTitle = (req) => {
     return result;
 };
 NoteEndpointParamCheck.createNote = (req) => {
-    return NoteEndpointParamCheck.changeText(req);
+    let result = NoteEndpointParamCheck.changeText(req);
+    if (req.body.note.mainTags) {
+        if (req.body.note.mainTags instanceof Array) {
+            result = utils_1.default.jsonErr(new Error(const_1.default.INVALID_NOTE));
+        }
+    }
+    if (req.body.note.otherTags) {
+        if (req.body.note.otherTags instanceof Array) {
+            result = utils_1.default.jsonErr(new Error(const_1.default.INVALID_NOTE));
+        }
+    }
+    return result;
 };
 NoteEndpointParamCheck.removeNote = (req) => {
     let result = null;
@@ -97,7 +114,7 @@ NoteEndpoint.addTags = (req, res, next) => {
     let user = utils_1.default.extractUser(req);
     let tags;
     let tagsTemp;
-    let roles = [];
+    let roles;
     let result;
     let note;
     let check = NoteEndpointParamCheck.addTags(req);
@@ -106,10 +123,12 @@ NoteEndpoint.addTags = (req, res, next) => {
         return;
     }
     note = new note_1.default();
+    tags = [];
+    roles = [];
     note.title = req.body.note.title;
     note.userId = user.userId;
     if (req.body.note.mainTags) {
-        req.body.mainTags.map((currentValue, currentIndex) => {
+        req.body.note.mainTags.map((currentValue, currentIndex) => {
             let tag = new TagClass.Tag();
             tag.title = currentValue;
             tags.push(tag);
@@ -117,13 +136,14 @@ NoteEndpoint.addTags = (req, res, next) => {
         });
     }
     if (req.body.note.otherTags) {
-        req.body.otherTags.map((currentValue, currentIndex) => {
+        req.body.note.otherTags.map((currentValue, currentIndex) => {
             let tag = new TagClass.Tag();
             tag.title = currentValue;
             tags.push(tag);
             roles.push('otherTags');
         });
     }
+    result = note_middle_1.default.addTags(note, tags, roles);
     result.then(result => {
         res.json(result);
     });
@@ -203,6 +223,8 @@ NoteEndpoint.createNote = (req, res, next) => {
     note.text = req.body.note.text;
     note.isDone = ((req.body.note.isDone) ? req.body.note.isDone : null);
     note.links = ((req.body.note.links) ? req.body.note.links : null);
+    note.mainTags = ((req.body.note.mainTags) ? req.body.note.mainTags : null);
+    note.otherTags = ((req.body.note.otherTags) ? req.body.note.otherTags : null);
     note_middle_1.default.createNote(note)
         .then(result => {
         res.json(result);

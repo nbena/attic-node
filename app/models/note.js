@@ -1,10 +1,7 @@
 "use strict";
 class Note {
     getValues() {
-        let values = [];
-        values.push(this.userId);
-        values.push(this.title);
-        return values;
+        return [this.userId, this.title];
     }
 }
 Object.defineProperty(exports, "__esModule", { value: true });

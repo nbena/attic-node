@@ -10,7 +10,7 @@ NoteMiddle.addTags = (note, tags, roles) => {
         db.notes.addTags(note, tags, roles)
             .then(result => {
             console.log(result);
-            resolve(new types.BasicResult(true, JSON.stringify(result)));
+            resolve(new types.Result(true));
         })
             .catch(error => {
             resolve(utils_1.default.jsonErr(error));

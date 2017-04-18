@@ -1,4 +1,5 @@
 import { IDatabase, IMain } from 'pg-promise';
+import * as pgp from 'pg-promise';
 import sqlProvider from '../sql';
 import Note from '../../models/note';
 import User from '../../models/user';
@@ -7,6 +8,34 @@ import Const from '../../middles/useful/const';
 
 
 let sql = sqlProvider.notes;
+
+// class Inserts{
+//   _rawDBType: boolean;
+//   template: string;
+//   data: any[];
+//
+//   constructor(template:string, data: any[]){
+//     // if(!(this instanceof Inserts)){
+//     //   return new Inserts(template, data);
+//     // }
+//     this._rawDBType = true;
+//     this.data=data;
+//   }
+//
+//   formatDBType = ()=>{
+//     return this.data.map(d=>'('+pgp.as.format(this.template, d)+')').join();
+//   };
+// }
+
+// private Inserts(template, data) {
+//   if (!(this instanceof Inserts)) {
+//       return new Inserts(template, data);
+//   }
+//   this._rawDBType = true;
+//   this.formatDBType = function () {
+//       return data.map(d=>'(' + pgp.as.format(template, d) + ')').join();
+//   };
+// }
 
 export class Repository{
 
@@ -21,23 +50,44 @@ export class Repository{
     this.pgp = pgp;
   }
 
+
+
   addTags = (note:Note, tags:TagClass.Tag[], roles:string[]):Promise<any>=>{
     if(tags.length!=roles.length){
       throw new Error('mismatch');
     }
     /*must use a transaction here.*/
     return this.db.tx(t=>{
-      let queries:any[]=[tags.length];
+      // let queries:any[]=[tags.length];
+      // for(let i=0;i<tags.length;i++){
+      //   let values:any[]=[
+      //     note.userId,
+      //     note.title,
+      //     tags[i].title,
+      //     roles[i]
+      //   ]
+      //   queries.push(t.one(sql.addTags, values, (note:any)=>{note.result}));
+      // }
+      let things: any[]=[];
       for(let i=0;i<tags.length;i++){
-        let values:any[]=[
-          note.userId,
-          note.title,
-          tags[i].title,
-          roles[i]
-        ]
-        queries.push(t.one(sql.addTags, values, (note:any)=>{note.result}));
+        things.push({
+          noteTitle: note.title,
+          tagTitle: tags[i].title,
+          role: roles[i],
+          userId: note.userId
+        });
       }
-      return t.batch(queries);
+      // let values:any = new Inserts('${noteTitle}, ${tagTitle}, ${role}, ${userId}', things);
+      // console.log('the values is: ');
+      // console.log(JSON.stringify(values));
+      // return t.batch([
+      //   t.none('insert into attic.notes_tags(noteTitle, tagTitle, role, userId) values $1 returning noteTitle as result;',
+      //     values,
+      //     (result:any)=>{return result})
+      //   ]);
+      let res:string = this.pgp.helpers.insert(things, ['noteTitle', 'tagTitle', 'role', 'userId'], 'attic.notes_tags');
+      res=res.replace('"attic.notes_tags"("noteTitle","tagTitle","role","userId")', "attic.notes_tags(noteTitle,tagTitle,role,userId)");
+      return this.db.none(res);
     })
   }
 
@@ -67,6 +117,21 @@ export class Repository{
     ];
 
     return this.db.one(sql.createNoteAll, values, (note:any)=>{return note.result});
+  }
+
+  createNoteWithTags = (note:Note):Promise<Note>=>{
+    let values: any[]=[
+      note.userId,
+      note.title,
+      note.text,
+      note.isDone,
+      JSON.stringify(note.links)
+    ];
+
+    return this.db.tx(t=>{
+      let queries:any=[];
+      return t.batch(queries);
+    })
   }
 
   createNoteWithNoLinks = (note: Note):Promise<Note>=>{

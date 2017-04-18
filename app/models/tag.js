@@ -1,12 +1,7 @@
 "use strict";
 class Tag {
     getValues() {
-        let values = [];
-        values.push(this.userId);
-        values.push(this.title);
-        console.log('the values:');
-        console.log(values);
-        return values;
+        return [this.userId, this.title];
     }
 }
 exports.Tag = Tag;

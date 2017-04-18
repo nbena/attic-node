@@ -16,11 +16,11 @@ doing so, the endpoint willbe easy to write (no catch).
 export default class NoteMiddle{
 
 public static addTags = (note:Note, tags:TagClass.Tag[], roles:string[]):Promise<any>=>{
-  return new Promise<types.BasicResult>((resolve, reject)=>{
+  return new Promise<types.Result>((resolve, reject)=>{
     db.notes.addTags(note, tags, roles)
     .then(result=>{
       console.log(result);
-      resolve(new types.BasicResult(true, JSON.stringify(result)));
+      resolve(new types.Result(true));
     })
     .catch(error=>{
       resolve(Utils.jsonErr(error));

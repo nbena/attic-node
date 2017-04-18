@@ -16,4 +16,5 @@ export default class Const{
   public static readonly TAG_TITLE_REQUIRED: string = 'tag.title required';
   public static readonly TAG_TITLE_PARAM_REQUIRED: string = ':title required';
   public static readonly TAG_NEW_TITLE_REQUIRED: string = 'tag.newTitle required';
+
 }

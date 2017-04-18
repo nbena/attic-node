@@ -9,17 +9,18 @@ class Repository {
                 throw new Error('mismatch');
             }
             return this.db.tx(t => {
-                let queries = [tags.length];
+                let things = [];
                 for (let i = 0; i < tags.length; i++) {
-                    let values = [
-                        note.userId,
-                        note.title,
-                        tags[i].title,
-                        roles[i]
-                    ];
-                    queries.push(t.one(sql.addTags, values, (note) => { note.result; }));
+                    things.push({
+                        noteTitle: note.title,
+                        tagTitle: tags[i].title,
+                        role: roles[i],
+                        userId: note.userId
+                    });
                 }
-                return t.batch(queries);
+                let res = this.pgp.helpers.insert(things, ['noteTitle', 'tagTitle', 'role', 'userId'], 'attic.notes_tags');
+                res = res.replace('"attic.notes_tags"("noteTitle","tagTitle","role","userId")', "attic.notes_tags(noteTitle,tagTitle,role,userId)");
+                return this.db.none(res);
             });
         };
         this.changeLinks = (note, links) => {
@@ -43,6 +44,19 @@ class Repository {
                 JSON.stringify(note.links)
             ];
             return this.db.one(sql.createNoteAll, values, (note) => { return note.result; });
+        };
+        this.createNoteWithTags = (note) => {
+            let values = [
+                note.userId,
+                note.title,
+                note.text,
+                note.isDone,
+                JSON.stringify(note.links)
+            ];
+            return this.db.tx(t => {
+                let queries = [];
+                return t.batch(queries);
+            });
         };
         this.createNoteWithNoLinks = (note) => {
             let values = [
@@ -101,28 +115,18 @@ class Repository {
             return this.db.many(values);
         };
         this.selectNoteByTitle = (note) => {
-            let values = note.getValues();
-            return this.db.oneOrNone(sql.selectNoteByTitle, values, (note) => {
-                console.log(note);
+            return this.db.oneOrNone(sql.selectNoteByTitle, note.getValues(), (note) => {
                 return note;
             });
         };
         this.selectNotesByTitleReg = (userId, title) => {
-            let values = {
-                userId: userId,
-                title: title
-            };
-            return this.db.many(sql.selectNotesByTitleReg, values);
+            return this.db.many(sql.selectNotesByTitleReg, [userId, title]);
         };
         this.selectNotesByTextReg = (userId, text) => {
-            let values = {
-                userId: userId,
-                text: text
-            };
-            return this.db.many(sql.selectNotesByTextReg, values);
+            return this.db.many(sql.selectNotesByTextReg, [userId, text]);
         };
         this.selectNotesFull = (userId) => {
-            return this.db.many(sql.selectNotesFull, { userId: userId });
+            return this.db.many(sql.selectNotesFull, [userId]);
         };
         this.selectNotesMin = (user) => {
             return this.db.any(sql.selectNotesMin, [user.userId]);

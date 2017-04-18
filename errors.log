@@ -124,3 +124,6 @@
 
 20:34:45 error: password authentication failed for user "postgres"
          connection: "postgres://postgres@localhost:##########"
+
+16:05:44 error: relation "attic.notes_tags" does not exist
+         query: insert into "attic.notes_tags"("noteTitle","tagTitle","role","userId") values('is-a-test','new-tag2','mainTags','omni@pollo.com'),('is-a-test','new-tag3','otherTags','omni@pollo.com')

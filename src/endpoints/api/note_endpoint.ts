@@ -23,14 +23,21 @@ class NoteEndpointParamCheck{
   static addTags = (req: express.Request):types.BasicResult=>{
     let result: any = null;
     result = NoteEndpointParamCheck.title(req);
+    console.log('is note instanceof?');
+    console.log(JSON.stringify(req.body.note.mainTags instanceof Array));
     if(req.body.note.mainTags == null && req.body.note.otherTags == null){
       result = Utils.jsonErr(new Error(Const.TAGS_REQUIRED));
     }
-    if(req.body.note.mainTags!=null && req.body.note.mainTags !instanceof Array){
-      result = Utils.jsonErr(new Error(Const.NO_ARR_INST));
+    else if(req.body.note.mainTags!=null){
+      if(req.body.note.mainTags instanceof Array==false){
+        result = Utils.jsonErr(new Error(Const.NO_ARR_INST));
+      }
+
     }
-    if(req.body.note.otherTags!=null && req.body.note.otherTags !instanceof Array){
-      result = Utils.jsonErr(new Error(Const.NO_ARR_INST));
+    if(req.body.note.otherTags!=null){
+      if(req.body.note.otherTags !instanceof Array==false){
+        result = Utils.jsonErr(new Error(Const.NO_ARR_INST));
+      }
     }
     return result;
   }
@@ -73,7 +80,18 @@ class NoteEndpointParamCheck{
   }
 
   static createNote = (req: express.Request):types.BasicResult=>{
-    return NoteEndpointParamCheck.changeText(req);
+    let result:any=NoteEndpointParamCheck.changeText(req);
+    if(req.body.note.mainTags){
+      if(req.body.note.mainTags !instanceof Array){
+        result = Utils.jsonErr(new Error(Const.INVALID_NOTE));
+      }
+    }
+    if(req.body.note.otherTags){
+      if(req.body.note.otherTags !instanceof Array){
+        result = Utils.jsonErr(new Error(Const.INVALID_NOTE));
+      }
+    }
+    return result;
   }
 
   static removeNote = (req: express.Request):types.BasicResult=>{
@@ -130,7 +148,7 @@ export default class NoteEndpoint{
     let user:User=Utils.extractUser(req);
     let tags:TagClass.Tag[];
     let tagsTemp: string[];
-    let roles:string[]=[];
+    let roles:string[];
     let result:Promise<any>;
     let note:Note;
 
@@ -141,11 +159,13 @@ export default class NoteEndpoint{
     }
 
     note = new Note();
+    tags = [];
+    roles = [];
     note.title = req.body.note.title;
 
     note.userId=user.userId;
     if(req.body.note.mainTags){
-      req.body.mainTags.map((currentValue, currentIndex)=>{
+      req.body.note.mainTags.map((currentValue, currentIndex)=>{
         let tag:TagClass.Tag=new TagClass.Tag();
         tag.title=currentValue;
         tags.push(tag);
@@ -153,13 +173,14 @@ export default class NoteEndpoint{
       });
     }
     if(req.body.note.otherTags){
-      req.body.otherTags.map((currentValue, currentIndex)=>{
+      req.body.note.otherTags.map((currentValue, currentIndex)=>{
         let tag:TagClass.Tag=new TagClass.Tag();
         tag.title=currentValue;
         tags.push(tag);
         roles.push('otherTags');
       });
     }
+    result = NoteMiddle.addTags(note, tags, roles);
     result.then(result=>{
       res.json(result);
     })
@@ -250,6 +271,10 @@ export default class NoteEndpoint{
     note.text=req.body.note.text;
     note.isDone=((req.body.note.isDone) ? req.body.note.isDone : null);
     note.links=((req.body.note.links) ? req.body.note.links : null);
+
+    note.mainTags=((req.body.note.mainTags) ? req.body.note.mainTags : null);
+    note.otherTags=((req.body.note.otherTags) ? req.body.note.otherTags : null);
+
     NoteMiddle.createNote(note)
     .then(result=>{
       res.json(result);

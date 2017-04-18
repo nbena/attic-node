@@ -12,7 +12,7 @@ begin
                 				else json_agg(d_mainTags)
                 	end as mainTags
         				from (
-                			select tagTitle
+                			select tagTitle as title
                				from attic.notes_tags as rel
                 			where rel.userId=$1 and rel.noteTitle=note.title and role='mainTags'
                 			order by tagTitle asc
@@ -23,9 +23,9 @@ begin
                             case
                 				when json_agg(d_otherTags) is null then '[]'
                 				else json_agg(d_otherTags)
-                	end as mainTags
+                	end as otherTags
                 		from (
-                    		select tagTitle
+                    		select tagTitle as title
                     		from attic.notes_tags as rel
                    			where rel.userId=$1 and rel.noteTitle=note.title and role='otherTags'
                     		order by tagTitle asc

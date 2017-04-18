@@ -12,7 +12,7 @@ begin
                 	else json_agg(d)
                 	end as notes
         	from(
-                select noteTitle
+                select noteTitle as title
                	from attic.notes_tags as rel
                 where rel.userId=$1 and rel.tagTitle=tag.title
                 order by noteTitle asc
