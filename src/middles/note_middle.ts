@@ -68,18 +68,17 @@ public static changeTitle = (note:Note, title:string):Promise<types.BasicResult>
 public static createNote = (note:Note):Promise<types.Result>=>{
   return new Promise<types.Result>((resolve, reject)=>{
     let result:Promise<any>;
-    if(note.isDone==null && note.links==null){
-      result=db.notes.createNoteWithNoLinksNoIsDone(note);
-    }else if(note.links==null){
-      result=db.notes.createNoteWithNoLinks(note);
-    }else if(note.isDone==null){
-      result=db.notes.createNoteWithNoIsDone(note);
-    }else{
-      result=db.notes.createNoteAll(note);
-    }
+    result=db.notes.createNote(note);
     result.then(result=>{
-      console.log('result is: '+result);
-      resolve(new types.NoteResult(true, result));
+
+      console.log('the result');
+      console.log(JSON.stringify(result));
+      /*creating the object that we'll return*/
+      let noteRes:Note = result[0].result as Note;
+      noteRes.mainTags = ((note.mainTags==null)? [] : note.mainTags);
+      noteRes.otherTags = ((note.otherTags==null)? [] : note.otherTags);
+
+      resolve(new types.NoteResult(true, noteRes));
     })
     result.catch(error=>{
       resolve(Utils.jsonErr(error));

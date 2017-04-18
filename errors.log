@@ -127,3 +127,45 @@
 
 16:05:44 error: relation "attic.notes_tags" does not exist
          query: insert into "attic.notes_tags"("noteTitle","tagTitle","role","userId") values('is-a-test','new-tag2','mainTags','omni@pollo.com'),('is-a-test','new-tag3','otherTags','omni@pollo.com')
+
+16:56:58 error: INSERT has more target columns than expressions
+         tx: insert into attic.notes(userId, title, text, isDone, links) values ('omni@pollo.com', 'is-a-test', 'this is a text', '[]') returning json_object('{userId, title, text, isDone, links, creationDate, lastModificationDate}', array[userId, title, text, isDone::varchar, links::varchar, creationDate::varchar, lastModificationDate::varchar]) as result;
+
+16:56:58 error: current transaction is aborted, commands ignored until end of transaction block
+         tx: insert into attic.notes_tags(noteTitle,tagTitle,role,userId) values('is-a-test','new-tag3','mainTags','omni@pollo.com'),('is-a-test','tag-0','otherTags','omni@pollo.com')
+
+16:59:35 error: INSERT has more target columns than expressions
+         tx: insert into attic.notes(userId, title, text, isDone, links) values ('omni@pollo.com', 'is-a-test', 'this is a text', '[]') returning json_object('{userId, title, text, isDone, links, creationDate, lastModificationDate}', array[userId, title, text, isDone::varchar, links::varchar, creationDate::varchar, lastModificationDate::varchar]) as result;
+
+16:59:35 error: current transaction is aborted, commands ignored until end of transaction block
+         tx: insert into attic.notes_tags(noteTitle,tagTitle,role,userId) values('is-a-test','new-tag3','mainTags','omni@pollo.com'),('is-a-test','tag-0','otherTags','omni@pollo.com')
+
+17:01:38 error: INSERT has more target columns than expressions
+         tx: insert into attic.notes(userId, title, text, isDone, links) values ('omni@pollo.com', 'is-a-test', 'this is a text', '[]') returning json_object('{userId, title, text, isDone, links, creationDate, lastModificationDate}', array[userId, title, text, isDone::varchar, links::varchar, creationDate::varchar, lastModificationDate::varchar]) as result;
+
+17:01:38 error: current transaction is aborted, commands ignored until end of transaction block
+         tx: insert into attic.notes_tags(noteTitle,tagTitle,role,userId) values('is-a-test','new-tag3','mainTags','omni@pollo.com'),('is-a-test','tag-0','otherTags','omni@pollo.com')
+
+17:02:24 error: invalid input syntax for type boolean: "[]"
+         tx: insert into attic.notes(userId, title, text, isDone, links) values ('omni@pollo.com', 'is-a-test', 'this is a text', '[]', true) returning json_object('{userId, title, text, isDone, links, creationDate, lastModificationDate}', array[userId, title, text, isDone::varchar, links::varchar, creationDate::varchar, lastModificationDate::varchar]) as result;
+
+17:02:24 error: current transaction is aborted, commands ignored until end of transaction block
+         tx: insert into attic.notes_tags(noteTitle,tagTitle,role,userId) values('is-a-test','new-tag3','mainTags','omni@pollo.com'),('is-a-test','tag-0','otherTags','omni@pollo.com')
+
+17:12:19 error: duplicate key value violates unique constraint "notes_pkey"
+         tx: insert into attic.notes(userId, title, text, isDone, links) values ('omni@pollo.com', 'is-a-test', 'this is a text', true, '[]') returning get_full_note(userId, title);
+
+17:12:19 error: current transaction is aborted, commands ignored until end of transaction block
+         tx: insert into attic.notes_tags(noteTitle,tagTitle,role,userId) values('is-a-test','new-tag3','mainTags','omni@pollo.com'),('is-a-test','tag-0','otherTags','omni@pollo.com')
+
+17:21:40 error: syntax error at or near "json_object"
+         tx: insert into attic.notes(userId, title, text, isDone, links) values ('omni@pollo.com', 'is-a-test', 'this is a text', true, '[]') json_object('{userId, title, text, isDone, links, creationDate, lastModificationDate}', array[userId, title, text, isDone::text, links::text, creationDate::text, lastModificationDate::date]) as result;
+
+17:21:40 error: current transaction is aborted, commands ignored until end of transaction block
+         tx: insert into attic.notes_tags(noteTitle,tagTitle,role,userId) values('is-a-test','new-tag3','mainTags','omni@pollo.com'),('is-a-test','tag-0','otherTags','omni@pollo.com')
+
+17:22:00 error: ARRAY types character varying and date cannot be matched
+         tx: insert into attic.notes(userId, title, text, isDone, links) values ('omni@pollo.com', 'is-a-test', 'this is a text', true, '[]') returning json_object('{userId, title, text, isDone, links, creationDate, lastModificationDate}', array[userId, title, text, isDone::text, links::text, creationDate::text, lastModificationDate::date]) as result;
+
+17:22:00 error: current transaction is aborted, commands ignored until end of transaction block
+         tx: insert into attic.notes_tags(noteTitle,tagTitle,role,userId) values('is-a-test','new-tag3','mainTags','omni@pollo.com'),('is-a-test','tag-0','otherTags','omni@pollo.com')

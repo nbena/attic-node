@@ -82,12 +82,12 @@ class NoteEndpointParamCheck{
   static createNote = (req: express.Request):types.BasicResult=>{
     let result:any=NoteEndpointParamCheck.changeText(req);
     if(req.body.note.mainTags){
-      if(req.body.note.mainTags !instanceof Array){
+      if(req.body.note.mainTags instanceof Array==false){
         result = Utils.jsonErr(new Error(Const.INVALID_NOTE));
       }
     }
     if(req.body.note.otherTags){
-      if(req.body.note.otherTags !instanceof Array){
+      if(req.body.note.otherTags instanceof Array==false){
         result = Utils.jsonErr(new Error(Const.INVALID_NOTE));
       }
     }

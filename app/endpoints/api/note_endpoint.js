@@ -60,12 +60,12 @@ NoteEndpointParamCheck.changeTitle = (req) => {
 NoteEndpointParamCheck.createNote = (req) => {
     let result = NoteEndpointParamCheck.changeText(req);
     if (req.body.note.mainTags) {
-        if (req.body.note.mainTags instanceof Array) {
+        if (req.body.note.mainTags instanceof Array == false) {
             result = utils_1.default.jsonErr(new Error(const_1.default.INVALID_NOTE));
         }
     }
     if (req.body.note.otherTags) {
-        if (req.body.note.otherTags instanceof Array) {
+        if (req.body.note.otherTags instanceof Array == false) {
             result = utils_1.default.jsonErr(new Error(const_1.default.INVALID_NOTE));
         }
     }
