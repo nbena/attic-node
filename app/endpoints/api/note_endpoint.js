@@ -90,9 +90,14 @@ NoteEndpointParamCheck.removeTagsFromNote = (req) => {
     return result;
 };
 NoteEndpointParamCheck.selectNotesByTagsNoRole = (req) => {
+    console.log('req: is');
+    console.log(JSON.stringify(req.body));
     let result = null;
-    if (req.body.tags == null || req.body.tags instanceof Array) {
+    if (req.body.tags == null) {
         result = utils_1.default.jsonErr(new Error(const_1.default.GEN_TAGS_REQUIRED));
+    }
+    else if (req.body.tags instanceof Array == false) {
+        result = utils_1.default.jsonErr(new Error(const_1.default.TAGS_NOT_ARRAY));
     }
     return result;
 };

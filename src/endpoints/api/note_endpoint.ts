@@ -116,9 +116,13 @@ class NoteEndpointParamCheck{
   }
 
   static selectNotesByTagsNoRole = (req: express.Request):types.BasicResult=>{
+    console.log('req: is');
+    console.log(JSON.stringify(req.body));
     let result:any = null;
-    if(req.body.tags ==  null || req.body.tags !instanceof Array){
+    if(req.body.tags ==  null){
       result = Utils.jsonErr(new Error(Const.GEN_TAGS_REQUIRED));
+    }else if(req.body.tags instanceof Array==false){
+      result = Utils.jsonErr(new Error(Const.TAGS_NOT_ARRAY));
     }
     return result;
   }
