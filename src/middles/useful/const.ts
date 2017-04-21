@@ -19,6 +19,10 @@ export default class Const{
   public static readonly TAG_TITLE_PARAM_REQUIRED: string = ':title required';
   public static readonly TAG_NEW_TITLE_REQUIRED: string = 'tag.newTitle required';
 
+  public static readonly GEN_TAGS_REQUIRED:string = 'tags:[ ... ] required';
+
+  public static readonly TAGS_NOT_ARRAY: string = 'maintags or othetags must be instanceof array';
+
   //public static readonly ARRAY_EMPTY_NOT_ALLOWED: string = 'empty arrays are not allowed';
 
 }

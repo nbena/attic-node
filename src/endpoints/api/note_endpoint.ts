@@ -23,8 +23,6 @@ class NoteEndpointParamCheck{
   static addTags = (req: express.Request):types.BasicResult=>{
     let result: any = null;
     result = NoteEndpointParamCheck.title(req);
-    console.log('is note instanceof?');
-    console.log(JSON.stringify(req.body.note.maintags instanceof Array));
     if(req.body.note.maintags == null && req.body.note.otherTags == null){
       result = Utils.jsonErr(new Error(Const.TAGS_REQUIRED));
     }
@@ -73,7 +71,7 @@ class NoteEndpointParamCheck{
   static changeTitle = (req: express.Request):types.BasicResult=>{
     let result: any = null;
     result = NoteEndpointParamCheck.title(req);
-    if(!req.body.note.newTitle){
+    if(!req.body.note.newtitle){
       result = Utils.jsonErr(new Error(Const.TITLE_REQUIRED));
     }
     return result;
@@ -107,6 +105,7 @@ class NoteEndpointParamCheck{
     return result;
   }
 
+  /*rewrite this checks.*/
   static removeTagsFromNote = (req: express.Request):types.BasicResult=>{
     let result:any = null;
     result = NoteEndpointParamCheck.title(req);
@@ -117,7 +116,11 @@ class NoteEndpointParamCheck{
   }
 
   static selectNotesByTagsNoRole = (req: express.Request):types.BasicResult=>{
-    return NoteEndpointParamCheck.removeTagsFromNote(req);
+    let result:any = null;
+    if(req.body.tags ==  null || req.body.tags !instanceof Array){
+      result = Utils.jsonErr(new Error(Const.GEN_TAGS_REQUIRED));
+    }
+    return result;
   }
 
   static selectNoteByTitle = (req: express.Request):types.BasicResult=>{
@@ -133,7 +136,17 @@ class NoteEndpointParamCheck{
   }
 
   static selectNotesByTagsWithRole = (req: express.Request):types.BasicResult=>{
-    return NoteEndpointParamCheck.addTags(req);
+    let result:any = null;
+    if(req.body.maintags ==  null || req.body.othertags == null){
+      result = Utils.jsonErr(new Error(Const.TAGS_REQUIRED));
+    }
+    if(req.body.maintags && req.body.maintags !instanceof Array){
+      result = Utils.jsonErr(new Error(Const.TAGS_NOT_ARRAY));
+    }
+    if(req.body.othertags && req.body.othertags !instanceof Array){
+      result = Utils.jsonErr(new Error(Const.TAGS_NOT_ARRAY));
+    }
+    return result;
   }
 
   static setDone = (req: express.Request):types.BasicResult=>{
