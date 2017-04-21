@@ -105,6 +105,8 @@ class Repository {
         };
         this.selectNotesByTagsNoRole = (userid, tags) => {
             let values = Repository.getQueryNotesByTagsNoRole(userid, tags);
+            console.log('the query is:');
+            console.log(values);
             return this.db.many(values);
         };
         this.selectNotesByTagsWithRole = (userid, tags, roles) => {
@@ -166,6 +168,6 @@ class Repository {
         return query;
     }
 }
-Repository.SELECT_NOTES_BY_TAGS_START = 'select json_build_object(\'title\', title, \'text\', text,\'isdone\', isDone, \'lastmodificationdate\', lastModificationDate, \'creationDate\', creationDate, \'links\', links) from attic.notes join attic.notes_tags as rel on title=noteTitle where rel.userid=\'';
+Repository.SELECT_NOTES_BY_TAGS_START = 'select json_build_object(\'title\', title, \'text\', text,\'isdone\', isDone, \'lastmodificationdate\', lastModificationDate, \'creationDate\', creationDate, \'links\', links) as note from attic.notes join attic.notes_tags as rel on title=noteTitle where rel.userid=\'';
 exports.Repository = Repository;
 //# sourceMappingURL=notes.js.map
