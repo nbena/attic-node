@@ -90,8 +90,6 @@ NoteEndpointParamCheck.removeTagsFromNote = (req) => {
     return result;
 };
 NoteEndpointParamCheck.selectNotesByTagsNoRole = (req) => {
-    console.log('req: is');
-    console.log(JSON.stringify(req.body));
     let result = null;
     if (req.body.tags == null) {
         result = utils_1.default.jsonErr(new Error(const_1.default.GEN_TAGS_REQUIRED));
@@ -311,7 +309,7 @@ NoteEndpoint.selectNotesByTagsNoRole = (req, res, next) => {
         res.json(result);
         return;
     }
-    req.body.note.tags.map((currentValue) => {
+    req.body.tags.map((currentValue) => {
         let t = new TagClass.Tag();
         t.title = currentValue;
         tags.push(t);

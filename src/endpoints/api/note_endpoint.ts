@@ -116,8 +116,8 @@ class NoteEndpointParamCheck{
   }
 
   static selectNotesByTagsNoRole = (req: express.Request):types.BasicResult=>{
-    console.log('req: is');
-    console.log(JSON.stringify(req.body));
+    // console.log('req: is');
+    // console.log(JSON.stringify(req.body));
     let result:any = null;
     if(req.body.tags ==  null){
       result = Utils.jsonErr(new Error(Const.GEN_TAGS_REQUIRED));
@@ -370,7 +370,7 @@ export default class NoteEndpoint{
       res.json(result);
       return;
     }
-    req.body.note.tags.map((currentValue)=>{
+    req.body.tags.map((currentValue)=>{
       let t = new TagClass.Tag();
       t.title=currentValue;
       tags.push(t);
