@@ -166,6 +166,6 @@ class Repository {
         return query;
     }
 }
-Repository.SELECT_NOTES_BY_TAGS_START = 'select json_array(\'{title, text, isDone, creationDate, lastModficationDate, links}\', array[title, text, isDone:: text, creationDate::text, lastModficationDate::text, links::text]) from attic.notes join attic.notes_tags as rel on title=noteTitle where rel.userid=\'';
+Repository.SELECT_NOTES_BY_TAGS_START = 'select json_array(\'{title, text, isDone, creationDate, lastModificationDate, links}\', array[title, text, isDone:: text, creationDate::text, lastModficationDate::text, links::text]) from attic.notes join attic.notes_tags as rel on title=noteTitle where rel.userid=\'';
 exports.Repository = Repository;
 //# sourceMappingURL=notes.js.map

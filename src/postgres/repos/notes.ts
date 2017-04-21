@@ -40,7 +40,7 @@ let sql = sqlProvider.notes;
 export class Repository{
 
   private static readonly SELECT_NOTES_BY_TAGS_START =
-  'select json_array(\'{title, text, isDone, creationDate, lastModficationDate, links}\', array[title, text, isDone:: text, creationDate::text, lastModficationDate::text, links::text]) from attic.notes join attic.notes_tags as rel on title=noteTitle where rel.userid=\'';
+  'select json_array(\'{title, text, isDone, creationDate, lastModificationDate, links}\', array[title, text, isDone:: text, creationDate::text, lastModficationDate::text, links::text]) from attic.notes join attic.notes_tags as rel on title=noteTitle where rel.userid=\'';
 
   private db: IDatabase<any>;
   private pgp: IMain;
