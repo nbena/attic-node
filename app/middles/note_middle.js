@@ -92,7 +92,10 @@ NoteMiddle.removeTagsFromNote = (note, tags) => {
 NoteMiddle.selectNotesByTagsNoRole = (userId, tags) => {
     return new Promise((resolve, reject) => {
         db.notes.selectNotesByTagsNoRole(userId, tags)
-            .then(result => {
+            .then(rawResult => {
+            let result = rawResult.map((currentValue, currentIndex) => {
+                return currentValue.note;
+            });
             resolve(new types.AnyResult(true, result));
         })
             .catch(error => {

@@ -118,7 +118,11 @@ public static removeTagsFromNote = (note:Note, tags:TagClass.Tag[]):Promise<type
 public static selectNotesByTagsNoRole = (userId: string, tags:TagClass.Tag[]):Promise<types.Result>=>{
   return new Promise<any>((resolve, reject)=>{
     db.notes.selectNotesByTagsNoRole(userId, tags)
-    .then(result=>{
+    .then(rawResult=>{
+      /*any because soon I will rewrite with a function.*/
+      let result:any[]=rawResult.map((currentValue, currentIndex)=>{
+        return currentValue.note;
+      });
       resolve(new types.AnyResult(true, result));
     })
     .catch(error=>{
