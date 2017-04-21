@@ -19,6 +19,8 @@ Const.NOTE_NEW_TEXT_REUIRED = 'note.newText required';
 Const.TAG_TITLE_REQUIRED = 'tag.title required';
 Const.TAG_TITLE_PARAM_REQUIRED = ':title required';
 Const.TAG_NEW_TITLE_REQUIRED = 'tag.newTitle required';
+Const.GEN_TAGS_REQUIRED = 'tags:[ ... ] required';
+Const.TAGS_NOT_ARRAY = 'maintags or othetags must be instanceof array';
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = Const;
 //# sourceMappingURL=const.js.map

@@ -16,8 +16,6 @@ NoteEndpointParamCheck.title = (req) => {
 NoteEndpointParamCheck.addTags = (req) => {
     let result = null;
     result = NoteEndpointParamCheck.title(req);
-    console.log('is note instanceof?');
-    console.log(JSON.stringify(req.body.note.maintags instanceof Array));
     if (req.body.note.maintags == null && req.body.note.otherTags == null) {
         result = utils_1.default.jsonErr(new Error(const_1.default.TAGS_REQUIRED));
     }
@@ -52,7 +50,7 @@ NoteEndpointParamCheck.changeText = (req) => {
 NoteEndpointParamCheck.changeTitle = (req) => {
     let result = null;
     result = NoteEndpointParamCheck.title(req);
-    if (!req.body.note.newTitle) {
+    if (!req.body.note.newtitle) {
         result = utils_1.default.jsonErr(new Error(const_1.default.TITLE_REQUIRED));
     }
     return result;
@@ -92,7 +90,11 @@ NoteEndpointParamCheck.removeTagsFromNote = (req) => {
     return result;
 };
 NoteEndpointParamCheck.selectNotesByTagsNoRole = (req) => {
-    return NoteEndpointParamCheck.removeTagsFromNote(req);
+    let result = null;
+    if (req.body.tags == null || req.body.tags instanceof Array) {
+        result = utils_1.default.jsonErr(new Error(const_1.default.GEN_TAGS_REQUIRED));
+    }
+    return result;
 };
 NoteEndpointParamCheck.selectNoteByTitle = (req) => {
     return NoteEndpointParamCheck.removeNote(req);
@@ -104,7 +106,17 @@ NoteEndpointParamCheck.selectNotesByTitleReg = (req) => {
     return NoteEndpointParamCheck.title(req);
 };
 NoteEndpointParamCheck.selectNotesByTagsWithRole = (req) => {
-    return NoteEndpointParamCheck.addTags(req);
+    let result = null;
+    if (req.body.maintags == null || req.body.othertags == null) {
+        result = utils_1.default.jsonErr(new Error(const_1.default.TAGS_REQUIRED));
+    }
+    if (req.body.maintags && req.body.maintags instanceof Array) {
+        result = utils_1.default.jsonErr(new Error(const_1.default.TAGS_NOT_ARRAY));
+    }
+    if (req.body.othertags && req.body.othertags instanceof Array) {
+        result = utils_1.default.jsonErr(new Error(const_1.default.TAGS_NOT_ARRAY));
+    }
+    return result;
 };
 NoteEndpointParamCheck.setDone = (req) => {
     let result = NoteEndpointParamCheck.title(req);
