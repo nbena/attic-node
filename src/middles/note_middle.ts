@@ -119,7 +119,7 @@ public static selectNotesByTagsNoRole = (userId: string, tags:TagClass.Tag[]):Pr
   return new Promise<any>((resolve, reject)=>{
     db.notes.selectNotesByTagsNoRole(userId, tags)
     .then(rawResult=>{
-      resolve(new types.AnyResult(true, rawResult.map((noteObj)=>{return noteObj.title})));
+      resolve(new types.AnyResult(true, rawResult));
     })
     .catch(error=>{
       resolve(Utils.jsonErr(error));
@@ -136,7 +136,7 @@ public static selectNotesByTagsWithRole = (userId: string, tags:TagClass.Tag[], 
     }
     db.notes.selectNotesByTagsWithRole(userId, tags, roles)
     .then(rawResult=>{
-      resolve(new types.AnyResult(true, rawResult.map((noteObj)=>{return noteObj.title})));
+      resolve(new types.AnyResult(true, rawResult));
     })
     .catch(error=>{
       resolve(Utils.jsonErr(error));
