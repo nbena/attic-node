@@ -40,8 +40,10 @@ let sql = sqlProvider.notes;
 export class Repository{
 
   /*can be re-written with a function.*/
-  private static readonly SELECT_NOTES_BY_TAGS_START =
-  'select json_build_object(\'title\', title, \'text\', text,\'isdone\', isDone, \'lastmodificationdate\', lastModificationDate, \'creationDate\', creationDate, \'links\', links) as note from attic.notes join attic.notes_tags as rel on title=noteTitle where rel.userid=\'';
+  /*private static readonly SELECT_NOTES_BY_TAGS_START =
+  'select json_build_object(\'title\', title, \'text\', text,\'isdone\', isDone, \'lastmodificationdate\', lastModificationDate, \'creationDate\', creationDate, \'links\', links) as note from attic.notes join attic.notes_tags as rel on title=noteTitle where rel.userid=\'';*/
+
+  private static readonly SELECT_NOTES_BY_TAGS_START = 'select noteTitle as title from attic.notes_tags where attic.notes_tags.userId=\'';
 
   private db: IDatabase<any>;
   private pgp: IMain;

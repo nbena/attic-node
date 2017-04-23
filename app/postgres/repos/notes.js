@@ -168,6 +168,6 @@ class Repository {
         return query;
     }
 }
-Repository.SELECT_NOTES_BY_TAGS_START = 'select json_build_object(\'title\', title, \'text\', text,\'isdone\', isDone, \'lastmodificationdate\', lastModificationDate, \'creationDate\', creationDate, \'links\', links) as note from attic.notes join attic.notes_tags as rel on title=noteTitle where rel.userid=\'';
+Repository.SELECT_NOTES_BY_TAGS_START = 'select noteTitle as title from attic.notes_tags where attic.notes_tags.userId=\'';
 exports.Repository = Repository;
 //# sourceMappingURL=notes.js.map

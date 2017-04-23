@@ -93,10 +93,7 @@ NoteMiddle.selectNotesByTagsNoRole = (userId, tags) => {
     return new Promise((resolve, reject) => {
         db.notes.selectNotesByTagsNoRole(userId, tags)
             .then(rawResult => {
-            let result = rawResult.map((currentValue, currentIndex) => {
-                return currentValue.note;
-            });
-            resolve(new types.AnyResult(true, result));
+            resolve(new types.AnyResult(true, rawResult.map((noteObj) => { return noteObj.title; })));
         })
             .catch(error => {
             resolve(utils_1.default.jsonErr(error));
@@ -109,8 +106,8 @@ NoteMiddle.selectNotesByTagsWithRole = (userId, tags, roles) => {
             resolve(utils_1.default.jsonErr(new TypeError(const_1.default.ERR_DIFF_LENGTH)));
         }
         db.notes.selectNotesByTagsWithRole(userId, tags, roles)
-            .then(result => {
-            resolve(new types.AnyResult(true, result));
+            .then(rawResult => {
+            resolve(new types.AnyResult(true, rawResult.map((noteObj) => { return noteObj.title; })));
         })
             .catch(error => {
             resolve(utils_1.default.jsonErr(error));
