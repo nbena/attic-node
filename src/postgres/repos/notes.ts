@@ -63,9 +63,8 @@ export class Repository{
         userid: note.userid
       });
     }
-    let res:string = this.pgp.helpers.insert(things, ['noteTitle', 'tagTitle', 'role', 'userid'], 'attic.notes_tags');
-    res=res.replace('"attic.notes_tags"("noteTitle","tagTitle","role","userid")', "attic.notes_tags(noteTitle,tagTitle,role,userid)");
-    return res;
+    let table = new pgp.helpers.TableName('notes_tags', 'attic');
+    return this.pgp.helpers.insert(things, ['noteTitle', 'tagTitle', 'role', 'userid'], table);
   }
 
 
