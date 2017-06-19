@@ -57,14 +57,14 @@ export class Repository{
     let things: any[]=[];
     for(let i=0;i<tags.length;i++){
       things.push({
-        noteTitle: note.title,
-        tagTitle: tags[i].title,
+        notetitle: note.title,
+        tagtitle: tags[i].title,
         role: roles[i],
         userid: note.userid
       });
     }
     let table = new this.pgp.helpers.TableName('notes_tags', 'attic');
-    return this.pgp.helpers.insert(things, ['noteTitle', 'tagTitle', 'role', 'userid'], table);
+    return this.pgp.helpers.insert(things, ['notetitle', 'tagtitle', 'role', 'userid'], table);
   }
 
 
@@ -132,8 +132,14 @@ export class Repository{
       note.title,
       note.text
     ];
-    values.push(((note.isdone == null) ? false : note.isdone));
-    values.push(((note.links == null) ? '[]' : note.links));
+    //already done in the middle.
+    // values.push(((note.isdone == null) ? false : note.isdone));
+    values.push(note.isdone);
+    values.push(JSON.stringify(((note.links == null) ? '[]' : note.links)));
+
+
+    console.log('the note:');
+    console.log(JSON.stringify(note));
 
     console.log('values are');
     console.log(values);
@@ -144,7 +150,7 @@ export class Repository{
     let tags:TagClass.Tag[]=[];
     let roles:string[]=[];
 
-    if(note.maintags !=null && note.maintags.length!=0){
+    if(note.maintags !=null && note.maintags.length !=0){
         note.maintags.map((currentValue, currentIndex)=>{
           let tag =  new TagClass.Tag();
           tag.title = currentValue;
@@ -153,7 +159,7 @@ export class Repository{
         });
     }
 
-    if(note.maintags !=null && note.othertags.length !=0){
+    if(note.othertags !=null && note.othertags.length !=0){
         note.othertags.map((currentValue, currentIndex)=>{
           let tag =  new TagClass.Tag();
           tag.title = currentValue;
@@ -161,6 +167,9 @@ export class Repository{
           tags.push(tag);
         });
     }
+
+    // console.log('tags:');
+    // console.log(JSON.stringify(tags));
 
     return this.db.tx(t=>{
       queries.push(t.one(sql.createNoteAll, values));

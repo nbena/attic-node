@@ -9,15 +9,14 @@ class Repository {
             let things = [];
             for (let i = 0; i < tags.length; i++) {
                 things.push({
-                    noteTitle: note.title,
-                    tagTitle: tags[i].title,
+                    notetitle: note.title,
+                    tagtitle: tags[i].title,
                     role: roles[i],
                     userid: note.userid
                 });
             }
-            let res = this.pgp.helpers.insert(things, ['noteTitle', 'tagTitle', 'role', 'userid'], 'attic.notes_tags');
-            res = res.replace('"attic.notes_tags"("noteTitle","tagTitle","role","userid")', "attic.notes_tags(noteTitle,tagTitle,role,userid)");
-            return res;
+            let table = new this.pgp.helpers.TableName('notes_tags', 'attic');
+            return this.pgp.helpers.insert(things, ['notetitle', 'tagtitle', 'role', 'userid'], table);
         };
         this.addTags = (note, tags, roles) => {
             if (tags.length != roles.length) {
@@ -53,8 +52,10 @@ class Repository {
                 note.title,
                 note.text
             ];
-            values.push(((note.isdone == null) ? false : note.isdone));
-            values.push(((note.links == null) ? '[]' : note.links));
+            values.push(note.isdone);
+            values.push(JSON.stringify(((note.links == null) ? '[]' : note.links)));
+            console.log('the note:');
+            console.log(JSON.stringify(note));
             console.log('values are');
             console.log(values);
             let queries = [];
@@ -68,7 +69,7 @@ class Repository {
                     tags.push(tag);
                 });
             }
-            if (note.maintags != null && note.othertags.length != 0) {
+            if (note.othertags != null && note.othertags.length != 0) {
                 note.othertags.map((currentValue, currentIndex) => {
                     let tag = new TagClass.Tag();
                     tag.title = currentValue;

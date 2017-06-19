@@ -196,3 +196,54 @@
 
 20:50:05 error: cannot determine type of empty array
          tx: insert into attic.notes(userId, title, text, isDone, links) values ('omni@pollo.com', 'is-a-test', 'this is a text', false, array[]) returning json_build_object('userid', userId, 'title', title, 'text', text, 'links', links, 'isdone', isDone, 'creationdate', creationDate, 'lastmodificationdate', lastModificationDate) as result;
+
+18:12:56 error: password authentication failed for user "postgres"
+         connection: "postgres://postgres@localhost:##########"
+
+18:14:33 error: password authentication failed for user "postgres"
+         connection: "postgres://postgres@localhost:##########"
+
+18:15:45 error: password authentication failed for user "postgres"
+         connection: "postgres://postgres@localhost:##########"
+
+18:18:50 error: database "attic:5432" does not exist
+         connection: "postgres://nicola:##############@localhost/attic:5432"
+
+18:19:18 error: database "nicola" does not exist
+         connection: "postgres://nicola:##############@localhost:5432"
+
+18:27:23 error: password authentication failed for user "postgres"
+         connection: "postgres://postgres@localhost:##########"
+
+18:34:33 error: password authentication failed for user "postgres"
+         connection: "postgres://postgres@localhost:##########"
+
+18:39:40 error: password authentication failed for user "postgres"
+         connection: "postgres://postgres@localhost:##########"
+
+18:38:27 error: column "noteTitle" of relation "notes_tags" does not exist
+         tx: insert into "attic"."notes_tags"("noteTitle","tagTitle","role","userid") values('a brand new note!','new-otag-3','mainTags','omni@pollo.com')
+
+18:40:52 error: Property 'notetitle' doesn't exist.
+
+18:43:48 error: insert or update on table "notes_tags" violates foreign key constraint "notes_tags_tagtitle_fkey"
+         tx: insert into "attic"."notes_tags"("notetitle","tagtitle","role","userid") values('a brand new note!','new-otag-3','mainTags','omni@pollo.com')
+
+18:53:37 error: Variable $5 out of range. Parameters array length: 4
+         tx: insert into attic.notes(userId, title, text, isDone, links) values ($1, $2, $3, $4, $5) returning json_build_object('userid', userId, 'title', title, 'text', text, 'links', links, 'isdone', isDone, 'creationdate', creationDate, 'lastmodificationdate', lastModificationDate) as result;
+         params: ["omni@pollo.com","a brand new note!","this is funny",["https://nb-attic.herokuapp.com"]]
+
+18:53:37 error: insert or update on table "notes_tags" violates foreign key constraint "notes_tags_notetitle_fkey"
+         tx: insert into "attic"."notes_tags"("notetitle","tagtitle","role","userid") values('a brand new note!','boh','mainTags','omni@pollo.com'),('a brand new note!','new-otag3','otherTags','omni@pollo.com')
+
+18:57:04 error: column "isdone" is of type boolean but expression is of type text[]
+         tx: insert into attic.notes(userid, title, text, isdone, links) values ('omni@pollo.com', 'a brand new note!', 'this is funny', array['https://nb-attic.herokuapp.com'], false) returning json_build_object('userid', userid, 'title', title, 'text', text, 'links', links, 'isdone', isdone, 'creationdate', creationDate, 'lastmodificationdate', lastModificationDate) as result;
+
+18:57:04 error: current transaction is aborted, commands ignored until end of transaction block
+         tx: insert into "attic"."notes_tags"("notetitle","tagtitle","role","userid") values('a brand new note!','boh','mainTags','omni@pollo.com'),('a brand new note!','new-otag3','otherTags','omni@pollo.com')
+
+18:57:34 error: column "links" is of type json but expression is of type text[]
+         tx: insert into attic.notes(userid, title, text, isdone, links) values ('omni@pollo.com', 'a brand new note!', 'this is funny', false, array['https://nb-attic.herokuapp.com']) returning json_build_object('userid', userid, 'title', title, 'text', text, 'links', links, 'isdone', isdone, 'creationdate', creationDate, 'lastmodificationdate', lastModificationDate) as result;
+
+18:57:34 error: current transaction is aborted, commands ignored until end of transaction block
+         tx: insert into "attic"."notes_tags"("notetitle","tagtitle","role","userid") values('a brand new note!','boh','mainTags','omni@pollo.com'),('a brand new note!','new-otag3','otherTags','omni@pollo.com')

@@ -155,7 +155,7 @@ class NoteEndpointParamCheck{
 
   static setDone = (req: express.Request):types.BasicResult=>{
     let result:any=NoteEndpointParamCheck.title(req);
-    if(!req.body.note.isDone){
+    if(!req.body.note.isdone){
       result = Utils.jsonErr(new Error(Const.IS_DONE_REQUIRED));
     }
     return result;
@@ -291,7 +291,12 @@ export default class NoteEndpoint{
     note.userid=user.userid;
     note.title=req.body.note.title;
     note.text=req.body.note.text;
-    note.isdone=((req.body.note.isdone) ? req.body.note.isdone : null);
+    note.isdone=((req.body.note.isdone !=null) ? req.body.note.isdone : null);
+
+    note.links=((req.body.note.links !=null) ? req.body.note.links : null); 
+
+    console.log('note.isdone');
+    console.log(JSON.stringify(note.isdone));
 
     // note.links=((req.body.note.links) ? req.body.note.links : null);
 
@@ -307,7 +312,7 @@ export default class NoteEndpoint{
 
     if(req.body.note.othertags){
       if(req.body.note.othertags.length>0){
-        note.maintags=req.body.note.othertags;
+        note.othertags=req.body.note.othertags;
       }
     }else{
       note.othertags = null;

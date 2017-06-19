@@ -123,7 +123,7 @@ NoteEndpointParamCheck.selectNotesByTagsWithRole = (req) => {
 };
 NoteEndpointParamCheck.setDone = (req) => {
     let result = NoteEndpointParamCheck.title(req);
-    if (!req.body.note.isDone) {
+    if (!req.body.note.isdone) {
         result = utils_1.default.jsonErr(new Error(const_1.default.IS_DONE_REQUIRED));
     }
     return result;
@@ -241,7 +241,10 @@ NoteEndpoint.createNote = (req, res, next) => {
     note.userid = user.userid;
     note.title = req.body.note.title;
     note.text = req.body.note.text;
-    note.isdone = ((req.body.note.isdone) ? req.body.note.isdone : null);
+    note.isdone = ((req.body.note.isdone != null) ? req.body.note.isdone : null);
+    note.links = ((req.body.note.links != null) ? req.body.note.links : null);
+    console.log('note.isdone');
+    console.log(JSON.stringify(note.isdone));
     if (req.body.note.maintags) {
         if (req.body.note.maintags.length > 0) {
             note.maintags = req.body.note.maintags;
@@ -252,7 +255,7 @@ NoteEndpoint.createNote = (req, res, next) => {
     }
     if (req.body.note.othertags) {
         if (req.body.note.othertags.length > 0) {
-            note.maintags = req.body.note.othertags;
+            note.othertags = req.body.note.othertags;
         }
     }
     else {
