@@ -43,7 +43,7 @@ export class Repository{
   /*private static readonly SELECT_NOTES_BY_TAGS_START =
   'select json_build_object(\'title\', title, \'text\', text,\'isdone\', isDone, \'lastmodificationdate\', lastModificationDate, \'creationDate\', creationDate, \'links\', links) as note from attic.notes join attic.notes_tags as rel on title=noteTitle where rel.userid=\'';*/
 
-  private static readonly SELECT_NOTES_BY_TAGS_START = 'select noteTitle as title from attic.notes_tags where attic.notes_tags.userId=\'';
+  private static readonly SELECT_NOTES_BY_TAGS_START = 'select distinct notetitle as title from attic.notes_tags where attic.notes_tags.userId=\'';
 
   private db: IDatabase<any>;
   private pgp: IMain;
@@ -138,11 +138,11 @@ export class Repository{
     values.push(JSON.stringify(((note.links == null) ? '[]' : note.links)));
 
 
-    console.log('the note:');
-    console.log(JSON.stringify(note));
-
-    console.log('values are');
-    console.log(values);
+    // console.log('the note:');
+    // console.log(JSON.stringify(note));
+    //
+    // console.log('values are');
+    // console.log(values);
     //first action will create the done,
     //the second it will insert the tags.
 
@@ -154,7 +154,7 @@ export class Repository{
         note.maintags.map((currentValue, currentIndex)=>{
           let tag =  new TagClass.Tag();
           tag.title = currentValue;
-          roles.push('mainTags');
+          roles.push('maintags');
           tags.push(tag);
         });
     }
@@ -163,7 +163,7 @@ export class Repository{
         note.othertags.map((currentValue, currentIndex)=>{
           let tag =  new TagClass.Tag();
           tag.title = currentValue;
-          roles.push('otherTags');
+          roles.push('othertags');
           tags.push(tag);
         });
     }
@@ -243,18 +243,23 @@ export class Repository{
   from attic.notes join attic.notes_tags on title=noteTitle
   where attic.notes.userid=$1 and tagTitle=$2;
   */
-  private static getQueryNotesByTagsNoRole(userid: string, tags:TagClass.Tag[]):string{
+  private static getQueryNotesByTagsNoRole(userid: string, tags:TagClass.Tag[], and: boolean):string{
     let tagsTitle:string[]=tags.map((currentValue:TagClass.Tag)=>{
       return currentValue.title;
     });
 
     let query:string = Repository.SELECT_NOTES_BY_TAGS_START;
     query = query.concat(userid+'\'' );
-    query = query.concat('and ( tagTitle=\'');
+    query = query.concat('and ( tagtitle=\'');
 
     /*select ... from ... where userid='ciao' and (tagTitle='*/
+    let joined:string;
+    if(and){
+      joined = tagsTitle.join('\' and tagtitle = \'');
+    }else{
+      joined = tagsTitle.join('\' or tagtitle = \'');
+    }
 
-    let joined:string = tagsTitle.join('\' and tagTitle = \'');
     joined = joined.concat('\');');
 
     /*' or tagTitle='something */
@@ -262,7 +267,7 @@ export class Repository{
     return query.concat(joined);
   }
 
-  private static getQueryNotesByTagsWithRole(userid: string, tags:TagClass.Tag[], roles:string[]):string{
+  private static getQueryNotesByTagsWithRole(userid: string, tags:TagClass.Tag[], roles:string[], and: boolean):string{
 
     let rolesTags:any[]=tags.map((currentValue:TagClass.Tag, currentIndex: number)=>{
       return {role:roles[currentIndex], title: currentValue.title};
@@ -272,30 +277,36 @@ export class Repository{
     query = query.concat(userid+'\'' );
     query = query.concat('and ');
     let joined:string='';
-
+    let tmp: string;
     for(let obj of rolesTags){
-      let tmp:string = '(tagTitle =\''+obj.title+' and role = \''+obj.role+'\') and';
-      joined = joined.substring(0, joined.lastIndexOf('and'));
+      if(and){
+        tmp = '(tagtitle =\''+obj.title+' and role = \''+obj.role+'\') and';
+      }else{
+        tmp = '(tagtitle =\''+obj.title+' and role = \''+obj.role+'\') or';
+      }
+      //let tmp:string = '(tagtitle =\''+obj.title+' and role = \''+obj.role+'\') or';
+      joined = joined.substring(0, joined.lastIndexOf('or'));
     }
 
     joined = joined.concat('\);');
     query = query.concat(joined);
     return query;
+    //CURRENTLY HAS TO RE WRITTEN TO ESCAPE SQL-INJECTION.
   }
 
-  selectNotesByTagsNoRole = (userid: string, tags:TagClass.Tag[]):Promise<any>=>{
-    let values:string = Repository.getQueryNotesByTagsNoRole(userid,tags);
+  selectNotesByTagsNoRole = (userid: string, tags:TagClass.Tag[], and: boolean):Promise<any>=>{
+    let values:string = Repository.getQueryNotesByTagsNoRole(userid,tags, and);
     console.log('the query is:');
     console.log(values);
     return this.db.many(values);
   }
 
 
-  selectNotesByTagsWithRole = (userid: string, tags:TagClass.Tag[], roles:string[]):Promise<any>=>{
+  selectNotesByTagsWithRole = (userid: string, tags:TagClass.Tag[], roles:string[], and: boolean):Promise<any>=>{
     if(tags.length!=roles.length){
       throw new TypeError(Const.ERR_DIFF_LENGTH);
     }
-    let values:string = Repository.getQueryNotesByTagsWithRole(userid, tags, roles);
+    let values:string = Repository.getQueryNotesByTagsWithRole(userid, tags, roles, and);
     return this.db.many(values);
   }
 

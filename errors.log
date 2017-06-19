@@ -247,3 +247,15 @@
 
 18:57:34 error: current transaction is aborted, commands ignored until end of transaction block
          tx: insert into "attic"."notes_tags"("notetitle","tagtitle","role","userid") values('a brand new note!','boh','mainTags','omni@pollo.com'),('a brand new note!','new-otag3','otherTags','omni@pollo.com')
+
+20:59:47 error: syntax error at or near "%"
+         query: select note.title, note.userId, note.isDone, note.links, note.creationDate, note.lastModificationDate, rel.tagTitle, rel.role from attic.notes as note join attic.notes_tags as rel on title=noteTitle where note.userId='omni@pollo.com' and title like %'o'%;
+
+21:01:08 error: syntax error at or near "o"
+         query: select note.title, note.userId, note.isDone, note.links, note.creationDate, note.lastModificationDate, rel.tagTitle, rel.role from attic.notes as note join attic.notes_tags as rel on title=noteTitle where note.userId='omni@pollo.com' and title like '%'o'%';
+
+21:03:46 error: syntax error at or near "\"
+         query: select note.title, note.userId, note.isDone, note.links, note.creationDate, note.lastModificationDate, rel.tagTitle, rel.role from attic.notes as note join attic.notes_tags as rel on title=noteTitle where note.userId='omni@pollo.com' and title like \'%'o'%\';
+
+21:15:06 error: missing FROM-clause entry for table "note"
+         query: select title from attic.notes where note.userId='omni@pollo.com' and title like '%o%';

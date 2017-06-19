@@ -115,9 +115,9 @@ public static removeTagsFromNote = (note:Note, tags:TagClass.Tag[]):Promise<type
   })
 }
 
-public static selectNotesByTagsNoRole = (userId: string, tags:TagClass.Tag[]):Promise<types.Result>=>{
+public static selectNotesByTagsNoRole = (userId: string, tags:TagClass.Tag[], and: boolean):Promise<types.Result>=>{
   return new Promise<any>((resolve, reject)=>{
-    db.notes.selectNotesByTagsNoRole(userId, tags)
+    db.notes.selectNotesByTagsNoRole(userId, tags, and)
     .then(rawResult=>{
       resolve(new types.AnyResult(true, rawResult));
     })
@@ -128,13 +128,13 @@ public static selectNotesByTagsNoRole = (userId: string, tags:TagClass.Tag[]):Pr
 }
 
 
-public static selectNotesByTagsWithRole = (userId: string, tags:TagClass.Tag[], roles:string[]):Promise<types.Result>=>{
+public static selectNotesByTagsWithRole = (userId: string, tags:TagClass.Tag[], roles:string[], and: boolean):Promise<types.Result>=>{
   return new Promise<any>((resolve, reject)=>{
     /*even if the db takes control of correct parameters, I prefer doing it now too.*/
     if(tags.length!=roles.length){
       resolve(Utils.jsonErr(new TypeError(Const.ERR_DIFF_LENGTH)));
     }
-    db.notes.selectNotesByTagsWithRole(userId, tags, roles)
+    db.notes.selectNotesByTagsWithRole(userId, tags, roles, and)
     .then(rawResult=>{
       resolve(new types.AnyResult(true, rawResult));
     })
@@ -143,6 +143,8 @@ public static selectNotesByTagsWithRole = (userId: string, tags:TagClass.Tag[], 
     })
   });
 }
+
+
 
 
 public static selectNoteByTitle = (note:Note):Promise<types.Result>=>{

@@ -89,9 +89,9 @@ NoteMiddle.removeTagsFromNote = (note, tags) => {
         });
     });
 };
-NoteMiddle.selectNotesByTagsNoRole = (userId, tags) => {
+NoteMiddle.selectNotesByTagsNoRole = (userId, tags, and) => {
     return new Promise((resolve, reject) => {
-        db.notes.selectNotesByTagsNoRole(userId, tags)
+        db.notes.selectNotesByTagsNoRole(userId, tags, and)
             .then(rawResult => {
             resolve(new types.AnyResult(true, rawResult));
         })
@@ -100,12 +100,12 @@ NoteMiddle.selectNotesByTagsNoRole = (userId, tags) => {
         });
     });
 };
-NoteMiddle.selectNotesByTagsWithRole = (userId, tags, roles) => {
+NoteMiddle.selectNotesByTagsWithRole = (userId, tags, roles, and) => {
     return new Promise((resolve, reject) => {
         if (tags.length != roles.length) {
             resolve(utils_1.default.jsonErr(new TypeError(const_1.default.ERR_DIFF_LENGTH)));
         }
-        db.notes.selectNotesByTagsWithRole(userId, tags, roles)
+        db.notes.selectNotesByTagsWithRole(userId, tags, roles, and)
             .then(rawResult => {
             resolve(new types.AnyResult(true, rawResult));
         })

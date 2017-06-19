@@ -1,3 +1,4 @@
-select note.title, note.userId, note.isDone, note.links, note.creationDate, note.lastModificationDate, rel.tagTitle, rel.role
-from attic.notes as note join attic.notes_tags as rel on title=noteTitle
-where note.userId=$1 and title like %$2%;
+select title
+from attic.notes
+where userid=$1 and title like $2
+order by lastmodificationdate desc, title asc;

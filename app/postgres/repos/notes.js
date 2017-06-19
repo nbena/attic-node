@@ -54,10 +54,6 @@ class Repository {
             ];
             values.push(note.isdone);
             values.push(JSON.stringify(((note.links == null) ? '[]' : note.links)));
-            console.log('the note:');
-            console.log(JSON.stringify(note));
-            console.log('values are');
-            console.log(values);
             let queries = [];
             let tags = [];
             let roles = [];
@@ -65,7 +61,7 @@ class Repository {
                 note.maintags.map((currentValue, currentIndex) => {
                     let tag = new TagClass.Tag();
                     tag.title = currentValue;
-                    roles.push('mainTags');
+                    roles.push('maintags');
                     tags.push(tag);
                 });
             }
@@ -73,7 +69,7 @@ class Repository {
                 note.othertags.map((currentValue, currentIndex) => {
                     let tag = new TagClass.Tag();
                     tag.title = currentValue;
-                    roles.push('otherTags');
+                    roles.push('othertags');
                     tags.push(tag);
                 });
             }
@@ -104,17 +100,17 @@ class Repository {
                 return t.batch(queries);
             });
         };
-        this.selectNotesByTagsNoRole = (userid, tags) => {
-            let values = Repository.getQueryNotesByTagsNoRole(userid, tags);
+        this.selectNotesByTagsNoRole = (userid, tags, and) => {
+            let values = Repository.getQueryNotesByTagsNoRole(userid, tags, and);
             console.log('the query is:');
             console.log(values);
             return this.db.many(values);
         };
-        this.selectNotesByTagsWithRole = (userid, tags, roles) => {
+        this.selectNotesByTagsWithRole = (userid, tags, roles, and) => {
             if (tags.length != roles.length) {
                 throw new TypeError(const_1.default.ERR_DIFF_LENGTH);
             }
-            let values = Repository.getQueryNotesByTagsWithRole(userid, tags, roles);
+            let values = Repository.getQueryNotesByTagsWithRole(userid, tags, roles, and);
             return this.db.many(values);
         };
         this.selectNoteByTitle = (note) => {
@@ -141,18 +137,24 @@ class Repository {
         this.db = db;
         this.pgp = pgp;
     }
-    static getQueryNotesByTagsNoRole(userid, tags) {
+    static getQueryNotesByTagsNoRole(userid, tags, and) {
         let tagsTitle = tags.map((currentValue) => {
             return currentValue.title;
         });
         let query = Repository.SELECT_NOTES_BY_TAGS_START;
         query = query.concat(userid + '\'');
-        query = query.concat('and ( tagTitle=\'');
-        let joined = tagsTitle.join('\' and tagTitle = \'');
+        query = query.concat('and ( tagtitle=\'');
+        let joined;
+        if (and) {
+            joined = tagsTitle.join('\' and tagtitle = \'');
+        }
+        else {
+            joined = tagsTitle.join('\' or tagtitle = \'');
+        }
         joined = joined.concat('\');');
         return query.concat(joined);
     }
-    static getQueryNotesByTagsWithRole(userid, tags, roles) {
+    static getQueryNotesByTagsWithRole(userid, tags, roles, and) {
         let rolesTags = tags.map((currentValue, currentIndex) => {
             return { role: roles[currentIndex], title: currentValue.title };
         });
@@ -160,15 +162,21 @@ class Repository {
         query = query.concat(userid + '\'');
         query = query.concat('and ');
         let joined = '';
+        let tmp;
         for (let obj of rolesTags) {
-            let tmp = '(tagTitle =\'' + obj.title + ' and role = \'' + obj.role + '\') and';
-            joined = joined.substring(0, joined.lastIndexOf('and'));
+            if (and) {
+                tmp = '(tagtitle =\'' + obj.title + ' and role = \'' + obj.role + '\') and';
+            }
+            else {
+                tmp = '(tagtitle =\'' + obj.title + ' and role = \'' + obj.role + '\') or';
+            }
+            joined = joined.substring(0, joined.lastIndexOf('or'));
         }
         joined = joined.concat('\);');
         query = query.concat(joined);
         return query;
     }
 }
-Repository.SELECT_NOTES_BY_TAGS_START = 'select noteTitle as title from attic.notes_tags where attic.notes_tags.userId=\'';
+Repository.SELECT_NOTES_BY_TAGS_START = 'select distinct notetitle as title from attic.notes_tags where attic.notes_tags.userId=\'';
 exports.Repository = Repository;
 //# sourceMappingURL=notes.js.map

@@ -33,7 +33,7 @@ class NoteEndpointParamCheck{
 
     }
     if(req.body.note.othertags!=null){
-      if(req.body.note.othertags !instanceof Array==false){
+      if(req.body.note.othertags instanceof Array==false){
         result = Utils.jsonErr(new Error(Const.NO_ARR_INST));
       }
     }
@@ -132,11 +132,19 @@ class NoteEndpointParamCheck{
   }
 
   static selectNotesByTextReg = (req: express.Request):types.BasicResult=>{
-    return NoteEndpointParamCheck.changeText(req);
+    let result:any = null;
+    if(req.body.text == null /*|| req.body.title instanceof String == false*/){
+      result = Utils.jsonErr(new Error(Const.TEXT_BASIC_REQUIRED));
+    }
+    return result;
   }
 
   static selectNotesByTitleReg = (req: express.Request):types.BasicResult=>{
-    return NoteEndpointParamCheck.title(req);
+    let result:any = null;
+    if(req.body.title == null /*|| req.body.title instanceof String == false*/){
+      result = Utils.jsonErr(new Error(Const.TITLE_BASIC_REQUIRED));
+    }
+    return result;
   }
 
   static selectNotesByTagsWithRole = (req: express.Request):types.BasicResult=>{
@@ -293,10 +301,7 @@ export default class NoteEndpoint{
     note.text=req.body.note.text;
     note.isdone=((req.body.note.isdone !=null) ? req.body.note.isdone : null);
 
-    note.links=((req.body.note.links !=null) ? req.body.note.links : null); 
-
-    console.log('note.isdone');
-    console.log(JSON.stringify(note.isdone));
+    note.links=((req.body.note.links !=null) ? req.body.note.links : null);
 
     // note.links=((req.body.note.links) ? req.body.note.links : null);
 
@@ -367,7 +372,25 @@ export default class NoteEndpoint{
     })
   }
 
-  public static selectNotesByTagsNoRole = (req: express.Request, res: express.Response, next)=>{
+  public static selectNotesByTagsNoRoleAnd = (req: express.Request, res: express.Response, next)=>{
+    return NoteEndpoint.selectNotesByTagsNoRoleCore(req, res, next, true);
+  }
+
+  public static selectNotesByTagsWithRoleAnd = (req: express.Request, res: express.Response, next)=>{
+    return NoteEndpoint.selectNotesByTagsWithRoleCore(req, res, next, true);
+  }
+
+
+  public static selectNotesByTagsNoRoleOr = (req: express.Request, res: express.Response, next)=>{
+    return NoteEndpoint.selectNotesByTagsNoRoleCore(req, res, next, false);
+  }
+
+  public static selectNotesByTagsWithRoleOr = (req: express.Request, res: express.Response, next)=>{
+    return NoteEndpoint.selectNotesByTagsWithRoleCore(req, res, next, false);
+  }
+
+
+  public static selectNotesByTagsNoRoleCore = (req: express.Request, res: express.Response, next, and: boolean)=>{
     let user:User = Utils.extractUser(req);
     let tags:TagClass.Tag[]=[];
     let result:any=NoteEndpointParamCheck.selectNotesByTagsNoRole(req);
@@ -380,13 +403,13 @@ export default class NoteEndpoint{
       t.title=currentValue;
       tags.push(t);
     });
-    NoteMiddle.selectNotesByTagsNoRole(user.userid, tags)
+    NoteMiddle.selectNotesByTagsNoRole(user.userid, tags, and)
     .then(result=>{
       res.json(result);
     })
   }
 
-  public static selectNotesByTagsWithRole = (req: express.Request, res: express.Response, next)=>{
+  public static selectNotesByTagsWithRoleCore = (req: express.Request, res: express.Response, next, and: boolean)=>{
     let user:User = Utils.extractUser(req);
     let tags:TagClass.Tag[]=[];
     let roles:string[]=[];
@@ -400,7 +423,7 @@ export default class NoteEndpoint{
         let tag:TagClass.Tag=new TagClass.Tag();
         tag.title=currentValue;
         tags.push(tag);
-        roles.push('mainTags');
+        roles.push('maintags');
       });
     }
     if(req.body.note.othertags){
@@ -408,10 +431,10 @@ export default class NoteEndpoint{
         let tag:TagClass.Tag=new TagClass.Tag();
         tag.title=currentValue;
         tags.push(tag);
-        roles.push('otherTags');
+        roles.push('othertags');
       });
     }
-    NoteMiddle.selectNotesByTagsWithRole(user.userid, tags, roles)
+    NoteMiddle.selectNotesByTagsWithRole(user.userid, tags, roles, and)
     .then(result=>{
       res.json(result);
     })
@@ -443,7 +466,8 @@ export default class NoteEndpoint{
       res.json(result);
       return;
     }
-    title=req.body.note.title;
+    title=req.body.title;
+    title='%'+title+'%';
     NoteMiddle.selectNotesByTitleReg(user.userid, title)
     .then(result=>{
       res.json(result);
@@ -459,7 +483,8 @@ export default class NoteEndpoint{
       res.json(result);
       return;
     }
-    text=req.body.note.title;
+    text=req.body.text;
+    text='%'+text+'%';
     NoteMiddle.selectNotesByTextReg(user.userid, text)
     .then(result=>{
       res.json(result);
