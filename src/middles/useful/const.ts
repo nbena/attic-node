@@ -25,6 +25,8 @@ export default class Const{
 
   public static readonly TAGS_NOT_ARRAY: string = 'maintags or othetags must be instanceof array';
 
+  public static readonly USERNAME_AND_PASSWORD: string = 'userid and password required';
+
   //public static readonly ARRAY_EMPTY_NOT_ALLOWED: string = 'empty arrays are not allowed';
 
 }

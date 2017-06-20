@@ -265,3 +265,9 @@
 
 16:26:03 error: column "noteslength" does not exist
          query: select title, count(tagtitle)::integer as notestength from attic.tags as t left join attic.notes_tags on title=tagtitle where t.userid='omni@pollo.com' and t.title like '%tag%' group by title, t.userId order by noteslength desc, title asc;
+
+21:05:46 error: null value in column "userid" violates not-null constraint
+         query: insert into attic.users(userid, hashedpassword) values (null, null) returning null
+
+21:06:56 error: null value in column "userid" violates not-null constraint
+         query: insert into attic.users(userid, hashedpassword) values (null, null) returning null

@@ -6,11 +6,14 @@ import Utils from './useful/utils';
 export default class UserMiddle{
   static createUser = (user: User):Promise<any>=>{
     return new Promise((resolve, reject)=>{
-      db.users.createUser(user)
-        .then(user=>{
+      user.hashPassword()
+      .then(hashed=>{
+        //console.log('hashed');
+        return db.users.createUser(user);
+      })
+      .then(createdUser=>{
           let result:any={
             ok:true,
-            userid: user.userid,
             token: 'JWT '+AuthMiddle.generateToken(user)
           };
           resolve(result);
@@ -20,6 +23,7 @@ export default class UserMiddle{
         })
     })
   }
+
 
   static removeUser = (user:User):Promise<any>=>{
     return new Promise((resolve, reject)=>{

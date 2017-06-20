@@ -1,3 +1,3 @@
-insert into attic.users(userId, hashedPassword)
+insert into attic.users(userid, hashedpassword)
   values ($1, $2)
-returning json_object('{userId, hashedPassword}', array[userId, hashedPassword]);
+returning $1

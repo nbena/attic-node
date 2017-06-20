@@ -6,11 +6,13 @@ class UserMiddle {
 }
 UserMiddle.createUser = (user) => {
     return new Promise((resolve, reject) => {
-        db.users.createUser(user)
-            .then(user => {
+        user.hashPassword()
+            .then(hashed => {
+            return db.users.createUser(user);
+        })
+            .then(createdUser => {
             let result = {
                 ok: true,
-                userid: user.userid,
                 token: 'JWT ' + auth_middle_1.default.generateToken(user)
             };
             resolve(result);
