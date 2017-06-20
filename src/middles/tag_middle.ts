@@ -23,7 +23,11 @@ export default class TagMiddle{
     return new Promise((resolve, reject)=>{
       db.tags.createTag(tag)
       .then(result=>{
-        resolve(new types.TagResult(true, result));
+        /*use this 'hack' because that tag parameter has already everything we want it to be, it just misses
+        the noteslength. We add them and we can send it back to the user.
+        */
+        tag.noteslength = 0;
+        resolve(new types.TagResult(true, tag));
       })
       .catch(error=>{
         resolve(Utils.jsonErr(error));

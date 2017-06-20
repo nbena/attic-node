@@ -6,7 +6,7 @@ const passport = require("passport");
 require('../../config/passport')(passport);
 let auth = passport.authenticate('jwt', { session: false });
 let authLog = passport.authenticate('local', { session: false });
-router.post('/mod/changetitle', auth, tag_endpoint_1.default.changeTitle);
+router.post('/mod/change-title', auth, tag_endpoint_1.default.changeTitle);
 router.put('/:title', auth, tag_endpoint_1.default.createTag);
 router.post('/by-title-reg', auth, tag_endpoint_1.default.selectTagsByTitleReg);
 router.get('/all/min', auth, tag_endpoint_1.default.selectAllTagsMin);

@@ -15,7 +15,7 @@ let authLog = passport.authenticate('local', {session:false});
 
 
 
-router.post('/mod/changetitle', auth, TagEndpoint.changeTitle);
+router.post('/mod/change-title', auth, TagEndpoint.changeTitle);
 
 router.put('/:title', auth, TagEndpoint.createTag);
 

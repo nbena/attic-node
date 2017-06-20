@@ -19,7 +19,8 @@ TagMiddle.createTag = (tag) => {
     return new Promise((resolve, reject) => {
         db.tags.createTag(tag)
             .then(result => {
-            resolve(new types.TagResult(true, result));
+            tag.noteslength = 0;
+            resolve(new types.TagResult(true, tag));
         })
             .catch(error => {
             resolve(utils_1.default.jsonErr(error));

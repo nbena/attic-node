@@ -28,13 +28,13 @@ router.delete('/:title', auth, NoteEndpoint.removeNote);
 
 router.post('/mod/removetags', auth, NoteEndpoint.removeTagsFromNote);
 
-router.post('/by-tags-no-role-and', auth, NoteEndpoint.selectNotesByTagsNoRoleAnd);
+router.post('/by-tags-no-role/and', auth, NoteEndpoint.selectNotesByTagsNoRoleAnd);
 
-router.post('/by-tags-with-role-and', auth, NoteEndpoint.selectNotesByTagsWithRoleAnd);
+router.post('/by-tags-with-role/and', auth, NoteEndpoint.selectNotesByTagsWithRoleAnd);
 
-router.post('/by-tags-no-role-or', auth, NoteEndpoint.selectNotesByTagsNoRoleOr);
+router.post('/by-tags-no-role/or', auth, NoteEndpoint.selectNotesByTagsNoRoleOr);
 
-router.post('/by-tags-with-role-or', auth, NoteEndpoint.selectNotesByTagsWithRoleOr);
+router.post('/by-tags-with-role/or', auth, NoteEndpoint.selectNotesByTagsWithRoleOr);
 
 router.post('/by-tile-reg', auth, NoteEndpoint.selectNoteByTitleReg);
 
