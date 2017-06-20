@@ -19,7 +19,7 @@ begin
                 ) as d
         	) ,
  			(
-            select json_array_length(json_agg(d)) as notesLength
+            select json_array_length(json_agg(d)) as noteslength
             from (
             	select noteTitle
                 from attic.notes_tags as rel

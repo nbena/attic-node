@@ -259,3 +259,9 @@
 
 21:15:06 error: missing FROM-clause entry for table "note"
          query: select title from attic.notes where note.userId='omni@pollo.com' and title like '%o%';
+
+16:25:45 error: syntax error at or near "group"
+         query: select title, count(tagtitle)::integer as notestength from attic.tags as t left join attic.notes_tags on title=tagtitle where t.userid='omni@pollo.com' and t.title like '%tag%'; group by title, t.userId order by noteslength desc, title asc;
+
+16:26:03 error: column "noteslength" does not exist
+         query: select title, count(tagtitle)::integer as notestength from attic.tags as t left join attic.notes_tags on title=tagtitle where t.userid='omni@pollo.com' and t.title like '%tag%' group by title, t.userId order by noteslength desc, title asc;

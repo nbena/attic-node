@@ -67,7 +67,7 @@ export default class TagMiddle{
   }
 
 
-  public static selectTasgByTitleReg  = (user:User, title:string):Promise<types.Result>=>{
+  public static selectTagsByTitleReg  = (user:User, title:string):Promise<types.Result>=>{
       return new Promise((resolve, reject)=>{
         db.tags.selectTagsByTitleReg(user, title)
         .then(tags=>{

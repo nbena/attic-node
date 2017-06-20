@@ -14,7 +14,7 @@ TagEndpointParamCheck.title = (req) => {
 };
 TagEndpointParamCheck.changeTitle = (req) => {
     let result = TagEndpointParamCheck.title(req);
-    if (!req.body.tag.newTitle) {
+    if (!req.body.tag.newtitle) {
         result = utils_1.default.jsonErr(new Error(const_1.default.TAG_NEW_TITLE_REQUIRED));
     }
     return result;
@@ -107,16 +107,14 @@ TagEndpoint.selectTagByTitle = (req, res, next) => {
 };
 TagEndpoint.selectTagsByTitleReg = (req, res, next) => {
     let user = utils_1.default.extractUser(req);
-    let tag;
-    let result = TagEndpointParamCheck.selectTagByTitle(req);
+    let result = TagEndpointParamCheck.selectTagsByTitleReg(req);
     if (result != null) {
         res.json(result);
         return;
     }
-    tag = new TagClass.Tag();
-    tag.title = req.body.tag.title;
-    tag.userid = user.userid;
-    tag_middle_1.default.selectTagByTitle(tag)
+    ;
+    let title = '%' + req.body.tag.title + '%';
+    tag_middle_1.default.selectTagsByTitleReg(user, title)
         .then(result => {
         res.json(result);
     });

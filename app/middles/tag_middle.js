@@ -49,7 +49,7 @@ TagMiddle.selectTagByTitle = (tag) => {
         });
     });
 };
-TagMiddle.selectTasgByTitleReg = (user, title) => {
+TagMiddle.selectTagsByTitleReg = (user, title) => {
     return new Promise((resolve, reject) => {
         db.tags.selectTagsByTitleReg(user, title)
             .then(tags => {

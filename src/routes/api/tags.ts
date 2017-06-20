@@ -33,4 +33,6 @@ router.delete('/:title', auth, TagEndpoint.removeTag);
 
 router.get('/:title', auth,  TagEndpoint.selectTagByTitle);
 
+router.post('/:title', auth, TagEndpoint.selectTagByTitle);
+
 export default router;

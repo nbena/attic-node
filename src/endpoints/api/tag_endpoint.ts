@@ -20,7 +20,7 @@ class TagEndpointParamCheck{
 
   static changeTitle = (req: express.Request):types.BasicResult=>{
     let result:any=TagEndpointParamCheck.title(req);
-    if(!req.body.tag.newTitle){
+    if(!req.body.tag.newtitle){
       result = Utils.jsonErr(new Error(Const.TAG_NEW_TITLE_REQUIRED));
     }
     return result;
@@ -122,18 +122,16 @@ export default class TagEndpoint{
     })
   }
 
+  /*must write the postgres function!*/
   public static selectTagsByTitleReg = (req: express.Request, res: express.Response, next)=>{
     let user:User=Utils.extractUser(req);
-    let tag:TagClass.Tag;
-    let result:any = TagEndpointParamCheck.selectTagByTitle(req);
+    let result:any = TagEndpointParamCheck.selectTagsByTitleReg(req);
     if(result!=null){
       res.json(result);
       return;
-    }
-    tag=new TagClass.Tag();
-    tag.title=req.body.tag.title;
-    tag.userid=user.userid;
-    TagMiddle.selectTagByTitle(tag)
+    };
+    let title:string = '%'+req.body.tag.title+'%';
+    TagMiddle.selectTagsByTitleReg(user, title)
     .then(result=>{
       res.json(result);
     })

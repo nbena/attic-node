@@ -1,4 +1,5 @@
-select distinct title, noteTitle, role
-from attic.tags left join attic.notes_tags on title=tagTitle
-where title=$2 and attic.tags.userId=$1
-group by title, noteTitle, role;
+select title, count(tagtitle)::integer as noteslength
+from attic.tags as t left join attic.notes_tags on title=tagtitle
+where t.userid=$1 and t.title like $2
+group by title, t.userId
+order by noteslength desc, title asc;
