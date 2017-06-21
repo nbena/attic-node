@@ -61,7 +61,7 @@ class Repository {
                 note.maintags.map((currentValue, currentIndex) => {
                     let tag = new TagClass.Tag();
                     tag.title = currentValue;
-                    roles.push('maintags');
+                    roles.push('mainTags');
                     tags.push(tag);
                 });
             }
@@ -69,7 +69,7 @@ class Repository {
                 note.othertags.map((currentValue, currentIndex) => {
                     let tag = new TagClass.Tag();
                     tag.title = currentValue;
-                    roles.push('othertags');
+                    roles.push('otherTags');
                     tags.push(tag);
                 });
             }
