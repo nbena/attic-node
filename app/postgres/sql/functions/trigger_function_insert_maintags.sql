@@ -1,7 +1,6 @@
 create or replace function trigger_function_insert_maintags () returns trigger as $$
 declare
 	before_count integer;
-    total integer;
 begin
 	before_count := (select count(*) + 1
     				from attic.notes_tags
