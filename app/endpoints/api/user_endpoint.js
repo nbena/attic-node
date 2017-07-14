@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 const user_1 = require("../../models/user");
 const const_1 = require("../../middles/useful/const");
 const utils_1 = require("../../middles/useful/utils");
@@ -28,6 +29,5 @@ UserEndpoint.createUser = (req, res, next) => {
         res.json(result);
     });
 };
-Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = UserEndpoint;
 //# sourceMappingURL=user_endpoint.js.map

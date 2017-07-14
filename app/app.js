@@ -1,4 +1,5 @@
 'use strict';
+Object.defineProperty(exports, "__esModule", { value: true });
 const express = require("express");
 const path = require("path");
 const logger = require("morgan");
@@ -51,6 +52,5 @@ app.use((err, req, res, next) => {
         error: {}
     });
 });
-Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = app;
 //# sourceMappingURL=app.js.map

@@ -1,4 +1,5 @@
 'use strict';
+Object.defineProperty(exports, "__esModule", { value: true });
 const express = require("express");
 const router = express.Router();
 const note_endpoint_1 = require("../../endpoints/api/note_endpoint");
@@ -23,6 +24,5 @@ router.post('/mod/set-done', auth, note_endpoint_1.default.setDone);
 router.get('/all/min', auth, note_endpoint_1.default.selectAllNotesMin);
 router.post('/all/min', auth, note_endpoint_1.default.selectAllNotesMin);
 router.get('/:title', auth, note_endpoint_1.default.selectNoteByTitle);
-Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = router;
 //# sourceMappingURL=notes.js.map

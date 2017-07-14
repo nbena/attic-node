@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 const Types = require("./types");
 const user_1 = require("../../models/user");
 class Utils {
@@ -21,6 +22,5 @@ Utils.jsonCorrect = (obj) => {
     let objRes = JSON.parse(objString);
     return objRes;
 };
-Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = Utils;
 //# sourceMappingURL=utils.js.map

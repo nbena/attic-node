@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 const TagClass = require("../../models/tag");
 const const_1 = require("../../middles/useful/const");
 const utils_1 = require("../../middles/useful/utils");
@@ -126,6 +127,5 @@ TagEndpoint.selectAllTagsMin = (req, res, next) => {
         res.json(result);
     });
 };
-Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = TagEndpoint;
 //# sourceMappingURL=tag_endpoint.js.map

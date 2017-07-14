@@ -6,11 +6,12 @@ import Utils from './useful/utils';
 export default class UserMiddle{
   static createUser = (user: User):Promise<any>=>{
     return new Promise((resolve, reject)=>{
-      user.hashPassword()
-      .then(hashed=>{
-        //console.log('hashed');
-        return db.users.createUser(user);
-      })
+      user.hashPassword();
+      // .then(hashed=>{
+      //   //console.log('hashed');
+      //   return db.users.createUser(user);
+      // })
+      db.users.createUser(user)
       .then(createdUser=>{
           let result:any={
             ok:true,

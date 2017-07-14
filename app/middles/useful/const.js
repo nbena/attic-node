@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 class Const {
 }
 Const.ERR_USER = 'error: user is required';
@@ -24,6 +25,5 @@ Const.TAG_NEW_TITLE_REQUIRED = 'tag.newTitle required';
 Const.GEN_TAGS_REQUIRED = 'tags:[ ... ] required';
 Const.TAGS_NOT_ARRAY = 'maintags or othetags must be instanceof array';
 Const.USERNAME_AND_PASSWORD = 'userid and password required';
-Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = Const;
 //# sourceMappingURL=const.js.map

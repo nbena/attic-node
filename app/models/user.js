@@ -1,20 +1,25 @@
 "use strict";
-const bcrypt = require("bcrypt");
+Object.defineProperty(exports, "__esModule", { value: true });
+const js_sha3_1 = require("js-sha3");
 class User {
     hashPassword() {
-        return bcrypt.genSalt(10)
-            .then(salt => {
-            return bcrypt.hash(this.hashedpassword, salt);
-        })
-            .then(hash => {
-            this.hashedpassword = hash;
-        })
-            .catch(error => {
-            throw new Error(error);
-        });
+        this.hashedpassword = js_sha3_1.sha3_512(this.hashedpassword);
     }
     checkPassword(passwordToCheck) {
-        return bcrypt.compare(passwordToCheck, this.hashedpassword);
+        return new Promise((resolve, reject) => {
+            let tempPassword = js_sha3_1.sha3_512(passwordToCheck);
+            console.log('passwordToCheck:');
+            console.log(tempPassword);
+            console.log('hashedpassword');
+            console.log(this.hashedpassword);
+            console.log(tempPassword == this.hashedpassword);
+            if (tempPassword == this.hashedpassword) {
+                resolve(true);
+            }
+            else {
+                resolve(false);
+            }
+        });
     }
     getValues() {
         let values = {
@@ -27,6 +32,5 @@ class User {
         this.userid = userid;
     }
 }
-Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = User;
 //# sourceMappingURL=user.js.map

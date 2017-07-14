@@ -1,7 +1,7 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 const pg_promise_1 = require("pg-promise");
 const path = require("path");
-Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = {
     notes: {
         addTags: link('notes/add_tags_to_note.sql'),

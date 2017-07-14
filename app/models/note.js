@@ -1,9 +1,9 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 class Note {
     getValues() {
         return [this.userid, this.title];
     }
 }
-Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = Note;
 //# sourceMappingURL=note.js.map

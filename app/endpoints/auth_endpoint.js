@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 const user_1 = require("../models/user");
 const auth_middle_1 = require("../middles/auth_middle");
 const const_1 = require("../middles/useful/const");
@@ -18,6 +19,5 @@ AuthEndpoint.authenticate = (req, res, next) => {
         res.json(utils_1.default.jsonErr(error));
     });
 };
-Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = AuthEndpoint;
 //# sourceMappingURL=auth_endpoint.js.map

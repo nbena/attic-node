@@ -274,3 +274,6 @@
 
 21:39:17 error: new row for relation "notes_tags" violates check constraint "role_check"
          tx: insert into "attic"."notes_tags"("notetitle","tagtitle","role","userid") values('mikkeller','new-tag1','maintags','omni@pollo.com')
+
+11:22:28 error: password authentication failed for user "DrumdiPostgres"
+         connection: "nicola:##############@localhost:5432/attic"

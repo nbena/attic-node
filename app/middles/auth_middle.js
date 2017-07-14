@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 const user_1 = require("../models/user");
 const jwt = require("jsonwebtoken");
 const database_1 = require("../config/database");
@@ -25,7 +26,8 @@ AuthMiddle.getUserFromToken = (headers) => {
     return new user_1.default(userid);
 };
 AuthMiddle.generateToken = (user) => {
-    return jwt.sign({ userid: user.userid }, database_1.default.secret);
+    let obj = { userid: user.userid };
+    return jwt.sign(obj, database_1.default.secret);
 };
 AuthMiddle.authenticate = (user) => {
     return new Promise((resolve, reject) => {
@@ -35,6 +37,5 @@ AuthMiddle.authenticate = (user) => {
         resolve(result);
     });
 };
-Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = AuthMiddle;
 //# sourceMappingURL=auth_middle.js.map

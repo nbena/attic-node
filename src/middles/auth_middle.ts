@@ -30,7 +30,10 @@ public static getUserFromToken = (headers):User=>{
 
 
 public static generateToken = (user:User)=>{
-  return jwt.sign({userid: user.userid}, Config.secret);
+  let obj:object = {userid: user.userid};
+  return jwt.sign(
+    obj
+  , Config.secret);
 }
 
 

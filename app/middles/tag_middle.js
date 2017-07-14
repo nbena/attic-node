@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 const db = require("../postgres");
 const types = require("./useful/types");
 const utils_1 = require("./useful/utils");
@@ -71,6 +72,5 @@ TagMiddle.selectAllTagsMin = (user) => {
         });
     });
 };
-Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = TagMiddle;
 //# sourceMappingURL=tag_middle.js.map

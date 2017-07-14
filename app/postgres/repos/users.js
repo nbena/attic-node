@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 const sql_1 = require("../sql");
 const user_1 = require("../../models/user");
 let sql = sql_1.default.users;

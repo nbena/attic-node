@@ -1,4 +1,5 @@
 'use strict';
+Object.defineProperty(exports, "__esModule", { value: true });
 const express = require("express");
 const router = express.Router();
 const tag_endpoint_1 = require("../../endpoints/api/tag_endpoint");
@@ -14,6 +15,5 @@ router.post('/all/min', auth, tag_endpoint_1.default.selectAllTagsMin);
 router.delete('/:title', auth, tag_endpoint_1.default.removeTag);
 router.get('/:title', auth, tag_endpoint_1.default.selectTagByTitle);
 router.post('/:title', auth, tag_endpoint_1.default.selectTagByTitle);
-Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = router;
 //# sourceMappingURL=tags.js.map

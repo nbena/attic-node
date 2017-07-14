@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 const note_1 = require("../../models/note");
 const TagClass = require("../../models/tag");
 const const_1 = require("../../middles/useful/const");
@@ -434,6 +435,5 @@ NoteEndpoint.setDone = (req, res, next) => {
         res.json(result);
     });
 };
-Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = NoteEndpoint;
 //# sourceMappingURL=note_endpoint.js.map

@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 const db = require("../postgres");
 const types = require("./useful/types");
 const utils_1 = require("./useful/utils");
@@ -169,6 +170,5 @@ NoteMiddle.setDone = (note, done) => {
         });
     });
 };
-Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = NoteMiddle;
 //# sourceMappingURL=note_middle.js.map
