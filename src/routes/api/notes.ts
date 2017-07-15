@@ -14,19 +14,19 @@ let auth = passport.authenticate('jwt', {session:false});
 let authLog = passport.authenticate('local', {session:false});
 
 
-router.post('/mod/addtags', auth, NoteEndpoint.addTags);
+router.post('/mod/add-tags', auth, NoteEndpoint.addTags);
 
-router.post('/mod/changelinks', auth, NoteEndpoint.changeLinks);
+router.post('/mod/change-links', auth, NoteEndpoint.changeLinks);
 
-router.post('/mod/changetitle', auth, NoteEndpoint.changeTitle);
+router.post('/mod/change-title', auth, NoteEndpoint.changeTitle);
 
-router.post('/mod/changetext', auth, NoteEndpoint.changeText);
+router.post('/mod/change-text', auth, NoteEndpoint.changeText);
 
 router.put('/create', auth, NoteEndpoint.createNote);
 
 router.delete('/:title', auth, NoteEndpoint.removeNote);
 
-router.post('/mod/removetags', auth, NoteEndpoint.removeTagsFromNote);
+router.post('/mod/remove-tags', auth, NoteEndpoint.removeTagsFromNote);
 
 router.post('/by-tags-no-role/and', auth, NoteEndpoint.selectNotesByTagsNoRoleAnd);
 
