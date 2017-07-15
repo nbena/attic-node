@@ -33,10 +33,6 @@ class Repository {
             let values = [note.userid, note.title, newText];
             return this.db.one(sql.changeText, values, (note) => { return note.result; });
         };
-        this.changeTitle = (note, newTitle) => {
-            let values = [newTitle, note.title, note.userid];
-            return this.db.one(sql.changeTitle, values, (note) => { return note.result; });
-        };
         this.createNoteAll = (note) => {
             let values = [
                 note.userid,
@@ -137,6 +133,9 @@ class Repository {
         };
         this.db = db;
         this.pgp = pgp;
+    }
+    changeTitle(note, newTitle) {
+        return this.db.one(sql.changeTitle, [note.userid, note.title, newTitle], (note) => { return note.result; });
     }
     static getQueryNotesByTagsNoRole(userid, tags, and) {
         let tagsTitle = tags.map((currentValue) => {

@@ -9,7 +9,7 @@ TagMiddle.changeTitle = (tag, newTitle) => {
     return new Promise((resolve, reject) => {
         db.tags.changeTitle(tag, newTitle)
             .then(result => {
-            resolve(new types.BasicResult(true, JSON.stringify(result)));
+            resolve(new types.Result(true));
         })
             .catch(error => {
             resolve(utils_1.default.jsonErr(error));
