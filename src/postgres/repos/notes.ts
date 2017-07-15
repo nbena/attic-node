@@ -109,7 +109,7 @@ export class Repository{
   }
 
   changeTitle = (note:Note, newTitle: string):Promise<any>=>{
-    let values:any[]=[note.userid, note.title, newTitle];
+    let values:any[]=[newTitle, note.title, note.userid];
     return this.db.one(sql.changeTitle, values, (note:any)=>{return note.result});
   }
 

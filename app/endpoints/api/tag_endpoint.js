@@ -50,7 +50,7 @@ TagEndpoint.changeTitle = (req, res, next) => {
     tag = new TagClass.Tag();
     tag.title = req.body.tag.title;
     tag.userid = user.userid;
-    newTitle = req.body.tag.newTitle;
+    newTitle = req.body.tag.newtitle;
     tag_middle_1.default.changeTitle(tag, newTitle)
         .then(result => {
         res.json(result);

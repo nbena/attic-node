@@ -34,7 +34,7 @@ class Repository {
             return this.db.one(sql.changeText, values, (note) => { return note.result; });
         };
         this.changeTitle = (note, newTitle) => {
-            let values = [note.userid, note.title, newTitle];
+            let values = [newTitle, note.title, note.userid];
             return this.db.one(sql.changeTitle, values, (note) => { return note.result; });
         };
         this.createNoteAll = (note) => {

@@ -5,7 +5,7 @@ let sql = sql_1.default.tags;
 class Repository {
     constructor(db, pgp) {
         this.changeTitle = (tag, newTitle) => {
-            return this.db.one(sql.changeTitle, [tag.userid, tag.title, newTitle], (tag) => { return tag.result; });
+            return this.db.one(sql.changeTitle, [newTitle, tag.userid, tag.title], (tag) => { return tag.result; });
         };
         this.createTag = (tag) => {
             return this.db.one(sql.createTag, tag.getValues(), (tag) => { return tag.result; });

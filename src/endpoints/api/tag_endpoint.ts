@@ -62,7 +62,7 @@ export default class TagEndpoint{
     tag = new TagClass.Tag();
     tag.title=req.body.tag.title;
     tag.userid=user.userid;
-    newTitle = req.body.tag.newTitle;
+    newTitle = req.body.tag.newtitle;
     TagMiddle.changeTitle(tag, newTitle)
     .then(result=>{
       res.json(result);
