@@ -8,11 +8,6 @@ class User {
     checkPassword(passwordToCheck) {
         return new Promise((resolve, reject) => {
             let tempPassword = js_sha3_1.sha3_512(passwordToCheck);
-            console.log('passwordToCheck:');
-            console.log(tempPassword);
-            console.log('hashedpassword');
-            console.log(this.hashedpassword);
-            console.log(tempPassword == this.hashedpassword);
             if (tempPassword == this.hashedpassword) {
                 resolve(true);
             }
