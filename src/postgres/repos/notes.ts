@@ -108,9 +108,10 @@ export class Repository{
     return this.db.one(sql.changeText, values, (note:any)=>{return note.result});
   }
 
-  changeTitle = (note:Note, newTitle: string):Promise<any>=>{
-    let values:any[]=[newTitle, note.title, note.userid];
-    return this.db.one(sql.changeTitle, values, (note:any)=>{return note.result});
+  changeTitle (note:Note, newTitle: string):Promise<any>{
+    // let values:any[]=[newTitle, note.title, note.userid];
+    // let ps: pgp.PreparedStatement = new pgp.PreparedStatement('change-title', sql.changeTitle, [note.userid, note.title, newTitle]);
+    return this.db.one(sql.changeTitle, [note.userid, note.title, newTitle], (note:any)=>{return note.result});
   }
 
   /*rewrite a bit, will be done into a transaction..*/
