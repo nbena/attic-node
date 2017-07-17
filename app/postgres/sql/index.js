@@ -35,7 +35,8 @@ exports.default = {
     users: {
         createUser: link('users/create_user.sql'),
         removeUser: link('users/remove_user.sql'),
-        selectByUserId: link('users/select.sql')
+        selectByUserId: link('users/select.sql'),
+        selectSummary: link('users/select_summary.sql')
     }
 };
 function link(file) {

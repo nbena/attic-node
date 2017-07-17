@@ -43,7 +43,7 @@ export class Repository {
 
   summary = (user: User):Promise<UserSummary>=>{
     return this.db.one(sql.selectSummary, [user.userid], (result:any)=>{
-      return result;
+      return result.get_user_summary;
     })
   }
 

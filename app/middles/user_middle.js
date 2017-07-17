@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const auth_middle_1 = require("./auth_middle");
 const db = require("../postgres");
 const utils_1 = require("./useful/utils");
+const types = require("./useful/types");
 class UserMiddle {
 }
 UserMiddle.createUser = (user) => {
@@ -26,6 +27,17 @@ UserMiddle.removeUser = (user) => {
         db.users.removeUser(user)
             .then(result => {
             resolve(result);
+        })
+            .catch(error => {
+            resolve(utils_1.default.jsonErr(error));
+        });
+    });
+};
+UserMiddle.summary = (user) => {
+    return new Promise((resolve, reject) => {
+        db.users.summary(user)
+            .then(result => {
+            resolve(new types.AnyResult(true, result));
         })
             .catch(error => {
             resolve(utils_1.default.jsonErr(error));

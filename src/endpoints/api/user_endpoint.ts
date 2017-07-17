@@ -18,6 +18,16 @@ class UserEndpointParamCheck {
     return result;
   }
 
+
+  //I know that it's not necessay but I want to.
+  public static summary = (req: express.Request):types.BasicResult=>{
+    let result:any = null;
+    if(!req.params.userid){
+      result = Utils.jsonErr(new Error(Const.USERID_REQUIRED));
+    }
+    return result;
+  }
+
 }
 
 export default class UserEndpoint{
@@ -41,7 +51,20 @@ export default class UserEndpoint{
 
   public static summary = (req: express.Request, res: express.Response, next)=>{
     let user:User;
+    let check = UserEndpointParamCheck.summary(req);
+    if(check!=null){
+      res.json(check);
+      return;
+    }
     user = Utils.extractUser(req);
+    if(user.userid!=req.params.userid){
+      res.json(Utils.jsonErr(new Error(Const.USER_MISMATCH)));
+      return;
+    }
+    UserMiddle.summary(user)
+    .then(result=>{
+      res.json(result);
+    })
   }
 
 }

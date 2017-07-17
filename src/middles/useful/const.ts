@@ -11,7 +11,7 @@ export default class Const{
   public static readonly IS_DONE_NOT_BOOL: string = 'note.isdone is not boolean';
   public static readonly TEXT_REQUIRED:string = 'note.text required';
   public static readonly TEXT_BASIC_REQUIRED: string = 'text required';
-  public static readonly TITLE_REQUIRED:string = 'note.title required';
+  public static readonly TITLE_REQUIRED:string = 'note.title required, or :title required';
   public static readonly TITLE_BASIC_REQUIRED: string = 'title required';
   public static readonly IS_DONE_REQUIRED: string = 'note.isdone required';
   public static readonly NOTE_NEW_TITLE_REQUIRED: string = 'note.newtitle required';
@@ -26,6 +26,9 @@ export default class Const{
   public static readonly TAGS_NOT_ARRAY: string = 'maintags or othetags must be instanceof array';
 
   public static readonly USERNAME_AND_PASSWORD: string = 'userid and password required';
+
+  public static readonly USERID_REQUIRED: string = ':userid required';
+  public static readonly USER_MISMATCH: string = 'the authenticated user is different from the required one';
 
   //public static readonly ARRAY_EMPTY_NOT_ALLOWED: string = 'empty arrays are not allowed';
 

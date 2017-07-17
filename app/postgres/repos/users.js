@@ -20,6 +20,11 @@ class Repository {
                 return user;
             });
         };
+        this.summary = (user) => {
+            return this.db.one(sql.selectSummary, [user.userid], (result) => {
+                return result.get_user_summary;
+            });
+        };
         this.db = db;
         this.pgp = pgp;
     }
