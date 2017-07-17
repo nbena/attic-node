@@ -1,6 +1,7 @@
 import { IDatabase, IMain } from 'pg-promise';
 import sqlProvider from '../sql';
 import User from '../../models/user';
+import UserSummary from '../../models/user_summary';
 
 let sql = sqlProvider.users; /*getting just what we need*/
 
@@ -38,6 +39,12 @@ export class Repository {
       // console.log(JSON.stringify(user));
       return user;
     });
+  }
+
+  summary = (user: User):Promise<UserSummary>=>{
+    return this.db.one(sql.selectSummary, [user.userid], (result:any)=>{
+      return result;
+    })
   }
 
 

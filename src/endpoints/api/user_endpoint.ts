@@ -38,4 +38,10 @@ export default class UserEndpoint{
     })
   }
 
+
+  public static summary = (req: express.Request, res: express.Response, next)=>{
+    let user:User;
+    user = Utils.extractUser(req);
+  }
+
 }
