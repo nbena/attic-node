@@ -30,7 +30,7 @@ Const.USER_MISMATCH = 'the authenticated user is different from the required one
 exports.Const = Const;
 class PostgresError {
     static getCorrectError(error) {
-        let returnedError = '';
+        let returnedError = error;
         switch (error) {
             case PostgresError.POSTGRES_DUPLICATE_KEY_NOTES:
                 returnedError = PostgresError.FINAL_DUPLICATE_KEY_NOTES;
@@ -58,9 +58,6 @@ class PostgresError {
                 break;
             case PostgresError.POSTGRES_TAGS_FKEY:
                 returnedError = PostgresError.FINAL_TAGS_FKEY;
-                break;
-            default:
-                returnedError = error;
                 break;
         }
         return returnedError;

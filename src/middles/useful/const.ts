@@ -58,7 +58,7 @@ export class PostgresError {
   public static readonly FINAL_TAGS_FKEY:string = "tags not found";
 
   public static getCorrectError(error: string): string {
-    let returnedError: string = '';
+    let returnedError: string = error;
     switch (error) {
       case PostgresError.POSTGRES_DUPLICATE_KEY_NOTES:
         returnedError = PostgresError.FINAL_DUPLICATE_KEY_NOTES;
@@ -86,9 +86,6 @@ export class PostgresError {
         break;
       case PostgresError.POSTGRES_TAGS_FKEY:
         returnedError = PostgresError.FINAL_TAGS_FKEY;
-        break;
-      default:
-        returnedError = error;
         break;
     }
     return returnedError;
