@@ -1,6 +1,6 @@
 import User from '../../models/user';
 
-import Const from '../../middles/useful/const';
+import {Const} from '../../middles/useful/const';
 import Utils from '../../middles/useful/utils';
 import {AnyResult, BasicResult, JsonError } from '../../middles/useful/types';
 

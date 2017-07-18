@@ -3,27 +3,28 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const TagClass = require("../../models/tag");
 const const_1 = require("../../middles/useful/const");
 const utils_1 = require("../../middles/useful/utils");
+const types_1 = require("../../middles/useful/types");
 const tag_middle_1 = require("../../middles/tag_middle");
 class TagEndpointParamCheck {
 }
 TagEndpointParamCheck.title = (req) => {
     let result = null;
     if (!req.body.tag.title || !req.body.tag) {
-        result = utils_1.default.jsonErr(new Error(const_1.default.TAG_TITLE_REQUIRED));
+        result = utils_1.default.jsonErr(new types_1.JsonError(const_1.Const.TAG_TITLE_REQUIRED));
     }
     return result;
 };
 TagEndpointParamCheck.changeTitle = (req) => {
     let result = TagEndpointParamCheck.title(req);
     if (!req.body.tag.newtitle) {
-        result = utils_1.default.jsonErr(new Error(const_1.default.TAG_NEW_TITLE_REQUIRED));
+        result = utils_1.default.jsonErr(new types_1.JsonError(const_1.Const.TAG_NEW_TITLE_REQUIRED));
     }
     return result;
 };
 TagEndpointParamCheck.createTag = (req) => {
     let result = null;
     if (!req.params.title) {
-        result = utils_1.default.jsonErr(new Error(const_1.default.TAG_TITLE_PARAM_REQUIRED));
+        result = utils_1.default.jsonErr(new types_1.JsonError(const_1.Const.TAG_TITLE_PARAM_REQUIRED));
     }
     return result;
 };

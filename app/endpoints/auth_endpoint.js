@@ -9,7 +9,7 @@ class AuthEndpoint {
 }
 AuthEndpoint.authenticate = (req, res, next) => {
     if (!req.user || req.user == null) {
-        res.json(new types.BasicResult(false, const_1.default.ERR_USER));
+        res.json(new types.BasicResult(false, const_1.Const.ERR_USER));
     }
     auth_middle_1.default.authenticate(new user_1.default(req.user))
         .then(result => {

@@ -1,4 +1,4 @@
-export default class Const{
+export class Const {
   public static readonly ERR_USER:string = 'error: user is required';
   public static readonly ERR_DIFF_LENGTH:string = 'the two arrays must have the same length';
   public static readonly ERR_DB:string = 'db error';
@@ -34,8 +34,63 @@ export default class Const{
 
 }
 
-export class PostgresError{
-  public static readonly POSTGRES_DUPLICATE_KEY_NOTES:string = "duplicate key value violates unique constraint \"notes_pkey\"";
-  public static readonly POSTGRES_DUPLICATE_KEY_TAGS:string = "error duplicate key value violates unique constraint \"tags_pkey\"";
-  public static readonly POSTGRES_DUPLICATE_KEY_NOTES_TAGS:string = "error duplicate key value violates unique constraint \"notes_tags_pkey\"";
+export class PostgresError {
+  public static readonly POSTGRES_DUPLICATE_KEY_NOTES:string = 'duplicate key value violates unique constraint \"notes_pkey\"';
+  public static readonly POSTGRES_DUPLICATE_KEY_TAGS:string = 'error duplicate key value violates unique constraint \"tags_pkey\"';
+  public static readonly POSTGRES_DUPLICATE_KEY_NOTES_TAGS:string = 'error duplicate key value violates unique constraint \"notes_tags_pkey\"';
+  public static readonly POSTGRES_USER_REACHED_MAX_NOTES:string = 'a free user cannot have more than 50 notes';
+  public static readonly POSTGRES_USER_REACHED_MAX_TAGS:string = 'a free user cannot have more than 50 tags';
+  public static readonly POSTGRES_MAINTAGS_LIMIT:string = 'maintags cannot be more than 3';
+  public static readonly POSTGRES_OTHERTAGS_LIMIT:string = 'othetags cannot be more than 15';
+  public static readonly POSTGRES_TAGS_FKEY:string = 'insert or update on table \"notes_tags\" violates foreign key constraint \"notes_tags_tagtitle_fkey\"';
+
+  public static readonly FINAL_DUPLICATE_KEY_NOTES:string = 'another note with the same title';
+  public static readonly FINAL_DUPLICATE_KEY_TAGS:string = 'another tag with the same title';
+  public static readonly FINAL_DUPLICATE_KEY_NOTES_TAGS:string = 'the tag is already with this note';
+  // public static readonly FINAL_USER_REACHED_MAX_NOTES:string = PostgresError.POSTGRES_USER_REACHED_MAX_NOTES.replace('BatchError', '');
+  // public static readonly FINAL_USER_REACHED_MAX_TAGS:string = PostgresError.POSTGRES_USER_REACHED_MAX_TAGS.replace('BatchError', '');
+  // public static readonly FINAL_MAINTAGS_LIMIT:string = PostgresError.POSTGRES_MAINTAGS_LIMIT.replace('BatchError', '');
+  // public static readonly FINAL_OTHERTAGS_LIMIT:string = PostgresError.POSTGRES_OTHERTAGS_LIMIT.replace('BatchError', '');
+  public static readonly FINAL_USER_REACHED_MAX_NOTES:string = PostgresError.POSTGRES_USER_REACHED_MAX_NOTES;
+  public static readonly FINAL_USER_REACHED_MAX_TAGS:string = PostgresError.POSTGRES_USER_REACHED_MAX_TAGS;
+  public static readonly FINAL_MAINTAGS_LIMIT:string = PostgresError.POSTGRES_MAINTAGS_LIMIT
+  public static readonly FINAL_OTHERTAGS_LIMIT:string = PostgresError.POSTGRES_OTHERTAGS_LIMIT;
+  public static readonly FINAL_TAGS_FKEY:string = "tags not found";
+
+  public static getCorrectError(error: string): string {
+    let returnedError: string = '';
+    switch (error) {
+      case PostgresError.POSTGRES_DUPLICATE_KEY_NOTES:
+        returnedError = PostgresError.FINAL_DUPLICATE_KEY_NOTES;
+        break;
+      case PostgresError.POSTGRES_DUPLICATE_KEY_TAGS:
+        returnedError = PostgresError.FINAL_DUPLICATE_KEY_TAGS;
+        break;
+      case PostgresError.POSTGRES_DUPLICATE_KEY_NOTES_TAGS:
+        returnedError = PostgresError.FINAL_DUPLICATE_KEY_NOTES_TAGS;
+        break;
+      case PostgresError.POSTGRES_USER_REACHED_MAX_NOTES:
+        returnedError = PostgresError.FINAL_USER_REACHED_MAX_NOTES;
+        break;
+      case PostgresError.POSTGRES_USER_REACHED_MAX_TAGS:
+        returnedError = PostgresError.FINAL_USER_REACHED_MAX_TAGS;
+        break;
+      case PostgresError.POSTGRES_MAINTAGS_LIMIT:
+        returnedError = PostgresError.FINAL_MAINTAGS_LIMIT;
+        break;
+      case PostgresError.POSTGRES_OTHERTAGS_LIMIT:
+        returnedError = PostgresError.FINAL_OTHERTAGS_LIMIT;
+        break;
+      case PostgresError.POSTGRES_MAINTAGS_LIMIT:
+        returnedError = PostgresError.FINAL_MAINTAGS_LIMIT;
+        break;
+      case PostgresError.POSTGRES_TAGS_FKEY:
+        returnedError = PostgresError.FINAL_TAGS_FKEY;
+        break;
+      default:
+        returnedError = error;
+        break;
+    }
+    return returnedError;
+  }
 }

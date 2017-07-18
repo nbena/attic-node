@@ -1,13 +1,18 @@
-import * as Types from './types';
+import {DbError, BasicResult} from './types';
 import * as express from 'express';
 import User from '../../models/user';
+import {PostgresError} from './const';
 
 export default class Utils{
 
-  public static jsonErr=(err: Error):Types.BasicResult=>{
+  public static jsonErr=(err: Error):BasicResult=>{
     console.error(err.stack);
     console.log(JSON.stringify(err));
-    let res:Types.BasicResult = new Types.BasicResult(false, err.name+' '+err.message);
+    if(err.name=='BatchError'){
+      err = new DbError(err.message);
+    }
+    let msg:string = PostgresError.getCorrectError(err.message);
+    let res:BasicResult = new BasicResult(false, err.name+' '+msg);
     return res;
   }
 

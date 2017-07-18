@@ -4,7 +4,7 @@ import User from '../models/user';
 import * as db from '../postgres';
 import * as types from './useful/types';
 import Utils from './useful/utils';
-import Const from './useful/const';
+import {Const} from './useful/const';
 
 /*
 the middle never throw exception, just return a basic result.

@@ -11,7 +11,7 @@ class NoteEndpointParamCheck {
 NoteEndpointParamCheck.title = (req) => {
     let result = null;
     if (!req.body.note.title || !req.body.note) {
-        result = utils_1.default.jsonErr(new Error(const_1.default.NOTE_REQUIRED));
+        result = utils_1.default.jsonErr(new types_1.JsonError(const_1.Const.NOTE_REQUIRED));
     }
     return result;
 };
@@ -19,16 +19,16 @@ NoteEndpointParamCheck.addTags = (req) => {
     let result = null;
     result = NoteEndpointParamCheck.title(req);
     if (req.body.note.maintags == null && req.body.note.othertags == null) {
-        result = utils_1.default.jsonErr(new types_1.JsonError(const_1.default.TAGS_REQUIRED));
+        result = utils_1.default.jsonErr(new types_1.JsonError(const_1.Const.TAGS_REQUIRED));
     }
     else if (req.body.note.maintags != null) {
         if (req.body.note.maintags instanceof Array == false) {
-            result = utils_1.default.jsonErr(new types_1.JsonError(const_1.default.NO_ARR_INST));
+            result = utils_1.default.jsonErr(new types_1.JsonError(const_1.Const.NO_ARR_INST));
         }
     }
     if (req.body.note.othertags != null) {
         if (req.body.note.othertags instanceof Array == false) {
-            result = utils_1.default.jsonErr(new types_1.JsonError(const_1.default.NO_ARR_INST));
+            result = utils_1.default.jsonErr(new types_1.JsonError(const_1.Const.NO_ARR_INST));
         }
     }
     return result;
@@ -37,7 +37,7 @@ NoteEndpointParamCheck.changeLinks = (req) => {
     let result = null;
     result = NoteEndpointParamCheck.title(req);
     if (!req.body.note.links || req.body.note.links instanceof Array) {
-        result = utils_1.default.jsonErr(new Error(const_1.default.LINKS_REQUIRED));
+        result = utils_1.default.jsonErr(new types_1.JsonError(const_1.Const.LINKS_REQUIRED));
     }
     return result;
 };
@@ -45,7 +45,7 @@ NoteEndpointParamCheck.changeText = (req) => {
     let result = null;
     result = NoteEndpointParamCheck.title(req);
     if (!req.body.note.text) {
-        result = utils_1.default.jsonErr(new Error(const_1.default.TEXT_REQUIRED));
+        result = utils_1.default.jsonErr(new types_1.JsonError(const_1.Const.TEXT_REQUIRED));
     }
     return result;
 };
@@ -53,7 +53,7 @@ NoteEndpointParamCheck.changeTitle = (req) => {
     let result = null;
     result = NoteEndpointParamCheck.title(req);
     if (!req.body.note.newtitle) {
-        result = utils_1.default.jsonErr(new Error(const_1.default.TITLE_REQUIRED));
+        result = utils_1.default.jsonErr(new types_1.JsonError(const_1.Const.TITLE_REQUIRED));
     }
     return result;
 };
@@ -61,17 +61,17 @@ NoteEndpointParamCheck.createNote = (req) => {
     let result = NoteEndpointParamCheck.changeText(req);
     if (req.body.note.maintags) {
         if (req.body.note.maintags instanceof Array == false) {
-            result = utils_1.default.jsonErr(new Error(const_1.default.INVALID_NOTE));
+            result = utils_1.default.jsonErr(new types_1.JsonError(const_1.Const.INVALID_NOTE));
         }
     }
     if (req.body.note.otherTags) {
         if (req.body.note.otherTags instanceof Array == false) {
-            result = utils_1.default.jsonErr(new Error(const_1.default.INVALID_NOTE));
+            result = utils_1.default.jsonErr(new types_1.JsonError(const_1.Const.INVALID_NOTE));
         }
     }
     if (req.body.note.links) {
         if (req.body.note.links instanceof Array == false) {
-            result = utils_1.default.jsonErr(new Error(const_1.default.LINK_NOT_ARRAY));
+            result = utils_1.default.jsonErr(new types_1.JsonError(const_1.Const.LINK_NOT_ARRAY));
         }
     }
     return result;
@@ -79,7 +79,7 @@ NoteEndpointParamCheck.createNote = (req) => {
 NoteEndpointParamCheck.removeNote = (req) => {
     let result = null;
     if (!req.params.title) {
-        result = utils_1.default.jsonErr(new Error(const_1.default.TITLE_REQUIRED));
+        result = utils_1.default.jsonErr(new types_1.JsonError(const_1.Const.TITLE_REQUIRED));
     }
     return result;
 };
@@ -87,17 +87,17 @@ NoteEndpointParamCheck.removeTagsFromNote = (req) => {
     let result = null;
     result = NoteEndpointParamCheck.title(req);
     if (!req.body.note.tags && req.body.note.tags instanceof Array) {
-        result = utils_1.default.jsonErr(new Error(const_1.default.TAGS_REQUIRED));
+        result = utils_1.default.jsonErr(new types_1.JsonError(const_1.Const.TAGS_REQUIRED));
     }
     return result;
 };
 NoteEndpointParamCheck.selectNotesByTagsNoRole = (req) => {
     let result = null;
     if (req.body.tags == null) {
-        result = utils_1.default.jsonErr(new Error(const_1.default.GEN_TAGS_REQUIRED));
+        result = utils_1.default.jsonErr(new types_1.JsonError(const_1.Const.GEN_TAGS_REQUIRED));
     }
     else if (req.body.tags instanceof Array == false) {
-        result = utils_1.default.jsonErr(new Error(const_1.default.TAGS_NOT_ARRAY));
+        result = utils_1.default.jsonErr(new types_1.JsonError(const_1.Const.TAGS_NOT_ARRAY));
     }
     return result;
 };
@@ -107,34 +107,34 @@ NoteEndpointParamCheck.selectNoteByTitle = (req) => {
 NoteEndpointParamCheck.selectNotesByTextReg = (req) => {
     let result = null;
     if (req.body.text == null) {
-        result = utils_1.default.jsonErr(new Error(const_1.default.TEXT_BASIC_REQUIRED));
+        result = utils_1.default.jsonErr(new types_1.JsonError(const_1.Const.TEXT_BASIC_REQUIRED));
     }
     return result;
 };
 NoteEndpointParamCheck.selectNotesByTitleReg = (req) => {
     let result = null;
     if (req.body.title == null) {
-        result = utils_1.default.jsonErr(new Error(const_1.default.TITLE_BASIC_REQUIRED));
+        result = utils_1.default.jsonErr(new types_1.JsonError(const_1.Const.TITLE_BASIC_REQUIRED));
     }
     return result;
 };
 NoteEndpointParamCheck.selectNotesByTagsWithRole = (req) => {
     let result = null;
     if (req.body.maintags == null || req.body.othertags == null) {
-        result = utils_1.default.jsonErr(new Error(const_1.default.TAGS_REQUIRED));
+        result = utils_1.default.jsonErr(new types_1.JsonError(const_1.Const.TAGS_REQUIRED));
     }
     if (req.body.maintags && req.body.maintags instanceof Array) {
-        result = utils_1.default.jsonErr(new Error(const_1.default.TAGS_NOT_ARRAY));
+        result = utils_1.default.jsonErr(new types_1.JsonError(const_1.Const.TAGS_NOT_ARRAY));
     }
     if (req.body.othertags && req.body.othertags instanceof Array) {
-        result = utils_1.default.jsonErr(new Error(const_1.default.TAGS_NOT_ARRAY));
+        result = utils_1.default.jsonErr(new types_1.JsonError(const_1.Const.TAGS_NOT_ARRAY));
     }
     return result;
 };
 NoteEndpointParamCheck.setDone = (req) => {
     let result = NoteEndpointParamCheck.title(req);
     if (!req.body.note.isdone) {
-        result = utils_1.default.jsonErr(new Error(const_1.default.IS_DONE_REQUIRED));
+        result = utils_1.default.jsonErr(new types_1.JsonError(const_1.Const.IS_DONE_REQUIRED));
     }
     return result;
 };

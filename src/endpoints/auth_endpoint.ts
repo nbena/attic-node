@@ -3,7 +3,7 @@ import * as jwt from 'jsonwebtoken';
 import * as passport from 'passport';
 import * as express from 'express';
 import AuthMiddle from '../middles/auth_middle';
-import Const  from '../middles/useful/const';
+import {Const}  from '../middles/useful/const';
 import * as types from '../middles/useful/types';
 import Utils from '../middles/useful/utils';
 

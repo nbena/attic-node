@@ -2,7 +2,7 @@ import User from '../models/user';
 import AuthMiddle from './auth_middle';
 import * as db from '../postgres';
 import Utils from './useful/utils';
-import * as types from './useful/types';
+import {AnyResult, DbError }  from './useful/types';
 
 export default class UserMiddle{
   static createUser = (user: User):Promise<any>=>{
@@ -43,7 +43,7 @@ export default class UserMiddle{
     return new Promise((resolve, reject)=>{
       db.users.summary(user)
       .then(result=>{
-        resolve(new types.AnyResult(true, result));
+        resolve(new AnyResult(true, result));
       })
       .catch(error=>{
         resolve(Utils.jsonErr(error));

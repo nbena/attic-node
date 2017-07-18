@@ -27,11 +27,60 @@ Const.TAGS_NOT_ARRAY = 'maintags or othetags must be instanceof array';
 Const.USERNAME_AND_PASSWORD = 'userid and password required';
 Const.USERID_REQUIRED = ':userid required';
 Const.USER_MISMATCH = 'the authenticated user is different from the required one';
-exports.default = Const;
+exports.Const = Const;
 class PostgresError {
+    static getCorrectError(error) {
+        let returnedError = '';
+        switch (error) {
+            case PostgresError.POSTGRES_DUPLICATE_KEY_NOTES:
+                returnedError = PostgresError.FINAL_DUPLICATE_KEY_NOTES;
+                break;
+            case PostgresError.POSTGRES_DUPLICATE_KEY_TAGS:
+                returnedError = PostgresError.FINAL_DUPLICATE_KEY_TAGS;
+                break;
+            case PostgresError.POSTGRES_DUPLICATE_KEY_NOTES_TAGS:
+                returnedError = PostgresError.FINAL_DUPLICATE_KEY_NOTES_TAGS;
+                break;
+            case PostgresError.POSTGRES_USER_REACHED_MAX_NOTES:
+                returnedError = PostgresError.FINAL_USER_REACHED_MAX_NOTES;
+                break;
+            case PostgresError.POSTGRES_USER_REACHED_MAX_TAGS:
+                returnedError = PostgresError.FINAL_USER_REACHED_MAX_TAGS;
+                break;
+            case PostgresError.POSTGRES_MAINTAGS_LIMIT:
+                returnedError = PostgresError.FINAL_MAINTAGS_LIMIT;
+                break;
+            case PostgresError.POSTGRES_OTHERTAGS_LIMIT:
+                returnedError = PostgresError.FINAL_OTHERTAGS_LIMIT;
+                break;
+            case PostgresError.POSTGRES_MAINTAGS_LIMIT:
+                returnedError = PostgresError.FINAL_MAINTAGS_LIMIT;
+                break;
+            case PostgresError.POSTGRES_TAGS_FKEY:
+                returnedError = PostgresError.FINAL_TAGS_FKEY;
+                break;
+            default:
+                returnedError = error;
+                break;
+        }
+        return returnedError;
+    }
 }
-PostgresError.POSTGRES_DUPLICATE_KEY_NOTES = "duplicate key value violates unique constraint \"notes_pkey\"";
-PostgresError.POSTGRES_DUPLICATE_KEY_TAGS = "error duplicate key value violates unique constraint \"tags_pkey\"";
-PostgresError.POSTGRES_DUPLICATE_KEY_NOTES_TAGS = "error duplicate key value violates unique constraint \"notes_tags_pkey\"";
+PostgresError.POSTGRES_DUPLICATE_KEY_NOTES = 'duplicate key value violates unique constraint \"notes_pkey\"';
+PostgresError.POSTGRES_DUPLICATE_KEY_TAGS = 'error duplicate key value violates unique constraint \"tags_pkey\"';
+PostgresError.POSTGRES_DUPLICATE_KEY_NOTES_TAGS = 'error duplicate key value violates unique constraint \"notes_tags_pkey\"';
+PostgresError.POSTGRES_USER_REACHED_MAX_NOTES = 'a free user cannot have more than 50 notes';
+PostgresError.POSTGRES_USER_REACHED_MAX_TAGS = 'a free user cannot have more than 50 tags';
+PostgresError.POSTGRES_MAINTAGS_LIMIT = 'maintags cannot be more than 3';
+PostgresError.POSTGRES_OTHERTAGS_LIMIT = 'othetags cannot be more than 15';
+PostgresError.POSTGRES_TAGS_FKEY = 'insert or update on table \"notes_tags\" violates foreign key constraint \"notes_tags_tagtitle_fkey\"';
+PostgresError.FINAL_DUPLICATE_KEY_NOTES = 'another note with the same title';
+PostgresError.FINAL_DUPLICATE_KEY_TAGS = 'another tag with the same title';
+PostgresError.FINAL_DUPLICATE_KEY_NOTES_TAGS = 'the tag is already with this note';
+PostgresError.FINAL_USER_REACHED_MAX_NOTES = PostgresError.POSTGRES_USER_REACHED_MAX_NOTES;
+PostgresError.FINAL_USER_REACHED_MAX_TAGS = PostgresError.POSTGRES_USER_REACHED_MAX_TAGS;
+PostgresError.FINAL_MAINTAGS_LIMIT = PostgresError.POSTGRES_MAINTAGS_LIMIT;
+PostgresError.FINAL_OTHERTAGS_LIMIT = PostgresError.POSTGRES_OTHERTAGS_LIMIT;
+PostgresError.FINAL_TAGS_FKEY = "tags not found";
 exports.PostgresError = PostgresError;
 //# sourceMappingURL=const.js.map

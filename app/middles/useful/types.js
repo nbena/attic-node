@@ -55,4 +55,11 @@ class JsonError extends Error {
     }
 }
 exports.JsonError = JsonError;
+class DbError extends Error {
+    constructor(msg) {
+        super(msg);
+        this.name = 'DbError';
+    }
+}
+exports.DbError = DbError;
 //# sourceMappingURL=types.js.map

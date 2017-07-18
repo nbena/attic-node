@@ -1,13 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const Types = require("./types");
+const types_1 = require("./types");
 const user_1 = require("../../models/user");
+const const_1 = require("./const");
 class Utils {
 }
 Utils.jsonErr = (err) => {
     console.error(err.stack);
     console.log(JSON.stringify(err));
-    let res = new Types.BasicResult(false, err.name + ' ' + err.message);
+    if (err.name == 'BatchError') {
+        err = new types_1.DbError(err.message);
+    }
+    let msg = const_1.PostgresError.getCorrectError(err.message);
+    let res = new types_1.BasicResult(false, err.name + ' ' + msg);
     return res;
 };
 Utils.extractUser = (req) => {

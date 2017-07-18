@@ -286,3 +286,171 @@
 
 09:49:40 error: duplicate key value violates unique constraint "notes_tags_pkey"
          query: insert into "attic"."notes_tags"("notetitle","tagtitle","role","userid") values('omni-note1','omni-tag1','otherTags','omni@pollo.com')
+
+11:11:18 error: duplicate key value violates unique constraint "notes_pkey"
+         tx: insert into attic.notes(userid, title, text, isdone, links) values ('omni@pollo.com', 'omni-note$i', 'error', null, '"[]"') returning json_build_object('userid', userid, 'title', title, 'text', text, 'links', links, 'isdone', isdone, 'creationdate', creationDate, 'lastmodificationdate', lastModificationDate) as result;
+
+11:11:18 error: duplicate key value violates unique constraint "notes_pkey"
+         tx: insert into attic.notes(userid, title, text, isdone, links) values ('omni@pollo.com', 'omni-note$i', 'error', null, '"[]"') returning json_build_object('userid', userid, 'title', title, 'text', text, 'links', links, 'isdone', isdone, 'creationdate', creationDate, 'lastmodificationdate', lastModificationDate) as result;
+
+11:11:18 error: duplicate key value violates unique constraint "notes_pkey"
+         tx: insert into attic.notes(userid, title, text, isdone, links) values ('omni@pollo.com', 'omni-note$i', 'error', null, '"[]"') returning json_build_object('userid', userid, 'title', title, 'text', text, 'links', links, 'isdone', isdone, 'creationdate', creationDate, 'lastmodificationdate', lastModificationDate) as result;
+
+11:11:18 error: duplicate key value violates unique constraint "notes_pkey"
+         tx: insert into attic.notes(userid, title, text, isdone, links) values ('omni@pollo.com', 'omni-note$i', 'error', null, '"[]"') returning json_build_object('userid', userid, 'title', title, 'text', text, 'links', links, 'isdone', isdone, 'creationdate', creationDate, 'lastmodificationdate', lastModificationDate) as result;
+
+11:11:18 error: duplicate key value violates unique constraint "notes_pkey"
+         tx: insert into attic.notes(userid, title, text, isdone, links) values ('omni@pollo.com', 'omni-note$i', 'error', null, '"[]"') returning json_build_object('userid', userid, 'title', title, 'text', text, 'links', links, 'isdone', isdone, 'creationdate', creationDate, 'lastmodificationdate', lastModificationDate) as result;
+
+11:11:18 error: duplicate key value violates unique constraint "notes_pkey"
+         tx: insert into attic.notes(userid, title, text, isdone, links) values ('omni@pollo.com', 'omni-note$i', 'error', null, '"[]"') returning json_build_object('userid', userid, 'title', title, 'text', text, 'links', links, 'isdone', isdone, 'creationdate', creationDate, 'lastmodificationdate', lastModificationDate) as result;
+
+11:11:18 error: duplicate key value violates unique constraint "notes_pkey"
+         tx: insert into attic.notes(userid, title, text, isdone, links) values ('omni@pollo.com', 'omni-note$i', 'error', null, '"[]"') returning json_build_object('userid', userid, 'title', title, 'text', text, 'links', links, 'isdone', isdone, 'creationdate', creationDate, 'lastmodificationdate', lastModificationDate) as result;
+
+11:11:19 error: duplicate key value violates unique constraint "notes_pkey"
+         tx: insert into attic.notes(userid, title, text, isdone, links) values ('omni@pollo.com', 'omni-note$i', 'error', null, '"[]"') returning json_build_object('userid', userid, 'title', title, 'text', text, 'links', links, 'isdone', isdone, 'creationdate', creationDate, 'lastmodificationdate', lastModificationDate) as result;
+
+11:11:19 error: duplicate key value violates unique constraint "notes_pkey"
+         tx: insert into attic.notes(userid, title, text, isdone, links) values ('omni@pollo.com', 'omni-note$i', 'error', null, '"[]"') returning json_build_object('userid', userid, 'title', title, 'text', text, 'links', links, 'isdone', isdone, 'creationdate', creationDate, 'lastmodificationdate', lastModificationDate) as result;
+
+11:11:19 error: duplicate key value violates unique constraint "notes_pkey"
+         tx: insert into attic.notes(userid, title, text, isdone, links) values ('omni@pollo.com', 'omni-note$i', 'error', null, '"[]"') returning json_build_object('userid', userid, 'title', title, 'text', text, 'links', links, 'isdone', isdone, 'creationdate', creationDate, 'lastmodificationdate', lastModificationDate) as result;
+
+11:11:19 error: duplicate key value violates unique constraint "notes_pkey"
+         tx: insert into attic.notes(userid, title, text, isdone, links) values ('omni@pollo.com', 'omni-note$i', 'error', null, '"[]"') returning json_build_object('userid', userid, 'title', title, 'text', text, 'links', links, 'isdone', isdone, 'creationdate', creationDate, 'lastmodificationdate', lastModificationDate) as result;
+
+11:11:19 error: duplicate key value violates unique constraint "notes_pkey"
+         tx: insert into attic.notes(userid, title, text, isdone, links) values ('omni@pollo.com', 'omni-note$i', 'error', null, '"[]"') returning json_build_object('userid', userid, 'title', title, 'text', text, 'links', links, 'isdone', isdone, 'creationdate', creationDate, 'lastmodificationdate', lastModificationDate) as result;
+
+11:11:19 error: duplicate key value violates unique constraint "notes_pkey"
+         tx: insert into attic.notes(userid, title, text, isdone, links) values ('omni@pollo.com', 'omni-note$i', 'error', null, '"[]"') returning json_build_object('userid', userid, 'title', title, 'text', text, 'links', links, 'isdone', isdone, 'creationdate', creationDate, 'lastmodificationdate', lastModificationDate) as result;
+
+11:11:19 error: duplicate key value violates unique constraint "notes_pkey"
+         tx: insert into attic.notes(userid, title, text, isdone, links) values ('omni@pollo.com', 'omni-note$i', 'error', null, '"[]"') returning json_build_object('userid', userid, 'title', title, 'text', text, 'links', links, 'isdone', isdone, 'creationdate', creationDate, 'lastmodificationdate', lastModificationDate) as result;
+
+11:11:19 error: duplicate key value violates unique constraint "notes_pkey"
+         tx: insert into attic.notes(userid, title, text, isdone, links) values ('omni@pollo.com', 'omni-note$i', 'error', null, '"[]"') returning json_build_object('userid', userid, 'title', title, 'text', text, 'links', links, 'isdone', isdone, 'creationdate', creationDate, 'lastmodificationdate', lastModificationDate) as result;
+
+11:11:19 error: duplicate key value violates unique constraint "notes_pkey"
+         tx: insert into attic.notes(userid, title, text, isdone, links) values ('omni@pollo.com', 'omni-note$i', 'error', null, '"[]"') returning json_build_object('userid', userid, 'title', title, 'text', text, 'links', links, 'isdone', isdone, 'creationdate', creationDate, 'lastmodificationdate', lastModificationDate) as result;
+
+11:11:19 error: duplicate key value violates unique constraint "notes_pkey"
+         tx: insert into attic.notes(userid, title, text, isdone, links) values ('omni@pollo.com', 'omni-note$i', 'error', null, '"[]"') returning json_build_object('userid', userid, 'title', title, 'text', text, 'links', links, 'isdone', isdone, 'creationdate', creationDate, 'lastmodificationdate', lastModificationDate) as result;
+
+11:11:19 error: duplicate key value violates unique constraint "notes_pkey"
+         tx: insert into attic.notes(userid, title, text, isdone, links) values ('omni@pollo.com', 'omni-note$i', 'error', null, '"[]"') returning json_build_object('userid', userid, 'title', title, 'text', text, 'links', links, 'isdone', isdone, 'creationdate', creationDate, 'lastmodificationdate', lastModificationDate) as result;
+
+11:11:19 error: duplicate key value violates unique constraint "notes_pkey"
+         tx: insert into attic.notes(userid, title, text, isdone, links) values ('omni@pollo.com', 'omni-note$i', 'error', null, '"[]"') returning json_build_object('userid', userid, 'title', title, 'text', text, 'links', links, 'isdone', isdone, 'creationdate', creationDate, 'lastmodificationdate', lastModificationDate) as result;
+
+11:11:19 error: duplicate key value violates unique constraint "notes_pkey"
+         tx: insert into attic.notes(userid, title, text, isdone, links) values ('omni@pollo.com', 'omni-note$i', 'error', null, '"[]"') returning json_build_object('userid', userid, 'title', title, 'text', text, 'links', links, 'isdone', isdone, 'creationdate', creationDate, 'lastmodificationdate', lastModificationDate) as result;
+
+11:11:19 error: duplicate key value violates unique constraint "notes_pkey"
+         tx: insert into attic.notes(userid, title, text, isdone, links) values ('omni@pollo.com', 'omni-note$i', 'error', null, '"[]"') returning json_build_object('userid', userid, 'title', title, 'text', text, 'links', links, 'isdone', isdone, 'creationdate', creationDate, 'lastmodificationdate', lastModificationDate) as result;
+
+11:11:19 error: duplicate key value violates unique constraint "notes_pkey"
+         tx: insert into attic.notes(userid, title, text, isdone, links) values ('omni@pollo.com', 'omni-note$i', 'error', null, '"[]"') returning json_build_object('userid', userid, 'title', title, 'text', text, 'links', links, 'isdone', isdone, 'creationdate', creationDate, 'lastmodificationdate', lastModificationDate) as result;
+
+11:11:19 error: duplicate key value violates unique constraint "notes_pkey"
+         tx: insert into attic.notes(userid, title, text, isdone, links) values ('omni@pollo.com', 'omni-note$i', 'error', null, '"[]"') returning json_build_object('userid', userid, 'title', title, 'text', text, 'links', links, 'isdone', isdone, 'creationdate', creationDate, 'lastmodificationdate', lastModificationDate) as result;
+
+11:11:19 error: duplicate key value violates unique constraint "notes_pkey"
+         tx: insert into attic.notes(userid, title, text, isdone, links) values ('omni@pollo.com', 'omni-note$i', 'error', null, '"[]"') returning json_build_object('userid', userid, 'title', title, 'text', text, 'links', links, 'isdone', isdone, 'creationdate', creationDate, 'lastmodificationdate', lastModificationDate) as result;
+
+11:11:19 error: duplicate key value violates unique constraint "notes_pkey"
+         tx: insert into attic.notes(userid, title, text, isdone, links) values ('omni@pollo.com', 'omni-note$i', 'error', null, '"[]"') returning json_build_object('userid', userid, 'title', title, 'text', text, 'links', links, 'isdone', isdone, 'creationdate', creationDate, 'lastmodificationdate', lastModificationDate) as result;
+
+11:11:19 error: duplicate key value violates unique constraint "notes_pkey"
+         tx: insert into attic.notes(userid, title, text, isdone, links) values ('omni@pollo.com', 'omni-note$i', 'error', null, '"[]"') returning json_build_object('userid', userid, 'title', title, 'text', text, 'links', links, 'isdone', isdone, 'creationdate', creationDate, 'lastmodificationdate', lastModificationDate) as result;
+
+11:11:19 error: duplicate key value violates unique constraint "notes_pkey"
+         tx: insert into attic.notes(userid, title, text, isdone, links) values ('omni@pollo.com', 'omni-note$i', 'error', null, '"[]"') returning json_build_object('userid', userid, 'title', title, 'text', text, 'links', links, 'isdone', isdone, 'creationdate', creationDate, 'lastmodificationdate', lastModificationDate) as result;
+
+11:11:19 error: duplicate key value violates unique constraint "notes_pkey"
+         tx: insert into attic.notes(userid, title, text, isdone, links) values ('omni@pollo.com', 'omni-note$i', 'error', null, '"[]"') returning json_build_object('userid', userid, 'title', title, 'text', text, 'links', links, 'isdone', isdone, 'creationdate', creationDate, 'lastmodificationdate', lastModificationDate) as result;
+
+11:11:19 error: duplicate key value violates unique constraint "notes_pkey"
+         tx: insert into attic.notes(userid, title, text, isdone, links) values ('omni@pollo.com', 'omni-note$i', 'error', null, '"[]"') returning json_build_object('userid', userid, 'title', title, 'text', text, 'links', links, 'isdone', isdone, 'creationdate', creationDate, 'lastmodificationdate', lastModificationDate) as result;
+
+11:11:19 error: duplicate key value violates unique constraint "notes_pkey"
+         tx: insert into attic.notes(userid, title, text, isdone, links) values ('omni@pollo.com', 'omni-note$i', 'error', null, '"[]"') returning json_build_object('userid', userid, 'title', title, 'text', text, 'links', links, 'isdone', isdone, 'creationdate', creationDate, 'lastmodificationdate', lastModificationDate) as result;
+
+11:11:19 error: duplicate key value violates unique constraint "notes_pkey"
+         tx: insert into attic.notes(userid, title, text, isdone, links) values ('omni@pollo.com', 'omni-note$i', 'error', null, '"[]"') returning json_build_object('userid', userid, 'title', title, 'text', text, 'links', links, 'isdone', isdone, 'creationdate', creationDate, 'lastmodificationdate', lastModificationDate) as result;
+
+11:11:19 error: duplicate key value violates unique constraint "notes_pkey"
+         tx: insert into attic.notes(userid, title, text, isdone, links) values ('omni@pollo.com', 'omni-note$i', 'error', null, '"[]"') returning json_build_object('userid', userid, 'title', title, 'text', text, 'links', links, 'isdone', isdone, 'creationdate', creationDate, 'lastmodificationdate', lastModificationDate) as result;
+
+11:11:19 error: duplicate key value violates unique constraint "notes_pkey"
+         tx: insert into attic.notes(userid, title, text, isdone, links) values ('omni@pollo.com', 'omni-note$i', 'error', null, '"[]"') returning json_build_object('userid', userid, 'title', title, 'text', text, 'links', links, 'isdone', isdone, 'creationdate', creationDate, 'lastmodificationdate', lastModificationDate) as result;
+
+11:11:19 error: duplicate key value violates unique constraint "notes_pkey"
+         tx: insert into attic.notes(userid, title, text, isdone, links) values ('omni@pollo.com', 'omni-note$i', 'error', null, '"[]"') returning json_build_object('userid', userid, 'title', title, 'text', text, 'links', links, 'isdone', isdone, 'creationdate', creationDate, 'lastmodificationdate', lastModificationDate) as result;
+
+11:11:19 error: duplicate key value violates unique constraint "notes_pkey"
+         tx: insert into attic.notes(userid, title, text, isdone, links) values ('omni@pollo.com', 'omni-note$i', 'error', null, '"[]"') returning json_build_object('userid', userid, 'title', title, 'text', text, 'links', links, 'isdone', isdone, 'creationdate', creationDate, 'lastmodificationdate', lastModificationDate) as result;
+
+11:11:19 error: duplicate key value violates unique constraint "notes_pkey"
+         tx: insert into attic.notes(userid, title, text, isdone, links) values ('omni@pollo.com', 'omni-note$i', 'error', null, '"[]"') returning json_build_object('userid', userid, 'title', title, 'text', text, 'links', links, 'isdone', isdone, 'creationdate', creationDate, 'lastmodificationdate', lastModificationDate) as result;
+
+11:11:19 error: duplicate key value violates unique constraint "notes_pkey"
+         tx: insert into attic.notes(userid, title, text, isdone, links) values ('omni@pollo.com', 'omni-note$i', 'error', null, '"[]"') returning json_build_object('userid', userid, 'title', title, 'text', text, 'links', links, 'isdone', isdone, 'creationdate', creationDate, 'lastmodificationdate', lastModificationDate) as result;
+
+11:11:19 error: duplicate key value violates unique constraint "notes_pkey"
+         tx: insert into attic.notes(userid, title, text, isdone, links) values ('omni@pollo.com', 'omni-note$i', 'error', null, '"[]"') returning json_build_object('userid', userid, 'title', title, 'text', text, 'links', links, 'isdone', isdone, 'creationdate', creationDate, 'lastmodificationdate', lastModificationDate) as result;
+
+11:11:19 error: duplicate key value violates unique constraint "notes_pkey"
+         tx: insert into attic.notes(userid, title, text, isdone, links) values ('omni@pollo.com', 'omni-note$i', 'error', null, '"[]"') returning json_build_object('userid', userid, 'title', title, 'text', text, 'links', links, 'isdone', isdone, 'creationdate', creationDate, 'lastmodificationdate', lastModificationDate) as result;
+
+11:11:19 error: duplicate key value violates unique constraint "notes_pkey"
+         tx: insert into attic.notes(userid, title, text, isdone, links) values ('omni@pollo.com', 'omni-note$i', 'error', null, '"[]"') returning json_build_object('userid', userid, 'title', title, 'text', text, 'links', links, 'isdone', isdone, 'creationdate', creationDate, 'lastmodificationdate', lastModificationDate) as result;
+
+11:11:19 error: duplicate key value violates unique constraint "notes_pkey"
+         tx: insert into attic.notes(userid, title, text, isdone, links) values ('omni@pollo.com', 'omni-note$i', 'error', null, '"[]"') returning json_build_object('userid', userid, 'title', title, 'text', text, 'links', links, 'isdone', isdone, 'creationdate', creationDate, 'lastmodificationdate', lastModificationDate) as result;
+
+11:18:54 error: a free user cannot have more than 50 notes
+         tx: insert into attic.notes(userid, title, text, isdone, links) values ('omni@pollo.com', 'omni-note43', 'error', null, '"[]"') returning json_build_object('userid', userid, 'title', title, 'text', text, 'links', links, 'isdone', isdone, 'creationdate', creationDate, 'lastmodificationdate', lastModificationDate) as result;
+
+11:18:54 error: a free user cannot have more than 50 notes
+         tx: insert into attic.notes(userid, title, text, isdone, links) values ('omni@pollo.com', 'omni-note44', 'error', null, '"[]"') returning json_build_object('userid', userid, 'title', title, 'text', text, 'links', links, 'isdone', isdone, 'creationdate', creationDate, 'lastmodificationdate', lastModificationDate) as result;
+
+11:18:54 error: a free user cannot have more than 50 notes
+         tx: insert into attic.notes(userid, title, text, isdone, links) values ('omni@pollo.com', 'omni-note45', 'error', null, '"[]"') returning json_build_object('userid', userid, 'title', title, 'text', text, 'links', links, 'isdone', isdone, 'creationdate', creationDate, 'lastmodificationdate', lastModificationDate) as result;
+
+11:18:54 error: a free user cannot have more than 50 notes
+         tx: insert into attic.notes(userid, title, text, isdone, links) values ('omni@pollo.com', 'omni-note46', 'error', null, '"[]"') returning json_build_object('userid', userid, 'title', title, 'text', text, 'links', links, 'isdone', isdone, 'creationdate', creationDate, 'lastmodificationdate', lastModificationDate) as result;
+
+11:18:54 error: a free user cannot have more than 50 notes
+         tx: insert into attic.notes(userid, title, text, isdone, links) values ('omni@pollo.com', 'omni-note47', 'error', null, '"[]"') returning json_build_object('userid', userid, 'title', title, 'text', text, 'links', links, 'isdone', isdone, 'creationdate', creationDate, 'lastmodificationdate', lastModificationDate) as result;
+
+11:18:54 error: a free user cannot have more than 50 notes
+         tx: insert into attic.notes(userid, title, text, isdone, links) values ('omni@pollo.com', 'omni-note48', 'error', null, '"[]"') returning json_build_object('userid', userid, 'title', title, 'text', text, 'links', links, 'isdone', isdone, 'creationdate', creationDate, 'lastmodificationdate', lastModificationDate) as result;
+
+11:18:54 error: a free user cannot have more than 50 notes
+         tx: insert into attic.notes(userid, title, text, isdone, links) values ('omni@pollo.com', 'omni-note49', 'error', null, '"[]"') returning json_build_object('userid', userid, 'title', title, 'text', text, 'links', links, 'isdone', isdone, 'creationdate', creationDate, 'lastmodificationdate', lastModificationDate) as result;
+
+11:18:54 error: a free user cannot have more than 50 notes
+         tx: insert into attic.notes(userid, title, text, isdone, links) values ('omni@pollo.com', 'omni-note50', 'error', null, '"[]"') returning json_build_object('userid', userid, 'title', title, 'text', text, 'links', links, 'isdone', isdone, 'creationdate', creationDate, 'lastmodificationdate', lastModificationDate) as result;
+
+11:25:49 error: maintags cannot be more than 3
+         tx: insert into "attic"."notes_tags"("notetitle","tagtitle","role","userid") values('omni-note8','omni-tag1','mainTags','omni@pollo.com'),('omni-note8','omni-tag2','mainTags','omni@pollo.com'),('omni-note8','omni-tag3','mainTags','omni@pollo.com'),('omni-note8','new-tag1','mainTags','omni@pollo.com')
+
+11:30:22 error: maintags cannot be more than 3
+         tx: insert into "attic"."notes_tags"("notetitle","tagtitle","role","userid") values('omni-note8','omni-tag1','mainTags','omni@pollo.com'),('omni-note8','omni-tag2','mainTags','omni@pollo.com'),('omni-note8','omni-tag3','mainTags','omni@pollo.com'),('omni-note8','new-cacca','mainTags','omni@pollo.com')
+
+11:30:32 error: insert or update on table "notes_tags" violates foreign key constraint "notes_tags_tagtitle_fkey"
+         tx: insert into "attic"."notes_tags"("notetitle","tagtitle","role","userid") values('omni-note8','omni-tag1','mainTags','omni@pollo.com'),('omni-note8','omni-tag2','mainTags','omni@pollo.com'),('omni-note8','omni-cacca','mainTags','omni@pollo.com')
+
+11:37:51 error: duplicate key value violates unique constraint "notes_pkey"
+         tx: insert into attic.notes(userid, title, text, isdone, links) values ('omni@pollo.com', 'omni-note1', 'error', null, '"[]"') returning json_build_object('userid', userid, 'title', title, 'text', text, 'links', links, 'isdone', isdone, 'creationdate', creationDate, 'lastmodificationdate', lastModificationDate) as result;
+
+12:01:32 error: duplicate key value violates unique constraint "notes_pkey"
+         tx: insert into attic.notes(userid, title, text, isdone, links) values ('omni@pollo.com', 'omni-note1', 'error', null, '"[]"') returning json_build_object('userid', userid, 'title', title, 'text', text, 'links', links, 'isdone', isdone, 'creationdate', creationDate, 'lastmodificationdate', lastModificationDate) as result;
+
+12:04:24 error: duplicate key value violates unique constraint "notes_pkey"
+         tx: insert into attic.notes(userid, title, text, isdone, links) values ('omni@pollo.com', 'omni-note1', 'error', null, '"[]"') returning json_build_object('userid', userid, 'title', title, 'text', text, 'links', links, 'isdone', isdone, 'creationdate', creationDate, 'lastmodificationdate', lastModificationDate) as result;
+
+13:03:06 error: duplicate key value violates unique constraint "notes_pkey"
+         tx: insert into attic.notes(userid, title, text, isdone, links) values ('omni@pollo.com', 'omni-note1', 'error', null, '"[]"') returning json_build_object('userid', userid, 'title', title, 'text', text, 'links', links, 'isdone', isdone, 'creationdate', creationDate, 'lastmodificationdate', lastModificationDate) as result;

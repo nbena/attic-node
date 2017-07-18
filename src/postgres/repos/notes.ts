@@ -4,7 +4,7 @@ import sqlProvider from '../sql';
 import Note from '../../models/note';
 import User from '../../models/user';
 import * as TagClass from '../../models/tag';
-import Const from '../../middles/useful/const';
+import  {Const} from '../../middles/useful/const';
 
 
 let sql = sqlProvider.notes;

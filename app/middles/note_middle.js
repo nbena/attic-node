@@ -104,7 +104,7 @@ NoteMiddle.selectNotesByTagsNoRole = (userId, tags, and) => {
 NoteMiddle.selectNotesByTagsWithRole = (userId, tags, roles, and) => {
     return new Promise((resolve, reject) => {
         if (tags.length != roles.length) {
-            resolve(utils_1.default.jsonErr(new TypeError(const_1.default.ERR_DIFF_LENGTH)));
+            resolve(utils_1.default.jsonErr(new TypeError(const_1.Const.ERR_DIFF_LENGTH)));
         }
         db.notes.selectNotesByTagsWithRole(userId, tags, roles, and)
             .then(rawResult => {

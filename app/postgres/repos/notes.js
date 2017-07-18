@@ -105,7 +105,7 @@ class Repository {
         };
         this.selectNotesByTagsWithRole = (userid, tags, roles, and) => {
             if (tags.length != roles.length) {
-                throw new TypeError(const_1.default.ERR_DIFF_LENGTH);
+                throw new TypeError(const_1.Const.ERR_DIFF_LENGTH);
             }
             let values = Repository.getQueryNotesByTagsWithRole(userid, tags, roles, and);
             return this.db.many(values);
