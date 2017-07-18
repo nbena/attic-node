@@ -33,3 +33,9 @@ export default class Const{
   //public static readonly ARRAY_EMPTY_NOT_ALLOWED: string = 'empty arrays are not allowed';
 
 }
+
+export class PostgresError{
+  public static readonly POSTGRES_DUPLICATE_KEY_NOTES:string = "duplicate key value violates unique constraint \"notes_pkey\"";
+  public static readonly POSTGRES_DUPLICATE_KEY_TAGS:string = "error duplicate key value violates unique constraint \"tags_pkey\"";
+  public static readonly POSTGRES_DUPLICATE_KEY_NOTES_TAGS:string = "error duplicate key value violates unique constraint \"notes_tags_pkey\"";
+}

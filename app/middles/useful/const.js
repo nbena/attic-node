@@ -28,4 +28,10 @@ Const.USERNAME_AND_PASSWORD = 'userid and password required';
 Const.USERID_REQUIRED = ':userid required';
 Const.USER_MISMATCH = 'the authenticated user is different from the required one';
 exports.default = Const;
+class PostgresError {
+}
+PostgresError.POSTGRES_DUPLICATE_KEY_NOTES = "duplicate key value violates unique constraint \"notes_pkey\"";
+PostgresError.POSTGRES_DUPLICATE_KEY_TAGS = "error duplicate key value violates unique constraint \"tags_pkey\"";
+PostgresError.POSTGRES_DUPLICATE_KEY_NOTES_TAGS = "error duplicate key value violates unique constraint \"notes_tags_pkey\"";
+exports.PostgresError = PostgresError;
 //# sourceMappingURL=const.js.map

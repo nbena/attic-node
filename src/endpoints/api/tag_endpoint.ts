@@ -3,46 +3,46 @@ import User from '../../models/user';
 
 import Const from '../../middles/useful/const';
 import Utils from '../../middles/useful/utils';
-import * as types from '../../middles/useful/types';
+import {AnyResult, BasicResult, JsonError } from '../../middles/useful/types';
 
 import TagMiddle from '../../middles/tag_middle';
 
 import * as express from 'express';
 
 class TagEndpointParamCheck{
-  static title = (req: express.Request):types.BasicResult=>{
+  static title = (req: express.Request):BasicResult=>{
     let result:any=null;
     if(!req.body.tag.title || !req.body.tag){
-      result = Utils.jsonErr(new Error(Const.TAG_TITLE_REQUIRED));
+      result = Utils.jsonErr(new JsonError(Const.TAG_TITLE_REQUIRED));
     }
     return result;
   }
 
-  static changeTitle = (req: express.Request):types.BasicResult=>{
+  static changeTitle = (req: express.Request):BasicResult=>{
     let result:any=TagEndpointParamCheck.title(req);
     if(!req.body.tag.newtitle){
-      result = Utils.jsonErr(new Error(Const.TAG_NEW_TITLE_REQUIRED));
+      result = Utils.jsonErr(new JsonError(Const.TAG_NEW_TITLE_REQUIRED));
     }
     return result;
   }
 
-  static createTag = (req: express.Request):types.BasicResult=>{
+  static createTag = (req: express.Request):BasicResult=>{
     let result:any=null;
     if(!req.params.title){
-      result = Utils.jsonErr(new Error(Const.TAG_TITLE_PARAM_REQUIRED));
+      result = Utils.jsonErr(new JsonError(Const.TAG_TITLE_PARAM_REQUIRED));
     }
     return result;
   }
 
-  static removeTag = (req: express.Request):types.BasicResult=>{
+  static removeTag = (req: express.Request):BasicResult=>{
     return TagEndpointParamCheck.createTag(req);
   }
 
-  static selectTagByTitle = (req: express.Request):types.BasicResult=>{
+  static selectTagByTitle = (req: express.Request):BasicResult=>{
     return TagEndpointParamCheck.createTag(req);
   }
 
-  static selectTagsByTitleReg = (req: express.Request):types.BasicResult=>{
+  static selectTagsByTitleReg = (req: express.Request):BasicResult=>{
     return TagEndpointParamCheck.title(req);
   }
 }

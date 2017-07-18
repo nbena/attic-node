@@ -62,3 +62,18 @@ export class BasicResult extends Result{
       this.result=result;
     }
   }
+
+
+  export class JsonError extends Error{
+    name:string = 'JsonError';
+    constructor(msg:string){
+      super(msg);
+    }
+  }
+
+  export class DbError extends Error{
+    name: string = 'DbError';
+    constructor(msg:string){
+      super(msg);
+    }
+  }

@@ -48,4 +48,11 @@ class AnyResult extends Result {
     }
 }
 exports.AnyResult = AnyResult;
+class JsonError extends Error {
+    constructor(msg) {
+        super(msg);
+        this.name = 'JsonError';
+    }
+}
+exports.JsonError = JsonError;
 //# sourceMappingURL=types.js.map

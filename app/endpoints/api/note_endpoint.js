@@ -4,6 +4,7 @@ const note_1 = require("../../models/note");
 const TagClass = require("../../models/tag");
 const const_1 = require("../../middles/useful/const");
 const utils_1 = require("../../middles/useful/utils");
+const types_1 = require("../../middles/useful/types");
 const note_middle_1 = require("../../middles/note_middle");
 class NoteEndpointParamCheck {
 }
@@ -17,17 +18,17 @@ NoteEndpointParamCheck.title = (req) => {
 NoteEndpointParamCheck.addTags = (req) => {
     let result = null;
     result = NoteEndpointParamCheck.title(req);
-    if (req.body.note.maintags == null && req.body.note.otherTags == null) {
-        result = utils_1.default.jsonErr(new Error(const_1.default.TAGS_REQUIRED));
+    if (req.body.note.maintags == null && req.body.note.othertags == null) {
+        result = utils_1.default.jsonErr(new types_1.JsonError(const_1.default.TAGS_REQUIRED));
     }
     else if (req.body.note.maintags != null) {
         if (req.body.note.maintags instanceof Array == false) {
-            result = utils_1.default.jsonErr(new Error(const_1.default.NO_ARR_INST));
+            result = utils_1.default.jsonErr(new types_1.JsonError(const_1.default.NO_ARR_INST));
         }
     }
     if (req.body.note.othertags != null) {
         if (req.body.note.othertags instanceof Array == false) {
-            result = utils_1.default.jsonErr(new Error(const_1.default.NO_ARR_INST));
+            result = utils_1.default.jsonErr(new types_1.JsonError(const_1.default.NO_ARR_INST));
         }
     }
     return result;
@@ -164,14 +165,16 @@ NoteEndpoint.addTags = (req, res, next) => {
             roles.push('mainTags');
         });
     }
-    if (req.body.note.otherags) {
-        req.body.note.othertags.map((currentValue, currentIndex) => {
+    if (req.body.note.othertags) {
+        req.body.note.othertags.forEach(currentValue => {
             let tag = new TagClass.Tag();
             tag.title = currentValue;
             tags.push(tag);
             roles.push('otherTags');
         });
     }
+    console.log('the tags');
+    console.log(JSON.stringify(tags));
     result = note_middle_1.default.addTags(note, tags, roles);
     result.then(result => {
         res.json(result);

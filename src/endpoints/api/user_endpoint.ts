@@ -2,7 +2,7 @@ import User from '../../models/user';
 
 import Const from '../../middles/useful/const';
 import Utils from '../../middles/useful/utils';
-import * as types from '../../middles/useful/types';
+import {AnyResult, BasicResult, JsonError } from '../../middles/useful/types';
 
 import UserMiddle from '../../middles/user_middle';
 
@@ -10,20 +10,20 @@ import * as express from 'express';
 
 class UserEndpointParamCheck {
 
-  public static createUser = (req: express.Request):types.BasicResult=>{
+  public static createUser = (req: express.Request):BasicResult=>{
     let result:any = null;
     if(!req.body.userid || !req.body.password){
-      result = Utils.jsonErr(new Error(Const.USERNAME_AND_PASSWORD));
+      result = Utils.jsonErr(new JsonError(Const.USERNAME_AND_PASSWORD));
     }
     return result;
   }
 
 
   //I know that it's not necessay but I want to.
-  public static summary = (req: express.Request):types.BasicResult=>{
+  public static summary = (req: express.Request):BasicResult=>{
     let result:any = null;
     if(!req.params.userid){
-      result = Utils.jsonErr(new Error(Const.USERID_REQUIRED));
+      result = Utils.jsonErr(new JsonError(Const.USERID_REQUIRED));
     }
     return result;
   }
