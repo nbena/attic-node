@@ -20,7 +20,7 @@ export class Repository {
     return this.db.any(sql.changeTitle, [tag.userid, tag.title, newTitle]);
   }
 
-  createTag = (tag: TagClass.Tag)=>{
+  createTag = (tag: TagClass.Tag):Promise<any>=>{
     return this.db.one(sql.createTag, tag.getValues(), (tag:any)=>{return tag.result});
   }
 

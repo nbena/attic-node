@@ -36,7 +36,7 @@ export class Const {
 
 export class PostgresError {
   public static readonly POSTGRES_DUPLICATE_KEY_NOTES:string = 'duplicate key value violates unique constraint \"notes_pkey\"';
-  public static readonly POSTGRES_DUPLICATE_KEY_TAGS:string = 'error duplicate key value violates unique constraint \"tags_pkey\"';
+  public static readonly POSTGRES_DUPLICATE_KEY_TAGS:string = 'duplicate key value violates unique constraint \"tags_pkey\"';
   public static readonly POSTGRES_DUPLICATE_KEY_NOTES_TAGS:string = 'error duplicate key value violates unique constraint \"notes_tags_pkey\"';
   public static readonly POSTGRES_USER_REACHED_MAX_NOTES:string = 'a free user cannot have more than 50 notes';
   public static readonly POSTGRES_USER_REACHED_MAX_TAGS:string = 'a free user cannot have more than 50 tags';
@@ -58,7 +58,7 @@ export class PostgresError {
   public static readonly FINAL_TAGS_FKEY:string = "tags not found";
 
   public static getCorrectError(error: string): string {
-    let returnedError: string = error;
+    let returnedError: string = error; //so don't need a default.
     switch (error) {
       case PostgresError.POSTGRES_DUPLICATE_KEY_NOTES:
         returnedError = PostgresError.FINAL_DUPLICATE_KEY_NOTES;
@@ -89,5 +89,13 @@ export class PostgresError {
         break;
     }
     return returnedError;
+  }
+
+  public static isPostgresError(msg:string):boolean{
+    return (msg == PostgresError.POSTGRES_DUPLICATE_KEY_NOTES || msg==PostgresError.POSTGRES_DUPLICATE_KEY_NOTES_TAGS
+      || msg==PostgresError.POSTGRES_DUPLICATE_KEY_TAGS || msg==PostgresError.POSTGRES_MAINTAGS_LIMIT
+      || msg==PostgresError.POSTGRES_OTHERTAGS_LIMIT || msg==PostgresError.POSTGRES_TAGS_FKEY
+      || msg==PostgresError.POSTGRES_USER_REACHED_MAX_NOTES || msg==PostgresError.POSTGRES_USER_REACHED_MAX_TAGS)
+
   }
 }

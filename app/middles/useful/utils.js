@@ -8,7 +8,7 @@ class Utils {
 Utils.jsonErr = (err) => {
     console.error(err.stack);
     console.log(JSON.stringify(err));
-    if (err.name == 'BatchError') {
+    if (err.name == 'BatchError' || const_1.PostgresError.isPostgresError(err.message)) {
         err = new types_1.DbError(err.message);
     }
     let msg = const_1.PostgresError.getCorrectError(err.message);

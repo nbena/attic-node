@@ -62,9 +62,15 @@ class PostgresError {
         }
         return returnedError;
     }
+    static isPostgresError(msg) {
+        return (msg == PostgresError.POSTGRES_DUPLICATE_KEY_NOTES || msg == PostgresError.POSTGRES_DUPLICATE_KEY_NOTES_TAGS
+            || msg == PostgresError.POSTGRES_DUPLICATE_KEY_TAGS || msg == PostgresError.POSTGRES_MAINTAGS_LIMIT
+            || msg == PostgresError.POSTGRES_OTHERTAGS_LIMIT || msg == PostgresError.POSTGRES_TAGS_FKEY
+            || msg == PostgresError.POSTGRES_USER_REACHED_MAX_NOTES || msg == PostgresError.POSTGRES_USER_REACHED_MAX_TAGS);
+    }
 }
 PostgresError.POSTGRES_DUPLICATE_KEY_NOTES = 'duplicate key value violates unique constraint \"notes_pkey\"';
-PostgresError.POSTGRES_DUPLICATE_KEY_TAGS = 'error duplicate key value violates unique constraint \"tags_pkey\"';
+PostgresError.POSTGRES_DUPLICATE_KEY_TAGS = 'duplicate key value violates unique constraint \"tags_pkey\"';
 PostgresError.POSTGRES_DUPLICATE_KEY_NOTES_TAGS = 'error duplicate key value violates unique constraint \"notes_tags_pkey\"';
 PostgresError.POSTGRES_USER_REACHED_MAX_NOTES = 'a free user cannot have more than 50 notes';
 PostgresError.POSTGRES_USER_REACHED_MAX_TAGS = 'a free user cannot have more than 50 tags';

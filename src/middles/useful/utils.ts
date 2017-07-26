@@ -8,7 +8,10 @@ export default class Utils{
   public static jsonErr=(err: Error):BasicResult=>{
     console.error(err.stack);
     console.log(JSON.stringify(err));
-    if(err.name=='BatchError'){
+    // if(err.name=='BatchError'){
+    //   err = new DbError(err.message);
+    // }
+    if(err.name=='BatchError' || PostgresError.isPostgresError(err.message)){
       err = new DbError(err.message);
     }
     let msg:string = PostgresError.getCorrectError(err.message);

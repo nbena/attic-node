@@ -454,3 +454,15 @@
 
 13:03:06 error: duplicate key value violates unique constraint "notes_pkey"
          tx: insert into attic.notes(userid, title, text, isdone, links) values ('omni@pollo.com', 'omni-note1', 'error', null, '"[]"') returning json_build_object('userid', userid, 'title', title, 'text', text, 'links', links, 'isdone', isdone, 'creationdate', creationDate, 'lastmodificationdate', lastModificationDate) as result;
+
+20:12:13 error: password authentication failed for user "postgres"
+         connection: "postgres://postgres@localhost:##########"
+
+20:13:37 error: duplicate key value violates unique constraint "tags_pkey"
+         query: insert into attic.tags(userId, title) values ('omni@pollo.com','piste') returning title as result;
+
+20:15:00 error: duplicate key value violates unique constraint "tags_pkey"
+         query: insert into attic.tags(userId, title) values ('omni@pollo.com','piste') returning title as result;
+
+20:16:02 error: duplicate key value violates unique constraint "tags_pkey"
+         query: insert into attic.tags(userId, title) values ('omni@pollo.com','piste') returning title as result;
