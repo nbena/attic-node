@@ -5,6 +5,17 @@ const types = require("./useful/types");
 const utils_1 = require("./useful/utils");
 const const_1 = require("./useful/const");
 class NoteMiddle {
+    static selectAllNotesMinWithDate(user) {
+        return new Promise((resolve, reject) => {
+            db.notes.selectNotesMinWithDate(user)
+                .then(notes => {
+                resolve(new types.AnyResult(true, notes));
+            })
+                .catch(error => {
+                resolve(utils_1.default.jsonErr(error));
+            });
+        });
+    }
 }
 NoteMiddle.addTags = (note, tags, roles) => {
     return new Promise((resolve, reject) => {

@@ -227,6 +227,15 @@ export default class NoteEndpoint{
   }
 
 
+  public static selectAllNotesMinWithDate = (req: express.Request, res: express.Response, next)=>{
+    let user:User=Utils.extractUser(req);
+    NoteMiddle.selectAllNotesMinWithDate(user)
+    .then(result=>{
+      res.json(result);
+    })
+  }
+
+
   public static changeLinks = (req: express.Request, res: express.Response, next)=>{
     let user:User=Utils.extractUser(req);
     let note:Note;

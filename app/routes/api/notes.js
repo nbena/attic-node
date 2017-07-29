@@ -23,6 +23,8 @@ router.post('/by-text', auth, note_endpoint_1.default.selectNoteByTextReg);
 router.post('/mod/set-done', auth, note_endpoint_1.default.setDone);
 router.get('/all/min', auth, note_endpoint_1.default.selectAllNotesMin);
 router.post('/all/min', auth, note_endpoint_1.default.selectAllNotesMin);
+router.get('/all/min/with-date', auth, note_endpoint_1.default.selectAllNotesMinWithDate);
+router.post('/all/min/with-date', auth, note_endpoint_1.default.selectAllNotesMinWithDate);
 router.get('/:title', auth, note_endpoint_1.default.selectNoteByTitle);
 exports.default = router;
 //# sourceMappingURL=notes.js.map

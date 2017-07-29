@@ -187,6 +187,13 @@ NoteEndpoint.selectAllNotesMin = (req, res, next) => {
         res.json(result);
     });
 };
+NoteEndpoint.selectAllNotesMinWithDate = (req, res, next) => {
+    let user = utils_1.default.extractUser(req);
+    note_middle_1.default.selectAllNotesMinWithDate(user)
+        .then(result => {
+        res.json(result);
+    });
+};
 NoteEndpoint.changeLinks = (req, res, next) => {
     let user = utils_1.default.extractUser(req);
     let note;

@@ -46,6 +46,10 @@ router.get('/all/min', auth, NoteEndpoint.selectAllNotesMin);
 
 router.post('/all/min', auth, NoteEndpoint.selectAllNotesMin);
 
+router.get('/all/min/with-date', auth, NoteEndpoint.selectAllNotesMinWithDate);
+
+router.post('/all/min/with-date', auth, NoteEndpoint.selectAllNotesMinWithDate);
+
 router.get('/:title', auth, NoteEndpoint.selectNoteByTitle);
 
 export default router;

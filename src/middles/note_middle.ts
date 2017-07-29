@@ -198,6 +198,18 @@ public static selectNotesByTextReg = (userId: string, text:string):Promise<types
     });
   }
 
+  public static selectAllNotesMinWithDate(user:User):Promise<types.Result>{
+    return new Promise<types.Result>((resolve, reject)=>{
+      db.notes.selectNotesMinWithDate(user)
+      .then(notes=>{
+        resolve(new types.AnyResult(true, notes));
+      })
+      .catch(error=>{
+        resolve(Utils.jsonErr(error));
+      })
+    });
+  }
+
   public static setDone = (note:Note, done:boolean):Promise<types.BasicResult>=>{
     return new Promise<types.BasicResult>((resolve, reject)=>{
       db.notes.setDone(note, done)

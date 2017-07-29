@@ -53,7 +53,7 @@ export class Repository{
     this.pgp = pgp;
   }
 
-  private addTagsString = (note:Note, tags: TagClass.Tag[], roles:string[]):string=>{
+  private addTagsString(note:Note, tags: TagClass.Tag[], roles:string[]):string{
     let things: any[]=[];
     for(let i=0;i<tags.length;i++){
       things.push({
@@ -68,7 +68,7 @@ export class Repository{
   }
 
 
-  addTags = (note:Note, tags:TagClass.Tag[], roles:string[]):Promise<any>=>{
+  addTags(note:Note, tags:TagClass.Tag[], roles:string[]):Promise<any>{
     if(tags.length!=roles.length){
       throw new Error('mismatch');
     }
@@ -98,12 +98,12 @@ export class Repository{
 
   }
 
-  changeLinks = (note: Note, links: string[]):Promise<any>=>{
+  changeLinks(note: Note, links: string[]):Promise<any>{
     let values:any[]=[note.userid, note.title, links];
     return this.db.one(sql.changeLinks,values, (note:any)=>{return note.result});
   }
 
-  changeText = (note: Note, newText: string):Promise<any>=>{
+  changeText(note: Note, newText: string):Promise<any>{
     let values:any[]=[note.userid, note.title, newText];
     return this.db.one(sql.changeText, values, (note:any)=>{return note.result});
   }
@@ -115,7 +115,7 @@ export class Repository{
   }
 
   /*rewrite a bit, will be done into a transaction..*/
-  createNoteAll = (note:Note):Promise<Note>=>{
+  createNoteAll(note:Note):Promise<Note>{
     let values: any[]=[
       note.userid,
       note.title,
@@ -127,7 +127,7 @@ export class Repository{
     return this.db.one(sql.createNoteAll, values, (note:any)=>{return note.result});
   }
 
-  createNote = (note: Note):Promise<Note>=>{
+  createNote(note: Note):Promise<Note>{
     let values:any[]=[
       note.userid,
       note.title,
@@ -218,12 +218,12 @@ export class Repository{
   //   let values:any = note.getValues();
   //   return this.db.one(sql.removeNote, values,(result:any)=>{return result.rowCont});
   // }
-  removeNote = (note:Note):Promise<any>=>{
+  removeNote(note:Note):Promise<any>{
     let values:any = note.getValues();
     return this.db.none(sql.removeNote, values);
   }
 
-  removeTagsFromNote = (note:Note, tags: TagClass.Tag[]):Promise<any>=>{
+  removeTagsFromNote(note:Note, tags: TagClass.Tag[]):Promise<any>{
     let values: any=note.getValues();
     return this.db.tx(t=>{
       let queries:any[]=[tags.length];
@@ -295,7 +295,7 @@ export class Repository{
     //CURRENTLY HAS TO RE WRITTEN TO ESCAPE SQL-INJECTION.
   }
 
-  selectNotesByTagsNoRole = (userid: string, tags:TagClass.Tag[], and: boolean):Promise<any>=>{
+  selectNotesByTagsNoRole(userid: string, tags:TagClass.Tag[], and: boolean):Promise<any>{
     let values:string = Repository.getQueryNotesByTagsNoRole(userid,tags, and);
     console.log('the query is:');
     console.log(values);
@@ -303,7 +303,7 @@ export class Repository{
   }
 
 
-  selectNotesByTagsWithRole = (userid: string, tags:TagClass.Tag[], roles:string[], and: boolean):Promise<any>=>{
+  selectNotesByTagsWithRole(userid: string, tags:TagClass.Tag[], roles:string[], and: boolean):Promise<any>{
     if(tags.length!=roles.length){
       throw new TypeError(Const.ERR_DIFF_LENGTH);
     }
@@ -311,28 +311,32 @@ export class Repository{
     return this.db.many(values);
   }
 
-  selectNoteByTitle = (note:Note):Promise<any>=>{
+  selectNoteByTitle(note:Note):Promise<any>{
     return this.db.oneOrNone(sql.selectNoteByTitle, note.getValues(), (note:any)=>{
       return note});
   }
 
-  selectNotesByTitleReg = (userid:string, title:string):Promise<any>=>{
+  selectNotesByTitleReg(userid:string, title:string):Promise<any>{
     return this.db.many(sql.selectNotesByTitleReg, [userid, title]);
   }
 
-  selectNotesByTextReg = (userid:string, text:string):Promise<any>=>{
+  selectNotesByTextReg(userid:string, text:string):Promise<any>{
     return this.db.many(sql.selectNotesByTextReg, [userid, text]);
   }
 
-  selectNotesFull = (userid:string):Promise<any>=>{
+  selectNotesFull(userid:string):Promise<any>{
     return this.db.many(sql.selectNotesFull, [userid]);
   }
 
-  selectNotesMin = (user: User):Promise<any>=>{
+  selectNotesMin(user: User):Promise<any>{
     return this.db.any(sql.selectNotesMin,[user.userid]);
   }
 
-  setDone = (note:Note, done: boolean):Promise<any>=>{
+  selectNotesMinWithDate(user:User):Promise<any>{
+    return this.db.any(sql.selectNotesMinWithDate, [user.userid]);
+  }
+
+  setDone(note:Note, done: boolean):Promise<any>{
     let values:any[]=[note.isdone, note.title, done];
     return this.db.one(sql.setDone, values, (note:any)=>{return note.result});
   }
