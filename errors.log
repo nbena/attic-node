@@ -466,3 +466,12 @@
 
 20:16:02 error: duplicate key value violates unique constraint "tags_pkey"
          query: insert into attic.tags(userId, title) values ('omni@pollo.com','piste') returning title as result;
+
+11:29:10 error: maintags cannot be more than 3
+         query: insert into "attic"."notes_tags"("notetitle","tagtitle","role","userid") values('omni-note1','omni-tag1','mainTags','omni@pollo.com')
+
+11:31:38 error: insert or update on table "notes_tags" violates foreign key constraint "notes_tags_notetitle_fkey"
+         query: insert into "attic"."notes_tags"("notetitle","tagtitle","role","userid") values('a brand new note','boh','mainTags','omni@pollo.com')
+
+11:31:49 error: duplicate key value violates unique constraint "notes_tags_pkey"
+         query: insert into "attic"."notes_tags"("notetitle","tagtitle","role","userid") values('a brand new note!','boh','mainTags','omni@pollo.com')
