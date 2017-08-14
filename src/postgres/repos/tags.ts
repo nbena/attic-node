@@ -17,7 +17,7 @@ export class Repository {
 
 
   changeTitle = (tag: TagClass.Tag,newTitle: string)=>{
-    return this.db.any(sql.changeTitle, [tag.userid, tag.title, newTitle]);
+    return this.db.none(sql.changeTitle, [tag.userid, tag.title, newTitle]);
   }
 
   createTag = (tag: TagClass.Tag):Promise<any>=>{

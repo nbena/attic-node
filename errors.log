@@ -475,3 +475,9 @@
 
 11:31:49 error: duplicate key value violates unique constraint "notes_tags_pkey"
          query: insert into "attic"."notes_tags"("notetitle","tagtitle","role","userid") values('a brand new note!','boh','mainTags','omni@pollo.com')
+
+15:46:27 error: No data returned from the query.
+         query: update attic.notes set text='this is a changed text' where title='omni@pollo.com' and userId='a brand new note!' returning text as result;
+
+15:48:03 error: No data returned from the query.
+         query: update attic.notes set text='this is a changed text' where title='omni@pollo.com' and userId='a brand new note!' returning text as result;

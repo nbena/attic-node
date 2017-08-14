@@ -100,18 +100,22 @@ export class Repository{
 
   changeLinks(note: Note, links: string[]):Promise<any>{
     let values:any[]=[note.userid, note.title, links];
-    return this.db.one(sql.changeLinks,values, (note:any)=>{return note.result});
+    // return this.db.oneOrNone(sql.changeLinks,values, (res:any)=>{return res.result});
+    return this.db.none(sql.changeLinks,values);
   }
 
   changeText(note: Note, newText: string):Promise<any>{
     let values:any[]=[note.userid, note.title, newText];
-    return this.db.one(sql.changeText, values, (note:any)=>{return note.result});
+    // return this.db.oneOrNone(sql.changeText, values, (res:any)=>{
+    //   return res.result});
+    return this.db.none(sql.changeText, values);
   }
 
   changeTitle (note:Note, newTitle: string):Promise<any>{
     // let values:any[]=[newTitle, note.title, note.userid];
     // let ps: pgp.PreparedStatement = new pgp.PreparedStatement('change-title', sql.changeTitle, [note.userid, note.title, newTitle]);
-    return this.db.one(sql.changeTitle, [note.userid, note.title, newTitle], (note:any)=>{return note.result});
+    //return this.db.oneOrNone(sql.changeTitle, [note.userid, note.title, newTitle], (res:any)=>{return res.result});
+        return this.db.none(sql.changeTitle, [note.userid, note.title, newTitle]);
   }
 
   /*rewrite a bit, will be done into a transaction..*/
@@ -297,8 +301,8 @@ export class Repository{
 
   selectNotesByTagsNoRole(userid: string, tags:TagClass.Tag[], and: boolean):Promise<any>{
     let values:string = Repository.getQueryNotesByTagsNoRole(userid,tags, and);
-    console.log('the query is:');
-    console.log(values);
+    // console.log('the query is:');
+    // console.log(values);
     return this.db.many(values);
   }
 
@@ -338,7 +342,8 @@ export class Repository{
 
   setDone(note:Note, done: boolean):Promise<any>{
     let values:any[]=[note.isdone, note.title, done];
-    return this.db.one(sql.setDone, values, (note:any)=>{return note.result});
+    //return this.db.oneOrNone(sql.setDone, values, (note:any)=>{return note.result});
+    return this.db.none(sql.setDone, values);
   }
 
 }

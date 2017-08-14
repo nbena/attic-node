@@ -15,7 +15,7 @@ doing so, the endpoint willbe easy to write (no catch).
 
 export default class NoteMiddle{
 
-public static addTags = (note:Note, tags:TagClass.Tag[], roles:string[]):Promise<any>=>{
+public static addTags = (note:Note, tags:TagClass.Tag[], roles:string[]):Promise<types.Result>=>{
   return new Promise<types.Result>((resolve, reject)=>{
     db.notes.addTags(note, tags, roles)
     .then(result=>{
@@ -29,11 +29,12 @@ public static addTags = (note:Note, tags:TagClass.Tag[], roles:string[]):Promise
 }
 
 
-public static changeLinks = (note:Note, links:string[]):Promise<types.BasicResult>=>{
-  return new Promise<types.BasicResult>((resolve, reject)=>{
+public static changeLinks = (note:Note, links:string[]):Promise<types.Result>=>{
+  return new Promise<types.Result>((resolve, reject)=>{
     db.notes.changeLinks(note, links)
     .then(result=>{
-      resolve(new types.BasicResult(true, JSON.stringify(result)));
+      // resolve(new types.BasicResult(true, JSON.stringify(result)));
+      resolve(new types.Result(true));
     })
     .catch(error=>{
       resolve(Utils.jsonErr(error));
@@ -41,11 +42,12 @@ public static changeLinks = (note:Note, links:string[]):Promise<types.BasicResul
   });
 }
 
-public static changeText = (note:Note, text:string):Promise<types.BasicResult>=>{
-  return new Promise<types.BasicResult>((resolve, reject)=>{
+public static changeText = (note:Note, text:string):Promise<types.Result>=>{
+  return new Promise<types.Result>((resolve, reject)=>{
     db.notes.changeText(note, text)
     .then(result=>{
-      resolve(new types.BasicResult(true, JSON.stringify(result)));
+      // resolve(new types.BasicResult(true, JSON.stringify(result)));
+      resolve(new types.Result(true));
     })
     .catch(error=>{
       resolve(Utils.jsonErr(error));
@@ -53,11 +55,12 @@ public static changeText = (note:Note, text:string):Promise<types.BasicResult>=>
   });
 }
 
-public static changeTitle = (note:Note, title:string):Promise<types.BasicResult>=>{
-  return new Promise<types.BasicResult>((resolve, reject)=>{
+public static changeTitle = (note:Note, title:string):Promise<types.Result>=>{
+  return new Promise<types.Result>((resolve, reject)=>{
     db.notes.changeTitle(note, title)
     .then(result=>{
-      resolve(new types.BasicResult(true, JSON.stringify(result)));
+      // resolve(new types.BasicResult(true, JSON.stringify(result)));
+      resolve(new types.Result(true));
     })
     .catch(error=>{
       resolve(Utils.jsonErr(error));
@@ -103,11 +106,12 @@ public static removeNote = (note:Note):Promise<types.Result>=>{
   })
 }
 
-public static removeTagsFromNote = (note:Note, tags:TagClass.Tag[]):Promise<types.BasicResult>=>{
-  return new Promise((resolve, reject)=>{
+public static removeTagsFromNote = (note:Note, tags:TagClass.Tag[]):Promise<types.Result>=>{
+  return new Promise<types.Result>((resolve, reject)=>{
     db.notes.removeTagsFromNote(note, tags)
       .then(result=>{
-        resolve(new types.BasicResult(true, JSON.stringify(result)));
+        // resolve(new types.Result(true, JSON.stringify(result)));
+        resolve(new types.Result(true));
       })
       .catch(error=>{
         resolve(Utils.jsonErr(error));
@@ -116,7 +120,7 @@ public static removeTagsFromNote = (note:Note, tags:TagClass.Tag[]):Promise<type
 }
 
 public static selectNotesByTagsNoRole = (userId: string, tags:TagClass.Tag[], and: boolean):Promise<types.Result>=>{
-  return new Promise<any>((resolve, reject)=>{
+  return new Promise<types.Result>((resolve, reject)=>{
     db.notes.selectNotesByTagsNoRole(userId, tags, and)
     .then(rawResult=>{
       resolve(new types.AnyResult(true, rawResult));
@@ -129,7 +133,7 @@ public static selectNotesByTagsNoRole = (userId: string, tags:TagClass.Tag[], an
 
 
 public static selectNotesByTagsWithRole = (userId: string, tags:TagClass.Tag[], roles:string[], and: boolean):Promise<types.Result>=>{
-  return new Promise<any>((resolve, reject)=>{
+  return new Promise<types.Result>((resolve, reject)=>{
     /*even if the db takes control of correct parameters, I prefer doing it now too.*/
     if(tags.length!=roles.length){
       resolve(Utils.jsonErr(new TypeError(Const.ERR_DIFF_LENGTH)));
@@ -210,8 +214,8 @@ public static selectNotesByTextReg = (userId: string, text:string):Promise<types
     });
   }
 
-  public static setDone = (note:Note, done:boolean):Promise<types.BasicResult>=>{
-    return new Promise<types.BasicResult>((resolve, reject)=>{
+  public static setDone = (note:Note, done:boolean):Promise<types.Result>=>{
+    return new Promise<types.Result>((resolve, reject)=>{
       db.notes.setDone(note, done)
         .then(result=>{
           resolve(new types.BasicResult(true, JSON.stringify(result)));

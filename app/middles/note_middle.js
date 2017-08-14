@@ -33,7 +33,7 @@ NoteMiddle.changeLinks = (note, links) => {
     return new Promise((resolve, reject) => {
         db.notes.changeLinks(note, links)
             .then(result => {
-            resolve(new types.BasicResult(true, JSON.stringify(result)));
+            resolve(new types.Result(true));
         })
             .catch(error => {
             resolve(utils_1.default.jsonErr(error));
@@ -44,7 +44,7 @@ NoteMiddle.changeText = (note, text) => {
     return new Promise((resolve, reject) => {
         db.notes.changeText(note, text)
             .then(result => {
-            resolve(new types.BasicResult(true, JSON.stringify(result)));
+            resolve(new types.Result(true));
         })
             .catch(error => {
             resolve(utils_1.default.jsonErr(error));
@@ -55,7 +55,7 @@ NoteMiddle.changeTitle = (note, title) => {
     return new Promise((resolve, reject) => {
         db.notes.changeTitle(note, title)
             .then(result => {
-            resolve(new types.BasicResult(true, JSON.stringify(result)));
+            resolve(new types.Result(true));
         })
             .catch(error => {
             resolve(utils_1.default.jsonErr(error));
@@ -94,7 +94,7 @@ NoteMiddle.removeTagsFromNote = (note, tags) => {
     return new Promise((resolve, reject) => {
         db.notes.removeTagsFromNote(note, tags)
             .then(result => {
-            resolve(new types.BasicResult(true, JSON.stringify(result)));
+            resolve(new types.Result(true));
         })
             .catch(error => {
             resolve(utils_1.default.jsonErr(error));

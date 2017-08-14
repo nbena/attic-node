@@ -30,14 +30,14 @@ class Repository {
     }
     changeLinks(note, links) {
         let values = [note.userid, note.title, links];
-        return this.db.one(sql.changeLinks, values, (note) => { return note.result; });
+        return this.db.none(sql.changeLinks, values);
     }
     changeText(note, newText) {
         let values = [note.userid, note.title, newText];
-        return this.db.one(sql.changeText, values, (note) => { return note.result; });
+        return this.db.none(sql.changeText, values);
     }
     changeTitle(note, newTitle) {
-        return this.db.one(sql.changeTitle, [note.userid, note.title, newTitle], (note) => { return note.result; });
+        return this.db.none(sql.changeTitle, [note.userid, note.title, newTitle]);
     }
     createNoteAll(note) {
         let values = [
@@ -144,8 +144,6 @@ class Repository {
     }
     selectNotesByTagsNoRole(userid, tags, and) {
         let values = Repository.getQueryNotesByTagsNoRole(userid, tags, and);
-        console.log('the query is:');
-        console.log(values);
         return this.db.many(values);
     }
     selectNotesByTagsWithRole(userid, tags, roles, and) {
@@ -177,7 +175,7 @@ class Repository {
     }
     setDone(note, done) {
         let values = [note.isdone, note.title, done];
-        return this.db.one(sql.setDone, values, (note) => { return note.result; });
+        return this.db.none(sql.setDone, values);
     }
 }
 Repository.SELECT_NOTES_BY_TAGS_START = 'select distinct notetitle as title from attic.notes_tags where attic.notes_tags.userId=\'';
