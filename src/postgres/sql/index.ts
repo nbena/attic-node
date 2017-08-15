@@ -37,7 +37,8 @@ export default {
       createUser: link('users/create_user.sql'),
       removeUser: link('users/remove_user.sql'),
       selectByUserId: link('users/select.sql'),
-      selectSummary: link('users/select_summary.sql')
+      selectSummary: link('users/select_summary.sql'),
+      isAvailable: link('users/is_user_available.sql')
     }
 };
 
@@ -46,9 +47,9 @@ Linkin external files.
 */
 function link(file: string): QueryFile {
   /*absolute path.*/
-    var fullPath: string = path.join(__dirname, file);
+    let fullPath: string = path.join(__dirname, file);
 
-    var options: TQueryFileOptions = {
+    let options: TQueryFileOptions = {
         minify: true, /*authors siggest to set this to true.*/
         params: {
             schema: 'attic' /*if in future schema will change, no need to
@@ -56,7 +57,7 @@ function link(file: string): QueryFile {
         }
     };
 
-    var queryFile: QueryFile = new QueryFile(fullPath, options);
+    let queryFile: QueryFile = new QueryFile(fullPath, options);
 
     if (queryFile.error) {
         throw queryFile.error;

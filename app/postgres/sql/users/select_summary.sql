@@ -1,1 +1,1 @@
-../../../../src/postgres/sql/users/select_summary.sql
+select get_user_summary($1);

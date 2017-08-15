@@ -27,7 +27,7 @@ export class Const {
 
   public static readonly USERNAME_AND_PASSWORD: string = 'userid and password required';
 
-  public static readonly USERID_REQUIRED: string = ':userid required';
+  public static readonly USERID_REQUIRED: string = ':userid required (or in the body too)';
   public static readonly USER_MISMATCH: string = 'the authenticated user is different from the required one';
 
   //public static readonly ARRAY_EMPTY_NOT_ALLOWED: string = 'empty arrays are not allowed';

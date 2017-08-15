@@ -18,8 +18,13 @@ let auth = passport.authenticate('jwt', {session:false});
 
 router.put('/create', UserEndpoint.createUser);
 
+router.post('/is-available', UserEndpoint.isUserAvailable);
+
+router.get('/is-available', UserEndpoint.isUserAvailable);
+
 router.get('/:userid', auth,  UserEndpoint.summary);
 
 router.post('/:userid', auth,  UserEndpoint.summary);
+
 
 export default router;

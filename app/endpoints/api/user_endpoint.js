@@ -6,22 +6,42 @@ const utils_1 = require("../../middles/useful/utils");
 const types_1 = require("../../middles/useful/types");
 const user_middle_1 = require("../../middles/user_middle");
 class UserEndpointParamCheck {
+    static createUser(req) {
+        let result = null;
+        if (!req.body.userid || !req.body.password) {
+            result = utils_1.default.jsonErr(new types_1.JsonError(const_1.Const.USERNAME_AND_PASSWORD));
+        }
+        return result;
+    }
+    static summary(req) {
+        let result = null;
+        if (!req.params.userid) {
+            result = utils_1.default.jsonErr(new types_1.JsonError(const_1.Const.USERID_REQUIRED));
+        }
+        return result;
+    }
+    static isUserAvailable(req) {
+        let result = null;
+        if (!req.body.userid) {
+            result = utils_1.default.jsonErr(new types_1.JsonError(const_1.Const.USERID_REQUIRED));
+        }
+        return result;
+    }
 }
-UserEndpointParamCheck.createUser = (req) => {
-    let result = null;
-    if (!req.body.userid || !req.body.password) {
-        result = utils_1.default.jsonErr(new types_1.JsonError(const_1.Const.USERNAME_AND_PASSWORD));
-    }
-    return result;
-};
-UserEndpointParamCheck.summary = (req) => {
-    let result = null;
-    if (!req.params.userid) {
-        result = utils_1.default.jsonErr(new types_1.JsonError(const_1.Const.USERID_REQUIRED));
-    }
-    return result;
-};
 class UserEndpoint {
+    static isUserAvailable(req, res, next) {
+        let user;
+        let check = UserEndpointParamCheck.isUserAvailable(req);
+        if (check != null) {
+            res.json(check);
+            return;
+        }
+        user = new user_1.default(req.body.userid);
+        user_middle_1.default.isUserAvailable(user)
+            .then(result => {
+            res.json(result);
+        });
+    }
 }
 UserEndpoint.createUser = (req, res, next) => {
     let user;

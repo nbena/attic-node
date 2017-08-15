@@ -10,7 +10,7 @@ import * as express from 'express';
 
 class UserEndpointParamCheck {
 
-  public static createUser = (req: express.Request):BasicResult=>{
+  public static createUser(req: express.Request):BasicResult{
     let result:any = null;
     if(!req.body.userid || !req.body.password){
       result = Utils.jsonErr(new JsonError(Const.USERNAME_AND_PASSWORD));
@@ -20,9 +20,17 @@ class UserEndpointParamCheck {
 
 
   //I know that it's not necessay but I want to.
-  public static summary = (req: express.Request):BasicResult=>{
+  public static summary(req: express.Request):BasicResult{
     let result:any = null;
     if(!req.params.userid){
+      result = Utils.jsonErr(new JsonError(Const.USERID_REQUIRED));
+    }
+    return result;
+  }
+
+  public static isUserAvailable(req:express.Request):BasicResult{
+    let result:any = null;
+    if(!req.body.userid){
       result = Utils.jsonErr(new JsonError(Const.USERID_REQUIRED));
     }
     return result;
@@ -62,6 +70,24 @@ export default class UserEndpoint{
       return;
     }
     UserMiddle.summary(user)
+    .then(result=>{
+      res.json(result);
+    })
+  }
+
+
+  /**
+  Check if a user is available, it does not require authentication.
+  */
+  public static isUserAvailable(req:express.Request, res:express.Response, next){
+    let user:User;
+    let check = UserEndpointParamCheck.isUserAvailable(req);
+    if(check!=null){
+      res.json(check);
+      return;
+    }
+    user = new User(req.body.userid);
+    UserMiddle.isUserAvailable(user)
     .then(result=>{
       res.json(result);
     })

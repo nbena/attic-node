@@ -37,18 +37,19 @@ exports.default = {
         createUser: link('users/create_user.sql'),
         removeUser: link('users/remove_user.sql'),
         selectByUserId: link('users/select.sql'),
-        selectSummary: link('users/select_summary.sql')
+        selectSummary: link('users/select_summary.sql'),
+        isAvailable: link('users/is_user_available.sql')
     }
 };
 function link(file) {
-    var fullPath = path.join(__dirname, file);
-    var options = {
+    let fullPath = path.join(__dirname, file);
+    let options = {
         minify: true,
         params: {
             schema: 'attic'
         }
     };
-    var queryFile = new pg_promise_1.QueryFile(fullPath, options);
+    let queryFile = new pg_promise_1.QueryFile(fullPath, options);
     if (queryFile.error) {
         throw queryFile.error;
     }

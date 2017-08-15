@@ -2,11 +2,13 @@ import User from '../models/user';
 import AuthMiddle from './auth_middle';
 import * as db from '../postgres';
 import Utils from './useful/utils';
-import {AnyResult, DbError }  from './useful/types';
+import {AnyResult, DbError, Result }  from './useful/types';
+
+/*every class returns Promise<Result> because it's the superclass*/
 
 export default class UserMiddle{
-  static createUser = (user: User):Promise<any>=>{
-    return new Promise((resolve, reject)=>{
+  static createUser (user: User):Promise<Result>{
+    return new Promise<Result>((resolve, reject)=>{
       user.hashPassword();
       // .then(hashed=>{
       //   //console.log('hashed');
@@ -27,8 +29,8 @@ export default class UserMiddle{
   }
 
 
-  static removeUser = (user:User):Promise<any>=>{
-    return new Promise((resolve, reject)=>{
+  static removeUser(user:User):Promise<Result>{
+    return new Promise<Result>((resolve, reject)=>{
       db.users.removeUser(user)
       .then(result=>{
         resolve(result);
@@ -39,9 +41,22 @@ export default class UserMiddle{
     })
   }
 
-  static summary = (user:User):Promise<any>=>{
-    return new Promise((resolve, reject)=>{
+  static summary(user:User):Promise<Result>{
+    return new Promise<Result>((resolve, reject)=>{
       db.users.summary(user)
+      .then(result=>{
+        resolve(new AnyResult(true, result));
+      })
+      .catch(error=>{
+        resolve(Utils.jsonErr(error));
+      })
+    })
+  }
+
+
+  static isUserAvailable(user:User):Promise<Result>{
+    return new Promise<Result>((resolve, reject)=>{
+      db.users.isUserAvailable(user)
       .then(result=>{
         resolve(new AnyResult(true, result));
       })

@@ -19,7 +19,11 @@ export default class Utils{
     return res;
   }
 
-  public static extractUser = (req: express.Request):User=>{
+  /**
+  Return a new user from the params, basic is just a
+  return new User(req.user.userid)
+  */
+  public static extractUser(req: express.Request):User{
     return new User(req.user.userid);
   }
   /*

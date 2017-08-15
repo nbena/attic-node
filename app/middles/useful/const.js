@@ -25,7 +25,7 @@ Const.TAG_NEW_TITLE_REQUIRED = 'tag.newTitle required';
 Const.GEN_TAGS_REQUIRED = 'tags:[ ... ] required';
 Const.TAGS_NOT_ARRAY = 'maintags or othetags must be instanceof array';
 Const.USERNAME_AND_PASSWORD = 'userid and password required';
-Const.USERID_REQUIRED = ':userid required';
+Const.USERID_REQUIRED = ':userid required (or in the body too)';
 Const.USER_MISMATCH = 'the authenticated user is different from the required one';
 exports.Const = Const;
 class PostgresError {

@@ -481,3 +481,6 @@
 
 15:48:03 error: No data returned from the query.
          query: update attic.notes set text='this is a changed text' where title='omni@pollo.com' and userId='a brand new note!' returning text as result;
+
+10:27:26 error: No data returned from the query.
+         query: select case when userid is null then true else false end as isavailable from attic.users where userid='omni@culo.com';
