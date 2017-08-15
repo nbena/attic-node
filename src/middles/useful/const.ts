@@ -37,6 +37,7 @@ export class Const {
 export class PostgresError {
   public static readonly POSTGRES_DUPLICATE_KEY_NOTES:string = 'duplicate key value violates unique constraint \"notes_pkey\"';
   public static readonly POSTGRES_DUPLICATE_KEY_TAGS:string = 'duplicate key value violates unique constraint \"tags_pkey\"';
+  public static readonly POSTGRES_DUPLICATE_KEY_USERS:string = 'duplicate key value violates unique constraint \"users_pkey\"';
   //public static readonly POSTGRES_DUPLICATE_KEY_NOTES_TAGS:string = 'error duplicate key value violates unique constraint \"notes_tags_pkey\"';
   public static readonly POSTGRES_DUPLICATE_KEY_NOTES_TAGS:string = 'duplicate key value violates unique constraint \"notes_tags_pkey\"';
   public static readonly POSTGRES_USER_REACHED_MAX_NOTES:string = 'a free user cannot have more than 50 notes';
@@ -47,6 +48,7 @@ export class PostgresError {
 
   public static readonly FINAL_DUPLICATE_KEY_NOTES:string = 'another note with the same title';
   public static readonly FINAL_DUPLICATE_KEY_TAGS:string = 'another tag with the same title';
+  public static readonly FINAL_DUPLICATE_KEY_USERS:string ='another users with the same userid';
   public static readonly FINAL_DUPLICATE_KEY_NOTES_TAGS:string = 'the tag is already with this note';
   // public static readonly FINAL_USER_REACHED_MAX_NOTES:string = PostgresError.POSTGRES_USER_REACHED_MAX_NOTES.replace('BatchError', '');
   // public static readonly FINAL_USER_REACHED_MAX_TAGS:string = PostgresError.POSTGRES_USER_REACHED_MAX_TAGS.replace('BatchError', '');
@@ -88,6 +90,9 @@ export class PostgresError {
       case PostgresError.POSTGRES_TAGS_FKEY:
         returnedError = PostgresError.FINAL_TAGS_FKEY;
         break;
+      case PostgresError.POSTGRES_DUPLICATE_KEY_USERS:
+        returnedError = PostgresError.FINAL_DUPLICATE_KEY_USERS;
+        break;
     }
     return returnedError;
   }
@@ -96,7 +101,9 @@ export class PostgresError {
     return (msg == PostgresError.POSTGRES_DUPLICATE_KEY_NOTES || msg==PostgresError.POSTGRES_DUPLICATE_KEY_NOTES_TAGS
       || msg==PostgresError.POSTGRES_DUPLICATE_KEY_TAGS || msg==PostgresError.POSTGRES_MAINTAGS_LIMIT
       || msg==PostgresError.POSTGRES_OTHERTAGS_LIMIT || msg==PostgresError.POSTGRES_TAGS_FKEY
-      || msg==PostgresError.POSTGRES_USER_REACHED_MAX_NOTES || msg==PostgresError.POSTGRES_USER_REACHED_MAX_TAGS)
+      || msg==PostgresError.POSTGRES_USER_REACHED_MAX_NOTES || msg==PostgresError.POSTGRES_USER_REACHED_MAX_TAGS
+      || msg==PostgresError.POSTGRES_DUPLICATE_KEY_USERS
+    )
 
   }
 }

@@ -59,6 +59,9 @@ class PostgresError {
             case PostgresError.POSTGRES_TAGS_FKEY:
                 returnedError = PostgresError.FINAL_TAGS_FKEY;
                 break;
+            case PostgresError.POSTGRES_DUPLICATE_KEY_USERS:
+                returnedError = PostgresError.FINAL_DUPLICATE_KEY_USERS;
+                break;
         }
         return returnedError;
     }
@@ -66,11 +69,13 @@ class PostgresError {
         return (msg == PostgresError.POSTGRES_DUPLICATE_KEY_NOTES || msg == PostgresError.POSTGRES_DUPLICATE_KEY_NOTES_TAGS
             || msg == PostgresError.POSTGRES_DUPLICATE_KEY_TAGS || msg == PostgresError.POSTGRES_MAINTAGS_LIMIT
             || msg == PostgresError.POSTGRES_OTHERTAGS_LIMIT || msg == PostgresError.POSTGRES_TAGS_FKEY
-            || msg == PostgresError.POSTGRES_USER_REACHED_MAX_NOTES || msg == PostgresError.POSTGRES_USER_REACHED_MAX_TAGS);
+            || msg == PostgresError.POSTGRES_USER_REACHED_MAX_NOTES || msg == PostgresError.POSTGRES_USER_REACHED_MAX_TAGS
+            || msg == PostgresError.POSTGRES_DUPLICATE_KEY_USERS);
     }
 }
 PostgresError.POSTGRES_DUPLICATE_KEY_NOTES = 'duplicate key value violates unique constraint \"notes_pkey\"';
 PostgresError.POSTGRES_DUPLICATE_KEY_TAGS = 'duplicate key value violates unique constraint \"tags_pkey\"';
+PostgresError.POSTGRES_DUPLICATE_KEY_USERS = 'duplicate key value violates unique constraint \"users_pkey\"';
 PostgresError.POSTGRES_DUPLICATE_KEY_NOTES_TAGS = 'duplicate key value violates unique constraint \"notes_tags_pkey\"';
 PostgresError.POSTGRES_USER_REACHED_MAX_NOTES = 'a free user cannot have more than 50 notes';
 PostgresError.POSTGRES_USER_REACHED_MAX_TAGS = 'a free user cannot have more than 50 tags';
@@ -79,6 +84,7 @@ PostgresError.POSTGRES_OTHERTAGS_LIMIT = 'othetags cannot be more than 15';
 PostgresError.POSTGRES_TAGS_FKEY = 'insert or update on table \"notes_tags\" violates foreign key constraint \"notes_tags_tagtitle_fkey\"';
 PostgresError.FINAL_DUPLICATE_KEY_NOTES = 'another note with the same title';
 PostgresError.FINAL_DUPLICATE_KEY_TAGS = 'another tag with the same title';
+PostgresError.FINAL_DUPLICATE_KEY_USERS = 'another users with the same userid';
 PostgresError.FINAL_DUPLICATE_KEY_NOTES_TAGS = 'the tag is already with this note';
 PostgresError.FINAL_USER_REACHED_MAX_NOTES = PostgresError.POSTGRES_USER_REACHED_MAX_NOTES;
 PostgresError.FINAL_USER_REACHED_MAX_TAGS = PostgresError.POSTGRES_USER_REACHED_MAX_TAGS;

@@ -484,3 +484,9 @@
 
 10:27:26 error: No data returned from the query.
          query: select case when userid is null then true else false end as isavailable from attic.users where userid='omni@culo.com';
+
+14:45:05 error: duplicate key value violates unique constraint "users_pkey"
+         query: insert into attic.users(userid, hashedpassword) values ('omni@pollo.com', 'ada9eb45e96d523cc001bd95e4632c43fe3dceb128b5141038781145e2ec71d259060178e2096ca604e7aae429e8cefef6ba6bff66f0f011dc16db8fad38a2c1') returning 'omni@pollo.com'
+
+14:48:12 error: duplicate key value violates unique constraint "users_pkey"
+         query: insert into attic.users(userid, hashedpassword) values ('omni@pollo.com', 'ada9eb45e96d523cc001bd95e4632c43fe3dceb128b5141038781145e2ec71d259060178e2096ca604e7aae429e8cefef6ba6bff66f0f011dc16db8fad38a2c1') returning 'omni@pollo.com'
