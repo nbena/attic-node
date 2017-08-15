@@ -119,28 +119,34 @@ export class Repository{
   }
 
   /*rewrite a bit, will be done into a transaction..*/
-  createNoteAll(note:Note):Promise<Note>{
-    let values: any[]=[
-      note.userid,
-      note.title,
-      note.text,
-      note.isdone,
-      JSON.stringify(note.links)
-    ];
-
-    return this.db.one(sql.createNoteAll, values, (note:any)=>{return note.result});
-  }
+  // createNoteAll(note:Note):Promise<Note>{
+  //   let values: any[]=[
+  //     note.userid,
+  //     note.title,
+  //     note.text,
+  //     note.isdone,
+  //     JSON.stringify(note.links),
+  //     note.lastmodificationdate,
+  //     note.creationdate
+  //   ];
+  //
+  //   return this.db.one(sql.createNoteWithDateToo, values, (note:any)=>{return note.result});
+  // }
 
   createNote(note: Note):Promise<Note>{
     let values:any[]=[
       note.userid,
       note.title,
-      note.text
+      note.text,
+      note.isdone,
+      JSON.stringify(note.links),
+      note.lastmodificationdate,
+      note.creationdate
     ];
     //already done in the middle.
     // values.push(((note.isdone == null) ? false : note.isdone));
-    values.push(note.isdone);
-    values.push(JSON.stringify(((note.links == null) ? '[]' : note.links)));
+    // values.push(note.isdone);
+    // values.push(JSON.stringify(note.links));
 
 
     // console.log('the note:');
@@ -155,7 +161,7 @@ export class Repository{
     let tags:TagClass.Tag[]=[];
     let roles:string[]=[];
 
-    if(note.maintags !=null && note.maintags.length !=0){
+    if(/*note.maintags !=null && */note.maintags.length !=0){
         note.maintags.map((currentValue, currentIndex)=>{
           let tag =  new TagClass.Tag();
           tag.title = currentValue;
@@ -164,7 +170,7 @@ export class Repository{
         });
     }
 
-    if(note.othertags !=null && note.othertags.length !=0){
+    if(/*note.othertags !=null && */note.othertags.length !=0){
         note.othertags.map((currentValue, currentIndex)=>{
           let tag =  new TagClass.Tag();
           tag.title = currentValue;
@@ -177,7 +183,7 @@ export class Repository{
     // console.log(JSON.stringify(tags));
 
     return this.db.tx(t=>{
-      queries.push(t.one(sql.createNoteAll, values));
+      queries.push(t.one(sql.createNoteWithDate, values));
       if(tags.length!=0){
         queries.push(t.none(this.addTagsString(note, tags, roles)));
       }

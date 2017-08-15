@@ -74,12 +74,12 @@ public static createNote = (note:Note):Promise<types.Result>=>{
     result=db.notes.createNote(note);
     result.then(result=>{
 
-      console.log('the result');
-      console.log(JSON.stringify(result));
+      // console.log('the result');
+      // console.log(JSON.stringify(result));
       /*creating the object that we'll return*/
       let noteRes:Note = result[0].result as Note;
-      noteRes.maintags = ((note.maintags==null)? [] : note.maintags);
-      noteRes.othertags = ((note.othertags==null)? [] : note.othertags);
+      // noteRes.maintags = ((note.maintags==null)? [] : note.maintags);
+      // noteRes.othertags = ((note.othertags==null)? [] : note.othertags);
 
       resolve(new types.NoteResult(true, noteRes));
     })

@@ -39,28 +39,20 @@ class Repository {
     changeTitle(note, newTitle) {
         return this.db.none(sql.changeTitle, [note.userid, note.title, newTitle]);
     }
-    createNoteAll(note) {
+    createNote(note) {
         let values = [
             note.userid,
             note.title,
             note.text,
             note.isdone,
-            JSON.stringify(note.links)
+            JSON.stringify(note.links),
+            note.lastmodificationdate,
+            note.creationdate
         ];
-        return this.db.one(sql.createNoteAll, values, (note) => { return note.result; });
-    }
-    createNote(note) {
-        let values = [
-            note.userid,
-            note.title,
-            note.text
-        ];
-        values.push(note.isdone);
-        values.push(JSON.stringify(((note.links == null) ? '[]' : note.links)));
         let queries = [];
         let tags = [];
         let roles = [];
-        if (note.maintags != null && note.maintags.length != 0) {
+        if (note.maintags.length != 0) {
             note.maintags.map((currentValue, currentIndex) => {
                 let tag = new TagClass.Tag();
                 tag.title = currentValue;
@@ -68,7 +60,7 @@ class Repository {
                 tags.push(tag);
             });
         }
-        if (note.othertags != null && note.othertags.length != 0) {
+        if (note.othertags.length != 0) {
             note.othertags.map((currentValue, currentIndex) => {
                 let tag = new TagClass.Tag();
                 tag.title = currentValue;
@@ -77,7 +69,7 @@ class Repository {
             });
         }
         return this.db.tx(t => {
-            queries.push(t.one(sql.createNoteAll, values));
+            queries.push(t.one(sql.createNoteWithDate, values));
             if (tags.length != 0) {
                 queries.push(t.none(this.addTagsString(note, tags, roles)));
             }

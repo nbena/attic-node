@@ -48,7 +48,7 @@ export class PostgresError {
 
   public static readonly FINAL_DUPLICATE_KEY_NOTES:string = 'another note with the same title';
   public static readonly FINAL_DUPLICATE_KEY_TAGS:string = 'another tag with the same title';
-  public static readonly FINAL_DUPLICATE_KEY_USERS:string ='another users with the same userid';
+  public static readonly FINAL_DUPLICATE_KEY_USERS:string ='another user with the same userid';
   public static readonly FINAL_DUPLICATE_KEY_NOTES_TAGS:string = 'the tag is already with this note';
   // public static readonly FINAL_USER_REACHED_MAX_NOTES:string = PostgresError.POSTGRES_USER_REACHED_MAX_NOTES.replace('BatchError', '');
   // public static readonly FINAL_USER_REACHED_MAX_TAGS:string = PostgresError.POSTGRES_USER_REACHED_MAX_TAGS.replace('BatchError', '');
