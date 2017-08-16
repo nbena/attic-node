@@ -12,6 +12,7 @@ const tags_1 = require("./routes/api/tags");
 const users_1 = require("./routes/api/users");
 const auth_1 = require("./routes/api/auth");
 const passport = require("passport");
+const ajv = require("express-ajv");
 const app = express();
 app.use(passport.initialize());
 app.set('views', path.join(__dirname, 'views'));
@@ -27,6 +28,7 @@ app.use('/api/notes', notes_1.default);
 app.use('/api/tags', tags_1.default);
 app.use('/api/users', users_1.default);
 app.use('/api/auth', auth_1.default);
+app.use(ajv.defaultErrorHandler);
 app.use((req, res, next) => {
     var err = new Error('Not Found');
     err['status'] = 404;

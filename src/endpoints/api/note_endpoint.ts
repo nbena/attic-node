@@ -8,6 +8,7 @@ import {AnyResult, BasicResult, JsonError } from '../../middles/useful/types';
 
 import NoteMiddle from '../../middles/note_middle';
 
+
 import * as express from 'express';
 
 class NoteEndpointParamCheck{
@@ -261,11 +262,11 @@ export default class NoteEndpoint{
     let user:User=Utils.extractUser(req);
     let note:Note;
     let text:string;
-    let result:any = NoteEndpointParamCheck.changeText(req);
-    if(result!=null){
-      res.json(result);
-      return;
-    }
+    // let result:any = NoteEndpointParamCheck.changeText(req);
+    // if(result!=null){
+    //   res.json(result);
+    //   return;
+    // }
 
     note = new Note();
     note.title=req.body.note.title;

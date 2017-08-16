@@ -215,11 +215,6 @@ class NoteEndpoint {
         let user = utils_1.default.extractUser(req);
         let note;
         let text;
-        let result = NoteEndpointParamCheck.changeText(req);
-        if (result != null) {
-            res.json(result);
-            return;
-        }
         note = new note_1.default();
         note.title = req.body.note.title;
         text = req.body.note.text;

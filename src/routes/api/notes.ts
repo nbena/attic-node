@@ -10,23 +10,27 @@ import NoteEndpoint from '../../endpoints/api/note_endpoint';
 import * as passport from 'passport';
 require('../../config/passport')(passport);
 
+//import * as validator from '../../schemas/notes/index';
+import { Schemas } from '../../schemas/index';
+const validator = require('../../schemas/notes/index');
+
 let auth = passport.authenticate('jwt', {session:false});
 let authLog = passport.authenticate('local', {session:false});
 
 
-router.post('/mod/add-tags', auth, NoteEndpoint.addTags);
+router.post('/mod/add-tags', auth, validator(Schemas.Notes.ADD_TAGS_SCHEMA), NoteEndpoint.addTags);
 
-router.post('/mod/change-links', auth, NoteEndpoint.changeLinks);
+router.post('/mod/change-links', auth,validator(Schemas.Notes.CHANGE_LINKS_SCHEMA), NoteEndpoint.changeLinks);
 
-router.post('/mod/change-title', auth, NoteEndpoint.changeTitle);
+router.post('/mod/change-title', auth, validator(Schemas.Notes.CHANGE_TITLE_SCHEMA),NoteEndpoint.changeTitle);
 
-router.post('/mod/change-text', auth, NoteEndpoint.changeText);
+router.post('/mod/change-text', auth, validator(Schemas.Notes.CHANGE_TEXT_SCHEMA), NoteEndpoint.changeText);
 
-router.put('/create', auth, NoteEndpoint.createNote);
+router.put('/create', auth, validator(Schemas.Notes.CREATE_NOTE_SCHEMA), NoteEndpoint.createNote);
 
 router.delete('/:title', auth, NoteEndpoint.removeNote);
 
-router.post('/mod/remove-tags', auth, NoteEndpoint.removeTagsFromNote);
+router.post('/mod/remove-tags', auth, validator(Schemas.Notes.REMOVE_TAGS_SCHEMA), NoteEndpoint.removeTagsFromNote);
 
 router.post('/by-tags-no-role/and', auth, NoteEndpoint.selectNotesByTagsNoRoleAnd);
 
@@ -36,11 +40,11 @@ router.post('/by-tags-no-role/or', auth, NoteEndpoint.selectNotesByTagsNoRoleOr)
 
 router.post('/by-tags-with-role/or', auth, NoteEndpoint.selectNotesByTagsWithRoleOr);
 
-router.post('/by-tile-reg', auth, NoteEndpoint.selectNoteByTitleReg);
+router.post('/by-tile-reg', auth, validator(Schemas.Notes.NOTES_BY_TITLE_REG_SCHEMA), NoteEndpoint.selectNoteByTitleReg);
 
-router.post('/by-text', auth, NoteEndpoint.selectNoteByTextReg);
+router.post('/by-text', auth, validator(Schemas.Notes.NOTES_BY_TEXT_SCHEMA), NoteEndpoint.selectNoteByTextReg);
 
-router.post('/mod/set-done', auth, NoteEndpoint.setDone);
+router.post('/mod/set-done', validator(Schemas.Notes.SET_DONE_SCHEMA),auth, NoteEndpoint.setDone);
 
 router.get('/all/min', auth, NoteEndpoint.selectAllNotesMin);
 

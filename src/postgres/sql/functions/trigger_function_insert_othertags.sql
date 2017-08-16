@@ -8,8 +8,8 @@ begin
                      and userid=new.userid
                      and notetitle=new.notetitle
                      );
-   if before_count > 15  then
-   	raise exception 'othertags cannot be more than 15';
+   if before_count > 10  then
+   	raise exception 'othertags cannot be more than 10';
    end if;
    return new;
 end
