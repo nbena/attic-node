@@ -43,11 +43,6 @@ TagEndpoint.changeTitle = (req, res, next) => {
     let user = utils_1.default.extractUser(req);
     let tag;
     let newTitle;
-    let result = TagEndpointParamCheck.changeTitle(req);
-    if (result != null) {
-        res.json(result);
-        return;
-    }
     tag = new TagClass.Tag();
     tag.title = req.body.tag.title;
     tag.userid = user.userid;
@@ -60,11 +55,6 @@ TagEndpoint.changeTitle = (req, res, next) => {
 TagEndpoint.createTag = (req, res, next) => {
     let user = utils_1.default.extractUser(req);
     let tag;
-    let result = TagEndpointParamCheck.createTag(req);
-    if (result != null) {
-        res.json(result);
-        return;
-    }
     tag = new TagClass.Tag();
     tag.title = req.params.title;
     tag.userid = user.userid;
@@ -76,11 +66,6 @@ TagEndpoint.createTag = (req, res, next) => {
 TagEndpoint.removeTag = (req, res, next) => {
     let user = utils_1.default.extractUser(req);
     let tag;
-    let result = TagEndpointParamCheck.removeTag(req);
-    if (result != null) {
-        res.json(result);
-        return;
-    }
     tag = new TagClass.Tag();
     tag.title = req.params.title;
     tag.userid = user.userid;
@@ -92,11 +77,6 @@ TagEndpoint.removeTag = (req, res, next) => {
 TagEndpoint.selectTagByTitle = (req, res, next) => {
     let user = utils_1.default.extractUser(req);
     let tag;
-    let result = TagEndpointParamCheck.selectTagByTitle(req);
-    if (result != null) {
-        res.json(result);
-        return;
-    }
     tag = new TagClass.Tag();
     tag.title = req.params.title;
     tag.userid = user.userid;
@@ -109,12 +89,6 @@ TagEndpoint.selectTagByTitle = (req, res, next) => {
 };
 TagEndpoint.selectTagsByTitleReg = (req, res, next) => {
     let user = utils_1.default.extractUser(req);
-    let result = TagEndpointParamCheck.selectTagsByTitleReg(req);
-    if (result != null) {
-        res.json(result);
-        return;
-    }
-    ;
     let title = '%' + req.body.tag.title + '%';
     tag_middle_1.default.selectTagsByTitleReg(user, title)
         .then(result => {

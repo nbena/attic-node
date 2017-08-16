@@ -151,10 +151,10 @@ class Repository {
         });
     }
     selectNotesByTitleReg(userid, title) {
-        return this.db.many(sql.selectNotesByTitleReg, [userid, title]);
+        return this.db.many(sql.selectNotesByTitleReg, [userid, '%' + title + '%']);
     }
     selectNotesByTextReg(userid, text) {
-        return this.db.many(sql.selectNotesByTextReg, [userid, text]);
+        return this.db.many(sql.selectNotesByTextReg, [userid, '%' + text + '%']);
     }
     selectNotesFull(userid) {
         return this.db.many(sql.selectNotesFull, [userid]);

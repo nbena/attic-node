@@ -16,11 +16,14 @@ let auth = passport.authenticate('jwt', {session:false});
 //   res.render('index', {title: 'Express'});
 // });
 
-router.put('/create', UserEndpoint.createUser);
+import { Schemas } from '../../schemas/index';
+const validator = require('../../schemas/users/index');
 
-router.post('/is-available', UserEndpoint.isUserAvailable);
+router.put('/create', validator(Schemas.Auth.LOGIN_SCHEMA), UserEndpoint.createUser);
 
-router.get('/is-available', UserEndpoint.isUserAvailable);
+router.post('/is-available', validator(Schemas.Users.IS_USER_VALID_SCHEMA), UserEndpoint.isUserAvailable);
+
+router.get('/is-available', validator(Schemas.Users.IS_USER_VALID_SCHEMA), UserEndpoint.isUserAvailable);
 
 router.get('/:userid', auth,  UserEndpoint.summary);
 

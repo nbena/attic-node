@@ -42,13 +42,13 @@ export default class UserEndpoint{
 
   public static createUser = (req: express.Request, res: express.Response, next) =>{
     let user:User;
-    let check = UserEndpointParamCheck.createUser(req);
-    if(check!=null){
-      res.json(check);
-      return;
-    }
-    user = new User(req.body.userid);
-    user.hashedpassword = req.body.password;
+    // let check = UserEndpointParamCheck.createUser(req);
+    // if(check!=null){
+    //   res.json(check);
+    //   return;
+    // }
+    user = new User(req.body.user.userid);
+    user.hashedpassword = req.body.user.password;
     //console.log(JSON.stringify(user));
     UserMiddle.createUser(user)
     .then(result=>{
@@ -59,11 +59,11 @@ export default class UserEndpoint{
 
   public static summary = (req: express.Request, res: express.Response, next)=>{
     let user:User;
-    let check = UserEndpointParamCheck.summary(req);
-    if(check!=null){
-      res.json(check);
-      return;
-    }
+    // let check = UserEndpointParamCheck.summary(req);
+    // if(check!=null){
+    //   res.json(check);
+    //   return;
+    // }
     user = Utils.extractUser(req);
     if(user.userid!=req.params.userid){
       res.json(Utils.jsonErr(new Error(Const.USER_MISMATCH)));
@@ -81,11 +81,11 @@ export default class UserEndpoint{
   */
   public static isUserAvailable(req:express.Request, res:express.Response, next){
     let user:User;
-    let check = UserEndpointParamCheck.isUserAvailable(req);
-    if(check!=null){
-      res.json(check);
-      return;
-    }
+    // let check = UserEndpointParamCheck.isUserAvailable(req);
+    // if(check!=null){
+    //   res.json(check);
+    //   return;
+    // }
     user = new User(req.body.userid);
     UserMiddle.isUserAvailable(user)
     .then(result=>{

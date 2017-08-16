@@ -13,7 +13,7 @@ const set_done_1 = require("./set_done");
 const utils_1 = require("../../middles/useful/utils");
 const types_1 = require("../../middles/useful/types");
 const index_1 = require("../index");
-let ajv = new AJV();
+let ajv = new AJV({ useDefaults: true });
 ajv.addSchema(add_tags_1.AddTagsSchema, index_1.Schemas.Notes.ADD_TAGS_SCHEMA);
 ajv.addSchema(change_links_1.ChangeLinksSchema, index_1.Schemas.Notes.CHANGE_LINKS_SCHEMA);
 ajv.addSchema(change_title_1.ChangeTitleSchema, index_1.Schemas.Notes.CHANGE_TITLE_SCHEMA);
@@ -27,7 +27,6 @@ ajv.addSchema(set_done_1.SetDoneSchema, index_1.Schemas.Notes.SET_DONE_SCHEMA);
 function valid(schema) {
     return (req, res, next) => {
         let valid = ajv.validate(schema, req.body);
-        console.log(valid);
         if (valid) {
             return next();
         }

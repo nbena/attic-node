@@ -8,7 +8,7 @@ export const SetDoneSchema = {
       },
       "isdone":{"type":"boolean"}
     },
-    "required": ["title", "isodne"]
+    "required": ["title", "isdone"]
   },
 
 

@@ -5,7 +5,8 @@ exports.NotesByTextSchema = {
         "type": "object",
         "properties": {
             "text": {
-                "type": "string"
+                "type": "string",
+                "minLength": 1
             }
         },
         "required": ["text"]

@@ -27,7 +27,6 @@ var Schemas;
     Schemas.Tags = Tags;
     class Users {
     }
-    Users.CREATE_USER_SCHEMA = 'create-user-schema';
     Users.IS_USER_VALID_SCHEMA = 'is-user-valid-schema';
     Schemas.Users = Users;
 })(Schemas = exports.Schemas || (exports.Schemas = {}));

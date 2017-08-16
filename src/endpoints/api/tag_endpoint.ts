@@ -54,11 +54,11 @@ export default class TagEndpoint{
     let user:User=Utils.extractUser(req);
     let tag:TagClass.Tag;
     let newTitle:string;
-    let result:any = TagEndpointParamCheck.changeTitle(req);
-    if(result!=null){
-      res.json(result);
-      return;
-    }
+    // let result:any = TagEndpointParamCheck.changeTitle(req);
+    // if(result!=null){
+    //   res.json(result);
+    //   return;
+    // }
     tag = new TagClass.Tag();
     tag.title=req.body.tag.title;
     tag.userid=user.userid;
@@ -72,11 +72,11 @@ export default class TagEndpoint{
   public static createTag = (req: express.Request, res: express.Response, next)=>{
     let user:User=Utils.extractUser(req);
     let tag:TagClass.Tag;
-    let result:any = TagEndpointParamCheck.createTag(req);
-    if(result!=null){
-      res.json(result);
-      return;
-    }
+    // let result:any = TagEndpointParamCheck.createTag(req);
+    // if(result!=null){
+    //   res.json(result);
+    //   return;
+    // }
     tag=new TagClass.Tag();
     tag.title=req.params.title;
     tag.userid=user.userid;
@@ -89,11 +89,11 @@ export default class TagEndpoint{
   public static removeTag = (req: express.Request, res: express.Response, next)=>{
     let user:User=Utils.extractUser(req);
     let tag:TagClass.Tag;
-    let result:any = TagEndpointParamCheck.removeTag(req);
-    if(result!=null){
-      res.json(result);
-      return;
-    }
+    // let result:any = TagEndpointParamCheck.removeTag(req);
+    // if(result!=null){
+    //   res.json(result);
+    //   return;
+    // }
     tag=new TagClass.Tag();
     tag.title=req.params.title;
     tag.userid=user.userid;
@@ -106,11 +106,11 @@ export default class TagEndpoint{
   public static selectTagByTitle = (req: express.Request, res: express.Response, next)=>{
     let user:User=Utils.extractUser(req);
     let tag:TagClass.Tag;
-    let result:any = TagEndpointParamCheck.selectTagByTitle(req);
-    if(result!=null){
-      res.json(result);
-      return;
-    }
+    // let result:any = TagEndpointParamCheck.selectTagByTitle(req);
+    // if(result!=null){
+    //   res.json(result);
+    //   return;
+    // }
     tag=new TagClass.Tag();
     tag.title=req.params.title;
     tag.userid=user.userid;
@@ -125,11 +125,11 @@ export default class TagEndpoint{
   /*must write the postgres function!*/
   public static selectTagsByTitleReg = (req: express.Request, res: express.Response, next)=>{
     let user:User=Utils.extractUser(req);
-    let result:any = TagEndpointParamCheck.selectTagsByTitleReg(req);
-    if(result!=null){
-      res.json(result);
-      return;
-    };
+    // let result:any = TagEndpointParamCheck.selectTagsByTitleReg(req);
+    // if(result!=null){
+    //   res.json(result);
+    //   return;
+    // };
     let title:string = '%'+req.body.tag.title+'%';
     TagMiddle.selectTagsByTitleReg(user, title)
     .then(result=>{

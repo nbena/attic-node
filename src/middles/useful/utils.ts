@@ -19,6 +19,8 @@ export default class Utils{
     return res;
   }
 
+
+
   /**
   Return a new user from the params, basic is just a
   return new User(req.user.userid)

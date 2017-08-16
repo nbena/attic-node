@@ -14,15 +14,9 @@ function passportFunc(passport) {
     const localLogin = new LocalStrategy.Strategy(localLoginOpt, (userId, password, done) => {
         db.users.selectByUserId(userId)
             .then(user => {
-            console.log('the password passed by param is');
-            console.log(password);
-            console.log('the user:');
-            console.log(user.hashedpassword);
             return user.checkPassword(password);
         })
             .then(result => {
-            console.log('result is: ');
-            console.log(result);
             if (result) {
                 return done(null, userId);
             }

@@ -20,7 +20,7 @@ export default class AuthEndpoint{
     f@@@ing important: req.user contains a string: the userId.
     */
 
-    AuthMiddle.authenticate(new User(req.user))
+    AuthMiddle.authenticate(new User(req.user.userid))
       .then(result=>{
         res.json(result);
       })

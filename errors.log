@@ -493,3 +493,15 @@
 
 13:55:58 error: database "aattic" does not exist
          connection: "postres://nicola:##############@localhost:5432/aattic"
+
+16:47:23 error: No data returned from the query.
+         query: select title from attic.notes where userid='omni@pollo.com' and text like '%undefined%' order by lastmodificationdate desc, title asc;
+
+16:51:18 error: No data returned from the query.
+         query: select title from attic.notes where userid='omni@pollo.com' and text like '%undefined%' order by lastmodificationdate desc, title asc;
+
+16:52:10 error: No data returned from the query.
+         query: select title from attic.notes where userid='omni@pollo.com' and text like '%wjhdiwhfienoejol%' order by lastmodificationdate desc, title asc;
+
+17:16:12 error: No data returned from the query.
+         query: select title from attic.notes where userid='omni@pollo.com' and text like '%changes%' order by lastmodificationdate desc, title asc;

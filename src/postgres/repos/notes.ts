@@ -327,11 +327,11 @@ export class Repository{
   }
 
   selectNotesByTitleReg(userid:string, title:string):Promise<any>{
-    return this.db.many(sql.selectNotesByTitleReg, [userid, title]);
+    return this.db.many(sql.selectNotesByTitleReg, [userid, '%'+title+'%']);
   }
 
   selectNotesByTextReg(userid:string, text:string):Promise<any>{
-    return this.db.many(sql.selectNotesByTextReg, [userid, text]);
+    return this.db.many(sql.selectNotesByTextReg, [userid, '%'+text+'%']);
   }
 
   selectNotesFull(userid:string):Promise<any>{

@@ -10,7 +10,7 @@ exports.SetDoneSchema = {
             },
             "isdone": { "type": "boolean" }
         },
-        "required": ["title", "isodne"]
+        "required": ["title", "isdone"]
     },
     "type": "object",
     "properties": {

@@ -146,11 +146,6 @@ class NoteEndpoint {
         let roles;
         let result;
         let note;
-        let check = NoteEndpointParamCheck.addTags(req);
-        if (check != null) {
-            res.json(check);
-            return;
-        }
         note = new note_1.default();
         tags = [];
         roles = [];
@@ -197,11 +192,6 @@ class NoteEndpoint {
         let user = utils_1.default.extractUser(req);
         let note;
         let links;
-        let result = NoteEndpointParamCheck.changeLinks(req);
-        if (result != null) {
-            res.json(result);
-            return;
-        }
         note = new note_1.default();
         note.title = req.body.note.title;
         links = req.body.note.links;
@@ -228,11 +218,6 @@ class NoteEndpoint {
         let user = utils_1.default.extractUser(req);
         let note;
         let newTitle;
-        let result = NoteEndpointParamCheck.changeTitle(req);
-        if (result != null) {
-            res.json(result);
-            return;
-        }
         note = new note_1.default();
         note.title = req.body.note.title;
         newTitle = req.body.note.newtitle;
@@ -245,47 +230,25 @@ class NoteEndpoint {
     static createNote(req, res, next) {
         let user = utils_1.default.extractUser(req);
         let note;
-        let result = NoteEndpointParamCheck.createNote(req);
-        if (result != null) {
-            res.json(result);
-            return;
-        }
         note = new note_1.default();
         note.userid = user.userid;
         note.title = req.body.note.title;
         note.text = req.body.note.text;
-        note.isdone = ((req.body.note.isdone != null) ? req.body.note.isdone : false);
-        note.links = ((req.body.note.links != null) ? req.body.note.links : []);
-        if (req.body.note.maintags) {
-            if (req.body.note.maintags.length > 0) {
-                note.maintags = req.body.note.maintags;
-            }
-        }
-        else {
-            note.maintags = [];
-        }
-        if (req.body.note.othertags) {
-            if (req.body.note.othertags.length > 0) {
-                note.othertags = req.body.note.othertags;
-            }
-        }
-        else {
-            note.othertags = [];
-        }
+        note.maintags = req.body.note.maintags;
+        note.othertags = req.body.note.othertags;
         if (req.body.note.lastmodificationdate) {
             note.lastmodificationdate = new Date(req.body.note.lastmodificationdate);
-            console.log('ok lastmodificationdate');
         }
         else {
             note.lastmodificationdate = new Date();
         }
         if (req.body.note.creationdate) {
             note.creationdate = new Date(req.body.note.creationdate);
-            console.log('ok creationdate');
         }
         else {
             note.creationdate = new Date();
         }
+        console.log(note);
         note_middle_1.default.createNote(note)
             .then(result => {
             res.json(result);
@@ -294,11 +257,6 @@ class NoteEndpoint {
     static removeNote(req, res, next) {
         let user = utils_1.default.extractUser(req);
         let note;
-        let result = NoteEndpointParamCheck.removeNote(req);
-        if (result != null) {
-            res.json(result);
-            return;
-        }
         note = new note_1.default();
         note.userid = user.userid;
         note.title = req.params.title;
@@ -311,11 +269,6 @@ class NoteEndpoint {
         let user = utils_1.default.extractUser(req);
         let note;
         let tags = [];
-        let result = NoteEndpointParamCheck.removeTagsFromNote(req);
-        if (result != null) {
-            res.json(result);
-            return;
-        }
         note = new note_1.default();
         note.title = req.body.note.title;
         note.userid = user.userid;
@@ -344,11 +297,6 @@ class NoteEndpoint {
     static selectNotesByTagsNoRoleCore(req, res, next, and) {
         let user = utils_1.default.extractUser(req);
         let tags = [];
-        let result = NoteEndpointParamCheck.selectNotesByTagsNoRole(req);
-        if (result != null) {
-            res.json(result);
-            return;
-        }
         req.body.tags.map((currentValue) => {
             let t = new TagClass.Tag();
             t.title = currentValue;
@@ -363,11 +311,6 @@ class NoteEndpoint {
         let user = utils_1.default.extractUser(req);
         let tags = [];
         let roles = [];
-        let result = NoteEndpointParamCheck.selectNotesByTagsWithRole(req);
-        if (result != null) {
-            res.json(result);
-            return;
-        }
         if (req.body.note.maintags) {
             req.body.mainTags.map((currentValue, currentIndex) => {
                 let tag = new TagClass.Tag();
@@ -392,11 +335,6 @@ class NoteEndpoint {
     static selectNoteByTitle(req, res, next) {
         let user = utils_1.default.extractUser(req);
         let note;
-        let result = NoteEndpointParamCheck.selectNoteByTitle(req);
-        if (result != null) {
-            res.json(result);
-            return;
-        }
         note = new note_1.default();
         note.title = req.params.title;
         note.userid = user.userid;
@@ -408,13 +346,7 @@ class NoteEndpoint {
     static selectNoteByTitleReg(req, res, next) {
         let user = utils_1.default.extractUser(req);
         let title;
-        let result = NoteEndpointParamCheck.selectNotesByTitleReg(req);
-        if (result != null) {
-            res.json(result);
-            return;
-        }
-        title = req.body.title;
-        title = '%' + title + '%';
+        title = req.body.note.title;
         note_middle_1.default.selectNotesByTitleReg(user.userid, title)
             .then(result => {
             res.json(result);
@@ -423,13 +355,7 @@ class NoteEndpoint {
     static selectNoteByTextReg(req, res, next) {
         let user = utils_1.default.extractUser(req);
         let text;
-        let result = NoteEndpointParamCheck.selectNotesByTextReg(req);
-        if (result != null) {
-            res.json(result);
-            return;
-        }
-        text = req.body.text;
-        text = '%' + text + '%';
+        text = req.body.note.text;
         note_middle_1.default.selectNotesByTextReg(user.userid, text)
             .then(result => {
             res.json(result);
@@ -439,11 +365,6 @@ class NoteEndpoint {
         let user = utils_1.default.extractUser(req);
         let isDone;
         let note;
-        let result = NoteEndpointParamCheck.setDone(req);
-        if (result != null) {
-            res.json(result);
-            return;
-        }
         note = new note_1.default();
         note.userid = user.userid;
         note.title = req.body.note.title;

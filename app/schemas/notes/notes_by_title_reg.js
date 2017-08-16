@@ -6,7 +6,8 @@ exports.NotesByTitleRegSchema = {
         "properties": {
             "title": {
                 "type": "string",
-                "maxLength": 64
+                "maxLength": 64,
+                "minLength": 1
             }
         },
         "required": ["title"]

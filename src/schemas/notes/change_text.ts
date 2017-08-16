@@ -4,9 +4,12 @@ export const ChangeTextSchema = {
     "properties": {
       "title": {
         "type": "string",
-        "maxLength":64
+        "maxLength": 64
       },
-      "text": {"type": "string"},
+      "text": {
+        "type": "string",
+        "minLength": 2
+      },
     },
     "required": ["title", "text"]
   },

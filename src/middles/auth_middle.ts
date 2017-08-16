@@ -6,7 +6,7 @@ import * as UsefulTypes from './useful/types';
 
 export default class AuthMiddle{
 
-  public static getToken = (headers):string=>{
+  private static getToken(headers):string{
     let res:string[];
     if(!headers.authorization){
       return null;
@@ -19,7 +19,7 @@ export default class AuthMiddle{
   }
 
 
-public static getUserFromToken = (headers):User=>{
+public static getUserFromToken(headers):User{
   let token:string = AuthMiddle.getToken(headers);
   if(token==null){
     throw new Error('NO TOKEN');
@@ -29,7 +29,7 @@ public static getUserFromToken = (headers):User=>{
 }
 
 
-public static generateToken = (user:User)=>{
+public static generateToken(user:User){
   let obj:object = {userid: user.userid};
   return jwt.sign(
     obj
@@ -37,7 +37,7 @@ public static generateToken = (user:User)=>{
 }
 
 
-public static authenticate = (user:User):Promise<UsefulTypes.AuthResult>=>{
+public static authenticate(user:User):Promise<UsefulTypes.AuthResult>{
   return new Promise((resolve, reject)=>{
     let result:UsefulTypes.AuthResult = new UsefulTypes.AuthResult();
     result.ok=true;

@@ -6,13 +6,15 @@ exports.CreateNoteSchema = {
         "properties": {
             "title": {
                 "type": "string",
+                "minLength": 1,
                 "maxLength": 64
             },
-            "text": { "type": "string" },
-            "isdone": { "type": "boolean" },
+            "text": { "type": "string", "minLength": 2 },
+            "isdone": { "type": "boolean", "default": false },
             "links": {
                 "type": "array",
-                "items": { "type": "string", "format": "uri" }
+                "items": { "type": "string", "format": "uri" },
+                "default": []
             },
             "lastmodificationdate": {
                 "type": "string",
@@ -29,7 +31,8 @@ exports.CreateNoteSchema = {
                     "maxLength": 64
                 },
                 "maxItems": 3,
-                "minItems": 0
+                "minItems": 0,
+                "default": []
             },
             "othertags": {
                 "type": "array",
@@ -38,7 +41,8 @@ exports.CreateNoteSchema = {
                     "maxLength": 64
                 },
                 "maxItems": 10,
-                "minItems": 0
+                "minItems": 0,
+                "default": []
             }
         },
         "required": ["title", "text"]

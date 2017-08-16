@@ -30,7 +30,7 @@ export namespace Schemas{
 
   export class Users{
 
-    public static readonly CREATE_USER_SCHEMA = 'create-user-schema';
+    // public static readonly CREATE_USER_SCHEMA = 'create-user-schema';
     public static readonly IS_USER_VALID_SCHEMA = 'is-user-valid-schema';
 
   }

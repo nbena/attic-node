@@ -20,7 +20,7 @@ import Utils from '../../middles/useful/utils';
 import { JsonError } from '../../middles/useful/types';
 import  {Schemas} from '../index';
 
-let ajv = new AJV();
+let ajv = new AJV({useDefaults:true});
 
 ajv.addSchema(AddTagsSchema, Schemas.Notes.ADD_TAGS_SCHEMA);
 ajv.addSchema(ChangeLinksSchema, Schemas.Notes.CHANGE_LINKS_SCHEMA);
@@ -35,15 +35,12 @@ ajv.addSchema(SetDoneSchema, Schemas.Notes.SET_DONE_SCHEMA);
 
 function valid(schema:string):any{
 
-
   return (req:express.Request, res:express.Response, next)=>{
     let valid = ajv.validate(schema, req.body);
-    console.log(valid);
+    // console.log(valid);
     if(valid){
-
       return next();
     }
-
     else{
       /*
       res.status(400).json({

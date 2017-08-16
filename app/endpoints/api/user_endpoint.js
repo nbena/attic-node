@@ -31,11 +31,6 @@ class UserEndpointParamCheck {
 class UserEndpoint {
     static isUserAvailable(req, res, next) {
         let user;
-        let check = UserEndpointParamCheck.isUserAvailable(req);
-        if (check != null) {
-            res.json(check);
-            return;
-        }
         user = new user_1.default(req.body.userid);
         user_middle_1.default.isUserAvailable(user)
             .then(result => {
@@ -45,13 +40,8 @@ class UserEndpoint {
 }
 UserEndpoint.createUser = (req, res, next) => {
     let user;
-    let check = UserEndpointParamCheck.createUser(req);
-    if (check != null) {
-        res.json(check);
-        return;
-    }
-    user = new user_1.default(req.body.userid);
-    user.hashedpassword = req.body.password;
+    user = new user_1.default(req.body.user.userid);
+    user.hashedpassword = req.body.user.password;
     user_middle_1.default.createUser(user)
         .then(result => {
         res.json(result);
@@ -59,11 +49,6 @@ UserEndpoint.createUser = (req, res, next) => {
 };
 UserEndpoint.summary = (req, res, next) => {
     let user;
-    let check = UserEndpointParamCheck.summary(req);
-    if (check != null) {
-        res.json(check);
-        return;
-    }
     user = utils_1.default.extractUser(req);
     if (user.userid != req.params.userid) {
         res.json(utils_1.default.jsonErr(new Error(const_1.Const.USER_MISMATCH)));

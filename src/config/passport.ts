@@ -25,15 +25,15 @@ function passportFunc(passport: passport.Passport){
     (userId: string, password: string, done)=>{
       db.users.selectByUserId(userId)
       .then(user=>{
-        console.log('the password passed by param is');
-        console.log(password);
-        console.log('the user:');
-        console.log(user.hashedpassword);
+        // console.log('the password passed by param is');
+        // console.log(password);
+        // console.log('the user:');
+        // console.log(user.hashedpassword);
         return user.checkPassword(password)
       })
         .then(result=>{
-          console.log('result is: ');
-          console.log(result);
+          // console.log('result is: ');
+          // console.log(result);
           if(result){
             return done(null, userId);
           }else{
