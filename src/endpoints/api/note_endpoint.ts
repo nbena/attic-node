@@ -11,166 +11,157 @@ import NoteMiddle from '../../middles/note_middle';
 
 import * as express from 'express';
 
-class NoteEndpointParamCheck{
-
-  static title(req: express.Request):BasicResult{
-    let result:any = null;
-    if(!req.body.note.title || !req.body.note){
-      result = Utils.jsonErr(new JsonError(Const.NOTE_REQUIRED));
-    }
-    return result;
-  }
-
-  static addTags(req: express.Request):BasicResult{
-    let result: any = null;
-    result = NoteEndpointParamCheck.title(req);
-    if(req.body.note.maintags == null && req.body.note.othertags == null){
-      result = Utils.jsonErr(new JsonError(Const.TAGS_REQUIRED));
-    }
-    else if(req.body.note.maintags!=null){
-      if(req.body.note.maintags instanceof Array==false){
-        result = Utils.jsonErr(new JsonError(Const.NO_ARR_INST));
-      }
-
-    }
-    if(req.body.note.othertags!=null){
-      if(req.body.note.othertags instanceof Array==false){
-        result = Utils.jsonErr(new JsonError(Const.NO_ARR_INST));
-      }
-    }
-    return result;
-  }
-
-  // static checkNote(req:express.Request):any{
-  //   let result;
-  //   try{
-  //     result=<Note>req.body.note; /*test this.*/
-  //   }catch(e){
-  //     result=Utils.jsonErr(new Error(Const.INVALID_NOTE));
-  //   }
-  //   return result;
-  // }
-
-  static changeLinks(req: express.Request):BasicResult{
-    let result: any = null;
-    result = NoteEndpointParamCheck.title(req);
-    if(!req.body.note.links || req.body.note.links !instanceof Array){
-      result = Utils.jsonErr(new JsonError(Const.LINKS_REQUIRED));
-    }
-    return result;
-  }
-
-  static changeText(req: express.Request):BasicResult{
-    let result: any = null;
-    result = NoteEndpointParamCheck.title(req);
-    if(!req.body.note.text){
-      result = Utils.jsonErr(new JsonError(Const.TEXT_REQUIRED));
-    }
-    return result;
-  }
-
-  static changeTitle(req: express.Request):BasicResult{
-    let result: any = null;
-    result = NoteEndpointParamCheck.title(req);
-    if(!req.body.note.newtitle){
-      result = Utils.jsonErr(new JsonError(Const.TITLE_REQUIRED));
-    }
-    return result;
-  }
-
-  static createNote(req: express.Request):BasicResult{
-    let result:any=NoteEndpointParamCheck.changeText(req);
-    if(req.body.note.maintags){
-      if(req.body.note.maintags instanceof Array==false){
-        result = Utils.jsonErr(new JsonError(Const.INVALID_NOTE));
-      }
-    }
-    if(req.body.note.otherTags){
-      if(req.body.note.otherTags instanceof Array==false){
-        result = Utils.jsonErr(new JsonError(Const.INVALID_NOTE));
-      }
-    }
-    if(req.body.note.links){
-      if(req.body.note.links instanceof Array==false){
-        result = Utils.jsonErr(new JsonError(Const.LINK_NOT_ARRAY));
-      }
-    }
-    return result;
-  }
-
-  static removeNote(req: express.Request):BasicResult{
-    let result:any=null;
-    if(!req.params.title){
-      result=Utils.jsonErr(new JsonError(Const.TITLE_REQUIRED));
-    }
-    return result;
-  }
-
-  /*rewrite this checks.*/
-  static removeTagsFromNote(req: express.Request):BasicResult{
-    let result:any = null;
-    result = NoteEndpointParamCheck.title(req);
-    if(!req.body.note.tags && req.body.note.tags !instanceof Array){
-      result = Utils.jsonErr(new JsonError(Const.TAGS_REQUIRED));
-    }
-    return result;
-  }
-
-  static selectNotesByTagsNoRole(req: express.Request):BasicResult{
-    // console.log('req: is');
-    // console.log(JSON.stringify(req.body));
-    let result:any = null;
-    if(req.body.tags ==  null){
-      result = Utils.jsonErr(new JsonError(Const.GEN_TAGS_REQUIRED));
-    }else if(req.body.tags instanceof Array==false){
-      result = Utils.jsonErr(new JsonError(Const.TAGS_NOT_ARRAY));
-    }
-    return result;
-  }
-
-  static selectNoteByTitle(req: express.Request):BasicResult{
-    return NoteEndpointParamCheck.removeNote(req);
-  }
-
-  static selectNotesByTextReg(req: express.Request):BasicResult{
-    let result:any = null;
-    if(req.body.text == null /*|| req.body.title instanceof String == false*/){
-      result = Utils.jsonErr(new JsonError(Const.TEXT_BASIC_REQUIRED));
-    }
-    return result;
-  }
-
-  static selectNotesByTitleReg(req: express.Request):BasicResult{
-    let result:any = null;
-    if(req.body.title == null /*|| req.body.title instanceof String == false*/){
-      result = Utils.jsonErr(new JsonError(Const.TITLE_BASIC_REQUIRED));
-    }
-    return result;
-  }
-
-  static selectNotesByTagsWithRole(req: express.Request):BasicResult{
-    let result:any = null;
-    if(req.body.maintags ==  null || req.body.othertags == null){
-      result = Utils.jsonErr(new JsonError(Const.TAGS_REQUIRED));
-    }
-    if(req.body.maintags && req.body.maintags !instanceof Array){
-      result = Utils.jsonErr(new JsonError(Const.TAGS_NOT_ARRAY));
-    }
-    if(req.body.othertags && req.body.othertags !instanceof Array){
-      result = Utils.jsonErr(new JsonError(Const.TAGS_NOT_ARRAY));
-    }
-    return result;
-  }
-
-  static setDone(req: express.Request):BasicResult{
-    let result:any=NoteEndpointParamCheck.title(req);
-    if(!req.body.note.isdone){
-      result = Utils.jsonErr(new JsonError(Const.IS_DONE_REQUIRED));
-    }
-    return result;
-  }
-
-}
+// class NoteEndpointParamCheck{
+//
+//   static title(req: express.Request):BasicResult{
+//     let result:any = null;
+//     if(!req.body.note.title || !req.body.note){
+//       result = Utils.jsonErr(new JsonError(Const.NOTE_REQUIRED));
+//     }
+//     return result;
+//   }
+//
+//   static addTags(req: express.Request):BasicResult{
+//     let result: any = null;
+//     result = NoteEndpointParamCheck.title(req);
+//     if(req.body.note.maintags == null && req.body.note.othertags == null){
+//       result = Utils.jsonErr(new JsonError(Const.TAGS_REQUIRED));
+//     }
+//     else if(req.body.note.maintags!=null){
+//       if(req.body.note.maintags instanceof Array==false){
+//         result = Utils.jsonErr(new JsonError(Const.NO_ARR_INST));
+//       }
+//
+//     }
+//     if(req.body.note.othertags!=null){
+//       if(req.body.note.othertags instanceof Array==false){
+//         result = Utils.jsonErr(new JsonError(Const.NO_ARR_INST));
+//       }
+//     }
+//     return result;
+//   }
+//
+//
+//   static changeLinks(req: express.Request):BasicResult{
+//     let result: any = null;
+//     result = NoteEndpointParamCheck.title(req);
+//     if(!req.body.note.links || req.body.note.links !instanceof Array){
+//       result = Utils.jsonErr(new JsonError(Const.LINKS_REQUIRED));
+//     }
+//     return result;
+//   }
+//
+//   static changeText(req: express.Request):BasicResult{
+//     let result: any = null;
+//     result = NoteEndpointParamCheck.title(req);
+//     if(!req.body.note.text){
+//       result = Utils.jsonErr(new JsonError(Const.TEXT_REQUIRED));
+//     }
+//     return result;
+//   }
+//
+//   static changeTitle(req: express.Request):BasicResult{
+//     let result: any = null;
+//     result = NoteEndpointParamCheck.title(req);
+//     if(!req.body.note.newtitle){
+//       result = Utils.jsonErr(new JsonError(Const.TITLE_REQUIRED));
+//     }
+//     return result;
+//   }
+//
+//   static createNote(req: express.Request):BasicResult{
+//     let result:any=NoteEndpointParamCheck.changeText(req);
+//     if(req.body.note.maintags){
+//       if(req.body.note.maintags instanceof Array==false){
+//         result = Utils.jsonErr(new JsonError(Const.INVALID_NOTE));
+//       }
+//     }
+//     if(req.body.note.otherTags){
+//       if(req.body.note.otherTags instanceof Array==false){
+//         result = Utils.jsonErr(new JsonError(Const.INVALID_NOTE));
+//       }
+//     }
+//     if(req.body.note.links){
+//       if(req.body.note.links instanceof Array==false){
+//         result = Utils.jsonErr(new JsonError(Const.LINK_NOT_ARRAY));
+//       }
+//     }
+//     return result;
+//   }
+//
+//   static removeNote(req: express.Request):BasicResult{
+//     let result:any=null;
+//     if(!req.params.title){
+//       result=Utils.jsonErr(new JsonError(Const.TITLE_REQUIRED));
+//     }
+//     return result;
+//   }
+//
+//   /*rewrite this checks.*/
+//   static removeTagsFromNote(req: express.Request):BasicResult{
+//     let result:any = null;
+//     result = NoteEndpointParamCheck.title(req);
+//     if(!req.body.note.tags && req.body.note.tags !instanceof Array){
+//       result = Utils.jsonErr(new JsonError(Const.TAGS_REQUIRED));
+//     }
+//     return result;
+//   }
+//
+//   static selectNotesByTagsNoRole(req: express.Request):BasicResult{
+//     // console.log('req: is');
+//     // console.log(JSON.stringify(req.body));
+//     let result:any = null;
+//     if(req.body.tags ==  null){
+//       result = Utils.jsonErr(new JsonError(Const.GEN_TAGS_REQUIRED));
+//     }else if(req.body.tags instanceof Array==false){
+//       result = Utils.jsonErr(new JsonError(Const.TAGS_NOT_ARRAY));
+//     }
+//     return result;
+//   }
+//
+//   static selectNoteByTitle(req: express.Request):BasicResult{
+//     return NoteEndpointParamCheck.removeNote(req);
+//   }
+//
+//   static selectNotesByTextReg(req: express.Request):BasicResult{
+//     let result:any = null;
+//     if(req.body.text == null /*|| req.body.title instanceof String == false*/){
+//       result = Utils.jsonErr(new JsonError(Const.TEXT_BASIC_REQUIRED));
+//     }
+//     return result;
+//   }
+//
+//   static selectNotesByTitleReg(req: express.Request):BasicResult{
+//     let result:any = null;
+//     if(req.body.title == null /*|| req.body.title instanceof String == false*/){
+//       result = Utils.jsonErr(new JsonError(Const.TITLE_BASIC_REQUIRED));
+//     }
+//     return result;
+//   }
+//
+//   static selectNotesByTagsWithRole(req: express.Request):BasicResult{
+//     let result:any = null;
+//     if(req.body.maintags ==  null || req.body.othertags == null){
+//       result = Utils.jsonErr(new JsonError(Const.TAGS_REQUIRED));
+//     }
+//     if(req.body.maintags && req.body.maintags !instanceof Array){
+//       result = Utils.jsonErr(new JsonError(Const.TAGS_NOT_ARRAY));
+//     }
+//     if(req.body.othertags && req.body.othertags !instanceof Array){
+//       result = Utils.jsonErr(new JsonError(Const.TAGS_NOT_ARRAY));
+//     }
+//     return result;
+//   }
+//
+//   static setDone(req: express.Request):BasicResult{
+//     let result:any=NoteEndpointParamCheck.title(req);
+//     if(!req.body.note.isdone){
+//       result = Utils.jsonErr(new JsonError(Const.IS_DONE_REQUIRED));
+//     }
+//     return result;
+//   }
+//
+// }
 
 export default class NoteEndpoint{
 
@@ -394,10 +385,10 @@ export default class NoteEndpoint{
     note = new Note();
     note.title=req.body.note.title;
     note.userid=user.userid;
-    req.body.note.tags.map((currentValue)=>{
+    tags = req.body.note.tags.map((currentValue)=>{
       let t = new TagClass.Tag();
       t.title=currentValue;
-      tags.push(t);
+      return t
     });
     NoteMiddle.removeTagsFromNote(note, tags)
     .then(result=>{

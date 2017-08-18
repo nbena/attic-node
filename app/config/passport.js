@@ -11,14 +11,14 @@ const jwtOpt = {
     secretOrKey: database_1.default.secret
 };
 function passportFunc(passport) {
-    const localLogin = new LocalStrategy.Strategy(localLoginOpt, (userId, password, done) => {
-        db.users.selectByUserId(userId)
+    const localLogin = new LocalStrategy.Strategy(localLoginOpt, (userid, password, done) => {
+        db.users.selectByUserId(userid)
             .then(user => {
             return user.checkPassword(password);
         })
             .then(result => {
             if (result) {
-                return done(null, userId);
+                return done(null, userid);
             }
             else {
                 return done(null, false);

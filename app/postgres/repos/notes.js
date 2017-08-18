@@ -80,20 +80,17 @@ class Repository {
         let values = note.getValues();
         return this.db.none(sql.removeNote, values);
     }
+    removeTagsString(length) {
+        let base = Repository.REMOVE_TAGS_FROM_NOTES_START;
+        let things = [];
+        for (let i = 0; i < length; i++) {
+            base += (' (tagtitle=$' + (i + 3) + ') or');
+        }
+        base = base.substr(0, base.length - 2);
+        return base;
+    }
     removeTagsFromNote(note, tags) {
-        let values = note.getValues();
-        return this.db.tx(t => {
-            let queries = [tags.length];
-            for (let i = 0; i < tags.length; i++) {
-                let values = {
-                    userid: note.userid,
-                    noteTitle: note.title,
-                    tagTitle: tags[i].title
-                };
-                queries.push(t.none(sql.removeTagsFromNote, values));
-            }
-            return t.batch(queries);
-        });
+        return this.db.none(this.removeTagsString(tags.length), [note.userid, note.title].concat(tags.map(obj => { return obj.title; })));
     }
     static getQueryNotesByTagsNoRole(userid, tags, and) {
         let tagsTitle = tags.map((currentValue) => {
@@ -171,5 +168,6 @@ class Repository {
     }
 }
 Repository.SELECT_NOTES_BY_TAGS_START = 'select distinct notetitle as title from attic.notes_tags where attic.notes_tags.userId=\'';
+Repository.REMOVE_TAGS_FROM_NOTES_START = 'delete from attic.notes where userid=$1 and notetitle=$2 and ';
 exports.Repository = Repository;
 //# sourceMappingURL=notes.js.map

@@ -20,7 +20,6 @@ import auth from './routes/api/auth';
 import * as passport from 'passport';
 import * as jwt from 'jsonwebtoken';
 
-import * as ajv from 'express-ajv';
 
 const app: express.Express = express();
 
@@ -52,8 +51,6 @@ app.use('/api/tags', tags);
 app.use('/api/users', users);
 app.use('/api/auth', auth);
 
-
-app.use(ajv.defaultErrorHandler);
 
 /*
 TODO: 404 for api error.

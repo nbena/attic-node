@@ -15,7 +15,7 @@ doing so, the endpoint willbe easy to write (no catch).
 
 export default class NoteMiddle{
 
-public static addTags = (note:Note, tags:TagClass.Tag[], roles:string[]):Promise<types.Result>=>{
+public static addTags (note:Note, tags:TagClass.Tag[], roles:string[]):Promise<types.Result>{
   return new Promise<types.Result>((resolve, reject)=>{
     db.notes.addTags(note, tags, roles)
     .then(result=>{
@@ -29,7 +29,7 @@ public static addTags = (note:Note, tags:TagClass.Tag[], roles:string[]):Promise
 }
 
 
-public static changeLinks = (note:Note, links:string[]):Promise<types.Result>=>{
+public static changeLinks (note:Note, links:string[]):Promise<types.Result>{
   return new Promise<types.Result>((resolve, reject)=>{
     db.notes.changeLinks(note, links)
     .then(result=>{
@@ -42,7 +42,7 @@ public static changeLinks = (note:Note, links:string[]):Promise<types.Result>=>{
   });
 }
 
-public static changeText = (note:Note, text:string):Promise<types.Result>=>{
+public static changeText (note:Note, text:string):Promise<types.Result>{
   return new Promise<types.Result>((resolve, reject)=>{
     db.notes.changeText(note, text)
     .then(result=>{
@@ -55,7 +55,7 @@ public static changeText = (note:Note, text:string):Promise<types.Result>=>{
   });
 }
 
-public static changeTitle = (note:Note, title:string):Promise<types.Result>=>{
+public static changeTitle (note:Note, title:string):Promise<types.Result>{
   return new Promise<types.Result>((resolve, reject)=>{
     db.notes.changeTitle(note, title)
     .then(result=>{
@@ -68,7 +68,7 @@ public static changeTitle = (note:Note, title:string):Promise<types.Result>=>{
   });
 }
 
-public static createNote = (note:Note):Promise<types.Result>=>{
+public static createNote (note:Note):Promise<types.Result>{
   return new Promise<types.Result>((resolve, reject)=>{
     let result:Promise<any>;
     result=db.notes.createNote(note);
@@ -89,7 +89,7 @@ public static createNote = (note:Note):Promise<types.Result>=>{
   });
 }
 
-public static removeNote = (note:Note):Promise<types.Result>=>{
+public static removeNote (note:Note):Promise<types.Result>{
   return new Promise((resolve, reject)=>{
     db.notes.removeNote(note)
       .then(result=>{
@@ -106,7 +106,7 @@ public static removeNote = (note:Note):Promise<types.Result>=>{
   })
 }
 
-public static removeTagsFromNote = (note:Note, tags:TagClass.Tag[]):Promise<types.Result>=>{
+public static removeTagsFromNote (note:Note, tags:TagClass.Tag[]):Promise<types.Result>{
   return new Promise<types.Result>((resolve, reject)=>{
     db.notes.removeTagsFromNote(note, tags)
       .then(result=>{
@@ -119,7 +119,7 @@ public static removeTagsFromNote = (note:Note, tags:TagClass.Tag[]):Promise<type
   })
 }
 
-public static selectNotesByTagsNoRole = (userId: string, tags:TagClass.Tag[], and: boolean):Promise<types.Result>=>{
+public static selectNotesByTagsNoRole(userId: string, tags:TagClass.Tag[], and: boolean):Promise<types.Result>{
   return new Promise<types.Result>((resolve, reject)=>{
     db.notes.selectNotesByTagsNoRole(userId, tags, and)
     .then(rawResult=>{
@@ -132,7 +132,7 @@ public static selectNotesByTagsNoRole = (userId: string, tags:TagClass.Tag[], an
 }
 
 
-public static selectNotesByTagsWithRole = (userId: string, tags:TagClass.Tag[], roles:string[], and: boolean):Promise<types.Result>=>{
+public static selectNotesByTagsWithRole(userId: string, tags:TagClass.Tag[], roles:string[], and: boolean):Promise<types.Result>{
   return new Promise<types.Result>((resolve, reject)=>{
     /*even if the db takes control of correct parameters, I prefer doing it now too.*/
     if(tags.length!=roles.length){
@@ -151,7 +151,7 @@ public static selectNotesByTagsWithRole = (userId: string, tags:TagClass.Tag[], 
 
 
 
-public static selectNoteByTitle = (note:Note):Promise<types.Result>=>{
+public static selectNoteByTitle(note:Note):Promise<types.Result>{
   return new Promise<types.Result>((resolve, reject)=>{
     db.notes.selectNoteByTitle(note)
     .then(note=>{
@@ -164,7 +164,7 @@ public static selectNoteByTitle = (note:Note):Promise<types.Result>=>{
 }
 
 
-public static selectNotesByTitleReg = (userId: string, title:string):Promise<types.Result>=>{
+public static selectNotesByTitleReg(userId: string, title:string):Promise<types.Result>{
   return new Promise<types.Result>((resolve, reject)=>{
     db.notes.selectNotesByTitleReg(userId, title)
     .then(notes=>{
@@ -177,7 +177,7 @@ public static selectNotesByTitleReg = (userId: string, title:string):Promise<typ
 }
 
 
-public static selectNotesByTextReg = (userId: string, text:string):Promise<types.Result>=>{
+public static selectNotesByTextReg(userId: string, text:string):Promise<types.Result>{
   return new Promise<types.Result>((resolve, reject)=>{
     db.notes.selectNotesByTextReg(userId, text)
     .then(notes=>{
@@ -190,7 +190,7 @@ public static selectNotesByTextReg = (userId: string, text:string):Promise<types
 }
 
 
-  public static selectAllNotesMin = (user:User):Promise<types.Result>=>{
+  public static selectAllNotesMin(user:User):Promise<types.Result>{
     return new Promise<types.Result>((resolve, reject)=>{
       db.notes.selectNotesMin(user)
       .then(notes=>{
@@ -214,7 +214,7 @@ public static selectNotesByTextReg = (userId: string, text:string):Promise<types
     });
   }
 
-  public static setDone = (note:Note, done:boolean):Promise<types.Result>=>{
+  public static setDone (note:Note, done:boolean):Promise<types.Result>{
     return new Promise<types.Result>((resolve, reject)=>{
       db.notes.setDone(note, done)
         .then(result=>{

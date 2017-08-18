@@ -21,6 +21,10 @@ export default class Note{
   //   }
   //   return values;
   // }
+
+  /**
+  Return [this.userid, this.title]
+  */
   public getValues():string[]{
     return [this.userid, this.title];
   }

@@ -22,8 +22,8 @@ function passportFunc(passport: passport.Passport){
   the db returns an object of type User.
   */
   const localLogin = new LocalStrategy.Strategy(localLoginOpt,
-    (userId: string, password: string, done)=>{
-      db.users.selectByUserId(userId)
+    (userid: string, password: string, done)=>{
+      db.users.selectByUserId(userid)
       .then(user=>{
         // console.log('the password passed by param is');
         // console.log(password);
@@ -35,7 +35,7 @@ function passportFunc(passport: passport.Passport){
           // console.log('result is: ');
           // console.log(result);
           if(result){
-            return done(null, userId);
+            return done(null, userid);
           }else{
             return done(null, false);
           }

@@ -2,142 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const note_1 = require("../../models/note");
 const TagClass = require("../../models/tag");
-const const_1 = require("../../middles/useful/const");
 const utils_1 = require("../../middles/useful/utils");
-const types_1 = require("../../middles/useful/types");
 const note_middle_1 = require("../../middles/note_middle");
-class NoteEndpointParamCheck {
-    static title(req) {
-        let result = null;
-        if (!req.body.note.title || !req.body.note) {
-            result = utils_1.default.jsonErr(new types_1.JsonError(const_1.Const.NOTE_REQUIRED));
-        }
-        return result;
-    }
-    static addTags(req) {
-        let result = null;
-        result = NoteEndpointParamCheck.title(req);
-        if (req.body.note.maintags == null && req.body.note.othertags == null) {
-            result = utils_1.default.jsonErr(new types_1.JsonError(const_1.Const.TAGS_REQUIRED));
-        }
-        else if (req.body.note.maintags != null) {
-            if (req.body.note.maintags instanceof Array == false) {
-                result = utils_1.default.jsonErr(new types_1.JsonError(const_1.Const.NO_ARR_INST));
-            }
-        }
-        if (req.body.note.othertags != null) {
-            if (req.body.note.othertags instanceof Array == false) {
-                result = utils_1.default.jsonErr(new types_1.JsonError(const_1.Const.NO_ARR_INST));
-            }
-        }
-        return result;
-    }
-    static changeLinks(req) {
-        let result = null;
-        result = NoteEndpointParamCheck.title(req);
-        if (!req.body.note.links || req.body.note.links instanceof Array) {
-            result = utils_1.default.jsonErr(new types_1.JsonError(const_1.Const.LINKS_REQUIRED));
-        }
-        return result;
-    }
-    static changeText(req) {
-        let result = null;
-        result = NoteEndpointParamCheck.title(req);
-        if (!req.body.note.text) {
-            result = utils_1.default.jsonErr(new types_1.JsonError(const_1.Const.TEXT_REQUIRED));
-        }
-        return result;
-    }
-    static changeTitle(req) {
-        let result = null;
-        result = NoteEndpointParamCheck.title(req);
-        if (!req.body.note.newtitle) {
-            result = utils_1.default.jsonErr(new types_1.JsonError(const_1.Const.TITLE_REQUIRED));
-        }
-        return result;
-    }
-    static createNote(req) {
-        let result = NoteEndpointParamCheck.changeText(req);
-        if (req.body.note.maintags) {
-            if (req.body.note.maintags instanceof Array == false) {
-                result = utils_1.default.jsonErr(new types_1.JsonError(const_1.Const.INVALID_NOTE));
-            }
-        }
-        if (req.body.note.otherTags) {
-            if (req.body.note.otherTags instanceof Array == false) {
-                result = utils_1.default.jsonErr(new types_1.JsonError(const_1.Const.INVALID_NOTE));
-            }
-        }
-        if (req.body.note.links) {
-            if (req.body.note.links instanceof Array == false) {
-                result = utils_1.default.jsonErr(new types_1.JsonError(const_1.Const.LINK_NOT_ARRAY));
-            }
-        }
-        return result;
-    }
-    static removeNote(req) {
-        let result = null;
-        if (!req.params.title) {
-            result = utils_1.default.jsonErr(new types_1.JsonError(const_1.Const.TITLE_REQUIRED));
-        }
-        return result;
-    }
-    static removeTagsFromNote(req) {
-        let result = null;
-        result = NoteEndpointParamCheck.title(req);
-        if (!req.body.note.tags && req.body.note.tags instanceof Array) {
-            result = utils_1.default.jsonErr(new types_1.JsonError(const_1.Const.TAGS_REQUIRED));
-        }
-        return result;
-    }
-    static selectNotesByTagsNoRole(req) {
-        let result = null;
-        if (req.body.tags == null) {
-            result = utils_1.default.jsonErr(new types_1.JsonError(const_1.Const.GEN_TAGS_REQUIRED));
-        }
-        else if (req.body.tags instanceof Array == false) {
-            result = utils_1.default.jsonErr(new types_1.JsonError(const_1.Const.TAGS_NOT_ARRAY));
-        }
-        return result;
-    }
-    static selectNoteByTitle(req) {
-        return NoteEndpointParamCheck.removeNote(req);
-    }
-    static selectNotesByTextReg(req) {
-        let result = null;
-        if (req.body.text == null) {
-            result = utils_1.default.jsonErr(new types_1.JsonError(const_1.Const.TEXT_BASIC_REQUIRED));
-        }
-        return result;
-    }
-    static selectNotesByTitleReg(req) {
-        let result = null;
-        if (req.body.title == null) {
-            result = utils_1.default.jsonErr(new types_1.JsonError(const_1.Const.TITLE_BASIC_REQUIRED));
-        }
-        return result;
-    }
-    static selectNotesByTagsWithRole(req) {
-        let result = null;
-        if (req.body.maintags == null || req.body.othertags == null) {
-            result = utils_1.default.jsonErr(new types_1.JsonError(const_1.Const.TAGS_REQUIRED));
-        }
-        if (req.body.maintags && req.body.maintags instanceof Array) {
-            result = utils_1.default.jsonErr(new types_1.JsonError(const_1.Const.TAGS_NOT_ARRAY));
-        }
-        if (req.body.othertags && req.body.othertags instanceof Array) {
-            result = utils_1.default.jsonErr(new types_1.JsonError(const_1.Const.TAGS_NOT_ARRAY));
-        }
-        return result;
-    }
-    static setDone(req) {
-        let result = NoteEndpointParamCheck.title(req);
-        if (!req.body.note.isdone) {
-            result = utils_1.default.jsonErr(new types_1.JsonError(const_1.Const.IS_DONE_REQUIRED));
-        }
-        return result;
-    }
-}
 class NoteEndpoint {
     static addTags(req, res, next) {
         let user = utils_1.default.extractUser(req);
@@ -272,10 +138,10 @@ class NoteEndpoint {
         note = new note_1.default();
         note.title = req.body.note.title;
         note.userid = user.userid;
-        req.body.note.tags.map((currentValue) => {
+        tags = req.body.note.tags.map((currentValue) => {
             let t = new TagClass.Tag();
             t.title = currentValue;
-            tags.push(t);
+            return t;
         });
         note_middle_1.default.removeTagsFromNote(note, tags)
             .then(result => {

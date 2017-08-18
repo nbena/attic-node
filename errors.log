@@ -505,3 +505,9 @@
 
 17:16:12 error: No data returned from the query.
          query: select title from attic.notes where userid='omni@pollo.com' and text like '%changes%' order by lastmodificationdate desc, title asc;
+
+14:28:19 error: there is no parameter $1
+         query: select json_object('{userid, hashedpassword}', array[userId, hashedPassword]) as user from attic.users where userId=$1;
+
+14:37:02 error: column "notetitle" does not exist
+         query: delete from attic.notes where userid='omni@pollo.com' and notetitle='omni-note2' and  (tagtitle='omni-otag2') 

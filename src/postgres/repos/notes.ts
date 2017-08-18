@@ -44,6 +44,7 @@ export class Repository{
   'select json_build_object(\'title\', title, \'text\', text,\'isdone\', isDone, \'lastmodificationdate\', lastModificationDate, \'creationDate\', creationDate, \'links\', links) as note from attic.notes join attic.notes_tags as rel on title=noteTitle where rel.userid=\'';*/
 
   private static readonly SELECT_NOTES_BY_TAGS_START = 'select distinct notetitle as title from attic.notes_tags where attic.notes_tags.userId=\'';
+  private static readonly REMOVE_TAGS_FROM_NOTES_START = 'delete from attic.notes where userid=$1 and notetitle=$2 and ';
 
   private db: IDatabase<any>;
   private pgp: IMain;
@@ -52,6 +53,8 @@ export class Repository{
     this. db = db;
     this.pgp = pgp;
   }
+
+
 
   private addTagsString(note:Note, tags: TagClass.Tag[], roles:string[]):string{
     let things: any[]=[];
@@ -233,20 +236,31 @@ export class Repository{
     return this.db.none(sql.removeNote, values);
   }
 
+  private removeTagsString(length:number):string{
+    let base:string = Repository.REMOVE_TAGS_FROM_NOTES_START;
+    let things:string[]=[];
+    for(let i=0;i<length;i++){
+      base+=(' (tagtitle=$'+(i+3)+') or');
+    }
+    base=base.substr(0, base.length-2);
+    return base;
+  }
+
   removeTagsFromNote(note:Note, tags: TagClass.Tag[]):Promise<any>{
-    let values: any=note.getValues();
-    return this.db.tx(t=>{
-      let queries:any[]=[tags.length];
-      for(let i=0;i<tags.length;i++){
-        let values:any={
-          userid:note.userid,
-          noteTitle:note.title,
-          tagTitle:tags[i].title
-        };
-        queries.push(t.none(sql.removeTagsFromNote, values));
-      }
-      return t.batch(queries);
-    });
+    // let values: any=note.getValues();
+    // return this.db.tx(t=>{
+    //   let queries:any[]=[tags.length];
+    //   for(let i=0;i<tags.length;i++){
+    //     let values:any={
+    //       userid:note.userid,
+    //       noteTitle:note.title,
+    //       tagTitle:tags[i].title
+    //     };
+    //     queries.push(t.none(sql.removeTagsFromNote, values));
+    //   }
+    //   return t.batch(queries);
+    // });
+    return this.db.none(this.removeTagsString(tags.length), [note.userid, note.title].concat(tags.map(obj=>{return obj.title})));
   }
 
   /*
