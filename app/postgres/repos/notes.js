@@ -168,6 +168,6 @@ class Repository {
     }
 }
 Repository.SELECT_NOTES_BY_TAGS_START = 'select distinct notetitle as title from attic.notes_tags where attic.notes_tags.userId=\'';
-Repository.REMOVE_TAGS_FROM_NOTES_START = 'delete from attic.notes where userid=$1 and notetitle=$2 and ';
+Repository.REMOVE_TAGS_FROM_NOTES_START = 'delete from attic.notes_tags where userid=$1 and notetitle=$2 and ';
 exports.Repository = Repository;
 //# sourceMappingURL=notes.js.map

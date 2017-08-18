@@ -44,7 +44,7 @@ export class Repository{
   'select json_build_object(\'title\', title, \'text\', text,\'isdone\', isDone, \'lastmodificationdate\', lastModificationDate, \'creationDate\', creationDate, \'links\', links) as note from attic.notes join attic.notes_tags as rel on title=noteTitle where rel.userid=\'';*/
 
   private static readonly SELECT_NOTES_BY_TAGS_START = 'select distinct notetitle as title from attic.notes_tags where attic.notes_tags.userId=\'';
-  private static readonly REMOVE_TAGS_FROM_NOTES_START = 'delete from attic.notes where userid=$1 and notetitle=$2 and ';
+  private static readonly REMOVE_TAGS_FROM_NOTES_START = 'delete from attic.notes_tags where userid=$1 and notetitle=$2 and ';
 
   private db: IDatabase<any>;
   private pgp: IMain;

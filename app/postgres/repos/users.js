@@ -18,8 +18,6 @@ class Repository {
     }
     selectByUserId(userid) {
         return this.db.oneOrNone(sql.selectByUserId, userid, (result) => {
-            console.log('the result of the select is:');
-            console.log(JSON.stringify(result));
             let user = new user_1.default(result.user.userid);
             user.hashedpassword = result.user.hashedpassword;
             return user;
