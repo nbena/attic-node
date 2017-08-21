@@ -20,13 +20,17 @@ router.post('/by-tags-no-role/and', auth, note_endpoint_1.default.selectNotesByT
 router.post('/by-tags-with-role/and', auth, note_endpoint_1.default.selectNotesByTagsWithRoleAnd);
 router.post('/by-tags-no-role/or', auth, note_endpoint_1.default.selectNotesByTagsNoRoleOr);
 router.post('/by-tags-with-role/or', auth, note_endpoint_1.default.selectNotesByTagsWithRoleOr);
-router.post('/by-tile-reg', auth, validator(index_1.Schemas.Notes.NOTES_BY_TITLE_REG_SCHEMA), note_endpoint_1.default.selectNoteByTitleReg);
-router.post('/by-text', auth, validator(index_1.Schemas.Notes.NOTES_BY_TEXT_SCHEMA), note_endpoint_1.default.selectNoteByTextReg);
+router.post('/by-tile-reg', auth, validator(index_1.Schemas.Notes.NOTES_BY_TITLE_REG_SCHEMA), note_endpoint_1.default.selectNotesMinByTitleReg);
+router.post('/by-text', auth, validator(index_1.Schemas.Notes.NOTES_BY_TEXT_SCHEMA), note_endpoint_1.default.selectNotesMinByTextReg);
+router.post('/by-tile-reg/with-date', auth, validator(index_1.Schemas.Notes.NOTES_BY_TITLE_REG_SCHEMA), note_endpoint_1.default.selectNotesMinWithDateByTitleReg);
+router.post('/by-text/with-date', auth, validator(index_1.Schemas.Notes.NOTES_BY_TEXT_SCHEMA), note_endpoint_1.default.selectNotesMinWithDateByTextReg);
+router.post('/by-isdone', auth, validator(index_1.Schemas.Notes.NOTES_BY_ISDONE_SCHEMA), note_endpoint_1.default.selectNotesMinByIsDone);
+router.post('/by-isdone/with-date', auth, validator(index_1.Schemas.Notes.NOTES_BY_ISDONE_SCHEMA), note_endpoint_1.default.selectNotesMinWithDateByIsDone);
 router.post('/mod/set-done', validator(index_1.Schemas.Notes.SET_DONE_SCHEMA), auth, note_endpoint_1.default.setDone);
-router.get('/all/min', auth, note_endpoint_1.default.selectAllNotesMin);
-router.post('/all/min', auth, note_endpoint_1.default.selectAllNotesMin);
-router.get('/all/min/with-date', auth, note_endpoint_1.default.selectAllNotesMinWithDate);
-router.post('/all/min/with-date', auth, note_endpoint_1.default.selectAllNotesMinWithDate);
+router.get('/all/min', auth, note_endpoint_1.default.selectNotesMin);
+router.post('/all/min', auth, note_endpoint_1.default.selectNotesMin);
+router.get('/all/min/with-date', auth, note_endpoint_1.default.selectNotesMinWithDate);
+router.post('/all/min/with-date', auth, note_endpoint_1.default.selectNotesMinWithDate);
 router.get('/:title', auth, note_endpoint_1.default.selectNoteByTitle);
 exports.default = router;
 //# sourceMappingURL=notes.js.map

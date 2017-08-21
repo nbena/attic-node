@@ -12,6 +12,8 @@ export namespace Schemas{
 
     public static readonly CREATE_NOTE_SCHEMA = 'create-note-schema';
 
+    public static readonly NOTES_BY_ISDONE_SCHEMA = 'notes-by-isdone-schema';
+
     public static readonly NOTES_BY_TITLE_REG_SCHEMA = 'notes-by-title-schema';
     public static readonly NOTES_BY_TEXT_SCHEMA = 'notes-by-text-schema';
 

@@ -511,3 +511,6 @@
 
 14:37:02 error: column "notetitle" does not exist
          query: delete from attic.notes where userid='omni@pollo.com' and notetitle='omni-note2' and  (tagtitle='omni-otag2') 
+
+18:59:09 error: getaddrinfo EAI_AGAIN nicola:5432
+         connection: "postgres://nicola:###################################"

@@ -202,26 +202,25 @@ export default class NoteEndpoint{
         roles.push('otherTags');
       });
     }
-    console.log('the tags');
-    console.log(JSON.stringify(tags));
+    // console.log('the tags');console.log(JSON.stringify(tags));
     result = NoteMiddle.addTags(note, tags, roles);
     result.then(result=>{
       res.json(result);
     })
   }
 
-  public static selectAllNotesMin(req: express.Request, res: express.Response, next){
+  public static selectNotesMin(req: express.Request, res: express.Response, next){
     let user:User=Utils.extractUser(req);
-    NoteMiddle.selectAllNotesMin(user)
+    NoteMiddle.selectNotesMin(user, false)
     .then(result=>{
       res.json(result);
     })
   }
 
 
-  public static selectAllNotesMinWithDate(req: express.Request, res: express.Response, next){
+  public static selectNotesMinWithDate(req: express.Request, res: express.Response, next){
     let user:User=Utils.extractUser(req);
-    NoteMiddle.selectAllNotesMinWithDate(user)
+    NoteMiddle.selectNotesMin(user, true)
     .then(result=>{
       res.json(result);
     })
@@ -482,7 +481,7 @@ export default class NoteEndpoint{
     })
   }
 
-  public static selectNoteByTitleReg(req: express.Request, res: express.Response, next){
+  public static selectNotesMinByTitleReg(req: express.Request, res: express.Response, next){
     let user:User=Utils.extractUser(req);
     let title:string;
     // let result:any=NoteEndpointParamCheck.selectNotesByTitleReg(req);
@@ -492,14 +491,14 @@ export default class NoteEndpoint{
     // }
     title=req.body.note.title;
     // title='%'+title+'%';
-    NoteMiddle.selectNotesByTitleReg(user.userid, title)
+    NoteMiddle.selectNotesByTitleReg(user.userid, title,false)
     .then(result=>{
       res.json(result);
     })
   }
 
 
-  public static selectNoteByTextReg(req: express.Request, res: express.Response, next){
+  public static selectNotesMinByTextReg(req: express.Request, res: express.Response, next){
     let user:User=Utils.extractUser(req);
     let text:string;
     // let result:any=NoteEndpointParamCheck.selectNotesByTextReg(req);
@@ -509,11 +508,79 @@ export default class NoteEndpoint{
     // }
     text=req.body.note.text;
     // text='%'+text+'%';
-    NoteMiddle.selectNotesByTextReg(user.userid, text)
+    NoteMiddle.selectNotesByTextReg(user.userid, text, false)
     .then(result=>{
       res.json(result);
     })
   }
+
+
+
+  public static selectNotesMinWithDateByTitleReg(req: express.Request, res: express.Response, next){
+    let user:User=Utils.extractUser(req);
+    let title:string;
+    // let result:any=NoteEndpointParamCheck.selectNotesByTitleReg(req);
+    // if(result!=null){
+    //   res.json(result);
+    //   return;
+    // }
+    title=req.body.note.title;
+    // title='%'+title+'%';
+    NoteMiddle.selectNotesByTitleReg(user.userid, title,true)
+    .then(result=>{
+      res.json(result);
+    })
+  }
+
+
+  public static selectNotesMinWithDateByTextReg(req: express.Request, res: express.Response, next){
+    let user:User=Utils.extractUser(req);
+    let text:string;
+    // let result:any=NoteEndpointParamCheck.selectNotesByTextReg(req);
+    // if(result!=null){
+    //   res.json(result);
+    //   return;
+    // }
+    text=req.body.note.text;
+    // text='%'+text+'%';
+    NoteMiddle.selectNotesByTextReg(user.userid, text, true)
+    .then(result=>{
+      res.json(result);
+    })
+  }
+
+
+  public static selectNotesMinWithDateByIsDone(req: express.Request, res: express.Response, next){
+    let user:User=Utils.extractUser(req);
+    let isDone:boolean = req.body.note.isdone;
+    // let result:any=NoteEndpointParamCheck.selectNotesByTextReg(req);
+    // if(result!=null){
+    //   res.json(result);
+    //   return;
+    // }
+    // text='%'+text+'%';
+    NoteMiddle.selectNotesMinByIsDone(user, isDone, true)
+    .then(result=>{
+      res.json(result);
+    })
+  }
+
+
+  public static selectNotesMinByIsDone(req: express.Request, res: express.Response, next){
+    let user:User=Utils.extractUser(req);
+    let isDone:boolean = req.body.note.isdone;
+    // let result:any=NoteEndpointParamCheck.selectNotesByTextReg(req);
+    // if(result!=null){
+    //   res.json(result);
+    //   return;
+    // }
+    // text='%'+text+'%';
+    NoteMiddle.selectNotesMinByIsDone(user, isDone, false)
+    .then(result=>{
+      res.json(result);
+    })
+  }
+
 
   public static setDone(req: express.Request, res: express.Response, next){
     let user:User = Utils.extractUser(req);

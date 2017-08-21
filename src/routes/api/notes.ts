@@ -40,19 +40,27 @@ router.post('/by-tags-no-role/or', auth, NoteEndpoint.selectNotesByTagsNoRoleOr)
 
 router.post('/by-tags-with-role/or', auth, NoteEndpoint.selectNotesByTagsWithRoleOr);
 
-router.post('/by-tile-reg', auth, validator(Schemas.Notes.NOTES_BY_TITLE_REG_SCHEMA), NoteEndpoint.selectNoteByTitleReg);
+router.post('/by-tile-reg', auth, validator(Schemas.Notes.NOTES_BY_TITLE_REG_SCHEMA), NoteEndpoint.selectNotesMinByTitleReg);
 
-router.post('/by-text', auth, validator(Schemas.Notes.NOTES_BY_TEXT_SCHEMA), NoteEndpoint.selectNoteByTextReg);
+router.post('/by-text', auth, validator(Schemas.Notes.NOTES_BY_TEXT_SCHEMA), NoteEndpoint.selectNotesMinByTextReg);
+
+router.post('/by-tile-reg/with-date', auth, validator(Schemas.Notes.NOTES_BY_TITLE_REG_SCHEMA), NoteEndpoint.selectNotesMinWithDateByTitleReg);
+
+router.post('/by-text/with-date', auth, validator(Schemas.Notes.NOTES_BY_TEXT_SCHEMA), NoteEndpoint.selectNotesMinWithDateByTextReg);
+
+router.post('/by-isdone', auth, validator(Schemas.Notes.NOTES_BY_ISDONE_SCHEMA), NoteEndpoint.selectNotesMinByIsDone);
+
+router.post('/by-isdone/with-date', auth, validator(Schemas.Notes.NOTES_BY_ISDONE_SCHEMA), NoteEndpoint.selectNotesMinWithDateByIsDone);
 
 router.post('/mod/set-done', validator(Schemas.Notes.SET_DONE_SCHEMA),auth, NoteEndpoint.setDone);
 
-router.get('/all/min', auth, NoteEndpoint.selectAllNotesMin);
+router.get('/all/min', auth, NoteEndpoint.selectNotesMin);
 
-router.post('/all/min', auth, NoteEndpoint.selectAllNotesMin);
+router.post('/all/min', auth, NoteEndpoint.selectNotesMin);
 
-router.get('/all/min/with-date', auth, NoteEndpoint.selectAllNotesMinWithDate);
+router.get('/all/min/with-date', auth, NoteEndpoint.selectNotesMinWithDate);
 
-router.post('/all/min/with-date', auth, NoteEndpoint.selectAllNotesMinWithDate);
+router.post('/all/min/with-date', auth, NoteEndpoint.selectNotesMinWithDate);
 
 router.get('/:title', auth, NoteEndpoint.selectNoteByTitle);
 

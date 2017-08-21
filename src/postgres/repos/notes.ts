@@ -102,7 +102,7 @@ export class Repository{
   }
 
   changeLinks(note: Note, links: string[]):Promise<any>{
-    let values:any[]=[note.userid, note.title, links];
+    let values:any[]=[note.userid, note.title, JSON.stringify(links)];
     // return this.db.oneOrNone(sql.changeLinks,values, (res:any)=>{return res.result});
     return this.db.none(sql.changeLinks,values);
   }
@@ -340,12 +340,21 @@ export class Repository{
       return note});
   }
 
-  selectNotesByTitleReg(userid:string, title:string):Promise<any>{
-    return this.db.many(sql.selectNotesByTitleReg, [userid, '%'+title+'%']);
+  selectNotesMinByTitleReg(userid:string, title:string):Promise<any>{
+    return this.db.many(sql.selectNotesMinByTitleReg, [userid, '%'+title+'%']);
   }
 
-  selectNotesByTextReg(userid:string, text:string):Promise<any>{
-    return this.db.many(sql.selectNotesByTextReg, [userid, '%'+text+'%']);
+  selectNotesMinByTextReg(userid:string, text:string):Promise<any>{
+    return this.db.many(sql.selectNotesMinByTextReg, [userid, '%'+text+'%']);
+  }
+
+
+  selectNotesMinWithDateByTitleReg(userid:string, title:string):Promise<any>{
+    return this.db.many(sql.selectNotesMinWithDateByTitleReg, [userid, '%'+title+'%']);
+  }
+
+  selectNotesMinWithDateByTextReg(userid:string, text:string):Promise<any>{
+    return this.db.many(sql.selectNotesMinWithDateByTextReg, [userid, '%'+text+'%']);
   }
 
   selectNotesFull(userid:string):Promise<any>{
@@ -358,6 +367,14 @@ export class Repository{
 
   selectNotesMinWithDate(user:User):Promise<any>{
     return this.db.any(sql.selectNotesMinWithDate, [user.userid]);
+  }
+
+  selectNotesMinWithDateByIsDone(user:User,isDone:boolean):Promise<any>{
+    return this.db.any(sql.selectNotesMinWithDateByIsDone, [user.userid, isDone])
+  }
+
+  selectNotesMinByIsDone(user:User,isDone:boolean):Promise<any>{
+    return this.db.any(sql.selectNotesMinByIsDone, [user.userid, isDone])
   }
 
   setDone(note:Note, done: boolean):Promise<any>{
