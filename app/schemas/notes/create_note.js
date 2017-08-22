@@ -27,7 +27,7 @@ exports.CreateNoteSchema = {
             "maintags": {
                 "type": "array",
                 "items": {
-                    "items": "string",
+                    "type": "string",
                     "maxLength": 64
                 },
                 "maxItems": 3,
@@ -37,7 +37,7 @@ exports.CreateNoteSchema = {
             "othertags": {
                 "type": "array",
                 "items": {
-                    "items": "string",
+                    "type": "string",
                     "maxLength": 64
                 },
                 "maxItems": 10,

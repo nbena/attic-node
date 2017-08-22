@@ -17,8 +17,10 @@ export namespace Schemas{
     public static readonly NOTES_BY_TITLE_REG_SCHEMA = 'notes-by-title-schema';
     public static readonly NOTES_BY_TEXT_SCHEMA = 'notes-by-text-schema';
 
-    public static readonly NOTES_BY_TAGS_NO_ROLE = 'notes-by-tags-no-role-schema';
-    public static readonly NOTES_BY_TAGS_WITH_ROLE = 'notes-by-tags-with-role-schema';
+    // public static readonly NOTES_BY_TAGS_NO_ROLE = 'notes-by-tags-no-role-schema';
+    // public static readonly NOTES_BY_TAGS_WITH_ROLE = 'notes-by-tags-with-role-schema';
+
+    public static readonly NOTES_BY_TAGS_SCHEMA = 'notes-by-tags-schema';
 
     public static readonly REMOVE_TAGS_SCHEMA = 'remove-tags-schema';
     public static readonly SET_DONE_SCHEMA = 'set-done-schema';

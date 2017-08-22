@@ -16,6 +16,17 @@ export class Tag{
     return [this.userid, this.title];
   }
 
+  constructor(title?:string, userid?:string){
+    if(title!=null){
+      this.title=title;
+    }
+    if(userid!=null){
+      this.userid=userid;
+    }
+    this.noteslength=0;
+  }
+
+
 
 }
 

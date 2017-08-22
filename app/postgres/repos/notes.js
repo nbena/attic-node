@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const sql_1 = require("../sql");
 const TagClass = require("../../models/tag");
-const const_1 = require("../../middles/useful/const");
 let sql = sql_1.default.notes;
 class Repository {
     constructor(db, pgp) {
@@ -109,38 +108,17 @@ class Repository {
         joined = joined.concat('\');');
         return query.concat(joined);
     }
-    static getQueryNotesByTagsWithRole(userid, tags, roles, and) {
-        let rolesTags = tags.map((currentValue, currentIndex) => {
-            return { role: roles[currentIndex], title: currentValue.title };
-        });
-        let query = Repository.SELECT_NOTES_BY_TAGS_START;
-        query = query.concat(userid + '\'');
-        query = query.concat('and ');
-        let joined = '';
-        let tmp;
-        for (let obj of rolesTags) {
-            if (and) {
-                tmp = '(tagtitle =\'' + obj.title + ' and role = \'' + obj.role + '\') and';
-            }
-            else {
-                tmp = '(tagtitle =\'' + obj.title + ' and role = \'' + obj.role + '\') or';
-            }
-            joined = joined.substring(0, joined.lastIndexOf('or'));
-        }
-        joined = joined.concat('\);');
-        query = query.concat(joined);
-        return query;
+    selectNotesMinByTagsAnd(user, tags) {
+        return this.db.any(sql.selectNotesMinByTagsAnd, [user.userid, tags.map(obj => { return obj.title; })]);
     }
-    selectNotesByTagsNoRole(userid, tags, and) {
-        let values = Repository.getQueryNotesByTagsNoRole(userid, tags, and);
-        return this.db.many(values);
+    selectNotesMinByTagsOr(user, tags) {
+        return this.db.any(sql.selectNotesMinByTagsOr, [user.userid].concat(tags.map(obj => { return obj.title; })));
     }
-    selectNotesByTagsWithRole(userid, tags, roles, and) {
-        if (tags.length != roles.length) {
-            throw new TypeError(const_1.Const.ERR_DIFF_LENGTH);
-        }
-        let values = Repository.getQueryNotesByTagsWithRole(userid, tags, roles, and);
-        return this.db.many(values);
+    selectNotesMinWithDateByTagsAnd(user, tags) {
+        return this.db.any(sql.selectNotesMinWithDateByTagsAnd, [user.userid, tags.map(obj => { return obj.title; })]);
+    }
+    selectNotesMinWithDateByTagsOr(user, tags) {
+        return this.db.any(sql.selectNotesMinWithDateByTagsOr, [user.userid].concat(tags.map(obj => { return obj.title; })));
     }
     selectNoteByTitle(note) {
         return this.db.oneOrNone(sql.selectNoteByTitle, note.getValues(), (note) => {
@@ -148,19 +126,19 @@ class Repository {
         });
     }
     selectNotesMinByTitleReg(userid, title) {
-        return this.db.many(sql.selectNotesMinByTitleReg, [userid, '%' + title + '%']);
+        return this.db.any(sql.selectNotesMinByTitleReg, [userid, '%' + title + '%']);
     }
     selectNotesMinByTextReg(userid, text) {
-        return this.db.many(sql.selectNotesMinByTextReg, [userid, '%' + text + '%']);
+        return this.db.any(sql.selectNotesMinByTextReg, [userid, '%' + text + '%']);
     }
     selectNotesMinWithDateByTitleReg(userid, title) {
-        return this.db.many(sql.selectNotesMinWithDateByTitleReg, [userid, '%' + title + '%']);
+        return this.db.any(sql.selectNotesMinWithDateByTitleReg, [userid, '%' + title + '%']);
     }
     selectNotesMinWithDateByTextReg(userid, text) {
-        return this.db.many(sql.selectNotesMinWithDateByTextReg, [userid, '%' + text + '%']);
+        return this.db.any(sql.selectNotesMinWithDateByTextReg, [userid, '%' + text + '%']);
     }
     selectNotesFull(userid) {
-        return this.db.many(sql.selectNotesFull, [userid]);
+        return this.db.any(sql.selectNotesFull, [userid]);
     }
     selectNotesMin(user) {
         return this.db.any(sql.selectNotesMin, [user.userid]);

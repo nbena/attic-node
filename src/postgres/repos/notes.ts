@@ -292,47 +292,63 @@ export class Repository{
     return query.concat(joined);
   }
 
-  private static getQueryNotesByTagsWithRole(userid: string, tags:TagClass.Tag[], roles:string[], and: boolean):string{
+  // private static getQueryNotesByTagsWithRole(userid: string, tags:TagClass.Tag[], roles:string[], and: boolean):string{
+  //
+  //   let rolesTags:any[]=tags.map((currentValue:TagClass.Tag, currentIndex: number)=>{
+  //     return {role:roles[currentIndex], title: currentValue.title};
+  //   });
+  //
+  //   let query:string = Repository.SELECT_NOTES_BY_TAGS_START;
+  //   query = query.concat(userid+'\'' );
+  //   query = query.concat('and ');
+  //   let joined:string='';
+  //   let tmp: string;
+  //   for(let obj of rolesTags){
+  //     if(and){
+  //       tmp = '(tagtitle =\''+obj.title+' and role = \''+obj.role+'\') and';
+  //     }else{
+  //       tmp = '(tagtitle =\''+obj.title+' and role = \''+obj.role+'\') or';
+  //     }
+  //     //let tmp:string = '(tagtitle =\''+obj.title+' and role = \''+obj.role+'\') or';
+  //     joined = joined.substring(0, joined.lastIndexOf('or'));
+  //   }
+  //
+  //   joined = joined.concat('\);');
+  //   query = query.concat(joined);
+  //   return query;
+  //   //CURRENTLY HAS TO RE WRITTEN TO ESCAPE SQL-INJECTION.
+  // }
 
-    let rolesTags:any[]=tags.map((currentValue:TagClass.Tag, currentIndex: number)=>{
-      return {role:roles[currentIndex], title: currentValue.title};
-    });
+  // selectNotesByTagsNoRole(userid: string, tags:TagClass.Tag[], and: boolean):Promise<any>{
+  //   let values:string = Repository.getQueryNotesByTagsNoRole(userid,tags, and);
+  //   // console.log('the query is:');
+  //   // console.log(values);
+  //   return this.db.many(values);
+  // }
+  //
+  //
+  // selectNotesByTagsWithRole(userid: string, tags:TagClass.Tag[], roles:string[], and: boolean):Promise<any>{
+  //   if(tags.length!=roles.length){
+  //     throw new TypeError(Const.ERR_DIFF_LENGTH);
+  //   }
+  //   let values:string = Repository.getQueryNotesByTagsWithRole(userid, tags, roles, and);
+  //   return this.db.many(values);
+  // }
 
-    let query:string = Repository.SELECT_NOTES_BY_TAGS_START;
-    query = query.concat(userid+'\'' );
-    query = query.concat('and ');
-    let joined:string='';
-    let tmp: string;
-    for(let obj of rolesTags){
-      if(and){
-        tmp = '(tagtitle =\''+obj.title+' and role = \''+obj.role+'\') and';
-      }else{
-        tmp = '(tagtitle =\''+obj.title+' and role = \''+obj.role+'\') or';
-      }
-      //let tmp:string = '(tagtitle =\''+obj.title+' and role = \''+obj.role+'\') or';
-      joined = joined.substring(0, joined.lastIndexOf('or'));
-    }
-
-    joined = joined.concat('\);');
-    query = query.concat(joined);
-    return query;
-    //CURRENTLY HAS TO RE WRITTEN TO ESCAPE SQL-INJECTION.
+  selectNotesMinByTagsAnd(user:User, tags:TagClass.Tag[]):Promise<any>{
+    return this.db.any(sql.selectNotesMinByTagsAnd, [user.userid, tags.map(obj=>{return obj.title})]);
   }
 
-  selectNotesByTagsNoRole(userid: string, tags:TagClass.Tag[], and: boolean):Promise<any>{
-    let values:string = Repository.getQueryNotesByTagsNoRole(userid,tags, and);
-    // console.log('the query is:');
-    // console.log(values);
-    return this.db.many(values);
+  selectNotesMinByTagsOr(user:User, tags:TagClass.Tag[]):Promise<any>{
+    return this.db.any(sql.selectNotesMinByTagsOr, [user.userid].concat(tags.map(obj=>{return obj.title})));
   }
 
+  selectNotesMinWithDateByTagsAnd(user:User, tags:TagClass.Tag[]):Promise<any>{
+    return this.db.any(sql.selectNotesMinWithDateByTagsAnd, [user.userid, tags.map(obj=>{return obj.title})]);
+  }
 
-  selectNotesByTagsWithRole(userid: string, tags:TagClass.Tag[], roles:string[], and: boolean):Promise<any>{
-    if(tags.length!=roles.length){
-      throw new TypeError(Const.ERR_DIFF_LENGTH);
-    }
-    let values:string = Repository.getQueryNotesByTagsWithRole(userid, tags, roles, and);
-    return this.db.many(values);
+  selectNotesMinWithDateByTagsOr(user:User, tags:TagClass.Tag[]):Promise<any>{
+    return this.db.any(sql.selectNotesMinWithDateByTagsOr, [user.userid].concat(tags.map(obj=>{return obj.title})));
   }
 
   selectNoteByTitle(note:Note):Promise<any>{
@@ -341,24 +357,24 @@ export class Repository{
   }
 
   selectNotesMinByTitleReg(userid:string, title:string):Promise<any>{
-    return this.db.many(sql.selectNotesMinByTitleReg, [userid, '%'+title+'%']);
+    return this.db.any(sql.selectNotesMinByTitleReg, [userid, '%'+title+'%']);
   }
 
   selectNotesMinByTextReg(userid:string, text:string):Promise<any>{
-    return this.db.many(sql.selectNotesMinByTextReg, [userid, '%'+text+'%']);
+    return this.db.any(sql.selectNotesMinByTextReg, [userid, '%'+text+'%']);
   }
 
 
   selectNotesMinWithDateByTitleReg(userid:string, title:string):Promise<any>{
-    return this.db.many(sql.selectNotesMinWithDateByTitleReg, [userid, '%'+title+'%']);
+    return this.db.any(sql.selectNotesMinWithDateByTitleReg, [userid, '%'+title+'%']);
   }
 
   selectNotesMinWithDateByTextReg(userid:string, text:string):Promise<any>{
-    return this.db.many(sql.selectNotesMinWithDateByTextReg, [userid, '%'+text+'%']);
+    return this.db.any(sql.selectNotesMinWithDateByTextReg, [userid, '%'+text+'%']);
   }
 
   selectNotesFull(userid:string):Promise<any>{
-    return this.db.many(sql.selectNotesFull, [userid]);
+    return this.db.any(sql.selectNotesFull, [userid]);
   }
 
   selectNotesMin(user: User):Promise<any>{

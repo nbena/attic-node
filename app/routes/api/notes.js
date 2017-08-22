@@ -16,10 +16,10 @@ router.post('/mod/change-text', auth, validator(index_1.Schemas.Notes.CHANGE_TEX
 router.put('/create', auth, validator(index_1.Schemas.Notes.CREATE_NOTE_SCHEMA), note_endpoint_1.default.createNote);
 router.delete('/:title', auth, note_endpoint_1.default.removeNote);
 router.post('/mod/remove-tags', auth, validator(index_1.Schemas.Notes.REMOVE_TAGS_SCHEMA), note_endpoint_1.default.removeTagsFromNote);
-router.post('/by-tags-no-role/and', auth, note_endpoint_1.default.selectNotesByTagsNoRoleAnd);
-router.post('/by-tags-with-role/and', auth, note_endpoint_1.default.selectNotesByTagsWithRoleAnd);
-router.post('/by-tags-no-role/or', auth, note_endpoint_1.default.selectNotesByTagsNoRoleOr);
-router.post('/by-tags-with-role/or', auth, note_endpoint_1.default.selectNotesByTagsWithRoleOr);
+router.post('/by-tags/and/with-date', auth, validator(index_1.Schemas.Notes.NOTES_BY_TAGS_SCHEMA), note_endpoint_1.default.selectNotesMinWithDateByTagsAnd);
+router.post('/by-tags/and', auth, validator(index_1.Schemas.Notes.NOTES_BY_TAGS_SCHEMA), note_endpoint_1.default.selectNotesMinByTagsAnd);
+router.post('/by-tags/or/with-date', auth, validator(index_1.Schemas.Notes.NOTES_BY_TAGS_SCHEMA), note_endpoint_1.default.selectNotesMinWithDateByTagsOr);
+router.post('/by-tags/or', auth, validator(index_1.Schemas.Notes.NOTES_BY_TAGS_SCHEMA), note_endpoint_1.default.selectNotesMinByTagsOr);
 router.post('/by-tile-reg', auth, validator(index_1.Schemas.Notes.NOTES_BY_TITLE_REG_SCHEMA), note_endpoint_1.default.selectNotesMinByTitleReg);
 router.post('/by-text', auth, validator(index_1.Schemas.Notes.NOTES_BY_TEXT_SCHEMA), note_endpoint_1.default.selectNotesMinByTextReg);
 router.post('/by-tile-reg/with-date', auth, validator(index_1.Schemas.Notes.NOTES_BY_TITLE_REG_SCHEMA), note_endpoint_1.default.selectNotesMinWithDateByTitleReg);

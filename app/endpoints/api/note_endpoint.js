@@ -146,52 +146,34 @@ class NoteEndpoint {
             res.json(result);
         });
     }
-    static selectNotesByTagsNoRoleAnd(req, res, next) {
-        return NoteEndpoint.selectNotesByTagsNoRoleCore(req, res, next, true);
-    }
-    static selectNotesByTagsWithRoleAnd(req, res, next) {
-        return NoteEndpoint.selectNotesByTagsWithRoleCore(req, res, next, true);
-    }
-    static selectNotesByTagsNoRoleOr(req, res, next) {
-        return NoteEndpoint.selectNotesByTagsNoRoleCore(req, res, next, false);
-    }
-    static selectNotesByTagsWithRoleOr(req, res, next) {
-        return NoteEndpoint.selectNotesByTagsWithRoleCore(req, res, next, false);
-    }
-    static selectNotesByTagsNoRoleCore(req, res, next, and) {
+    static selectNotesMinByTagsOr(req, res, next) {
         let user = utils_1.default.extractUser(req);
-        let tags = [];
-        req.body.tags.map((currentValue) => {
-            let t = new TagClass.Tag();
-            t.title = currentValue;
-            tags.push(t);
-        });
-        note_middle_1.default.selectNotesByTagsNoRole(user.userid, tags, and)
+        let tags = req.body.note.tags.map(obj => { return new TagClass.Tag(obj); });
+        note_middle_1.default.selectNotesMinByTagsOr(user, tags, false)
             .then(result => {
             res.json(result);
         });
     }
-    static selectNotesByTagsWithRoleCore(req, res, next, and) {
+    static selectNotesMinByTagsAnd(req, res, next) {
         let user = utils_1.default.extractUser(req);
-        let tags = [];
-        let roles = [];
-        if (req.body.note.maintags) {
-            req.body.mainTags.map((currentValue, currentIndex) => {
-                let tag = new TagClass.Tag();
-                tag.title = currentValue;
-                tags.push(tag);
-                roles.push('maintags');
-            });
-        }
-        if (req.body.note.othertags) {
-            req.body.otherTags.map((currentValue, currentIndex) => {
-                let tag = new TagClass.Tag();
-                tag.title = currentValue;
-                tags.push(tag);
-                roles.push('othertags');
-            });
-        }
-        note_middle_1.default.selectNotesByTagsWithRole(user.userid, tags, roles, and)
+        let tags = req.body.note.tags.map(obj => { return new TagClass.Tag(obj); });
+        note_middle_1.default.selectNotesMinByTagsAnd(user, tags, false)
+            .then(result => {
+            res.json(result);
+        });
+    }
+    static selectNotesMinWithDateByTagsOr(req, res, next) {
+        let user = utils_1.default.extractUser(req);
+        let tags = req.body.note.tags.map(obj => { return new TagClass.Tag(obj); });
+        note_middle_1.default.selectNotesMinByTagsOr(user, tags, true)
+            .then(result => {
+            res.json(result);
+        });
+    }
+    static selectNotesMinWithDateByTagsAnd(req, res, next) {
+        let user = utils_1.default.extractUser(req);
+        let tags = req.body.note.tags.map(obj => { return new TagClass.Tag(obj); });
+        note_middle_1.default.selectNotesMinByTagsAnd(user, tags, true)
             .then(result => {
             res.json(result);
         });

@@ -4,6 +4,15 @@ class Tag {
     getValues() {
         return [this.userid, this.title];
     }
+    constructor(title, userid) {
+        if (title != null) {
+            this.title = title;
+        }
+        if (userid != null) {
+            this.userid = userid;
+        }
+        this.noteslength = 0;
+    }
 }
 exports.Tag = Tag;
 class TagMin extends Tag {

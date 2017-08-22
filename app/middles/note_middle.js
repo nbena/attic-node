@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const db = require("../postgres");
 const types = require("./useful/types");
 const utils_1 = require("./useful/utils");
-const const_1 = require("./useful/const");
 class NoteMiddle {
     static addTags(note, tags, roles) {
         return new Promise((resolve, reject) => {
@@ -85,25 +84,34 @@ class NoteMiddle {
             });
         });
     }
-    static selectNotesByTagsNoRole(userId, tags, and) {
+    static selectNotesMinByTagsAnd(user, tags, withDate) {
         return new Promise((resolve, reject) => {
-            db.notes.selectNotesByTagsNoRole(userId, tags, and)
-                .then(rawResult => {
-                resolve(new types.AnyResult(true, rawResult));
+            let p;
+            if (withDate) {
+                p = db.notes.selectNotesMinWithDateByTagsAnd(user, tags);
+            }
+            else {
+                p = db.notes.selectNotesMinByTagsAnd(user, tags);
+            }
+            p.then(result => {
+                resolve(new types.AnyResult(true, result));
             })
                 .catch(error => {
                 resolve(utils_1.default.jsonErr(error));
             });
         });
     }
-    static selectNotesByTagsWithRole(userId, tags, roles, and) {
+    static selectNotesMinByTagsOr(user, tags, withDate) {
         return new Promise((resolve, reject) => {
-            if (tags.length != roles.length) {
-                resolve(utils_1.default.jsonErr(new TypeError(const_1.Const.ERR_DIFF_LENGTH)));
+            let p;
+            if (withDate) {
+                p = db.notes.selectNotesMinWithDateByTagsOr(user, tags);
             }
-            db.notes.selectNotesByTagsWithRole(userId, tags, roles, and)
-                .then(rawResult => {
-                resolve(new types.AnyResult(true, rawResult));
+            else {
+                p = db.notes.selectNotesMinByTagsOr(user, tags);
+            }
+            p.then(result => {
+                resolve(new types.AnyResult(true, result));
             })
                 .catch(error => {
                 resolve(utils_1.default.jsonErr(error));

@@ -32,13 +32,21 @@ router.delete('/:title', auth, NoteEndpoint.removeNote);
 
 router.post('/mod/remove-tags', auth, validator(Schemas.Notes.REMOVE_TAGS_SCHEMA), NoteEndpoint.removeTagsFromNote);
 
-router.post('/by-tags-no-role/and', auth, NoteEndpoint.selectNotesByTagsNoRoleAnd);
+// router.post('/by-tags-no-role/and', auth, NoteEndpoint.selectNotesByTagsNoRoleAnd);
+//
+// router.post('/by-tags-with-role/and', auth, NoteEndpoint.selectNotesByTagsWithRoleAnd);
+//
+// router.post('/by-tags-no-role/or', auth, NoteEndpoint.selectNotesByTagsNoRoleOr);
+//
+// router.post('/by-tags-with-role/or', auth, NoteEndpoint.selectNotesByTagsWithRoleOr);
 
-router.post('/by-tags-with-role/and', auth, NoteEndpoint.selectNotesByTagsWithRoleAnd);
+router.post('/by-tags/and/with-date', auth, validator(Schemas.Notes.NOTES_BY_TAGS_SCHEMA),NoteEndpoint.selectNotesMinWithDateByTagsAnd);
 
-router.post('/by-tags-no-role/or', auth, NoteEndpoint.selectNotesByTagsNoRoleOr);
+router.post('/by-tags/and', auth, validator(Schemas.Notes.NOTES_BY_TAGS_SCHEMA),NoteEndpoint.selectNotesMinByTagsAnd);
 
-router.post('/by-tags-with-role/or', auth, NoteEndpoint.selectNotesByTagsWithRoleOr);
+router.post('/by-tags/or/with-date', auth, validator(Schemas.Notes.NOTES_BY_TAGS_SCHEMA),NoteEndpoint.selectNotesMinWithDateByTagsOr);
+
+router.post('/by-tags/or', auth, validator(Schemas.Notes.NOTES_BY_TAGS_SCHEMA),NoteEndpoint.selectNotesMinByTagsOr);
 
 router.post('/by-tile-reg', auth, validator(Schemas.Notes.NOTES_BY_TITLE_REG_SCHEMA), NoteEndpoint.selectNotesMinByTitleReg);
 

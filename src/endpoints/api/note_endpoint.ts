@@ -395,69 +395,106 @@ export default class NoteEndpoint{
     })
   }
 
-  public static selectNotesByTagsNoRoleAnd(req: express.Request, res: express.Response, next){
-    return NoteEndpoint.selectNotesByTagsNoRoleCore(req, res, next, true);
-  }
+  // public static selectNotesByTagsNoRoleAnd(req: express.Request, res: express.Response, next){
+  //   return NoteEndpoint.selectNotesByTagsNoRoleCore(req, res, next, true);
+  // }
+  //
+  // public static selectNotesByTagsWithRoleAnd(req: express.Request, res: express.Response, next){
+  //   return NoteEndpoint.selectNotesByTagsWithRoleCore(req, res, next, true);
+  // }
+  //
+  //
+  // public static selectNotesByTagsNoRoleOr(req: express.Request, res: express.Response, next){
+  //   return NoteEndpoint.selectNotesByTagsNoRoleCore(req, res, next, false);
+  // }
+  //
+  // public static selectNotesByTagsWithRoleOr(req: express.Request, res: express.Response, next){
+  //   return NoteEndpoint.selectNotesByTagsWithRoleCore(req, res, next, false);
+  // }
+  //
+  //
+  // public static selectNotesByTagsNoRoleCore(req: express.Request, res: express.Response, next, and: boolean){
+  //   let user:User = Utils.extractUser(req);
+  //   let tags:TagClass.Tag[]=[];
+  //   // let result:any=NoteEndpointParamCheck.selectNotesByTagsNoRole(req);
+  //   // if(result!=null){
+  //   //   res.json(result);
+  //   //   return;
+  //   // }
+  //   req.body.tags.map((currentValue)=>{
+  //     let t = new TagClass.Tag();
+  //     t.title=currentValue;
+  //     tags.push(t);
+  //   });
+  //   NoteMiddle.selectNotesByTagsNoRole(user.userid, tags, and)
+  //   .then(result=>{
+  //     res.json(result);
+  //   })
+  // }
+  //
+  // public static selectNotesByTagsWithRoleCore(req: express.Request, res: express.Response, next, and: boolean){
+  //   let user:User = Utils.extractUser(req);
+  //   let tags:TagClass.Tag[]=[];
+  //   let roles:string[]=[];
+  //   // let result:any=NoteEndpointParamCheck.selectNotesByTagsWithRole(req);
+  //   // if(result!=null){
+  //   //   res.json(result);
+  //   //   return;
+  //   // }
+  //   if(req.body.note.maintags){
+  //     req.body.mainTags.map((currentValue, currentIndex)=>{
+  //       let tag:TagClass.Tag=new TagClass.Tag();
+  //       tag.title=currentValue;
+  //       tags.push(tag);
+  //       roles.push('maintags');
+  //     });
+  //   }
+  //   if(req.body.note.othertags){
+  //     req.body.otherTags.map((currentValue, currentIndex)=>{
+  //       let tag:TagClass.Tag=new TagClass.Tag();
+  //       tag.title=currentValue;
+  //       tags.push(tag);
+  //       roles.push('othertags');
+  //     });
+  //   }
+  //   NoteMiddle.selectNotesByTagsWithRole(user.userid, tags, roles, and)
+  //   .then(result=>{
+  //     res.json(result);
+  //   })
+  // }
 
-  public static selectNotesByTagsWithRoleAnd(req: express.Request, res: express.Response, next){
-    return NoteEndpoint.selectNotesByTagsWithRoleCore(req, res, next, true);
-  }
 
-
-  public static selectNotesByTagsNoRoleOr(req: express.Request, res: express.Response, next){
-    return NoteEndpoint.selectNotesByTagsNoRoleCore(req, res, next, false);
-  }
-
-  public static selectNotesByTagsWithRoleOr(req: express.Request, res: express.Response, next){
-    return NoteEndpoint.selectNotesByTagsWithRoleCore(req, res, next, false);
-  }
-
-
-  public static selectNotesByTagsNoRoleCore(req: express.Request, res: express.Response, next, and: boolean){
-    let user:User = Utils.extractUser(req);
-    let tags:TagClass.Tag[]=[];
-    // let result:any=NoteEndpointParamCheck.selectNotesByTagsNoRole(req);
-    // if(result!=null){
-    //   res.json(result);
-    //   return;
-    // }
-    req.body.tags.map((currentValue)=>{
-      let t = new TagClass.Tag();
-      t.title=currentValue;
-      tags.push(t);
-    });
-    NoteMiddle.selectNotesByTagsNoRole(user.userid, tags, and)
+  public static selectNotesMinByTagsOr(req: express.Request, res: express.Response, next){
+    let user:User=Utils.extractUser(req);
+    let tags:TagClass.Tag[]=req.body.note.tags.map(obj=>{return new TagClass.Tag(obj)});
+    NoteMiddle.selectNotesMinByTagsOr(user, tags, false)
     .then(result=>{
       res.json(result);
     })
   }
 
-  public static selectNotesByTagsWithRoleCore(req: express.Request, res: express.Response, next, and: boolean){
-    let user:User = Utils.extractUser(req);
-    let tags:TagClass.Tag[]=[];
-    let roles:string[]=[];
-    // let result:any=NoteEndpointParamCheck.selectNotesByTagsWithRole(req);
-    // if(result!=null){
-    //   res.json(result);
-    //   return;
-    // }
-    if(req.body.note.maintags){
-      req.body.mainTags.map((currentValue, currentIndex)=>{
-        let tag:TagClass.Tag=new TagClass.Tag();
-        tag.title=currentValue;
-        tags.push(tag);
-        roles.push('maintags');
-      });
-    }
-    if(req.body.note.othertags){
-      req.body.otherTags.map((currentValue, currentIndex)=>{
-        let tag:TagClass.Tag=new TagClass.Tag();
-        tag.title=currentValue;
-        tags.push(tag);
-        roles.push('othertags');
-      });
-    }
-    NoteMiddle.selectNotesByTagsWithRole(user.userid, tags, roles, and)
+  public static selectNotesMinByTagsAnd(req: express.Request, res: express.Response, next){
+    let user:User=Utils.extractUser(req);
+    let tags:TagClass.Tag[]=req.body.note.tags.map(obj=>{return new TagClass.Tag(obj)});
+    NoteMiddle.selectNotesMinByTagsAnd(user, tags, false)
+    .then(result=>{
+      res.json(result);
+    })
+  }
+
+  public static selectNotesMinWithDateByTagsOr(req: express.Request, res: express.Response, next){
+    let user:User=Utils.extractUser(req);
+    let tags:TagClass.Tag[]=req.body.note.tags.map(obj=>{return new TagClass.Tag(obj)});
+    NoteMiddle.selectNotesMinByTagsOr(user, tags, true)
+    .then(result=>{
+      res.json(result);
+    })
+  }
+
+  public static selectNotesMinWithDateByTagsAnd(req: express.Request, res: express.Response, next){
+    let user:User=Utils.extractUser(req);
+    let tags:TagClass.Tag[]=req.body.note.tags.map(obj=>{return new TagClass.Tag(obj)});
+    NoteMiddle.selectNotesMinByTagsAnd(user, tags, true)
     .then(result=>{
       res.json(result);
     })

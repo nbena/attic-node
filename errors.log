@@ -514,3 +514,6 @@
 
 18:59:09 error: getaddrinfo EAI_AGAIN nicola:5432
          connection: "postgres://nicola:###################################"
+
+15:01:04 error: operator does not exist: character varying = text[]
+         query: select notetitle as title, lastmodificationdate from attic.notes_tags join attic.notes on notetitle=title and attic.notes_tags.userid = attic.notes.userid where attic.notes_tags.userid='omni@pollo.com' and tagtitle in (array['omni-tag1','omni-otag1']) order by title asc;

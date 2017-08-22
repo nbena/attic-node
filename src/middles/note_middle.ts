@@ -119,37 +119,70 @@ public static removeTagsFromNote (note:Note, tags:TagClass.Tag[]):Promise<types.
   })
 }
 
-public static selectNotesByTagsNoRole(userId: string, tags:TagClass.Tag[], and: boolean):Promise<types.Result>{
-  return new Promise<types.Result>((resolve, reject)=>{
-    db.notes.selectNotesByTagsNoRole(userId, tags, and)
-    .then(rawResult=>{
-      resolve(new types.AnyResult(true, rawResult));
-    })
-    .catch(error=>{
-      resolve(Utils.jsonErr(error));
-    })
-  });
-}
+// public static selectNotesByTagsNoRole(userId: string, tags:TagClass.Tag[], and: boolean):Promise<types.Result>{
+//   return new Promise<types.Result>((resolve, reject)=>{
+//     db.notes.selectNotesByTagsNoRole(userId, tags, and)
+//     .then(rawResult=>{
+//       resolve(new types.AnyResult(true, rawResult));
+//     })
+//     .catch(error=>{
+//       resolve(Utils.jsonErr(error));
+//     })
+//   });
+// }
+//
+//
+// public static selectNotesByTagsWithRole(userId: string, tags:TagClass.Tag[], roles:string[], and: boolean):Promise<types.Result>{
+//   return new Promise<types.Result>((resolve, reject)=>{
+//     /*even if the db takes control of correct parameters, I prefer doing it now too.*/
+//     if(tags.length!=roles.length){
+//       resolve(Utils.jsonErr(new TypeError(Const.ERR_DIFF_LENGTH)));
+//     }
+//     db.notes.selectNotesByTagsWithRole(userId, tags, roles, and)
+//     .then(rawResult=>{
+//       resolve(new types.AnyResult(true, rawResult));
+//     })
+//     .catch(error=>{
+//       resolve(Utils.jsonErr(error));
+//     })
+//   });
+// }
 
 
-public static selectNotesByTagsWithRole(userId: string, tags:TagClass.Tag[], roles:string[], and: boolean):Promise<types.Result>{
+public static selectNotesMinByTagsAnd(user:User, tags:TagClass.Tag[], withDate:boolean):Promise<types.Result>{
   return new Promise<types.Result>((resolve, reject)=>{
-    /*even if the db takes control of correct parameters, I prefer doing it now too.*/
-    if(tags.length!=roles.length){
-      resolve(Utils.jsonErr(new TypeError(Const.ERR_DIFF_LENGTH)));
+    let p:Promise<any>;
+    if(withDate){
+      p=db.notes.selectNotesMinWithDateByTagsAnd(user, tags);
+    }else{
+      p=db.notes.selectNotesMinByTagsAnd(user, tags)
     }
-    db.notes.selectNotesByTagsWithRole(userId, tags, roles, and)
-    .then(rawResult=>{
-      resolve(new types.AnyResult(true, rawResult));
+    p.then(result=>{
+      resolve(new types.AnyResult(true, result));
     })
     .catch(error=>{
       resolve(Utils.jsonErr(error));
     })
-  });
+  })
 }
 
 
-
+public static selectNotesMinByTagsOr(user:User, tags:TagClass.Tag[], withDate:boolean):Promise<types.Result>{
+  return new Promise<types.Result>((resolve, reject)=>{
+    let p:Promise<any>;
+    if(withDate){
+      p=db.notes.selectNotesMinWithDateByTagsOr(user, tags);
+    }else{
+      p=db.notes.selectNotesMinByTagsOr(user, tags)
+    }
+    p.then(result=>{
+      resolve(new types.AnyResult(true, result));
+    })
+    .catch(error=>{
+      resolve(Utils.jsonErr(error));
+    })
+  })
+}
 
 public static selectNoteByTitle(note:Note):Promise<types.Result>{
   return new Promise<types.Result>((resolve, reject)=>{
