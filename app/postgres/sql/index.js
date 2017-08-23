@@ -33,7 +33,6 @@ exports.default = {
         removeTag: link('tags/remove_tag.sql'),
         selectTagByTitle: link('tags/select_tag_by_title.sql'),
         selectTagsByTitle: link('tags/select_tags_by_title_reg.sql'),
-        selectTagsFull: link('tags/select_tags_full.sql'),
         selectTagsMin: link('tags/select_tags_min.sql')
     },
     users: {

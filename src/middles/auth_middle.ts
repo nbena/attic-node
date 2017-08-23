@@ -2,7 +2,7 @@ import User from '../models/user';
 import * as jwt from 'jsonwebtoken';
 import Config from '../config/database';
 import * as passport from 'passport';
-import * as UsefulTypes from './useful/types';
+import {AuthResult} from './useful/types';
 
 export default class AuthMiddle{
 
@@ -37,9 +37,9 @@ public static generateToken(user:User){
 }
 
 
-public static authenticate(user:User):Promise<UsefulTypes.AuthResult>{
+public static authenticate(user:User):Promise<AuthResult>{
   return new Promise((resolve, reject)=>{
-    let result:UsefulTypes.AuthResult = new UsefulTypes.AuthResult();
+    let result:AuthResult = new AuthResult();
     result.ok=true;
     result.result='JWT '+AuthMiddle.generateToken(user);
     resolve(result);

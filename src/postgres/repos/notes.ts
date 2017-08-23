@@ -1,9 +1,9 @@
 import { IDatabase, IMain } from 'pg-promise';
 import * as pgp from 'pg-promise';
 import sqlProvider from '../sql';
-import Note from '../../models/note';
+import {Note, NoteExtraMin} from '../../models/note';
 import User from '../../models/user';
-import * as TagClass from '../../models/tag';
+import {TagExtraMin} from '../../models/tag';
 import  {Const} from '../../middles/useful/const';
 
 
@@ -56,7 +56,7 @@ export class Repository{
 
 
 
-  private addTagsString(note:Note, tags: TagClass.Tag[], roles:string[]):string{
+  private addTagsString(note:NoteExtraMin, tags: TagExtraMin[], roles:string[]):string{
     let things: any[]=[];
     for(let i=0;i<tags.length;i++){
       things.push({
@@ -71,7 +71,7 @@ export class Repository{
   }
 
 
-  addTags(note:Note, tags:TagClass.Tag[], roles:string[]):Promise<any>{
+  addTags(note:NoteExtraMin, tags:TagExtraMin[], roles:string[]):Promise<any>{
     if(tags.length!=roles.length){
       throw new Error('mismatch');
     }
@@ -101,20 +101,26 @@ export class Repository{
 
   }
 
-  changeLinks(note: Note, links: string[]):Promise<any>{
+  changeDone(note:NoteExtraMin, done: boolean):Promise<any>{
+    // let values:any[]=[note.userid, note.title, done];
+    //return this.db.oneOrNone(sql.setDone, values, (note:any)=>{return note.result});
+    return this.db.none(sql.setDone, (note.getValues() as any[]).concat([done]));
+  }
+
+  changeLinks(note: NoteExtraMin, links: string[]):Promise<any>{
     let values:any[]=[note.userid, note.title, JSON.stringify(links)];
     // return this.db.oneOrNone(sql.changeLinks,values, (res:any)=>{return res.result});
     return this.db.none(sql.changeLinks,values);
   }
 
-  changeText(note: Note, newText: string):Promise<any>{
+  changeText(note: NoteExtraMin, newText: string):Promise<any>{
     let values:any[]=[note.userid, note.title, newText];
     // return this.db.oneOrNone(sql.changeText, values, (res:any)=>{
     //   return res.result});
     return this.db.none(sql.changeText, values);
   }
 
-  changeTitle (note:Note, newTitle: string):Promise<any>{
+  changeTitle (note:NoteExtraMin, newTitle: string):Promise<any>{
     // let values:any[]=[newTitle, note.title, note.userid];
     // let ps: pgp.PreparedStatement = new pgp.PreparedStatement('change-title', sql.changeTitle, [note.userid, note.title, newTitle]);
     //return this.db.oneOrNone(sql.changeTitle, [note.userid, note.title, newTitle], (res:any)=>{return res.result});
@@ -161,22 +167,20 @@ export class Repository{
     //the second it will insert the tags.
 
     let queries:any[]=[];
-    let tags:TagClass.Tag[]=[];
+    let tags:TagExtraMin[]=[];
     let roles:string[]=[];
 
     if(/*note.maintags !=null && */note.maintags.length !=0){
-        note.maintags.map((currentValue, currentIndex)=>{
-          let tag =  new TagClass.Tag();
-          tag.title = currentValue;
+        note.maintags.forEach(obj=>{
+          let tag =  new TagExtraMin(obj)
           roles.push('mainTags');
           tags.push(tag);
         });
     }
 
     if(/*note.othertags !=null && */note.othertags.length !=0){
-        note.othertags.map((currentValue, currentIndex)=>{
-          let tag =  new TagClass.Tag();
-          tag.title = currentValue;
+        note.othertags.forEach(obj=>{
+          let tag =  new TagExtraMin(obj);
           roles.push('otherTags');
           tags.push(tag);
         });
@@ -231,7 +235,7 @@ export class Repository{
   //   let values:any = note.getValues();
   //   return this.db.one(sql.removeNote, values,(result:any)=>{return result.rowCont});
   // }
-  removeNote(note:Note):Promise<any>{
+  removeNote(note:NoteExtraMin):Promise<any>{
     let values:any = note.getValues();
     return this.db.none(sql.removeNote, values);
   }
@@ -246,7 +250,7 @@ export class Repository{
     return base;
   }
 
-  removeTagsFromNote(note:Note, tags: TagClass.Tag[]):Promise<any>{
+  removeTagsFromNote(note:NoteExtraMin, tags: TagExtraMin[]):Promise<any>{
     // let values: any=note.getValues();
     // return this.db.tx(t=>{
     //   let queries:any[]=[tags.length];
@@ -268,33 +272,33 @@ export class Repository{
   from attic.notes join attic.notes_tags on title=noteTitle
   where attic.notes.userid=$1 and tagTitle=$2;
   */
-  private static getQueryNotesByTagsNoRole(userid: string, tags:TagClass.Tag[], and: boolean):string{
-    let tagsTitle:string[]=tags.map((currentValue:TagClass.Tag)=>{
-      return currentValue.title;
-    });
-
-    let query:string = Repository.SELECT_NOTES_BY_TAGS_START;
-    query = query.concat(userid+'\'' );
-    query = query.concat('and ( tagtitle=\'');
-
-    /*select ... from ... where userid='ciao' and (tagTitle='*/
-    let joined:string;
-    if(and){
-      joined = tagsTitle.join('\' and tagtitle = \'');
-    }else{
-      joined = tagsTitle.join('\' or tagtitle = \'');
-    }
-
-    joined = joined.concat('\');');
-
-    /*' or tagTitle='something */
-
-    return query.concat(joined);
-  }
-
-  // private static getQueryNotesByTagsWithRole(userid: string, tags:TagClass.Tag[], roles:string[], and: boolean):string{
+  // private static getQueryNotesByTagsNoRole(userid: string, tags:TagExtraMin[], and: boolean):string{
+  //   let tagsTitle:string[]=tags.map((currentValue:TagExtraMin)=>{
+  //     return currentValue.title;
+  //   });
   //
-  //   let rolesTags:any[]=tags.map((currentValue:TagClass.Tag, currentIndex: number)=>{
+  //   let query:string = Repository.SELECT_NOTES_BY_TAGS_START;
+  //   query = query.concat(userid+'\'' );
+  //   query = query.concat('and ( tagtitle=\'');
+  //
+  //   /*select ... from ... where userid='ciao' and (tagTitle='*/
+  //   let joined:string;
+  //   if(and){
+  //     joined = tagsTitle.join('\' and tagtitle = \'');
+  //   }else{
+  //     joined = tagsTitle.join('\' or tagtitle = \'');
+  //   }
+  //
+  //   joined = joined.concat('\');');
+  //
+  //   /*' or tagTitle='something */
+  //
+  //   return query.concat(joined);
+  // }
+
+  // private static getQueryNotesByTagsWithRole(userid: string, tags:Tag[], roles:string[], and: boolean):string{
+  //
+  //   let rolesTags:any[]=tags.map((currentValue:Tag, currentIndex: number)=>{
   //     return {role:roles[currentIndex], title: currentValue.title};
   //   });
   //
@@ -319,7 +323,7 @@ export class Repository{
   //   //CURRENTLY HAS TO RE WRITTEN TO ESCAPE SQL-INJECTION.
   // }
 
-  // selectNotesByTagsNoRole(userid: string, tags:TagClass.Tag[], and: boolean):Promise<any>{
+  // selectNotesByTagsNoRole(userid: string, tags:Tag[], and: boolean):Promise<any>{
   //   let values:string = Repository.getQueryNotesByTagsNoRole(userid,tags, and);
   //   // console.log('the query is:');
   //   // console.log(values);
@@ -327,7 +331,7 @@ export class Repository{
   // }
   //
   //
-  // selectNotesByTagsWithRole(userid: string, tags:TagClass.Tag[], roles:string[], and: boolean):Promise<any>{
+  // selectNotesByTagsWithRole(userid: string, tags:Tag[], roles:string[], and: boolean):Promise<any>{
   //   if(tags.length!=roles.length){
   //     throw new TypeError(Const.ERR_DIFF_LENGTH);
   //   }
@@ -335,46 +339,46 @@ export class Repository{
   //   return this.db.many(values);
   // }
 
-  selectNotesMinByTagsAnd(user:User, tags:TagClass.Tag[]):Promise<any>{
+  selectNotesMinByTagsAnd(user:User, tags:TagExtraMin[]):Promise<any>{
     return this.db.any(sql.selectNotesMinByTagsAnd, [user.userid, tags.map(obj=>{return obj.title})]);
   }
 
-  selectNotesMinByTagsOr(user:User, tags:TagClass.Tag[]):Promise<any>{
+  selectNotesMinByTagsOr(user:User, tags:TagExtraMin[]):Promise<any>{
     return this.db.any(sql.selectNotesMinByTagsOr, [user.userid].concat(tags.map(obj=>{return obj.title})));
   }
 
-  selectNotesMinWithDateByTagsAnd(user:User, tags:TagClass.Tag[]):Promise<any>{
+  selectNotesMinWithDateByTagsAnd(user:User, tags:TagExtraMin[]):Promise<any>{
     return this.db.any(sql.selectNotesMinWithDateByTagsAnd, [user.userid, tags.map(obj=>{return obj.title})]);
   }
 
-  selectNotesMinWithDateByTagsOr(user:User, tags:TagClass.Tag[]):Promise<any>{
+  selectNotesMinWithDateByTagsOr(user:User, tags:TagExtraMin[]):Promise<any>{
     return this.db.any(sql.selectNotesMinWithDateByTagsOr, [user.userid].concat(tags.map(obj=>{return obj.title})));
   }
 
-  selectNoteByTitle(note:Note):Promise<any>{
+  selectNoteByTitle(note:NoteExtraMin):Promise<any>{
     return this.db.oneOrNone(sql.selectNoteByTitle, note.getValues(), (note:any)=>{
       return note});
   }
 
-  selectNotesMinByTitleReg(userid:string, title:string):Promise<any>{
-    return this.db.any(sql.selectNotesMinByTitleReg, [userid, '%'+title+'%']);
+  selectNotesMinByTitleReg(user:User, title:string):Promise<any>{
+    return this.db.any(sql.selectNotesMinByTitleReg, [user.userid, '%'+title+'%']);
   }
 
-  selectNotesMinByTextReg(userid:string, text:string):Promise<any>{
-    return this.db.any(sql.selectNotesMinByTextReg, [userid, '%'+text+'%']);
+  selectNotesMinByTextReg(user:User, text:string):Promise<any>{
+    return this.db.any(sql.selectNotesMinByTextReg, [user.userid, '%'+text+'%']);
   }
 
 
-  selectNotesMinWithDateByTitleReg(userid:string, title:string):Promise<any>{
-    return this.db.any(sql.selectNotesMinWithDateByTitleReg, [userid, '%'+title+'%']);
+  selectNotesMinWithDateByTitleReg(user:User, title:string):Promise<any>{
+    return this.db.any(sql.selectNotesMinWithDateByTitleReg, [user.userid, '%'+title+'%']);
   }
 
-  selectNotesMinWithDateByTextReg(userid:string, text:string):Promise<any>{
-    return this.db.any(sql.selectNotesMinWithDateByTextReg, [userid, '%'+text+'%']);
+  selectNotesMinWithDateByTextReg(user:User, text:string):Promise<any>{
+    return this.db.any(sql.selectNotesMinWithDateByTextReg, [user.userid, '%'+text+'%']);
   }
 
-  selectNotesFull(userid:string):Promise<any>{
-    return this.db.any(sql.selectNotesFull, [userid]);
+  selectNotesFull(user:User):Promise<any>{
+    return this.db.any(sql.selectNotesFull, [user.userid]);
   }
 
   selectNotesMin(user: User):Promise<any>{
@@ -393,10 +397,6 @@ export class Repository{
     return this.db.any(sql.selectNotesMinByIsDone, [user.userid, isDone])
   }
 
-  setDone(note:Note, done: boolean):Promise<any>{
-    let values:any[]=[note.isdone, note.title, done];
-    //return this.db.oneOrNone(sql.setDone, values, (note:any)=>{return note.result});
-    return this.db.none(sql.setDone, values);
-  }
+
 
 }

@@ -39,7 +39,7 @@ export default {
       removeTag: link('tags/remove_tag.sql'),
       selectTagByTitle: link('tags/select_tag_by_title.sql'),
       selectTagsByTitle: link('tags/select_tags_by_title_reg.sql'),
-      selectTagsFull: link('tags/select_tags_full.sql'),
+      // selectTagsFull: link('tags/select_tags_full.sql'),
       selectTagsMin: link('tags/select_tags_min.sql')
     },
     users:{
@@ -61,8 +61,7 @@ function link(file: string): QueryFile {
     let options: TQueryFileOptions = {
         minify: true, /*authors siggest to set this to true.*/
         params: {
-            schema: 'attic' /*if in future schema will change, no need to
-            change the queries.*/
+            schema: 'attic' /*if in future schema will change, no need to change the queries.*/
         }
     };
 
@@ -71,6 +70,6 @@ function link(file: string): QueryFile {
     if (queryFile.error) {
         throw queryFile.error;
     }
-
+    
     return queryFile;
 }

@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const user_1 = require("../models/user");
 const jwt = require("jsonwebtoken");
 const database_1 = require("../config/database");
-const UsefulTypes = require("./useful/types");
+const types_1 = require("./useful/types");
 class AuthMiddle {
     static getToken(headers) {
         let res;
@@ -30,7 +30,7 @@ class AuthMiddle {
     }
     static authenticate(user) {
         return new Promise((resolve, reject) => {
-            let result = new UsefulTypes.AuthResult();
+            let result = new types_1.AuthResult();
             result.ok = true;
             result.result = 'JWT ' + AuthMiddle.generateToken(user);
             resolve(result);

@@ -20,6 +20,30 @@ class BasicResult extends Result {
     }
 }
 exports.BasicResult = BasicResult;
+class NoteExtraMinResult extends Result {
+    constructor(ok, note) {
+        super(ok);
+        this.result = note;
+    }
+}
+exports.NoteExtraMinResult = NoteExtraMinResult;
+class NoteExtraMinWithDateResult extends Result {
+    constructor(ok, note) {
+        super(ok);
+        this.result = note;
+    }
+    static getAppropriateNoteResult(ok, note, withDate) {
+        let res;
+        if (withDate) {
+            res = new NoteExtraMinWithDateResult(ok, note);
+        }
+        else {
+            res = new NoteExtraMinResult(ok, note);
+        }
+        return res;
+    }
+}
+exports.NoteExtraMinWithDateResult = NoteExtraMinWithDateResult;
 class NoteResult extends Result {
     constructor(ok, note) {
         super(ok);
@@ -27,6 +51,20 @@ class NoteResult extends Result {
     }
 }
 exports.NoteResult = NoteResult;
+class TagExtraMinResult extends Result {
+    constructor(ok, tag) {
+        super(ok);
+        this.result = tag;
+    }
+}
+exports.TagExtraMinResult = TagExtraMinResult;
+class TagAlmostMinResult extends Result {
+    constructor(ok, tag) {
+        super(ok);
+        this.result = tag;
+    }
+}
+exports.TagAlmostMinResult = TagAlmostMinResult;
 class TagResult extends Result {
     constructor(ok, tag) {
         super(ok);
@@ -34,13 +72,6 @@ class TagResult extends Result {
     }
 }
 exports.TagResult = TagResult;
-class TagMinResult extends Result {
-    constructor(ok, tag) {
-        super(ok);
-        this.result = tag;
-    }
-}
-exports.TagMinResult = TagMinResult;
 class AnyResult extends Result {
     constructor(ok, result) {
         super(ok);

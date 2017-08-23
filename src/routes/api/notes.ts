@@ -3,7 +3,7 @@
 import * as express from 'express';
 const router = express.Router();
 
-import Note from '../../models/note';
+//import Note from '../../models/note';
 
 import NoteEndpoint from '../../endpoints/api/note_endpoint';
 
@@ -60,7 +60,7 @@ router.post('/by-isdone', auth, validator(Schemas.Notes.NOTES_BY_ISDONE_SCHEMA),
 
 router.post('/by-isdone/with-date', auth, validator(Schemas.Notes.NOTES_BY_ISDONE_SCHEMA), NoteEndpoint.selectNotesMinWithDateByIsDone);
 
-router.post('/mod/set-done', validator(Schemas.Notes.SET_DONE_SCHEMA),auth, NoteEndpoint.setDone);
+router.post('/mod/set-done', validator(Schemas.Notes.SET_DONE_SCHEMA),auth, NoteEndpoint.changeDone);
 
 router.get('/all/min', auth, NoteEndpoint.selectNotesMin);
 

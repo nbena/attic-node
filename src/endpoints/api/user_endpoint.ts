@@ -7,7 +7,7 @@ import {AnyResult, BasicResult, JsonError } from '../../middles/useful/types';
 import UserMiddle from '../../middles/user_middle';
 
 import * as express from 'express';
-
+/*
 class UserEndpointParamCheck {
 
   public static createUser(req: express.Request):BasicResult{
@@ -37,10 +37,11 @@ class UserEndpointParamCheck {
   }
 
 }
+*/
 
 export default class UserEndpoint{
 
-  public static createUser = (req: express.Request, res: express.Response, next) =>{
+  public static createUser(req: express.Request, res: express.Response, next){
     let user:User;
     // let check = UserEndpointParamCheck.createUser(req);
     // if(check!=null){
@@ -57,7 +58,7 @@ export default class UserEndpoint{
   }
 
 
-  public static summary = (req: express.Request, res: express.Response, next)=>{
+  public static summary(req: express.Request, res: express.Response, next){
     let user:User;
     // let check = UserEndpointParamCheck.summary(req);
     // if(check!=null){

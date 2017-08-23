@@ -1,7 +1,13 @@
-import Note from './note';
-export class Tag{
-  userid: string;
-  title: string;
+//import Note from './note';
+import Base from './base';
+export class TagExtraMin extends Base{
+  constructor(title?:string, userid?:string){
+    super(title, userid);
+  }
+}
+export class TagAlmostMin extends TagExtraMin{
+  // userid: string;
+  // title: string;
   noteslength: number;
 
   // public getValues():any{
@@ -12,33 +18,38 @@ export class Tag{
   //   }
   // }
 
-  public getValues():string[]{
-    return [this.userid, this.title];
-  }
-
+  // public getValues():string[]{
+  //   return [this.userid, this.title];
+  // }
+  //
+  // constructor(title?:string, userid?:string){
+  //   if(title!=null){
+  //     this.title=title;
+  //   }
+  //   if(userid!=null){
+  //     this.userid=userid;
+  //   }
+  //   this.noteslength=0;
+  // }
   constructor(title?:string, userid?:string){
-    if(title!=null){
-      this.title=title;
-    }
-    if(userid!=null){
-      this.userid=userid;
-    }
-    this.noteslength=0;
+    super(title, userid);
   }
-
 
 
 }
 
-export class TagMin extends Tag{
+export class Tag extends TagAlmostMin{
   notes: string[];
   /*notes are always kept as string*/
+  constructor(title?:string, userid?:string){
+    super(title, userid);
+  }
 }
 
-export class TagFull extends Tag{
-  notes: Note[];
-}
-
-export class Tag2 extends Tag{
-  notes: any[];
-}
+// export class TagFull extends Tag{
+//   notes: Note[];
+// }
+//
+// export class Tag2 extends Tag{
+//   notes: any[];
+// }

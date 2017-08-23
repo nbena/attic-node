@@ -1,17 +1,17 @@
-import * as TagClass from '../models/tag';
+import {TagExtraMin, Tag, TagAlmostMin} from '../models/tag';
 import User from '../models/user';
 import * as db from '../postgres';
-import * as types from './useful/types';
+import {TagResult, TagAlmostMinResult, TagExtraMinResult, AnyResult, Result} from './useful/types';
 import Utils from './useful/utils';
 import {Const} from './useful/const';
 
 export default class TagMiddle{
 
-  public static changeTitle = (tag: TagClass.Tag, newTitle: string):Promise<types.Result>=>{
+  public static changeTitle(tag: TagExtraMin, newTitle: string):Promise<Result>{
     return new Promise((resolve, reject)=>{
       db.tags.changeTitle(tag, newTitle)
       .then(result=>{
-        resolve(new types.Result(true));
+        resolve(new Result(true));
       })
       .catch(error=>{
         resolve(Utils.jsonErr(error));
@@ -19,15 +19,16 @@ export default class TagMiddle{
     })
   }
 
-  public static createTag = (tag: TagClass.Tag):Promise<types.Result>=>{
+  public static createTag(tag: TagExtraMin):Promise<Result>{
     return new Promise((resolve, reject)=>{
       db.tags.createTag(tag)
       .then(result=>{
         /*use this 'hack' because that tag parameter has already everything we want it to be, it just misses
         the noteslength. We add them and we can send it back to the user.
         */
-        tag.noteslength = 0;
-        resolve(new types.TagResult(true, tag));
+        let res:TagAlmostMin = new TagAlmostMin(tag.title, tag.userid);
+        res.noteslength = 0;
+        resolve(new TagAlmostMinResult(true, res));
       })
       .catch(error=>{
         resolve(Utils.jsonErr(error));
@@ -36,16 +37,16 @@ export default class TagMiddle{
   }
 
 
-  public static removeTag = (tag: TagClass.Tag):Promise<types.Result>=>{
+  public static removeTag(tag: TagExtraMin):Promise<Result>{
     return new Promise((resolve, reject)=>{
       db.tags.removeTag(tag)
       .then(result=>{
         // if(result==1){
-        //   resolve(new types.Result(true));
+        //   resolve(new Result(true));
         // }else{
         //   resolve(Utils.jsonErr(new Error(Const.ERR_DB+': '+result)));
         // }
-        resolve(new types.Result(true));
+        resolve(new Result(true));
       })
       .catch(error=>{
         resolve(Utils.jsonErr(error));
@@ -54,11 +55,11 @@ export default class TagMiddle{
   }
 
 
-  public static selectTagByTitle  = (tag: TagClass.Tag):Promise<types.Result>=>{
+  public static selectTagByTitle (tag: TagExtraMin):Promise<Result>{
       return new Promise((resolve, reject)=>{
         db.tags.selectTagByTitle(tag)
         .then(result=>{
-          resolve(new types.TagMinResult(true, result));
+          resolve(new TagResult(true, result));
         })
         .catch(error=>{
           resolve(Utils.jsonErr(error));
@@ -67,11 +68,11 @@ export default class TagMiddle{
   }
 
 
-  public static selectTagsByTitleReg  = (user:User, title:string):Promise<types.Result>=>{
+  public static selectTagsAlmostMinByTitleReg (user:User, title:string):Promise<Result>{
       return new Promise((resolve, reject)=>{
-        db.tags.selectTagsByTitleReg(user, title)
+        db.tags.selectTagsAlmostMinByTitleReg(user, title)
         .then(tags=>{
-          resolve(new types.AnyResult(true, tags));
+          resolve(new TagAlmostMinResult(true, tags));
         })
         .catch(error=>{
           resolve(Utils.jsonErr(error));
@@ -79,11 +80,11 @@ export default class TagMiddle{
       })
   }
   //
-  // public static selectTagsFull  = (user:User)=>{
+  // public static selectTagsFull (user:User)=>{
   //     return new Promise((resolve, reject)=>{
   //       db.tags.selectTagsFull(user)
   //       .then(tags=>{
-  //         resolve(new types.AnyResult(true,tags));
+  //         resolve(new AnyResult(true,tags));
   //       })
   //       .catch(error=>{
   //         resolve(Utils.jsonErr(error));
@@ -91,11 +92,11 @@ export default class TagMiddle{
   //     })
   // }
 
-  public static selectAllTagsMin  = (user:User):Promise<types.Result>=>{
+  public static selectAllTagsAlmostMin (user:User):Promise<Result>{
       return new Promise((resolve, reject)=>{
-        db.tags.selectTagsMin(user)
+        db.tags.selectTagsAlmostMin(user)
         .then(tags=>{
-          resolve(new types.AnyResult(true, tags));
+          resolve(new TagAlmostMinResult(true, tags));
         })
         .catch(error=>{
           resolve(Utils.jsonErr(error));

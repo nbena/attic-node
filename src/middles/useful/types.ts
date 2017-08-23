@@ -1,5 +1,5 @@
-import Note from '../../models/note';
-import * as TagClass from '../../models/tag';
+import {NoteExtraMin, NoteExtraMinWithDate, Note} from '../../models/note';
+import {TagExtraMin,TagAlmostMin, Tag} from '../../models/tag';
 export class AuthResult{
   ok: boolean;
   result: string;
@@ -28,6 +28,38 @@ export class BasicResult extends Result{
   }
 }
 
+
+export class NoteExtraMinResult extends Result{
+  result: NoteExtraMin;
+
+  constructor(ok:boolean, note:NoteExtraMin){
+    super(ok);
+    this.result=note;
+  }
+}
+
+
+export class NoteExtraMinWithDateResult extends Result{
+  result: NoteExtraMinWithDate;
+
+  constructor(ok:boolean, note:NoteExtraMinWithDate){
+    super(ok);
+    this.result=note;
+  }
+
+  public static getAppropriateNoteResult(ok:boolean, note:NoteExtraMin, withDate:boolean){
+    let res:NoteExtraMinResult;
+    if(withDate){
+      res = new NoteExtraMinWithDateResult(ok, note as NoteExtraMinWithDate);
+    }else{
+      res = new NoteExtraMinResult(ok, note);
+    }
+    return res;
+  }
+
+}
+
+
   export class NoteResult extends Result{
     result: Note;
 
@@ -37,23 +69,39 @@ export class BasicResult extends Result{
     }
   }
 
-  //can't be done.
+
+  export class TagExtraMinResult extends Result{
+    result: TagExtraMin;
+    constructor(ok:boolean, tag:TagExtraMin){
+      super(ok);
+      this.result=tag;
+    }
+  }
+
+  export class TagAlmostMinResult extends Result{
+    result: TagAlmostMin;
+    constructor(ok:boolean, tag:TagAlmostMin){
+      super(ok);
+      this.result=tag;
+    }
+  }
+
   export class TagResult extends Result{
-    result: TagClass.Tag;
-    constructor(ok:boolean, tag:TagClass.Tag){
+    result: Tag;
+    constructor(ok:boolean, tag:Tag){
       super(ok);
       this.result=tag;
     }
   }
 
 
-  export class TagMinResult extends Result{
-    result: TagClass.TagMin;
-    constructor(ok:boolean, tag:TagClass.TagMin){
-      super(ok);
-      this.result=tag;
-    }
-  }
+  // export class TagMinResult extends Result{
+  //   result: TagClass.TagMin;
+  //   constructor(ok:boolean, tag:TagClass.TagMin){
+  //     super(ok);
+  //     this.result=tag;
+  //   }
+  // }
 
   export class AnyResult extends Result{
     result: any;

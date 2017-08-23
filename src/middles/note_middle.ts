@@ -1,8 +1,9 @@
-import Note from '../models/note';
-import * as TagClass from '../models/tag';
+import {Note, NoteExtraMin} from '../models/note';
+import {TagExtraMin} from '../models/tag';
 import User from '../models/user';
 import * as db from '../postgres';
-import * as types from './useful/types';
+import {BasicResult, Result, AnyResult, NoteExtraMinResult,
+  NoteExtraMinWithDateResult,NoteResult} from './useful/types';
 import Utils from './useful/utils';
 import {Const} from './useful/const';
 
@@ -11,16 +12,22 @@ the middle never throw exception, just return a basic result.
 doing so, the endpoint willbe easy to write (no catch).
 */
 
+/*
+a few notes
+if export default class Foo --> import Foo from
+if export class --> import {} or assign a name to the 'file' and use it as namespace
+*/
+
 
 
 export default class NoteMiddle{
 
-public static addTags (note:Note, tags:TagClass.Tag[], roles:string[]):Promise<types.Result>{
-  return new Promise<types.Result>((resolve, reject)=>{
+public static addTags (note:NoteExtraMin, tags:TagExtraMin[], roles:string[]):Promise<Result>{
+  return new Promise<Result>((resolve, reject)=>{
     db.notes.addTags(note, tags, roles)
     .then(result=>{
       console.log(result);
-      resolve(new types.Result(true));
+      resolve(new Result(true));
     })
     .catch(error=>{
       resolve(Utils.jsonErr(error));
@@ -28,13 +35,25 @@ public static addTags (note:Note, tags:TagClass.Tag[], roles:string[]):Promise<t
   });
 }
 
+public static changeDone (note:NoteExtraMin, done:boolean):Promise<Result>{
+  return new Promise<Result>((resolve, reject)=>{
+    db.notes.changeDone(note, done)
+      .then(result=>{
+        resolve(new BasicResult(true, JSON.stringify(result)));
+      })
+      .catch(error=>{
+        resolve(Utils.jsonErr(error));
+      })
+  });
+}
 
-public static changeLinks (note:Note, links:string[]):Promise<types.Result>{
-  return new Promise<types.Result>((resolve, reject)=>{
+
+public static changeLinks (note:NoteExtraMin, links:string[]):Promise<Result>{
+  return new Promise<Result>((resolve, reject)=>{
     db.notes.changeLinks(note, links)
     .then(result=>{
       // resolve(new types.BasicResult(true, JSON.stringify(result)));
-      resolve(new types.Result(true));
+      resolve(new Result(true));
     })
     .catch(error=>{
       resolve(Utils.jsonErr(error));
@@ -42,12 +61,12 @@ public static changeLinks (note:Note, links:string[]):Promise<types.Result>{
   });
 }
 
-public static changeText (note:Note, text:string):Promise<types.Result>{
-  return new Promise<types.Result>((resolve, reject)=>{
+public static changeText (note:NoteExtraMin, text:string):Promise<Result>{
+  return new Promise<Result>((resolve, reject)=>{
     db.notes.changeText(note, text)
     .then(result=>{
-      // resolve(new types.BasicResult(true, JSON.stringify(result)));
-      resolve(new types.Result(true));
+      // resolve(new BasicResult(true, JSON.stringify(result)));
+      resolve(new Result(true));
     })
     .catch(error=>{
       resolve(Utils.jsonErr(error));
@@ -55,12 +74,12 @@ public static changeText (note:Note, text:string):Promise<types.Result>{
   });
 }
 
-public static changeTitle (note:Note, title:string):Promise<types.Result>{
-  return new Promise<types.Result>((resolve, reject)=>{
+public static changeTitle (note:NoteExtraMin, title:string):Promise<Result>{
+  return new Promise<Result>((resolve, reject)=>{
     db.notes.changeTitle(note, title)
     .then(result=>{
-      // resolve(new types.BasicResult(true, JSON.stringify(result)));
-      resolve(new types.Result(true));
+      // resolve(new BasicResult(true, JSON.stringify(result)));
+      resolve(new Result(true));
     })
     .catch(error=>{
       resolve(Utils.jsonErr(error));
@@ -68,8 +87,8 @@ public static changeTitle (note:Note, title:string):Promise<types.Result>{
   });
 }
 
-public static createNote (note:Note):Promise<types.Result>{
-  return new Promise<types.Result>((resolve, reject)=>{
+public static createNote (note:Note):Promise<Result>{
+  return new Promise<Result>((resolve, reject)=>{
     let result:Promise<any>;
     result=db.notes.createNote(note);
     result.then(result=>{
@@ -81,7 +100,7 @@ public static createNote (note:Note):Promise<types.Result>{
       // noteRes.maintags = ((note.maintags==null)? [] : note.maintags);
       // noteRes.othertags = ((note.othertags==null)? [] : note.othertags);
 
-      resolve(new types.NoteResult(true, noteRes));
+      resolve(new NoteResult(true, noteRes));
     })
     result.catch(error=>{
       resolve(Utils.jsonErr(error));
@@ -89,7 +108,7 @@ public static createNote (note:Note):Promise<types.Result>{
   });
 }
 
-public static removeNote (note:Note):Promise<types.Result>{
+public static removeNote (note:NoteExtraMin):Promise<Result>{
   return new Promise((resolve, reject)=>{
     db.notes.removeNote(note)
       .then(result=>{
@@ -98,7 +117,7 @@ public static removeNote (note:Note):Promise<types.Result>{
         // }else{
         //   resolve(Utils.jsonErr(new Error(Const.ERR_DB+': '+result)));
         // }
-        resolve(new types.Result(true));
+        resolve(new Result(true));
       })
       .catch(error=>{
         resolve(Utils.jsonErr(error));
@@ -106,12 +125,12 @@ public static removeNote (note:Note):Promise<types.Result>{
   })
 }
 
-public static removeTagsFromNote (note:Note, tags:TagClass.Tag[]):Promise<types.Result>{
-  return new Promise<types.Result>((resolve, reject)=>{
+public static removeTagsFromNote (note:NoteExtraMin, tags:TagExtraMin[]):Promise<Result>{
+  return new Promise<Result>((resolve, reject)=>{
     db.notes.removeTagsFromNote(note, tags)
       .then(result=>{
         // resolve(new types.Result(true, JSON.stringify(result)));
-        resolve(new types.Result(true));
+        resolve(new Result(true));
       })
       .catch(error=>{
         resolve(Utils.jsonErr(error));
@@ -119,7 +138,7 @@ public static removeTagsFromNote (note:Note, tags:TagClass.Tag[]):Promise<types.
   })
 }
 
-// public static selectNotesByTagsNoRole(userId: string, tags:TagClass.Tag[], and: boolean):Promise<types.Result>{
+// public static selectNotesByTagsNoRole(userId: string, tags:Tag[], and: boolean):Promise<types.Result>{
 //   return new Promise<types.Result>((resolve, reject)=>{
 //     db.notes.selectNotesByTagsNoRole(userId, tags, and)
 //     .then(rawResult=>{
@@ -132,7 +151,7 @@ public static removeTagsFromNote (note:Note, tags:TagClass.Tag[]):Promise<types.
 // }
 //
 //
-// public static selectNotesByTagsWithRole(userId: string, tags:TagClass.Tag[], roles:string[], and: boolean):Promise<types.Result>{
+// public static selectNotesByTagsWithRole(userId: string, tags:Tag[], roles:string[], and: boolean):Promise<types.Result>{
 //   return new Promise<types.Result>((resolve, reject)=>{
 //     /*even if the db takes control of correct parameters, I prefer doing it now too.*/
 //     if(tags.length!=roles.length){
@@ -149,8 +168,8 @@ public static removeTagsFromNote (note:Note, tags:TagClass.Tag[]):Promise<types.
 // }
 
 
-public static selectNotesMinByTagsAnd(user:User, tags:TagClass.Tag[], withDate:boolean):Promise<types.Result>{
-  return new Promise<types.Result>((resolve, reject)=>{
+public static selectNotesMinByTagsAnd(user:User, tags:TagExtraMin[], withDate:boolean):Promise<Result>{
+  return new Promise<Result>((resolve, reject)=>{
     let p:Promise<any>;
     if(withDate){
       p=db.notes.selectNotesMinWithDateByTagsAnd(user, tags);
@@ -158,7 +177,7 @@ public static selectNotesMinByTagsAnd(user:User, tags:TagClass.Tag[], withDate:b
       p=db.notes.selectNotesMinByTagsAnd(user, tags)
     }
     p.then(result=>{
-      resolve(new types.AnyResult(true, result));
+      resolve(NoteExtraMinWithDateResult.getAppropriateNoteResult(true, result, withDate));
     })
     .catch(error=>{
       resolve(Utils.jsonErr(error));
@@ -167,8 +186,8 @@ public static selectNotesMinByTagsAnd(user:User, tags:TagClass.Tag[], withDate:b
 }
 
 
-public static selectNotesMinByTagsOr(user:User, tags:TagClass.Tag[], withDate:boolean):Promise<types.Result>{
-  return new Promise<types.Result>((resolve, reject)=>{
+public static selectNotesMinByTagsOr(user:User, tags:TagExtraMin[], withDate:boolean):Promise<Result>{
+  return new Promise<Result>((resolve, reject)=>{
     let p:Promise<any>;
     if(withDate){
       p=db.notes.selectNotesMinWithDateByTagsOr(user, tags);
@@ -176,7 +195,7 @@ public static selectNotesMinByTagsOr(user:User, tags:TagClass.Tag[], withDate:bo
       p=db.notes.selectNotesMinByTagsOr(user, tags)
     }
     p.then(result=>{
-      resolve(new types.AnyResult(true, result));
+      resolve(NoteExtraMinWithDateResult.getAppropriateNoteResult(true, result, withDate));
     })
     .catch(error=>{
       resolve(Utils.jsonErr(error));
@@ -184,11 +203,11 @@ public static selectNotesMinByTagsOr(user:User, tags:TagClass.Tag[], withDate:bo
   })
 }
 
-public static selectNoteByTitle(note:Note):Promise<types.Result>{
-  return new Promise<types.Result>((resolve, reject)=>{
+public static selectNoteByTitle(note:NoteExtraMin):Promise<Result>{
+  return new Promise<Result>((resolve, reject)=>{
     db.notes.selectNoteByTitle(note)
     .then(note=>{
-      resolve(new types.NoteResult(true, note));
+      resolve(new NoteResult(true, note));
     })
     .catch(error=>{
       resolve(Utils.jsonErr(error));
@@ -197,16 +216,16 @@ public static selectNoteByTitle(note:Note):Promise<types.Result>{
 }
 
 
-public static selectNotesByTitleReg(userId: string, title:string, withDate:boolean):Promise<types.Result>{
-  return new Promise<types.Result>((resolve, reject)=>{
+public static selectNotesByTitleReg(user:User, title:string, withDate:boolean):Promise<Result>{
+  return new Promise<Result>((resolve, reject)=>{
     let p:Promise<any>;
     if(withDate){
-      p=db.notes.selectNotesMinWithDateByTitleReg(userId, title);
+      p=db.notes.selectNotesMinWithDateByTitleReg(user, title);
     }else{
-      p=db.notes.selectNotesMinByTitleReg(userId, title);
+      p=db.notes.selectNotesMinByTitleReg(user, title);
     }
     p.then(notes=>{
-      resolve(new types.AnyResult(true, notes));
+      resolve(NoteExtraMinWithDateResult.getAppropriateNoteResult(true, notes, withDate));
     })
     .catch(error=>{
       resolve(Utils.jsonErr(error));
@@ -215,16 +234,16 @@ public static selectNotesByTitleReg(userId: string, title:string, withDate:boole
 }
 
 
-public static selectNotesByTextReg(userId: string, text:string, withDate:boolean):Promise<types.Result>{
-  return new Promise<types.Result>((resolve, reject)=>{
+public static selectNotesByTextReg(user:User, text:string, withDate:boolean):Promise<Result>{
+  return new Promise<Result>((resolve, reject)=>{
     let p:Promise<any>;
     if(withDate){
-      p=db.notes.selectNotesMinWithDateByTextReg(userId, text)
+      p=db.notes.selectNotesMinWithDateByTextReg(user, text)
     }else{
-      p=db.notes.selectNotesMinByTextReg(userId,text);
+      p=db.notes.selectNotesMinByTextReg(user,text);
     }
     p.then(notes=>{
-      resolve(new types.AnyResult(true, notes));
+      resolve(NoteExtraMinWithDateResult.getAppropriateNoteResult(true, notes, withDate));
     })
     .catch(error=>{
       resolve(Utils.jsonErr(error));
@@ -233,8 +252,8 @@ public static selectNotesByTextReg(userId: string, text:string, withDate:boolean
 }
 
 
-public static selectNotesMin(user:User, withDate:boolean):Promise<types.Result>{
-  return new Promise<types.Result>((resolve, reject)=>{
+public static selectNotesMin(user:User, withDate:boolean):Promise<Result>{
+  return new Promise<Result>((resolve, reject)=>{
     let p:Promise<any>;
     if(withDate){
       p=db.notes.selectNotesMinWithDate(user);
@@ -242,7 +261,7 @@ public static selectNotesMin(user:User, withDate:boolean):Promise<types.Result>{
       p=db.notes.selectNotesMin(user);
     }
     p.then(notes=>{
-      resolve(new types.AnyResult(true, notes));
+      resolve(NoteExtraMinWithDateResult.getAppropriateNoteResult(true, notes, withDate));
     })
     .catch(error=>{
       resolve(Utils.jsonErr(error));
@@ -251,8 +270,8 @@ public static selectNotesMin(user:User, withDate:boolean):Promise<types.Result>{
 }
 
 
-public static selectNotesMinByIsDone(user:User, isDone:boolean, withDate:boolean):Promise<types.Result>{
-  return new Promise<types.Result>((resolve, reject)=>{
+public static selectNotesMinByIsDone(user:User, isDone:boolean, withDate:boolean):Promise<Result>{
+  return new Promise<Result>((resolve, reject)=>{
     let p:Promise<any>;
     if(withDate){
       p=db.notes.selectNotesMinWithDateByIsDone(user, isDone);
@@ -260,7 +279,7 @@ public static selectNotesMinByIsDone(user:User, isDone:boolean, withDate:boolean
       p=db.notes.selectNotesMinByIsDone(user, isDone);
     }
     p.then(notes=>{
-      resolve(new types.AnyResult(true, notes));
+      resolve(NoteExtraMinWithDateResult.getAppropriateNoteResult(true, notes, withDate));
     })
     .catch(error=>{
       resolve(Utils.jsonErr(error));
@@ -293,17 +312,7 @@ public static selectNotesMinByIsDone(user:User, isDone:boolean, withDate:boolean
   //   });
   // }
 
-  public static setDone (note:Note, done:boolean):Promise<types.Result>{
-    return new Promise<types.Result>((resolve, reject)=>{
-      db.notes.setDone(note, done)
-        .then(result=>{
-          resolve(new types.BasicResult(true, JSON.stringify(result)));
-        })
-        .catch(error=>{
-          resolve(Utils.jsonErr(error));
-        })
-    });
-  }
+
 
 
 

@@ -3,7 +3,7 @@
 import * as express from 'express';
 const router = express.Router();
 
-import Note from '../../models/note';
+// import Note from '../../models/note';
 
 import TagEndpoint from '../../endpoints/api/tag_endpoint';
 
@@ -22,13 +22,13 @@ router.post('/mod/change-title', auth, validator(Schemas.Tags.CHANGE_TITLE_SCHEM
 
 router.put('/:title', auth, TagEndpoint.createTag);
 
-router.post('/by-title-reg', auth, validator(Schemas.Tags.TAGS_BY_TITLE_REG_SCHEMA),TagEndpoint.selectTagsByTitleReg);
+router.post('/by-title-reg', auth, validator(Schemas.Tags.TAGS_BY_TITLE_REG_SCHEMA),TagEndpoint.selectTagsAlmostMinByTitleReg);
 
-router.get('/all/min', auth, TagEndpoint.selectAllTagsMin);
+router.get('/all/min', auth, TagEndpoint.selectAllTagsAlmostMin);
 
 // router.get('/all', TagEndpoint.selectTagsFull);
 
-router.post('/all/min', auth, TagEndpoint.selectAllTagsMin);
+router.post('/all/min', auth, TagEndpoint.selectAllTagsAlmostMin);
 
 // router.post('/all', TagEndpoint.selectTagsFull);
 

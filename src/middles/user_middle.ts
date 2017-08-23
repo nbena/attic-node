@@ -7,7 +7,7 @@ import {AnyResult, DbError, Result }  from './useful/types';
 /*every class returns Promise<Result> because it's the superclass*/
 
 export default class UserMiddle{
-  static createUser (user: User):Promise<Result>{
+  public static createUser (user: User):Promise<Result>{
     return new Promise<Result>((resolve, reject)=>{
       user.hashPassword();
       // .then(hashed=>{
@@ -29,7 +29,7 @@ export default class UserMiddle{
   }
 
 
-  static removeUser(user:User):Promise<Result>{
+  public static removeUser(user:User):Promise<Result>{
     return new Promise<Result>((resolve, reject)=>{
       db.users.removeUser(user)
       .then(result=>{
@@ -41,7 +41,7 @@ export default class UserMiddle{
     })
   }
 
-  static summary(user:User):Promise<Result>{
+  public static summary(user:User):Promise<Result>{
     return new Promise<Result>((resolve, reject)=>{
       db.users.summary(user)
       .then(result=>{
@@ -54,7 +54,7 @@ export default class UserMiddle{
   }
 
 
-  static isUserAvailable(user:User):Promise<Result>{
+  public static isUserAvailable(user:User):Promise<Result>{
     return new Promise<Result>((resolve, reject)=>{
       db.users.isUserAvailable(user)
       .then(result=>{

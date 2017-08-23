@@ -12,7 +12,7 @@ Even if not necessary I prefer to use BasicResult, so I clearify what I'm doing.
 */
 
 export default class AuthEndpoint{
-  public static authenticate = (req: express.Request, res: express.Response, next)=>{
+  public static authenticate(req: express.Request, res: express.Response, next){
     if(!req.user || req.user==null){
       res.json(new types.BasicResult(false, Const.ERR_USER));
     }

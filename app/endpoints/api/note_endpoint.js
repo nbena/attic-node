@@ -1,40 +1,40 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const note_1 = require("../../models/note");
-const TagClass = require("../../models/tag");
+const tag_1 = require("../../models/tag");
 const utils_1 = require("../../middles/useful/utils");
 const note_middle_1 = require("../../middles/note_middle");
 class NoteEndpoint {
     static addTags(req, res, next) {
         let user = utils_1.default.extractUser(req);
-        let tags;
-        let tagsTemp;
-        let roles;
-        let result;
-        let note;
-        note = new note_1.default();
-        tags = [];
-        roles = [];
-        note.title = req.body.note.title;
-        note.userid = user.userid;
+        let tags = [];
+        let roles = [];
+        let note = new note_1.NoteExtraMin(req.body.title, user.userid);
         if (req.body.note.maintags) {
-            req.body.note.maintags.map((currentValue, currentIndex) => {
-                let tag = new TagClass.Tag();
-                tag.title = currentValue;
+            req.body.note.maintags.forEach(obj => {
+                let tag = new tag_1.TagExtraMin(obj);
                 tags.push(tag);
                 roles.push('mainTags');
             });
         }
         if (req.body.note.othertags) {
-            req.body.note.othertags.forEach(currentValue => {
-                let tag = new TagClass.Tag();
-                tag.title = currentValue;
+            req.body.note.othertags.forEach(obj => {
+                let tag = new tag_1.TagExtraMin(obj);
                 tags.push(tag);
                 roles.push('otherTags');
             });
         }
-        result = note_middle_1.default.addTags(note, tags, roles);
-        result.then(result => {
+        note_middle_1.default.addTags(note, tags, roles)
+            .then(result => {
+            res.json(result);
+        });
+    }
+    static changeDone(req, res, next) {
+        let user = utils_1.default.extractUser(req);
+        let isDone = req.body.note.isdone;
+        let note = new note_1.NoteExtraMin(req.body.title, user.userid);
+        note_middle_1.default.changeDone(note, isDone)
+            .then(result => {
             res.json(result);
         });
     }
@@ -54,12 +54,8 @@ class NoteEndpoint {
     }
     static changeLinks(req, res, next) {
         let user = utils_1.default.extractUser(req);
-        let note;
-        let links;
-        note = new note_1.default();
-        note.title = req.body.note.title;
-        links = req.body.note.links;
-        note.userid = user.userid;
+        let note = new note_1.NoteExtraMin(req.body.title, user.userid);
+        let links = req.body.note.links;
         note_middle_1.default.changeLinks(note, links)
             .then(result => {
             res.json(result);
@@ -67,12 +63,8 @@ class NoteEndpoint {
     }
     static changeText(req, res, next) {
         let user = utils_1.default.extractUser(req);
-        let note;
-        let text;
-        note = new note_1.default();
-        note.title = req.body.note.title;
-        text = req.body.note.text;
-        note.userid = user.userid;
+        let note = new note_1.NoteExtraMin(req.body.title, user.userid);
+        let text = req.body.note.text;
         note_middle_1.default.changeText(note, text)
             .then(result => {
             res.json(result);
@@ -80,12 +72,8 @@ class NoteEndpoint {
     }
     static changeTitle(req, res, next) {
         let user = utils_1.default.extractUser(req);
-        let note;
-        let newTitle;
-        note = new note_1.default();
-        note.title = req.body.note.title;
-        newTitle = req.body.note.newtitle;
-        note.userid = user.userid;
+        let note = new note_1.NoteExtraMin(req.body.title, user.userid);
+        let newTitle = req.body.note.newtitle;
         note_middle_1.default.changeTitle(note, newTitle)
             .then(result => {
             res.json(result);
@@ -94,7 +82,7 @@ class NoteEndpoint {
     static createNote(req, res, next) {
         let user = utils_1.default.extractUser(req);
         let note;
-        note = new note_1.default();
+        note = new note_1.Note();
         note.userid = user.userid;
         note.title = req.body.note.title;
         note.text = req.body.note.text;
@@ -120,10 +108,7 @@ class NoteEndpoint {
     }
     static removeNote(req, res, next) {
         let user = utils_1.default.extractUser(req);
-        let note;
-        note = new note_1.default();
-        note.userid = user.userid;
-        note.title = req.params.title;
+        let note = new note_1.NoteExtraMin(req.params.title, user.userid);
         note_middle_1.default.removeNote(note)
             .then(result => {
             res.json(result);
@@ -131,16 +116,9 @@ class NoteEndpoint {
     }
     static removeTagsFromNote(req, res, next) {
         let user = utils_1.default.extractUser(req);
-        let note;
+        let note = new note_1.NoteExtraMin(req.body.title, user.userid);
         let tags = [];
-        note = new note_1.default();
-        note.title = req.body.note.title;
-        note.userid = user.userid;
-        tags = req.body.note.tags.map((currentValue) => {
-            let t = new TagClass.Tag();
-            t.title = currentValue;
-            return t;
-        });
+        tags = req.body.note.tags.map(obj => { return new tag_1.TagExtraMin(obj); });
         note_middle_1.default.removeTagsFromNote(note, tags)
             .then(result => {
             res.json(result);
@@ -148,7 +126,7 @@ class NoteEndpoint {
     }
     static selectNotesMinByTagsOr(req, res, next) {
         let user = utils_1.default.extractUser(req);
-        let tags = req.body.note.tags.map(obj => { return new TagClass.Tag(obj); });
+        let tags = req.body.note.tags.map(obj => { return new tag_1.TagExtraMin(obj); });
         note_middle_1.default.selectNotesMinByTagsOr(user, tags, false)
             .then(result => {
             res.json(result);
@@ -156,7 +134,7 @@ class NoteEndpoint {
     }
     static selectNotesMinByTagsAnd(req, res, next) {
         let user = utils_1.default.extractUser(req);
-        let tags = req.body.note.tags.map(obj => { return new TagClass.Tag(obj); });
+        let tags = req.body.note.tags.map(obj => { return new tag_1.TagExtraMin(obj); });
         note_middle_1.default.selectNotesMinByTagsAnd(user, tags, false)
             .then(result => {
             res.json(result);
@@ -164,7 +142,7 @@ class NoteEndpoint {
     }
     static selectNotesMinWithDateByTagsOr(req, res, next) {
         let user = utils_1.default.extractUser(req);
-        let tags = req.body.note.tags.map(obj => { return new TagClass.Tag(obj); });
+        let tags = req.body.note.tags.map(obj => { return new tag_1.TagExtraMin(obj); });
         note_middle_1.default.selectNotesMinByTagsOr(user, tags, true)
             .then(result => {
             res.json(result);
@@ -172,7 +150,7 @@ class NoteEndpoint {
     }
     static selectNotesMinWithDateByTagsAnd(req, res, next) {
         let user = utils_1.default.extractUser(req);
-        let tags = req.body.note.tags.map(obj => { return new TagClass.Tag(obj); });
+        let tags = req.body.note.tags.map(obj => { return new tag_1.TagExtraMin(obj); });
         note_middle_1.default.selectNotesMinByTagsAnd(user, tags, true)
             .then(result => {
             res.json(result);
@@ -180,10 +158,7 @@ class NoteEndpoint {
     }
     static selectNoteByTitle(req, res, next) {
         let user = utils_1.default.extractUser(req);
-        let note;
-        note = new note_1.default();
-        note.title = req.params.title;
-        note.userid = user.userid;
+        let note = new note_1.NoteExtraMin(req.params.title, user.userid);
         note_middle_1.default.selectNoteByTitle(note)
             .then(result => {
             res.json(result);
@@ -193,7 +168,7 @@ class NoteEndpoint {
         let user = utils_1.default.extractUser(req);
         let title;
         title = req.body.note.title;
-        note_middle_1.default.selectNotesByTitleReg(user.userid, title, false)
+        note_middle_1.default.selectNotesByTitleReg(user, title, false)
             .then(result => {
             res.json(result);
         });
@@ -202,7 +177,7 @@ class NoteEndpoint {
         let user = utils_1.default.extractUser(req);
         let text;
         text = req.body.note.text;
-        note_middle_1.default.selectNotesByTextReg(user.userid, text, false)
+        note_middle_1.default.selectNotesByTextReg(user, text, false)
             .then(result => {
             res.json(result);
         });
@@ -211,7 +186,7 @@ class NoteEndpoint {
         let user = utils_1.default.extractUser(req);
         let title;
         title = req.body.note.title;
-        note_middle_1.default.selectNotesByTitleReg(user.userid, title, true)
+        note_middle_1.default.selectNotesByTitleReg(user, title, true)
             .then(result => {
             res.json(result);
         });
@@ -220,7 +195,7 @@ class NoteEndpoint {
         let user = utils_1.default.extractUser(req);
         let text;
         text = req.body.note.text;
-        note_middle_1.default.selectNotesByTextReg(user.userid, text, true)
+        note_middle_1.default.selectNotesByTextReg(user, text, true)
             .then(result => {
             res.json(result);
         });
@@ -237,19 +212,6 @@ class NoteEndpoint {
         let user = utils_1.default.extractUser(req);
         let isDone = req.body.note.isdone;
         note_middle_1.default.selectNotesMinByIsDone(user, isDone, false)
-            .then(result => {
-            res.json(result);
-        });
-    }
-    static setDone(req, res, next) {
-        let user = utils_1.default.extractUser(req);
-        let isDone;
-        let note;
-        note = new note_1.default();
-        note.userid = user.userid;
-        note.title = req.body.note.title;
-        isDone = req.body.note.isdone;
-        note_middle_1.default.setDone(note, isDone)
             .then(result => {
             res.json(result);
         });

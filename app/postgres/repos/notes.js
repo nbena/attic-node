@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const sql_1 = require("../sql");
-const TagClass = require("../../models/tag");
+const tag_1 = require("../../models/tag");
 let sql = sql_1.default.notes;
 class Repository {
     constructor(db, pgp) {
@@ -26,6 +26,9 @@ class Repository {
             throw new Error('mismatch');
         }
         return this.db.none(this.addTagsString(note, tags, roles));
+    }
+    changeDone(note, done) {
+        return this.db.none(sql.setDone, note.getValues().concat([done]));
     }
     changeLinks(note, links) {
         let values = [note.userid, note.title, JSON.stringify(links)];
@@ -52,17 +55,15 @@ class Repository {
         let tags = [];
         let roles = [];
         if (note.maintags.length != 0) {
-            note.maintags.map((currentValue, currentIndex) => {
-                let tag = new TagClass.Tag();
-                tag.title = currentValue;
+            note.maintags.forEach(obj => {
+                let tag = new tag_1.TagExtraMin(obj);
                 roles.push('mainTags');
                 tags.push(tag);
             });
         }
         if (note.othertags.length != 0) {
-            note.othertags.map((currentValue, currentIndex) => {
-                let tag = new TagClass.Tag();
-                tag.title = currentValue;
+            note.othertags.forEach(obj => {
+                let tag = new tag_1.TagExtraMin(obj);
                 roles.push('otherTags');
                 tags.push(tag);
             });
@@ -91,23 +92,6 @@ class Repository {
     removeTagsFromNote(note, tags) {
         return this.db.none(this.removeTagsString(tags.length), [note.userid, note.title].concat(tags.map(obj => { return obj.title; })));
     }
-    static getQueryNotesByTagsNoRole(userid, tags, and) {
-        let tagsTitle = tags.map((currentValue) => {
-            return currentValue.title;
-        });
-        let query = Repository.SELECT_NOTES_BY_TAGS_START;
-        query = query.concat(userid + '\'');
-        query = query.concat('and ( tagtitle=\'');
-        let joined;
-        if (and) {
-            joined = tagsTitle.join('\' and tagtitle = \'');
-        }
-        else {
-            joined = tagsTitle.join('\' or tagtitle = \'');
-        }
-        joined = joined.concat('\');');
-        return query.concat(joined);
-    }
     selectNotesMinByTagsAnd(user, tags) {
         return this.db.any(sql.selectNotesMinByTagsAnd, [user.userid, tags.map(obj => { return obj.title; })]);
     }
@@ -125,20 +109,20 @@ class Repository {
             return note;
         });
     }
-    selectNotesMinByTitleReg(userid, title) {
-        return this.db.any(sql.selectNotesMinByTitleReg, [userid, '%' + title + '%']);
+    selectNotesMinByTitleReg(user, title) {
+        return this.db.any(sql.selectNotesMinByTitleReg, [user.userid, '%' + title + '%']);
     }
-    selectNotesMinByTextReg(userid, text) {
-        return this.db.any(sql.selectNotesMinByTextReg, [userid, '%' + text + '%']);
+    selectNotesMinByTextReg(user, text) {
+        return this.db.any(sql.selectNotesMinByTextReg, [user.userid, '%' + text + '%']);
     }
-    selectNotesMinWithDateByTitleReg(userid, title) {
-        return this.db.any(sql.selectNotesMinWithDateByTitleReg, [userid, '%' + title + '%']);
+    selectNotesMinWithDateByTitleReg(user, title) {
+        return this.db.any(sql.selectNotesMinWithDateByTitleReg, [user.userid, '%' + title + '%']);
     }
-    selectNotesMinWithDateByTextReg(userid, text) {
-        return this.db.any(sql.selectNotesMinWithDateByTextReg, [userid, '%' + text + '%']);
+    selectNotesMinWithDateByTextReg(user, text) {
+        return this.db.any(sql.selectNotesMinWithDateByTextReg, [user.userid, '%' + text + '%']);
     }
-    selectNotesFull(userid) {
-        return this.db.any(sql.selectNotesFull, [userid]);
+    selectNotesFull(user) {
+        return this.db.any(sql.selectNotesFull, [user.userid]);
     }
     selectNotesMin(user) {
         return this.db.any(sql.selectNotesMin, [user.userid]);
@@ -151,10 +135,6 @@ class Repository {
     }
     selectNotesMinByIsDone(user, isDone) {
         return this.db.any(sql.selectNotesMinByIsDone, [user.userid, isDone]);
-    }
-    setDone(note, done) {
-        let values = [note.isdone, note.title, done];
-        return this.db.none(sql.setDone, values);
     }
 }
 Repository.SELECT_NOTES_BY_TAGS_START = 'select distinct notetitle as title from attic.notes_tags where attic.notes_tags.userId=\'';

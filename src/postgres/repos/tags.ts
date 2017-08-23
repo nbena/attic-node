@@ -1,6 +1,6 @@
 import { IDatabase, IMain } from 'pg-promise';
 import sqlProvider from '../sql';
-import * as TagClass from '../../models/tag';
+import {Tag, TagAlmostMin, TagExtraMin} from '../../models/tag';
 import User from '../../models/user';
 
 let sql = sqlProvider.tags;
@@ -16,35 +16,35 @@ export class Repository {
   }
 
 
-  changeTitle = (tag: TagClass.Tag,newTitle: string)=>{
+  changeTitle(tag: TagExtraMin,newTitle: string):Promise<any>{
     return this.db.none(sql.changeTitle, [tag.userid, tag.title, newTitle]);
   }
 
-  createTag = (tag: TagClass.Tag):Promise<any>=>{
+  createTag(tag: TagExtraMin):Promise<any>{
     return this.db.one(sql.createTag, tag.getValues(), (tag:any)=>{return tag.result});
   }
 
-  // removeTag = (tag: TagClass.Tag)=>{
+  // removeTag = (tag: Tag)=>{
   //   return this.db.result(sql.removeTag, tag.getValues(), (result:any)=>{return result.rowCount});
   // }
-  removeTag = (tag: TagClass.Tag)=>{
+  removeTag(tag: TagExtraMin):Promise<any>{
     return this.db.none(sql.removeTag, tag.getValues());
   }
 
   //test result.
-  selectTagByTitle = (tag: TagClass.Tag)=>{
+  selectTagByTitle(tag: TagExtraMin):Promise<any>{
     return this.db.oneOrNone(sql.selectTagByTitle, tag.getValues(), (tag:any)=>{return tag});
   }
 
-  selectTagsByTitleReg = (user:User, title: string)=>{
+  selectTagsAlmostMinByTitleReg(user:User, title: string):Promise<any>{
     return this.db.any(sql.selectTagsByTitle, [user.userid, title]/*, (rows:any)=>{return rows}*/);
   }
 
-  selectTagsFull = (user:User) =>{
-    return this.db.any(sql.selectTagsFull/*, (rows:any)=>{return rows}*/,[user.userid]);
-  }
+  // selectTagsFull(user:User){
+  //   return this.db.any(sql.selectTagsFull/*, (rows:any)=>{return rows}*/,[user.userid]);
+  // }
 
-  selectTagsMin = (user:User)=>{
+  selectTagsAlmostMin(user:User):Promise<any>{
     return this.db.any(sql.selectTagsMin/*, (rows:any)=>{return rows}*/,[user.userid]);
   }
 
