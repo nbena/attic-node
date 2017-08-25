@@ -48,8 +48,8 @@ export default class UserEndpoint{
     //   res.json(check);
     //   return;
     // }
-    user = new User(req.body.user.userid);
-    user.hashedpassword = req.body.user.password;
+    user = new User(req.body.userid);
+    user.hashedpassword = req.body.password;
     //console.log(JSON.stringify(user));
     UserMiddle.createUser(user)
     .then(result=>{

@@ -17,13 +17,14 @@ let auth = passport.authenticate('jwt', {session:false});
 // });
 
 import { Schemas } from '../../schemas/index';
-const validator = require('../../schemas/users/index');
+const userValidator = require('../../schemas/users/index');
+const authValidator = require('../../schemas/auth/index');
 
-router.put('/create', validator(Schemas.Auth.LOGIN_SCHEMA), UserEndpoint.createUser);
+router.put('/create', authValidator(Schemas.Auth.LOGIN_SCHEMA), UserEndpoint.createUser);
 
-router.post('/is-available', validator(Schemas.Users.IS_USER_VALID_SCHEMA), UserEndpoint.isUserAvailable);
+router.post('/is-available', userValidator(Schemas.Users.IS_USER_VALID_SCHEMA), UserEndpoint.isUserAvailable);
 
-router.get('/is-available', validator(Schemas.Users.IS_USER_VALID_SCHEMA), UserEndpoint.isUserAvailable);
+router.get('/is-available', userValidator(Schemas.Users.IS_USER_VALID_SCHEMA), UserEndpoint.isUserAvailable);
 
 router.get('/:userid', auth,  UserEndpoint.summary);
 

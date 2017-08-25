@@ -517,3 +517,6 @@
 
 15:01:04 error: operator does not exist: character varying = text[]
          query: select notetitle as title, lastmodificationdate from attic.notes_tags join attic.notes on notetitle=title and attic.notes_tags.userid = attic.notes.userid where attic.notes_tags.userid='omni@pollo.com' and tagtitle in (array['omni-tag1','omni-otag1']) order by title asc;
+
+14:30:48 error: duplicate key value violates unique constraint "users_pkey"
+         query: insert into attic.users(userid, hashedpassword) values ('omni@pollo.com', 'ada9eb45e96d523cc001bd95e4632c43fe3dceb128b5141038781145e2ec71d259060178e2096ca604e7aae429e8cefef6ba6bff66f0f011dc16db8fad38a2c1') returning 'omni@pollo.com'

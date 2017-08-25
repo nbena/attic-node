@@ -7,8 +7,8 @@ const user_middle_1 = require("../../middles/user_middle");
 class UserEndpoint {
     static createUser(req, res, next) {
         let user;
-        user = new user_1.default(req.body.user.userid);
-        user.hashedpassword = req.body.user.password;
+        user = new user_1.default(req.body.userid);
+        user.hashedpassword = req.body.password;
         user_middle_1.default.createUser(user)
             .then(result => {
             res.json(result);
