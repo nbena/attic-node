@@ -18,7 +18,7 @@ export default class UserMiddle{
       .then(createdUser=>{
           let result:any={
             ok:true,
-            token: 'JWT '+AuthMiddle.generateToken(user)
+            result: 'JWT '+AuthMiddle.generateToken(user)
           };
           resolve(result);
          })

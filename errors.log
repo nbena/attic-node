@@ -520,3 +520,12 @@
 
 14:30:48 error: duplicate key value violates unique constraint "users_pkey"
          query: insert into attic.users(userid, hashedpassword) values ('omni@pollo.com', 'ada9eb45e96d523cc001bd95e4632c43fe3dceb128b5141038781145e2ec71d259060178e2096ca604e7aae429e8cefef6ba6bff66f0f011dc16db8fad38a2c1') returning 'omni@pollo.com'
+
+15:06:22 error: duplicate key value violates unique constraint "users_pkey"
+         query: insert into attic.users(userid, hashedpassword) values ('omni@pollo.com', 'ada9eb45e96d523cc001bd95e4632c43fe3dceb128b5141038781145e2ec71d259060178e2096ca604e7aae429e8cefef6ba6bff66f0f011dc16db8fad38a2c1') returning 'omni@pollo.com'
+
+15:06:34 error: duplicate key value violates unique constraint "users_pkey"
+         query: insert into attic.users(userid, hashedpassword) values ('nicola@pollo.com', 'ada9eb45e96d523cc001bd95e4632c43fe3dceb128b5141038781145e2ec71d259060178e2096ca604e7aae429e8cefef6ba6bff66f0f011dc16db8fad38a2c1') returning 'nicola@pollo.com'
+
+15:14:14 error: duplicate key value violates unique constraint "users_pkey"
+         query: insert into attic.users(userid, hashedpassword) values ('nicola2@pollo.com', 'ada9eb45e96d523cc001bd95e4632c43fe3dceb128b5141038781145e2ec71d259060178e2096ca604e7aae429e8cefef6ba6bff66f0f011dc16db8fad38a2c1') returning 'nicola2@pollo.com'

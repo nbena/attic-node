@@ -29,7 +29,7 @@ public static getUserFromToken(headers):User{
 }
 
 
-public static generateToken(user:User){
+public static generateToken(user:User):string{
   let obj:object = {userid: user.userid};
   return jwt.sign(
     obj

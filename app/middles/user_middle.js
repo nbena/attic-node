@@ -12,7 +12,7 @@ class UserMiddle {
                 .then(createdUser => {
                 let result = {
                     ok: true,
-                    token: 'JWT ' + auth_middle_1.default.generateToken(user)
+                    result: 'JWT ' + auth_middle_1.default.generateToken(user)
                 };
                 resolve(result);
             })
