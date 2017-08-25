@@ -33,8 +33,12 @@ export class Repository {
     */
       // console.log('the result of the select is:');
       // console.log(JSON.stringify(result));
-      let user:User = new User(result.user.userid);
-      user.hashedpassword=result.user.hashedpassword;
+      let user:User = null;
+      if(result!=null){
+        user = new User(result.user.userid);
+        user.hashedpassword=result.user.hashedpassword;
+      }
+
       // console.log('the user instead is:');
       // console.log(JSON.stringify(user));
       return user;

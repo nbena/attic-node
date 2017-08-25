@@ -14,7 +14,14 @@ function passportFunc(passport) {
     const localLogin = new LocalStrategy.Strategy(localLoginOpt, (userid, password, done) => {
         db.users.selectByUserId(userid)
             .then(user => {
-            return user.checkPassword(password);
+            let p;
+            if (user != null) {
+                p = user.checkPassword(password);
+            }
+            else {
+                p = Promise.resolve(false);
+            }
+            return p;
         })
             .then(result => {
             if (result) {

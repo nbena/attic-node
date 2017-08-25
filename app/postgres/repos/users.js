@@ -18,8 +18,11 @@ class Repository {
     }
     selectByUserId(userid) {
         return this.db.oneOrNone(sql.selectByUserId, userid, (result) => {
-            let user = new user_1.default(result.user.userid);
-            user.hashedpassword = result.user.hashedpassword;
+            let user = null;
+            if (result != null) {
+                user = new user_1.default(result.user.userid);
+                user.hashedpassword = result.user.hashedpassword;
+            }
             return user;
         });
     }
