@@ -100,6 +100,8 @@ class NoteEndpoint {
         else {
             note.creationdate = new Date();
         }
+        note.links = req.body.note.links;
+        note.isdone = req.body.note.isdone;
         console.log(note);
         note_middle_1.default.createNote(note)
             .then(result => {

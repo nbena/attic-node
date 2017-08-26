@@ -361,6 +361,9 @@ export default class NoteEndpoint{
     // note.maintags=((req.body.note.maintags) ? req.body.note.maintags : null);
     // note.othertags=((req.body.note.othertags) ? req.body.note.othertags : null);
 
+    note.links=req.body.note.links;
+    note.isdone=req.body.note.isdone;
+
     console.log(note);
 
     NoteMiddle.createNote(note)
