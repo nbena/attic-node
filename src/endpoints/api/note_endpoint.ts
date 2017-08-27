@@ -172,7 +172,7 @@ export default class NoteEndpoint{
     // let tagsTemp: string[];
     let roles:string[]=[];
     // let result:Promise<any>;
-    let note:NoteExtraMin = new NoteExtraMin(req.body.title, user.userid);
+    let note:NoteExtraMin = new NoteExtraMin(req.body.note.title, user.userid);
 
     // let check = NoteEndpointParamCheck.addTags(req);
     // if(check!=null){
@@ -207,7 +207,7 @@ export default class NoteEndpoint{
   public static changeDone(req: express.Request, res: express.Response, next){
     let user:User = Utils.extractUser(req);
     let isDone:boolean=req.body.note.isdone;
-    let note:NoteExtraMin = new NoteExtraMin(req.body.title, user.userid);
+    let note:NoteExtraMin = new NoteExtraMin(req.body.note.title, user.userid);
     // let result:any=NoteEndpointParamCheck.setDone(req);
     // if(result!=null){
     //   res.json(result);
@@ -243,7 +243,7 @@ export default class NoteEndpoint{
 
   public static changeLinks(req: express.Request, res: express.Response, next){
     let user:User=Utils.extractUser(req);
-    let note:NoteExtraMin = new NoteExtraMin(req.body.title, user.userid);
+    let note:NoteExtraMin = new NoteExtraMin(req.body.note.title, user.userid);
     let links:string[] = req.body.note.links;
     // let result:any = NoteEndpointParamCheck.changeLinks(req);
     // if(result!=null){
@@ -264,7 +264,7 @@ export default class NoteEndpoint{
 
   public static changeText(req: express.Request, res: express.Response, next){
     let user:User=Utils.extractUser(req);
-    let note:NoteExtraMin = new NoteExtraMin(req.body.title, user.userid);
+    let note:NoteExtraMin = new NoteExtraMin(req.body.note.title, user.userid);
     let text:string=req.body.note.text;
     // let result:any = NoteEndpointParamCheck.changeText(req);
     // if(result!=null){
@@ -284,7 +284,7 @@ export default class NoteEndpoint{
 
   public static changeTitle(req: express.Request, res: express.Response, next){
     let user:User=Utils.extractUser(req);
-    let note:NoteExtraMin = new NoteExtraMin(req.body.title, user.userid);
+    let note:NoteExtraMin = new NoteExtraMin(req.body.note.title, user.userid);
     let newTitle:string=req.body.note.newtitle;
     // let result:any = NoteEndpointParamCheck.changeTitle(req);
     // if(result!=null){
@@ -391,7 +391,7 @@ export default class NoteEndpoint{
 
   public static removeTagsFromNote(req: express.Request, res: express.Response, next){
     let user:User=Utils.extractUser(req);
-    let note:NoteExtraMin = new NoteExtraMin(req.body.title, user.userid);
+    let note:NoteExtraMin = new NoteExtraMin(req.body.note.title, user.userid);
     let tags:TagExtraMin[]=[];
     // let result:any=NoteEndpointParamCheck.removeTagsFromNote(req);
     // if(result!=null){

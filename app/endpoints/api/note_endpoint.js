@@ -9,7 +9,7 @@ class NoteEndpoint {
         let user = utils_1.default.extractUser(req);
         let tags = [];
         let roles = [];
-        let note = new note_1.NoteExtraMin(req.body.title, user.userid);
+        let note = new note_1.NoteExtraMin(req.body.note.title, user.userid);
         if (req.body.note.maintags) {
             req.body.note.maintags.forEach(obj => {
                 let tag = new tag_1.TagExtraMin(obj);
@@ -32,7 +32,7 @@ class NoteEndpoint {
     static changeDone(req, res, next) {
         let user = utils_1.default.extractUser(req);
         let isDone = req.body.note.isdone;
-        let note = new note_1.NoteExtraMin(req.body.title, user.userid);
+        let note = new note_1.NoteExtraMin(req.body.note.title, user.userid);
         note_middle_1.default.changeDone(note, isDone)
             .then(result => {
             res.json(result);
@@ -54,7 +54,7 @@ class NoteEndpoint {
     }
     static changeLinks(req, res, next) {
         let user = utils_1.default.extractUser(req);
-        let note = new note_1.NoteExtraMin(req.body.title, user.userid);
+        let note = new note_1.NoteExtraMin(req.body.note.title, user.userid);
         let links = req.body.note.links;
         note_middle_1.default.changeLinks(note, links)
             .then(result => {
@@ -63,7 +63,7 @@ class NoteEndpoint {
     }
     static changeText(req, res, next) {
         let user = utils_1.default.extractUser(req);
-        let note = new note_1.NoteExtraMin(req.body.title, user.userid);
+        let note = new note_1.NoteExtraMin(req.body.note.title, user.userid);
         let text = req.body.note.text;
         note_middle_1.default.changeText(note, text)
             .then(result => {
@@ -72,7 +72,7 @@ class NoteEndpoint {
     }
     static changeTitle(req, res, next) {
         let user = utils_1.default.extractUser(req);
-        let note = new note_1.NoteExtraMin(req.body.title, user.userid);
+        let note = new note_1.NoteExtraMin(req.body.note.title, user.userid);
         let newTitle = req.body.note.newtitle;
         note_middle_1.default.changeTitle(note, newTitle)
             .then(result => {
@@ -118,7 +118,7 @@ class NoteEndpoint {
     }
     static removeTagsFromNote(req, res, next) {
         let user = utils_1.default.extractUser(req);
-        let note = new note_1.NoteExtraMin(req.body.title, user.userid);
+        let note = new note_1.NoteExtraMin(req.body.note.title, user.userid);
         let tags = [];
         tags = req.body.note.tags.map(obj => { return new tag_1.TagExtraMin(obj); });
         note_middle_1.default.removeTagsFromNote(note, tags)
