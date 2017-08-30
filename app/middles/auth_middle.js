@@ -26,7 +26,7 @@ class AuthMiddle {
     }
     static generateToken(user) {
         let obj = { userid: user.userid };
-        return jwt.sign(obj, database_1.default.secret);
+        return jwt.sign(obj, database_1.default.secret, { expiresIn: '30d' });
     }
     static authenticate(user) {
         return new Promise((resolve, reject) => {

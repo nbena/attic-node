@@ -33,7 +33,9 @@ public static generateToken(user:User):string{
   let obj:object = {userid: user.userid};
   return jwt.sign(
     obj
-  , Config.secret);
+  , Config.secret,
+    {expiresIn:'30d'} 
+  );
 }
 
 
