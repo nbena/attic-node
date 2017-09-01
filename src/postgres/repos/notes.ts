@@ -368,18 +368,21 @@ export class Repository{
     return this.db.any(sql.selectNotesMinByTextReg, [user.userid, '%'+text+'%']);
   }
 
+  selectNotesMinWithDateByTextReg(user:User, text:string):Promise<any>{
+  return this.db.any(sql.selectNotesMinWithDateByTextReg, [user.userid, '%'+text+'%']);
+}
 
   selectNotesMinWithDateByTitleReg(user:User, title:string):Promise<any>{
     return this.db.any(sql.selectNotesMinWithDateByTitleReg, [user.userid, '%'+title+'%']);
   }
 
-  selectNotesMinWithDateByTextReg(user:User, text:string):Promise<any>{
+  selectNotesMinWitDateByTextReg(user:User, text:string):Promise<any>{
     return this.db.any(sql.selectNotesMinWithDateByTextReg, [user.userid, '%'+text+'%']);
   }
-
-  selectNotesFull(user:User):Promise<any>{
-    return this.db.any(sql.selectNotesFull, [user.userid]);
-  }
+  //
+  // selectNotesFull(user:User):Promise<any>{
+  //   return this.db.any(sql.selectNotesFull, [user.userid]);
+  // }
 
   selectNotesMin(user: User):Promise<any>{
     return this.db.any(sql.selectNotesMin,[user.userid]);

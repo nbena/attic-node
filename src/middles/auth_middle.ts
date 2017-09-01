@@ -1,6 +1,6 @@
 import User from '../models/user';
 import * as jwt from 'jsonwebtoken';
-import Config from '../config/database';
+import Config from '../config/secret';
 import * as passport from 'passport';
 import {AuthResult} from './useful/types';
 
@@ -34,7 +34,7 @@ public static generateToken(user:User):string{
   return jwt.sign(
     obj
   , Config.secret,
-    {expiresIn:'30d'} 
+    {expiresIn:'30d'}
   );
 }
 

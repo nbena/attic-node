@@ -22,7 +22,6 @@ exports.default = {
         selectNotesMinByTitleReg: link('notes/select_notes_min_by_title_reg.sql'),
         selectNotesMinWithDateByTextReg: link('notes/select_notes_min_with_date_by_text_reg.sql'),
         selectNotesMinWithDateByTitleReg: link('notes/select_notes_min_with_date_by_title_reg.sql'),
-        selectNotesFull: link('notes/select_notes_full.sql'),
         selectNotesMin: link('notes/select_notes_min.sql'),
         selectNotesMinWithDate: link('notes/select_notes_min_with_date.sql'),
         setDone: link('notes/set_done.sql')

@@ -115,14 +115,14 @@ class Repository {
     selectNotesMinByTextReg(user, text) {
         return this.db.any(sql.selectNotesMinByTextReg, [user.userid, '%' + text + '%']);
     }
-    selectNotesMinWithDateByTitleReg(user, title) {
-        return this.db.any(sql.selectNotesMinWithDateByTitleReg, [user.userid, '%' + title + '%']);
-    }
     selectNotesMinWithDateByTextReg(user, text) {
         return this.db.any(sql.selectNotesMinWithDateByTextReg, [user.userid, '%' + text + '%']);
     }
-    selectNotesFull(user) {
-        return this.db.any(sql.selectNotesFull, [user.userid]);
+    selectNotesMinWithDateByTitleReg(user, title) {
+        return this.db.any(sql.selectNotesMinWithDateByTitleReg, [user.userid, '%' + title + '%']);
+    }
+    selectNotesMinWitDateByTextReg(user, text) {
+        return this.db.any(sql.selectNotesMinWithDateByTextReg, [user.userid, '%' + text + '%']);
     }
     selectNotesMin(user) {
         return this.db.any(sql.selectNotesMin, [user.userid]);

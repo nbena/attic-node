@@ -3,7 +3,7 @@
 import * as passportJwt from 'passport-jwt';
 import * as LocalStrategy from 'passport-local';
 import * as passport from 'passport';
-import Config from './database';
+import Config from './secret';
 import * as db from '../postgres';
 import User from '../models/user';
 

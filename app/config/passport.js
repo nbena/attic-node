@@ -1,14 +1,14 @@
 "use strict";
 const passportJwt = require("passport-jwt");
 const LocalStrategy = require("passport-local");
-const database_1 = require("./database");
+const secret_1 = require("./secret");
 const db = require("../postgres");
 const ExtractJwt = passportJwt.ExtractJwt;
 const JwtStrategy = passportJwt.Strategy;
 const localLoginOpt = { usernameField: 'userid' };
 const jwtOpt = {
     jwtFromRequest: ExtractJwt.fromAuthHeader(),
-    secretOrKey: database_1.default.secret
+    secretOrKey: secret_1.default.secret
 };
 function passportFunc(passport) {
     const localLogin = new LocalStrategy.Strategy(localLoginOpt, (userid, password, done) => {

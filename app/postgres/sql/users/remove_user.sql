@@ -1,2 +1,2 @@
-delete from attic.users
+delete from ${schema~}.users
   where userId=$1;

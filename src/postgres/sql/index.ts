@@ -28,7 +28,7 @@ export default {
       selectNotesMinByTitleReg: link('notes/select_notes_min_by_title_reg.sql'),
       selectNotesMinWithDateByTextReg: link('notes/select_notes_min_with_date_by_text_reg.sql'),
       selectNotesMinWithDateByTitleReg: link('notes/select_notes_min_with_date_by_title_reg.sql'),
-      selectNotesFull: link('notes/select_notes_full.sql'),
+      //selectNotesFull: link('notes/select_notes_full.sql'),
       selectNotesMin: link('notes/select_notes_min.sql'),
       selectNotesMinWithDate: link('notes/select_notes_min_with_date.sql'),
       setDone: link('notes/set_done.sql')
@@ -59,7 +59,7 @@ function link(file: string): QueryFile {
     let fullPath: string = path.join(__dirname, file);
 
     let options: TQueryFileOptions = {
-        minify: true, /*authors siggest to set this to true.*/
+        minify: true, /*authors suggest to set this to true.*/
         params: {
             schema: 'attic' /*if in future schema will change, no need to change the queries.*/
         }
@@ -70,6 +70,6 @@ function link(file: string): QueryFile {
     if (queryFile.error) {
         throw queryFile.error;
     }
-    
+
     return queryFile;
 }
