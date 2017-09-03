@@ -26,7 +26,7 @@ router.post('/by-tile-reg/with-date', auth, validator(index_1.Schemas.Notes.NOTE
 router.post('/by-text/with-date', auth, validator(index_1.Schemas.Notes.NOTES_BY_TEXT_SCHEMA), note_endpoint_1.default.selectNotesMinWithDateByTextReg);
 router.post('/by-isdone', auth, validator(index_1.Schemas.Notes.NOTES_BY_ISDONE_SCHEMA), note_endpoint_1.default.selectNotesMinByIsDone);
 router.post('/by-isdone/with-date', auth, validator(index_1.Schemas.Notes.NOTES_BY_ISDONE_SCHEMA), note_endpoint_1.default.selectNotesMinWithDateByIsDone);
-router.post('/mod/set-done', validator(index_1.Schemas.Notes.SET_DONE_SCHEMA), auth, note_endpoint_1.default.changeDone);
+router.post('/mod/change-done', validator(index_1.Schemas.Notes.SET_DONE_SCHEMA), auth, note_endpoint_1.default.changeDone);
 router.get('/all/min', auth, note_endpoint_1.default.selectNotesMin);
 router.post('/all/min', auth, note_endpoint_1.default.selectNotesMin);
 router.get('/all/min/with-date', auth, note_endpoint_1.default.selectNotesMinWithDate);

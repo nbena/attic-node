@@ -43,7 +43,7 @@ export class PostgresError {
   public static readonly POSTGRES_USER_REACHED_MAX_NOTES:string = 'a free user cannot have more than 50 notes';
   public static readonly POSTGRES_USER_REACHED_MAX_TAGS:string = 'a free user cannot have more than 50 tags';
   public static readonly POSTGRES_MAINTAGS_LIMIT:string = 'maintags cannot be more than 3';
-  public static readonly POSTGRES_OTHERTAGS_LIMIT:string = 'othetags cannot be more than 15';
+  public static readonly POSTGRES_OTHERTAGS_LIMIT:string = 'othetags cannot be more than 10';
   public static readonly POSTGRES_TAGS_FKEY:string = 'insert or update on table \"notes_tags\" violates foreign key constraint \"notes_tags_tagtitle_fkey\"';
 
   public static readonly FINAL_DUPLICATE_KEY_NOTES:string = 'another note with the same title';
