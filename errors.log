@@ -532,3 +532,12 @@
 
 14:58:43 error: database ":54327attic" does not exist
          connection: "postgres://nicola:##############@localhost:54327attic"
+
+13:16:46 error: insert or update on table "notes_tags" violates foreign key constraint "notes_tags_tagtitle_fkey"
+         tx: insert into "attic"."notes_tags"("notetitle","tagtitle","role","userid") values('nicola','nicola','mainTags','ciaobena@outlook.it')
+
+14:36:43 error: insert or update on table "notes_tags" violates foreign key constraint "notes_tags_notetitle_fkey"
+         query: insert into "attic"."notes_tags"("notetitle","tagtitle","role","userid") values('nicola','nicola','mainTags','ciaobena@outlook.it')
+
+14:53:50 error: insert or update on table "notes_tags" violates foreign key constraint "notes_tags_notetitle_fkey"
+         query: insert into "attic"."notes_tags"("notetitle","tagtitle","role","userid") values('nicola','nicola','mainTags','ciaobena@outlook.it')
