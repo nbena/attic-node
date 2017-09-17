@@ -39,7 +39,7 @@
 -- end
 -- $$ language plpgsql;
 
-create or replace function get_full_note2(userId varchar, title varchar) returns json as $$
+create or replace function get_full_note(userId varchar, title varchar) returns json as $$
 declare
 	noteRes json;
     aggOtherTags json;
@@ -81,6 +81,10 @@ begin
         from attic.notes as n
         where n.title=$2 and n.userid=$1
         ) as t;
+
+	if noteRes is null then
+      raise exception 'note not found';
+  end if;
 
     return noteRes;
 end

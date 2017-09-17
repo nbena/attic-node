@@ -66,6 +66,10 @@ begin
          where t.userid=$1 and t.title=$2
      ) as t;
 
-    return tagRes;
+		if tagRes is null then
+	      raise exception 'tag not found';
+	  end if;
+
+		return tagRes;
 end
 $$ language plpgsql;

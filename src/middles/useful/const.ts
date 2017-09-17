@@ -46,6 +46,8 @@ export class PostgresError {
   public static readonly POSTGRES_OTHERTAGS_LIMIT:string = 'othetags cannot be more than 10';
   public static readonly POSTGRES_NOTES_FKEY:string = 'insert or update on table \"notes_tags\" violates foreign key constraint \"notes_tags_notetitle_fkey\"';
   public static readonly POSTGRES_TAGS_FKEY:string = 'insert or update on table \"notes_tags\" violates foreign key constraint \"notes_tags_tagtitle_fkey\"';
+  public static readonly POSTGRES_NOTE_NOT_FOUND:string = 'note not found';
+  public static readonly POSTGRES_TAG_NOT_FOUND:string = 'tag not found';
 
   public static readonly FINAL_DUPLICATE_KEY_NOTES:string = 'another note with the same title';
   public static readonly FINAL_DUPLICATE_KEY_TAGS:string = 'another tag with the same title';
@@ -59,8 +61,10 @@ export class PostgresError {
   public static readonly FINAL_USER_REACHED_MAX_TAGS:string = PostgresError.POSTGRES_USER_REACHED_MAX_TAGS;
   public static readonly FINAL_MAINTAGS_LIMIT:string = PostgresError.POSTGRES_MAINTAGS_LIMIT
   public static readonly FINAL_OTHERTAGS_LIMIT:string = PostgresError.POSTGRES_OTHERTAGS_LIMIT;
-  public static readonly FINAL_TAGS_FKEY:string = "tags not found";
-  public static readonly FINAL_NOTES_FKEY:string ='note not found';
+  public static readonly FINAL_TAGS_FKEY:string = 'tags not found';
+  public static readonly FINAL_NOTES_FKEY:string ='notes not found';
+  public static readonly FINAL_NOTE_NOT_FOUND:string = PostgresError.POSTGRES_NOTE_NOT_FOUND;
+  public static readonly FINAL_TAG_NOT_FOUND:string = PostgresError.POSTGRES_TAG_NOT_FOUND;
 
   public static getCorrectError(error: string): string {
     let returnedError: string = error; //so don't need a default.
@@ -98,6 +102,12 @@ export class PostgresError {
       case PostgresError.POSTGRES_NOTES_FKEY:
         returnedError=PostgresError.FINAL_NOTES_FKEY;
         break;
+      case PostgresError.POSTGRES_NOTE_NOT_FOUND:
+        returnedError=PostgresError.FINAL_NOTE_NOT_FOUND;
+        break;
+      case PostgresError.POSTGRES_TAG_NOT_FOUND:
+        returnedError=PostgresError.FINAL_TAG_NOT_FOUND;
+        break;
     }
     return returnedError;
   }
@@ -108,6 +118,7 @@ export class PostgresError {
       || msg==PostgresError.POSTGRES_OTHERTAGS_LIMIT || msg==PostgresError.POSTGRES_TAGS_FKEY
       || msg==PostgresError.POSTGRES_USER_REACHED_MAX_NOTES || msg==PostgresError.POSTGRES_USER_REACHED_MAX_TAGS
       || msg==PostgresError.POSTGRES_DUPLICATE_KEY_USERS || msg==PostgresError.POSTGRES_NOTES_FKEY
+      || msg==PostgresError.POSTGRES_NOTE_NOT_FOUND || msg==PostgresError.POSTGRES_TAG_NOT_FOUND
     )
 
   }

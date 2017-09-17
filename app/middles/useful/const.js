@@ -43,6 +43,12 @@ class PostgresError {
             case PostgresError.POSTGRES_NOTES_FKEY:
                 returnedError = PostgresError.FINAL_NOTES_FKEY;
                 break;
+            case PostgresError.POSTGRES_NOTE_NOT_FOUND:
+                returnedError = PostgresError.FINAL_NOTE_NOT_FOUND;
+                break;
+            case PostgresError.POSTGRES_TAG_NOT_FOUND:
+                returnedError = PostgresError.FINAL_TAG_NOT_FOUND;
+                break;
         }
         return returnedError;
     }
@@ -51,7 +57,8 @@ class PostgresError {
             || msg == PostgresError.POSTGRES_DUPLICATE_KEY_TAGS || msg == PostgresError.POSTGRES_MAINTAGS_LIMIT
             || msg == PostgresError.POSTGRES_OTHERTAGS_LIMIT || msg == PostgresError.POSTGRES_TAGS_FKEY
             || msg == PostgresError.POSTGRES_USER_REACHED_MAX_NOTES || msg == PostgresError.POSTGRES_USER_REACHED_MAX_TAGS
-            || msg == PostgresError.POSTGRES_DUPLICATE_KEY_USERS || msg == PostgresError.POSTGRES_NOTES_FKEY);
+            || msg == PostgresError.POSTGRES_DUPLICATE_KEY_USERS || msg == PostgresError.POSTGRES_NOTES_FKEY
+            || msg == PostgresError.POSTGRES_NOTE_NOT_FOUND || msg == PostgresError.POSTGRES_TAG_NOT_FOUND);
     }
 }
 PostgresError.POSTGRES_DUPLICATE_KEY_NOTES = 'duplicate key value violates unique constraint \"notes_pkey\"';
@@ -64,6 +71,8 @@ PostgresError.POSTGRES_MAINTAGS_LIMIT = 'maintags cannot be more than 3';
 PostgresError.POSTGRES_OTHERTAGS_LIMIT = 'othetags cannot be more than 10';
 PostgresError.POSTGRES_NOTES_FKEY = 'insert or update on table \"notes_tags\" violates foreign key constraint \"notes_tags_notetitle_fkey\"';
 PostgresError.POSTGRES_TAGS_FKEY = 'insert or update on table \"notes_tags\" violates foreign key constraint \"notes_tags_tagtitle_fkey\"';
+PostgresError.POSTGRES_NOTE_NOT_FOUND = 'note not found';
+PostgresError.POSTGRES_TAG_NOT_FOUND = 'tag not found';
 PostgresError.FINAL_DUPLICATE_KEY_NOTES = 'another note with the same title';
 PostgresError.FINAL_DUPLICATE_KEY_TAGS = 'another tag with the same title';
 PostgresError.FINAL_DUPLICATE_KEY_USERS = 'another user with the same userid';
@@ -72,7 +81,9 @@ PostgresError.FINAL_USER_REACHED_MAX_NOTES = PostgresError.POSTGRES_USER_REACHED
 PostgresError.FINAL_USER_REACHED_MAX_TAGS = PostgresError.POSTGRES_USER_REACHED_MAX_TAGS;
 PostgresError.FINAL_MAINTAGS_LIMIT = PostgresError.POSTGRES_MAINTAGS_LIMIT;
 PostgresError.FINAL_OTHERTAGS_LIMIT = PostgresError.POSTGRES_OTHERTAGS_LIMIT;
-PostgresError.FINAL_TAGS_FKEY = "tags not found";
+PostgresError.FINAL_TAGS_FKEY = 'tags not found';
 PostgresError.FINAL_NOTES_FKEY = 'note not found';
+PostgresError.FINAL_NOTE_NOT_FOUND = PostgresError.POSTGRES_NOTE_NOT_FOUND;
+PostgresError.FINAL_TAG_NOT_FOUND = PostgresError.POSTGRES_TAG_NOT_FOUND;
 exports.PostgresError = PostgresError;
 //# sourceMappingURL=const.js.map
