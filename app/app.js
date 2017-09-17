@@ -11,6 +11,7 @@ const notes_1 = require("./routes/api/notes");
 const tags_1 = require("./routes/api/tags");
 const users_1 = require("./routes/api/users");
 const auth_1 = require("./routes/api/auth");
+const _404_endpoint_1 = require("./endpoints/404_endpoint");
 const passport = require("passport");
 const app = express();
 app.use(passport.initialize());
@@ -27,6 +28,10 @@ app.use('/api/notes', notes_1.default);
 app.use('/api/tags', tags_1.default);
 app.use('/api/users', users_1.default);
 app.use('/api/auth', auth_1.default);
+app.get('/api/*', _404_endpoint_1.default.error404);
+app.post('/api/*', _404_endpoint_1.default.error404);
+app.put('/api/*', _404_endpoint_1.default.error404);
+app.delete('/api/*', _404_endpoint_1.default.error404);
 app.use((req, res, next) => {
     var err = new Error('Not Found');
     err['status'] = 404;

@@ -96,7 +96,10 @@ public static createNote (note:Note):Promise<Result>{
       // console.log('the result');
       // console.log(JSON.stringify(result));
       /*creating the object that we'll return*/
-      let noteRes:Note = result[0].result as Note;
+      let noteRes/*:Note*/ = result[0].result/* as Note*/;
+
+      noteRes.maintags=note.maintags.map(obj=>{return new TagExtraMin(obj)});
+      noteRes.othertags=note.othertags.map(obj=>{return new TagExtraMin(obj)});
       // noteRes.maintags = ((note.maintags==null)? [] : note.maintags);
       // noteRes.othertags = ((note.othertags==null)? [] : note.othertags);
 

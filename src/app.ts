@@ -17,6 +17,8 @@ import tags from './routes/api/tags';
 import users from './routes/api/users';
 import auth from './routes/api/auth';
 
+import Endpoint404 from './endpoints/404_endpoint';
+
 import * as passport from 'passport';
 import * as jwt from 'jsonwebtoken';
 
@@ -50,6 +52,12 @@ app.use('/api/notes',notes);
 app.use('/api/tags', tags);
 app.use('/api/users', users);
 app.use('/api/auth', auth);
+
+/* my handler to manage API errors in JSON */
+app.get('/api/*', Endpoint404.error404);
+app.post('/api/*', Endpoint404.error404);
+app.put('/api/*', Endpoint404.error404);
+app.delete('/api/*', Endpoint404.error404);
 
 
 /*

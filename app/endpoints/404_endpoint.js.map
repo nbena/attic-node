@@ -1,0 +1,1 @@
+{"version":3,"file":"404_endpoint.js","sourceRoot":"","sources":["../../src/endpoints/404_endpoint.ts"],"names":[],"mappings":";;AACA,mDAA4C;AAE5C;IAES,MAAM,CAAC,QAAQ,CAAC,GAAmB,EAAE,GAAoB,EAAE,IAAI;QACpE,GAAG,CAAC,MAAM,CAAC,GAAG,CAAC,CAAC;QAChB,GAAG,CAAC,IAAI,CAAC,eAAK,CAAC,OAAO,EAAE,CAAC,CAAC;IAC5B,CAAC;CACF;AAND,8BAMC"}

@@ -5,7 +5,7 @@ import {PostgresError} from './const';
 
 export default class Utils{
 
-  public static jsonErr=(err: Error):BasicResult=>{
+  public static jsonErr(err: Error):BasicResult{
     console.error(err.stack);
     console.log(JSON.stringify(err));
     // if(err.name=='BatchError'){
@@ -32,14 +32,19 @@ export default class Utils{
   key: the name of the obj property,
   value: its value.
   */
-  public static jsonCorrect = (obj:any):any=>{
-    let objString:string = JSON.stringify(obj,(key, value)=>{
-      if(key == 'userid'){
-        key = 'userId'
-      }
-    });
-    let objRes:any = JSON.parse(objString);
-    return objRes;
+  // public static jsonCorrect = (obj:any):any=>{
+  //   let objString:string = JSON.stringify(obj,(key, value)=>{
+  //     if(key == 'userid'){
+  //       key = 'userId'
+  //     }
+  //   });
+  //   let objRes:any = JSON.parse(objString);
+  //   return objRes;
+  // }
+
+  public static json404():BasicResult{
+    let err:BasicResult = new BasicResult(false, 'Error 404');
+    return err;
   }
 
 

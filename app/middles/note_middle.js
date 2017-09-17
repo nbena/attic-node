@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const tag_1 = require("../models/tag");
 const db = require("../postgres");
 const types_1 = require("./useful/types");
 const utils_1 = require("./useful/utils");
@@ -66,6 +67,8 @@ class NoteMiddle {
             result = db.notes.createNote(note);
             result.then(result => {
                 let noteRes = result[0].result;
+                noteRes.maintags = note.maintags.map(obj => { return new tag_1.TagExtraMin(obj); });
+                noteRes.othertags = note.othertags.map(obj => { return new tag_1.TagExtraMin(obj); });
                 resolve(new types_1.NoteResult(true, noteRes));
             });
             result.catch(error => {
