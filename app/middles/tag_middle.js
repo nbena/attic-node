@@ -20,9 +20,8 @@ class TagMiddle {
         return new Promise((resolve, reject) => {
             db.tags.createTag(tag)
                 .then(result => {
-                let res = new tag_1.TagAlmostMin(tag.title, tag.userid);
-                res.noteslength = 0;
-                resolve(new types_1.TagAlmostMinResult(true, res));
+                let res = new tag_1.Tag(tag.title, tag.userid);
+                resolve(new types_1.TagResult(true, res));
             })
                 .catch(error => {
                 resolve(utils_1.default.jsonErr(error));
@@ -44,6 +43,7 @@ class TagMiddle {
         return new Promise((resolve, reject) => {
             db.tags.selectTagByTitle(tag)
                 .then(result => {
+                result.tag.userid = tag.userid;
                 resolve(new types_1.TagResult(true, result));
             })
                 .catch(error => {

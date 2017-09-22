@@ -26,9 +26,13 @@ export default class TagMiddle{
         /*use this 'hack' because that tag parameter has already everything we want it to be, it just misses
         the noteslength. We add them and we can send it back to the user.
         */
-        let res:TagAlmostMin = new TagAlmostMin(tag.title, tag.userid);
-        res.noteslength = 0;
-        resolve(new TagAlmostMinResult(true, res));
+        //let res:TagAlmostMin = new TagAlmostMin(tag.title, tag.userid);
+        //res.noteslength = 0;
+        //resolve(new TagAlmostMinResult(true, res));
+        let res:Tag = new Tag(tag.title, tag.userid);
+        // res.noteslength=0;
+        // res.notes=[];
+        resolve(new TagResult(true, res));
       })
       .catch(error=>{
         resolve(Utils.jsonErr(error));
@@ -59,6 +63,7 @@ export default class TagMiddle{
       return new Promise((resolve, reject)=>{
         db.tags.selectTagByTitle(tag)
         .then(result=>{
+          result.tag.userid=tag.userid;
           resolve(new TagResult(true, result));
         })
         .catch(error=>{

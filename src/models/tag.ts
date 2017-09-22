@@ -33,6 +33,7 @@ export class TagAlmostMin extends TagExtraMin{
   // }
   constructor(title?:string, userid?:string){
     super(title, userid);
+    this.noteslength=0;
   }
 
 
@@ -43,6 +44,7 @@ export class Tag extends TagAlmostMin{
   /*notes are always kept as string*/
   constructor(title?:string, userid?:string){
     super(title, userid);
+    this.notes=[];
   }
 }
 

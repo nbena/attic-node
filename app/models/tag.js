@@ -10,12 +10,14 @@ exports.TagExtraMin = TagExtraMin;
 class TagAlmostMin extends TagExtraMin {
     constructor(title, userid) {
         super(title, userid);
+        this.noteslength = 0;
     }
 }
 exports.TagAlmostMin = TagAlmostMin;
 class Tag extends TagAlmostMin {
     constructor(title, userid) {
         super(title, userid);
+        this.notes = [];
     }
 }
 exports.Tag = Tag;
